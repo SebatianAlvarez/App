@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color ="success">
+    <ion-title style="text-align: center;">Nombre Restaurante</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card>
+    <img src="../../assets/icon/resta1.jpg" width="100" height="150"/>
+  </ion-card>
+
+  <h2 style="text-align: center;">CALIFICACION</h2>
+
+  <ion-card>
+      <img src="../../assets/icon/3estrellas.jpg"/>
+    </ion-card>
+
+  <h3 style="text-align: center;">Menú del Día</h3>
+
+  <ion-item *ngFor = "let resta of restaurantes">
+    <ion-label>
+      <h4>Entrada: <b>{{resta.entrada}}</b></h4>
+      <h4>Segundo: <b>{{resta.segundo}}</b></h4>
+      <h4>Jugo: <b>{{resta.jugo}}</b></h4>
+      <h4>Precio: <b>{{resta.precio}}</b></h4>
+      <h4>Capacidad: <b>{{resta.capacidad}}</b></h4>
+      <h4>Horario: <b>{{resta.horario}}</b></h4>
+    </ion-label>
+    
+  </ion-item>
+  <ion-button routerLink="/mapa">REGRESAR</ion-button>
+
+</ion-content>
