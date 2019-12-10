@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Map, tileLayer, marker} from 'leaflet';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mapa',
@@ -44,5 +45,7 @@ export class MapaPage implements OnInit {
     this.marker.addTo(this.map).bindPopup('Estoy aqui');
     this.map.setView(latLong);
   }
+
+
 
 }

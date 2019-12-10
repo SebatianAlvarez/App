@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-title style="text-align: center;">
       BIENVENIDO
     </ion-title>
@@ -31,7 +31,8 @@
   <p style="text-align: center;">Ó Inicia con:</p>
   
   <ion-item>
-    <ion-button expand="full">FACEBOOK</ion-button>
+    <ion-button shape ="round" (click)="FacebookLogin()">FACEBOOK</ion-button>
+    <ion-icon slot="start" name ="logo-facebook"></ion-icon>
   </ion-item>
   
   <ion-item>
