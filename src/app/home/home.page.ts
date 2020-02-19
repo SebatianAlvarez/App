@@ -3,6 +3,9 @@ import { AuthService } from '../servicios/auth.service';
 import { Router } from '@angular/router';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Platform } from '@ionic/angular';
+
+//librerias para el uso Firebase
+
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
