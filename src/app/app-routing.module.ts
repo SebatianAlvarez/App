@@ -6,6 +6,8 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   { path: 'mapa', loadChildren: './components/mapa/mapa.module#MapaPageModule' },
   { path: 'perfil', loadChildren: './components/perfil/perfil.module#PerfilPageModule' },
+  { path: 'reserva', loadChildren: './components/reserva/reserva.module#ReservaPageModule' },
+  { path: 'formulario-reserva', loadChildren: './components/formulario-reserva/formulario-reserva.module#FormularioReservaPageModule' },
 ];
 
 @NgModule({

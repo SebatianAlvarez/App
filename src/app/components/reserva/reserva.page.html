@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color ="success">
+    <ion-title style="text-align: center;">Reservar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngFor = "let reser of reservas">
+
+  <ion-item>
+    <ion-label>
+      <h4>Nombre: <b>{{reser.nombre}}</b></h4>
+    </ion-label>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label>
+      <h4>Cedula: <b>{{reser.cedula}}</b></h4>
+    </ion-label>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label>
+      <h4>Pedido: <b>{{reser.pedido}}</b></h4>
+    </ion-label>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label>
+      <h4>Cantidad: <b>{{reser.cantidad}}</b></h4>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <h4>Reserva dentro de: <b>{{reser.cantidad}}</b></h4>
+    </ion-label>
+  </ion-item>
+  <br>
+
+  <ion-button routerLink="/perfil">REGRESAR</ion-button>
+  <br>
+  <ion-button routerLink="#">ENVIAR RESERVACION</ion-button>
+
+</ion-content>

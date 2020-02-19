@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RestaurantesService, resta } from '../../servicios/restaurantes.service';
+import { RestaurantesService } from '../../servicios/restaurantes.service';
 
 
 
@@ -16,8 +16,11 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
 
+    //mostrar datos restaurantes
+
     this.restauranteService.getRestaurantes().subscribe( resta => {
       this.restaurantes = resta;
+      console.log(resta);
     })
   }
 
