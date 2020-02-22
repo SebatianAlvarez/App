@@ -8,13 +8,9 @@ export interface resta {
   nombre : string
   tipo : string
   capacidad : string
-  precio : string
   direccion : any
   horario : string
   id : string
-  entrada: string
-  segundo: string
-  jugo: string
 }
 
 @Injectable({

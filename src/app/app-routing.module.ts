@@ -8,6 +8,8 @@ const routes: Routes = [
   { path: 'perfil', loadChildren: './components/perfil/perfil.module#PerfilPageModule' },
   { path: 'reserva', loadChildren: './components/reserva/reserva.module#ReservaPageModule' },
   { path: 'formulario-reserva', loadChildren: './components/formulario-reserva/formulario-reserva.module#FormularioReservaPageModule' },
+  { path: 'registro', loadChildren: './components/registro/registro.module#RegistroPageModule' },
+  { path: 'menu', loadChildren: './components/menu/menu.module#MenuPageModule' },
 ];
 
 @NgModule({

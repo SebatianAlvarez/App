@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
+import { MenuService } from '../../servicios/menu.service';
 
 
 
@@ -11,8 +12,9 @@ import { RestaurantesService } from '../../servicios/restaurantes.service';
 export class PerfilPage implements OnInit {
 
   public restaurantes : any = [];
+  public menus : any = [];
 
-  constructor( public restauranteService: RestaurantesService ) { }
+  constructor( public restauranteService: RestaurantesService, public menuService: MenuService ) { }
 
   ngOnInit() {
 
@@ -20,7 +22,12 @@ export class PerfilPage implements OnInit {
 
     this.restauranteService.getRestaurantes().subscribe( resta => {
       this.restaurantes = resta;
-      console.log(resta);
+      console.log(resta)
+
+      this.menuService.getMenus().subscribe(menu =>{
+        this.menus = menu;
+        console.log(menu)
+      })
     })
   }
 

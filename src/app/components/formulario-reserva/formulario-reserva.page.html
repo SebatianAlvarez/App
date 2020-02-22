@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>formularioReserva</ion-title>
+  <ion-toolbar color ="success">
+    <ion-title style="text-align: center;">Realizar Reserva</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-item>
+    <ion-label>Nombre:</ion-label>
+    <ion-input type="text" [(ngModel)]="nombre" name="nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Número:</ion-label>
+    <ion-input type="text" [(ngModel)]="numero" name="numero"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Pedido:</ion-label>
+    <ion-input type="text" [(ngModel)]="pedido" name="pedido"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Cantidad:</ion-label>
+    <ion-input type="text" [(ngModel)]="cantidad" name="cantidad"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Tiempo a Reservar:</ion-label>
+    <ion-input type="text" [(ngModel)]="tiempo" name="tiempo"></ion-input>
+  </ion-item>
+  <br>
+
+  <ion-button routerLink="/perfil" (click)="Reservar()">CONFIRMAR RESERVA</ion-button>
+  
+  <br>
+  
+  <ion-button routerLink="/perfil">REGRESAR</ion-button>
+  
 
 </ion-content>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color ="success">
-    <ion-title style="text-align: center;">Reservar</ion-title>
+    <ion-title style="text-align: center;">Visualizar Peticiones</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
   <br>
   <ion-item>
     <ion-label>
-      <h4>Cedula: <b>{{reser.cedula}}</b></h4>
+      <h4>Cedula: <b>{{reser.numero}}</b></h4>
     </ion-label>
   </ion-item>
   <br>
@@ -31,13 +31,13 @@
   </ion-item>
   <ion-item>
     <ion-label>
-      <h4>Reserva dentro de: <b>{{reser.cantidad}}</b></h4>
+      <h4>Reserva dentro de: <b>{{reser.tiempo}}</b></h4>
     </ion-label>
   </ion-item>
   <br>
 
   <ion-button routerLink="/perfil">REGRESAR</ion-button>
   <br>
-  <ion-button routerLink="#">ENVIAR RESERVACION</ion-button>
+  <ion-button routerLink="#">ACEPTAR PETICION</ion-button>
 
 </ion-content>

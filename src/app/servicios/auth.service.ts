@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth';
-import { promise } from 'protractor';
-import { resolve } from 'url';
-import { reject } from 'q';
+import { AngularFirestore } from '@angular/fire/firestore'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private AFauth: AngularFireAuth) { }
+  constructor(private AFauth: AngularFireAuth, private db:AngularFirestore) { }
 
   login(email:string, password:string){
 
@@ -21,6 +19,22 @@ export class AuthService {
     } )
 
     
+  }
+
+  register(email:string, password:string, nombre:string, numero:string){
+    
+    return new Promise ((resolve, reject) =>{
+      this.AFauth.auth.createUserWithEmailAndPassword(email, password).then( res =>{
+        this.db.collection('clientes').doc(res.user.uid).set({
+          nombre : nombre,
+          numero : numero,
+          email : email,
+          password : password
+        })
+        resolve(res)
+      }).catch(err => reject(err))
+    })
+
   }
 
 }

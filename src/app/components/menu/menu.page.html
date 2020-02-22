@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title style="text-align: center;">Actualizar Menú Diario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label>Entrada:</ion-label>
+    <ion-input type="text" [(ngModel)]="entrada" name="entrada"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Segundo:</ion-label>
+    <ion-input type="text" [(ngModel)]="segundo" name="segundo"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Jugo:</ion-label>
+    <ion-input type="text" [(ngModel)]="jugo" name="jugo"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Precio:</ion-label>
+    <ion-input type="text" [(ngModel)]="precio" name="precio"></ion-input>
+  </ion-item>
+
+  <ion-button routerLink="/perfil" (click)="actualizarMenu()">ACTUALIZAR MENU</ion-button>
+  <br>
+  <ion-button routerLink="/perfil">REGRESAR</ion-button>
+
+</ion-content>
