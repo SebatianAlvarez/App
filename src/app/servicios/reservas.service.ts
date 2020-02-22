@@ -4,10 +4,11 @@ import { map } from 'rxjs/operators';
 
 export interface reser {
   nombre : string
-  cedula: string
+  numero: string
   pedido: string
-  cantidad:number
+  cantidad:string
   id:string
+  tiempo:string
 }
 
 @Injectable({
@@ -15,7 +16,7 @@ export interface reser {
 })
 export class ReservasService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore ) { }
 
   getReservas(){
     return this.db.collection("reservas").snapshotChanges().pipe(map(res => {

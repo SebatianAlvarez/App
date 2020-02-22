@@ -60,54 +60,19 @@ export class MapaPage implements OnInit {
 
   mostrarRestaurantes(){
 
-      this.restauranteService.getDireccion().subscribe(resta =>{
+      this.restauranteService.getRestaurantes().subscribe(resta =>{
       this.restaurantes = resta
-      console.log(resta)
-      //this.marker = marker(resta);
-      //this.marker.addTo(this.map).bindPopup('averrr!!!!');
+      console.log(this.restaurantes)
+      for (let  rest of this.restaurantes){
+        let latLong = [
+          rest.direccion._lat,
+          rest.direccion._long
+        ]
+        this.marker = marker(latLong);
+        this.marker.addTo(this.map).bindPopup('Restaurante');
+      }
       
     });
-
-    /*    HABER PAPU AQUI TE PONGO MI LOGICA
-
-          ese "this.restauranteService coje lo q son las coordenadas que ya estan grabadas en la BDD como
-          geopoint mismo lo que quiero es utilizar esas coordenadas para mostrar el Popup de los restaurantes
-          el problema esq no me deja creo q no agarra igual esas coordenadas con la otra funcion mas arriba la 
-          que dice "ShowMarker" q esa ya coje las coordenadas de ese rato donde este tu celu x asi decirlo
-          no se en q estoy mal o q se te ocurre el chiste es que muestre el Popup de los restaurantes que ya estan
-          guardados en la BDD
-
-          Ya te mando tambien las capturas al face con lo q yo creo seria el error pero no cacharia como arreglarle
-
-    */
-
-    /* parece q aqui ai algo
-
-     this.restauranteService.getDireccion().subscribe(resta =>{
-      this.restaurantes = x =>{
-        return this.latLong = [
-          x.coords.latitude,
-          x.coords.longitude
-        ]
-      }
-    });
-
-    */
-  
-  
-
-    /*
-    this.marker = marker(this.restauranteService.getDireccion());
-    console.log(this.restauranteService.getDireccion())
-    this.marker.addTo(this.map).bindPopup('restaurante');
-
-
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) =>{
-      data.coords.latitude
-      data.coords.longitude
-    })
-    */
   }
 
 }

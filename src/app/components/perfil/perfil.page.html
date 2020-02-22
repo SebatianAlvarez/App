@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color ="success">
-    <ion-title style="text-align: center;" *ngFor = "let resta of restaurantes">{{resta.nombre_resta}}</ion-title>
+    <ion-title style="text-align: center;" *ngFor = "let resta of restaurantes">{{resta.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,20 +18,22 @@
 
   <h3 style="text-align: center;">Menú del Día</h3>
 
-  <ion-item *ngFor = "let resta of restaurantes">
+  <ion-item *ngFor = "let menu of menus">
     <ion-label>
-      <h4>Entrada: <b>{{resta.entrada}}</b></h4>
-      <h4>Segundo: <b>{{resta.segundo}}</b></h4>
-      <h4>Jugo: <b>{{resta.jugo}}</b></h4>
-      <h4>Precio: <b>{{resta.precio}}</b></h4>
-      <h4>Capacidad: <b>{{resta.capacidad}}</b></h4>
-      <h4>Horario: <b>{{resta.horario}}</b></h4>
-      <h4>Direccion: <b>{{resta.direccion}}</b></h4>
+      <h4>Entrada: <b>{{menu.entrada}}</b></h4>
+      <h4>Segundo: <b>{{menu.segundo}}</b></h4>
+      <h4>Jugo: <b>{{menu.jugo}}</b></h4>
+      <h4>Precio: <b>{{menu.precio}}</b></h4>
     </ion-label>
     
   </ion-item>
   <ion-button routerLink="/mapa">REGRESAR</ion-button>
   <br>
-  <ion-button routerLink="/reserva">Realizar Reserva</ion-button>
+  <ion-button routerLink="/formulario-reserva">Realizar Reserva</ion-button>
+  <br>
+  <ion-button routerLink="/reserva">Visualizar Pedidos</ion-button>
+  <br>
+  <ion-button routerLink="/menu">Actualizar Menu</ion-button>
+  <br>
 
 </ion-content>

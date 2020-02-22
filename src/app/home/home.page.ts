@@ -20,8 +20,8 @@ export class HomePage {
 
   providerFb: firebase.auth.FacebookAuthProvider;
 
-  email:string;
-  password:string;
+  public email:string;
+  public password:string;
 
   constructor(private authSercive: AuthService, public router: Router, public afBD: AngularFireDatabase,
     public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform) {
