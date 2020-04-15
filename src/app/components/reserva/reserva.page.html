@@ -1,5 +1,11 @@
 <ion-header>
-  <ion-toolbar color ="success">
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
     <ion-title style="text-align: center;">Visualizar Peticiones</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -35,9 +41,6 @@
     </ion-label>
   </ion-item>
   <br>
-
-  <ion-button routerLink="/perfil">REGRESAR</ion-button>
-  <br>
-  <ion-button routerLink="#">ACEPTAR PETICION</ion-button>
+  <ion-button >ACEPTAR PETICION</ion-button>
 
 </ion-content>

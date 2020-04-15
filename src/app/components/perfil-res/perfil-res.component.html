@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <img src ="{{res.logo}}" width="100%" height="17%" margin-top="5px">
+
+<ion-content class="ion-padding">
+
+  <h3 style="text-align: center;">Pizarron</h3>
+
+  <ion-item>
+    <ion-label>
+      <h4>Entrada: <b>{{res.entrada}}</b></h4>
+      <h4>Segundo: <b>{{res.segundo}}</b></h4>
+      <h4>Jugo: <b>{{res.jugo}}</b></h4>
+      <h4>Precio: <b>{{res.precio}}</b></h4>
+    </ion-label>
+    
+  </ion-item>
+
+  <h3 style="text-align: center;">Platos</h3>
+
+  <img src ="{{res.plato}}">
+
+  <h3 style="text-align: center;">Calificacion</h3>
+
+  <ion-slides pager ="true" class="slides">
+    <ion-slide>
+      <img src = "{{res.pregunta}}">
+    </ion-slide>
+  </ion-slides>
+
+  <br>
+  <br>
+
+</ion-content>

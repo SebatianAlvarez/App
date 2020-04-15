@@ -46,7 +46,7 @@ export class HomePage {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
           console.log('Info Facebook: '+ JSON.stringify(success));
-          this.router.navigate(['/mapa']);
+          this.router.navigate(['/listado']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));
         });
@@ -58,7 +58,7 @@ export class HomePage {
     facebookWeb(){
       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((success) => {
         console.log('Info Facebook '+ JSON.stringify(success));
-        this.router.navigate(['/mapa']);
+        this.router.navigate(['/listado']);
       }).catch((error) => {
         console.log('Error: '+ JSON.stringify(error))
       })
@@ -66,7 +66,7 @@ export class HomePage {
 
   OnSubmitLogin(){
     this.authSercive.login(this.email, this.password).then(res => {
-      this.router.navigate(['/mapa']);
+      this.router.navigate(['/listado']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
   }
 

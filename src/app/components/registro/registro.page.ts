@@ -21,7 +21,7 @@ export class RegistroPage implements OnInit {
 
   OnSubmitRegister(){
     this.authSercive.register(this.email , this.password, this.nombre, this.numero).then(auth =>{
-      (this.router.navigate(['/mapa']))
+      (this.router.navigate(['/home']))
     })
   }
 

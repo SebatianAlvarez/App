@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private AFauth: AngularFireAuth, private db:AngularFirestore) { }
+  constructor(private AFauth: AngularFireAuth, private db:AngularFirestore,
+    private router:Router) { }
 
   login(email:string, password:string){
 
@@ -35,6 +37,12 @@ export class AuthService {
       }).catch(err => reject(err))
     })
 
+  }
+
+  logout(){
+    this.AFauth.auth.signOut().then(() =>{
+      this.router.navigate(['/home'])
+    })
   }
 
 }

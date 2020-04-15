@@ -1,5 +1,11 @@
 <ion-header>
   <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
     <ion-title style="text-align: center;">MAPA</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,6 +17,5 @@
   <br>
   <ion-button (click)="mostrarRestaurantes()">Mostrar Restaurantes</ion-button>
   <br>
-  <ion-button routerLink="/home">SALIR</ion-button>
 
 </ion-content>

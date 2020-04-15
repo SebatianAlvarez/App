@@ -21,11 +21,12 @@ import { AngularFireAuthModule} from '@angular/fire/auth'
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireDatabase} from '@angular/fire/database/';
+import { PerfilResComponent } from './components/perfil-res/perfil-res.component';
   
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, PerfilResComponent],
+  entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
      AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule],
   providers: [
