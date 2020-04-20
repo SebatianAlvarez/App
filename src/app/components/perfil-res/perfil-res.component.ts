@@ -82,8 +82,7 @@ export class PerfilResComponent implements OnInit {
         }
       }, {
         text: 'Cerrar Sesion',
-        icon: 'close',
-        role: 'logout',
+        icon: 'logout',
         handler: () => {
          this.onLogout();
         }

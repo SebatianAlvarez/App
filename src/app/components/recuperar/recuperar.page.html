@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">¿Olvidaste tu Contraseña?</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <br>
+  <ion-item>
+    <ion-label>Email:</ion-label>
+    <ion-input type="text" [(ngModel)] ="email" name="email"></ion-input>
+  </ion-item>
+  <br>
+
+  <ion-button routerLink="/home" (click)="restablecerContra()">Enviar Email</ion-button>
+  <br>
+ 
+
+</ion-content>

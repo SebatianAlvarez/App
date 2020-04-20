@@ -9,6 +9,9 @@ import { Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
+import { auth } from 'firebase/app'
+
+import { MenuService } from '../servicios/menu.service';
 
 
 @Component({
@@ -23,13 +26,14 @@ export class HomePage {
   public email:string;
   public password:string;
 
-  constructor(private authSercive: AuthService, public router: Router, public afBD: AngularFireDatabase,
-    public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform) {
+  constructor(private authService: AuthService, private router: Router, private afBD: AngularFireDatabase,
+    public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform,
+    private menuService: MenuService) {
 
-      this.providerFb = new firebase.auth.FacebookAuthProvider();
+     this.providerFb = new firebase.auth.FacebookAuthProvider();
     }
 
-    FacebookLogin(){
+    facebookLogin(){
       if(this.platform.is('cordova')){
           console.log('platform: cordova')
           this.facebookCordova();
@@ -58,16 +62,89 @@ export class HomePage {
     facebookWeb(){
       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((success) => {
         console.log('Info Facebook '+ JSON.stringify(success));
+        this.authService.actualizarUsuario(success.user)
+        this.router.navigate(['/listado']);
+      }).catch((err) => {
+        if(err.code === 'auth/account-exists-with-different-credential'){
+          let FaceCred = err.credential;
+          let GooCred = new auth.GoogleAuthProvider();
+          GooCred.setCustomParameters({ 'login_hint': err.email});
+
+          return auth().signInWithPopup(GooCred).then(res => {
+            return res.user.linkWithCredential(FaceCred);
+          });
+        }
+      });
+    }
+
+    googleLogin(){
+      if(this.platform.is('cordova')){
+          console.log('platform: cordova')
+          this.googleCordova();
+          
+      } else {
+          console.log('platform: web')
+          this.googleWeb();
+          
+      }
+    }
+
+    googleCordova(){
+      this.fb.login(['email']).then( (response) => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+        firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
+          console.log('Info Facebook: '+ JSON.stringify(success));
+          this.router.navigate(['/listado']);
+        }).catch((error) => {
+          console.log('Error: '+ JSON.stringify(error));
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+
+    googleWeb(){
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((success) => {
+        console.log('Info Google '+ JSON.stringify(success));
+        this.authService.actualizarUsuario(success.user);
         this.router.navigate(['/listado']);
       }).catch((error) => {
         console.log('Error: '+ JSON.stringify(error))
       })
     }
 
+    
+/*
+  loginFacebook(){
+    const provider = new auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider)
+  }
+
+  oAuthLogin(provider: any){
+    return this.afAuth.auth.signInWithPopup(provider).then(credencial =>{
+      console.log("Metadata: "+ credencial);
+      this.authService.actualizarUsuario(credencial.user);
+    })
+  }
+
+  loginGoogle(){
+    const provider = new auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider)
+  }
+  */
+
   OnSubmitLogin(){
-    this.authSercive.login(this.email, this.password).then(res => {
+    this.authService.login(this.email, this.password).then(res => {
       this.router.navigate(['/listado']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
   }
+
+  /*
+  listarMenus(){
+    this.menuService.listar().subscribe(data => {
+      this.menuService.menuCambio.next(data);
+    });
+  }
+  */
 
 }

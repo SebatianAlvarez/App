@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { PerfilResComponent } from '../perfil-res/perfil-res.component';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { MenuService } from '../../servicios/menu.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class ListadoPage implements OnInit {
   public Restaurantes : any = [];
 
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
-    private modal: ModalController,public actionSheetController: ActionSheetController, private router:Router ) { }
+    private modal: ModalController,public actionSheetController: ActionSheetController, private router:Router,
+    private menuService : MenuService ) { }
 
   ngOnInit() { 
     this.restaurantesService.getRestaurantes().subscribe( resta => {
@@ -40,9 +42,12 @@ export class ListadoPage implements OnInit {
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
+
+
+
       header: 'Menu',
       buttons: [{
-        text: 'Editar Perfil',
+        text: 'Editar Perf',
         icon: 'settings',
         handler: () => {
           

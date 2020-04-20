@@ -7,13 +7,15 @@ export const environment = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBhYc4H-BPVz7bFqk5B2DLQ09t7brb26-M",
-  authDomain: "tesis-e5304.firebaseapp.com",
-  databaseURL: "https://tesis-e5304.firebaseio.com",
-  projectId: "tesis-e5304",
-  storageBucket: "tesis-e5304.appspot.com",
-  messagingSenderId: "927065522573",
-  appId: "1:927065522573:web:6c16032e8210d213"
+  apiKey: "AIzaSyDGzjtS_GEUrQ6JAPm3vPvwiUVFKKvb3eA",
+    authDomain: "muertosdehambre.firebaseapp.com",
+    databaseURL: "https://muertosdehambre.firebaseio.com",
+    projectId: "muertosdehambre",
+    storageBucket: "muertosdehambre.appspot.com",
+    messagingSenderId: "794079665373",
+    appId: "1:794079665373:web:5068cd0106fc6c25f88f34",
+    measurementId: "G-VVTHJJ4RT6"
+
 };
 
 
