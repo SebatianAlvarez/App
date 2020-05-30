@@ -1,39 +1,32 @@
 <ion-header>
-  <ion-toolbar color ="success">
-    <ion-title style="text-align: center;" *ngFor = "let resta of restaurantes">{{resta.nombre}}</ion-title>
+  <ion-toolbar color ="dark">
+    <ion-button slot="end" fill ="none" (click)="getMenu()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Mi Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <ion-card>
-    <img src="../../assets/icon/resta1.jpg" width="100" height="150"/>
-  </ion-card>
+<div *ngIf="usuarios$ | async as usu">
+  <div *ngFor ="let u of usu">
+    <div *ngIf = "usuarioLog === u.uid">
 
-  <h2 style="text-align: center;">CALIFICACION</h2>
+      <h2 style="text-align: center;">Datos del Usuario</h2>
+      <br>
 
-  <ion-card>
-      <img src="../../assets/icon/3estrellas.jpg"/>
-    </ion-card>
+      <ion-item>
+        <ion-label>
+          <h5><b>Nombre: </b>{{u.nombre}}</h5>
+          <h5><b>Numero: </b>{{u.numero}}</h5>
+          <h5><b>Correo: </b>{{u.email}}</h5>
+        </ion-label>
+        
+      </ion-item>
+    </div>
+  </div>
 
-  <h3 style="text-align: center;">Menú del Día</h3>
-
-  <ion-item *ngFor = "let menu of menus">
-    <ion-label>
-      <h4>Entrada: <b>{{menu.entrada}}</b></h4>
-      <h4>Segundo: <b>{{menu.segundo}}</b></h4>
-      <h4>Jugo: <b>{{menu.jugo}}</b></h4>
-      <h4>Precio: <b>{{menu.precio}}</b></h4>
-    </ion-label>
+</div>
     
-  </ion-item>
-  <ion-button routerLink="/mapa">REGRESAR</ion-button>
-  <br>
-  <ion-button routerLink="/formulario-reserva">Realizar Reserva</ion-button>
-  <br>
-  <ion-button routerLink="/reserva">Visualizar Pedidos</ion-button>
-  <br>
-  <ion-button routerLink="/menu">Actualizar Menu</ion-button>
-  <br>
-
 </ion-content>

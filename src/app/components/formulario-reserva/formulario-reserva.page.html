@@ -13,28 +13,18 @@
 <ion-content>
 
   <ion-item>
-    <ion-label>Nombre:</ion-label>
-    <ion-input type="text" [(ngModel)]="nombre" name="nombre"></ion-input>
+    <ion-label>Mesas a Reservar:</ion-label>
+    <br>
+    <ion-input type="text" [(ngModel)]="Reserva.mesas" name="mesas"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Número:</ion-label>
-    <ion-input type="text" [(ngModel)]="numero" name="numero"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Pedido:</ion-label>
-    <ion-input type="text" [(ngModel)]="pedido" name="pedido"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Cantidad:</ion-label>
-    <ion-input type="text" [(ngModel)]="cantidad" name="cantidad"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Tiempo a Reservar:</ion-label>
-    <ion-input type="text" [(ngModel)]="tiempo" name="tiempo"></ion-input>
+    <ion-label>Tiempo estimado para llegar:</ion-label>
+    <br>
+    <ion-input type="text" [(ngModel)]="Reserva.tiempo" name="tiempo"></ion-input>
   </ion-item>
   <br>
 
-  <ion-button routerLink="/perfil" (click)="Reservar()">CONFIRMAR RESERVA</ion-button>
+  <ion-button (click)="Reservar()">CONFIRMAR RESERVA</ion-button>
   
   <br>
 

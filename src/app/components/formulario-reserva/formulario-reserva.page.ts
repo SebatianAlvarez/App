@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Reserva } from 'src/app/models/reserva-interface';
+import { ReservasService } from '../../servicios/reservas.service';
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-formulario-reserva',
@@ -11,27 +15,54 @@ import { AuthService } from '../../servicios/auth.service';
 })
 export class FormularioReservaPage implements OnInit {
 
-  public nombre:string
-  public numero:string
-  public cantidad:string
-  public pedido:string
+
+  public mesas:string
   public tiempo:string
 
-  constructor( private db: AngularFirestore,private authservice: AuthService,
-    public actionSheetController: ActionSheetController, private router:Router) { }
+  public Reserva : Reserva = {
+    mesas:'',
+    tiempo:'',
+  }
+
+  public usuarioLog:string;
+
+
+  constructor( private db: AngularFirestore,private authservice: AuthService, private router:Router,
+    public actionSheetController: ActionSheetController,   private AFauth : AngularFireAuth,
+    private reservaService : ReservasService, private loadingController : LoadingController,
+  ) { }
 
   ngOnInit() {
+
+
+    let currentUser = this.AFauth.auth.currentUser;
+    this.usuarioLog = currentUser.uid;
   }
+
+  /*
+  async actualizarReserva(){
+    const loading = await this.loadingController.create({
+      message:"Saving....."
+    });
+    await loading.present();
+
+    if (){
+      // update
+      this.reservaService.updateReserva(, this.Reserva).then(() =>{
+        loading.dismiss();
+        this.router.navigate(['/perfil'])
+      })
+    }
+  }
+*/
 
   Reservar(){
     
     return new Promise<any>((resolve, reject) => {
       this.db.collection('reservas').add({
-        nombre:this.nombre,
-        numero:this.numero,
-        cantidad:this.cantidad,
-        pedido:this.pedido,
-        tiempo:this.tiempo
+        mesas : this.mesas,
+        tiempo : this.tiempo,
+        usuario : this.usuarioLog,
       }).then((res) =>{
         resolve(res)
       }).catch(err => reject(err))
@@ -50,15 +81,20 @@ export class FormularioReservaPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
+        text: 'Mi Perfil',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/perfil'])
+        }
+      },{
         text: 'Editar Perfil',
         icon: 'settings',
         handler: () => {
-          
+          this.router.navigate(['/actualizar-perfil'])
         }
-      }, {
+      },{
         text: 'Cerrar Sesion',
-        icon: 'close',
-        role: 'logout',
+        icon: 'log-out',
         handler: () => {
          this.onLogout();
         }

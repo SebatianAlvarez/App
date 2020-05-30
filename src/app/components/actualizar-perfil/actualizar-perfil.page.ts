@@ -1,44 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, Usuario } from '../../servicios/auth.service';
+import { AuthService} from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Usuario } from '../../models/usuario-interface';
+import { PerfilesService } from '../../servicios/perfiles.service';
+
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.page.html',
-  styleUrls: ['./perfil.page.scss'],
+  selector: 'app-actualizar-perfil',
+  templateUrl: './actualizar-perfil.page.html',
+  styleUrls: ['./actualizar-perfil.page.scss'],
 })
-export class PerfilPage implements OnInit {
+export class ActualizarPerfilPage implements OnInit {
 
-  public usuarios$: Observable<Usuario[]>;
   
+
+  
+
+  public Usuarios : Usuario[];
 
   public usuarioLog:string;
   public UsuarioRoles: Usuario[];
-
   public rolActual: string[];
-
-  public perfil : any = [];
-  public perfilID:Usuario[];
 
   public numero:string;
   public nombre:string;
 
+  public Usuario: Usuario = {
+
+    nombre : '',
+    numero : '',
+  };
+  
+  public UsuarioId = null;
 
   constructor( private authservice: AuthService, private actionSheetController : ActionSheetController,
-    private router: Router, private AFauth : AngularFireAuth, private db:AngularFirestore ) { }
+    private router: Router, private AFauth : AngularFireAuth,private perfilService : PerfilesService,
+     private loadingController: LoadingController ) { }
 
   ngOnInit() {
 
-    this.usuarios$ = this.authservice.recuperarDatos();
-    
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
 
-  }
+    this.UsuarioId = this.usuarioLog
+
+    }
+
+    async actualizarUsuario(){
+      const loading = await this.loadingController.create({
+        message:"Saving....."
+      });
+      await loading.present();
+
+      if (this.UsuarioId){
+        // update
+        this.perfilService.updateUsuario(this.UsuarioId, this.Usuario).then(() =>{
+          loading.dismiss();
+          this.router.navigate(['/perfil'])
+        })
+      }
+    }
+
 
   onLogout(){
     this.authservice.logout();
@@ -69,10 +94,10 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Editar Perfil',
-        icon: 'settings',
+        text: 'Mi Perfil',
+        icon: 'person',
         handler: () => {
-          this.router.navigate(['/reserva']);
+          this.router.navigate(['/perfil']);
         }
       }, {
         text: 'Visualizar Peticiones',
@@ -104,13 +129,13 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/listado']);
         }
-      },{
-        text: 'Editar Perfil',
-        icon: 'settings',
-        handler: () => {
-          this.router.navigate(['/actualizar-perfil'])
-        }
       }, {
+        text: 'Mi Perfil',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/perfil'])
+        }
+      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {
@@ -121,5 +146,6 @@ export class PerfilPage implements OnInit {
     await actionSheet.present();
   }
 }
+
 
 }

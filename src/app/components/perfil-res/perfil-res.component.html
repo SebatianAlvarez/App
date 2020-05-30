@@ -10,35 +10,64 @@
   </ion-toolbar>
 </ion-header>
 
-  <img src ="{{res.logo}}" width="100%" height="17%" margin-top="5px">
+  <img src ="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
 
 <ion-content class="ion-padding">
 
+  <button (click)="getRes()">AVER</button>
+
   <h3 style="text-align: center;">Pizarron</h3>
+  
+  
 
-  <ion-item>
-    <ion-label>
-      <h4>Entrada: <b>{{res.entrada}}</b></h4>
-      <h4>Segundo: <b>{{res.segundo}}</b></h4>
-      <h4>Jugo: <b>{{res.jugo}}</b></h4>
-      <h4>Precio: <b>{{res.precio}}</b></h4>
-    </ion-label>
-    
-  </ion-item>
+  <div *ngFor ="let plat of Platos">
 
-  <h3 style="text-align: center;">Platos</h3>
+    <div *ngIf = "res.userUID == plat.userUID">
 
-  <img src ="{{res.plato}}">
+      <h4 style="text-align: center;">Desayuno</h4>
 
+    <ion-item >
+      <ion-label>
+        <h5><b>Detalle: </b>{{plat.detalleDesayuno}}</h5>
+        <h5><b>Precio: </b>{{plat.precioDesayuno}}</h5>
+      </ion-label>
+    </ion-item>
+  
+    <h4 style="text-align: center;">Almuerzo</h4>
+  
+    <ion-item>
+      <ion-label>
+        <h5><b>Entrada: </b>{{plat.entradaAlmuerzo}}</h5>
+        <h5><b>Segundo: </b>{{plat.segundoAlmuerzo}}</h5>
+        <h5><b>Jugo: </b>{{plat.jugoAlmuerzo}}</h5>
+        <h5><b>Precio: </b>{{plat.precioAlmuerzo}}</h5>
+      </ion-label>
+      
+    </ion-item>
+
+    <h3 style="text-align: center;">Platos</h3>
+  
+  <img src ="{{plat.imgPlato}}">
+
+  <br>
+  <br>
+
+  <ion-button (click)="getRestauranteActual()">Este</ion-button>
+  <br>
+  
   <h3 style="text-align: center;">Calificacion</h3>
 
   <ion-slides pager ="true" class="slides">
     <ion-slide>
-      <img src = "{{res.pregunta}}">
+      pregunta 1
+    </ion-slide>
+    <ion-slide>
+      pregunta 2
     </ion-slide>
   </ion-slides>
 
-  <br>
-  <br>
+    </div>
+
+  </div>
 
 </ion-content>

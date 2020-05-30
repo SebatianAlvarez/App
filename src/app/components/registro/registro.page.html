@@ -16,6 +16,14 @@
     <ion-label>Contraseña:</ion-label>
     <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>Nombre:</ion-label>
+    <ion-input type="text" [(ngModel)]="nombre" name="nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Número:</ion-label>
+    <ion-input type="text" [(ngModel)]="numero" name="numero"></ion-input>
+  </ion-item>
   <br>
   <ion-button routerLink="/home" (click)="OnSubmitRegister()">REGISTRARSE</ion-button>
   <br>

@@ -35,13 +35,10 @@ export class HomePage {
 
     facebookLogin(){
       if(this.platform.is('cordova')){
-          console.log('platform: cordova')
           this.facebookCordova();
-          
       } else {
           console.log('platform: web')
           this.facebookWeb();
-          
       }
     }
 
@@ -50,7 +47,7 @@ export class HomePage {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
           console.log('Info Facebook: '+ JSON.stringify(success));
-          this.router.navigate(['/listado']);
+          this.router.navigate(['/perfil']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));
         });
@@ -63,7 +60,7 @@ export class HomePage {
       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((success) => {
         console.log('Info Facebook '+ JSON.stringify(success));
         this.authService.actualizarUsuario(success.user)
-        this.router.navigate(['/listado']);
+        this.router.navigate(['/perfil']);
       }).catch((err) => {
         if(err.code === 'auth/account-exists-with-different-credential'){
           let FaceCred = err.credential;
@@ -94,7 +91,7 @@ export class HomePage {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
           console.log('Info Facebook: '+ JSON.stringify(success));
-          this.router.navigate(['/listado']);
+          this.router.navigate(['/perfil']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));
         });
@@ -107,44 +104,16 @@ export class HomePage {
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((success) => {
         console.log('Info Google '+ JSON.stringify(success));
         this.authService.actualizarUsuario(success.user);
-        this.router.navigate(['/listado']);
+        this.router.navigate(['/perfil']);
       }).catch((error) => {
         console.log('Error: '+ JSON.stringify(error))
       })
     }
 
-    
-/*
-  loginFacebook(){
-    const provider = new auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider)
-  }
-
-  oAuthLogin(provider: any){
-    return this.afAuth.auth.signInWithPopup(provider).then(credencial =>{
-      console.log("Metadata: "+ credencial);
-      this.authService.actualizarUsuario(credencial.user);
-    })
-  }
-
-  loginGoogle(){
-    const provider = new auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider)
-  }
-  */
-
   OnSubmitLogin(){
     this.authService.login(this.email, this.password).then(res => {
-      this.router.navigate(['/listado']);
+      this.router.navigate(['/perfil']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
   }
-
-  /*
-  listarMenus(){
-    this.menuService.listar().subscribe(data => {
-      this.menuService.menuCambio.next(data);
-    });
-  }
-  */
 
 }

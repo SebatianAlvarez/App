@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="tertiary">
+  <ion-toolbar color="dark">
     <ion-title style="text-align: center;">
       BIENVENIDO
     </ion-title>
@@ -8,38 +8,54 @@
 
 <ion-content>
 
-  <ion-card>
-    <img src="../../assets/icon/hambre.jpg"/>
-  </ion-card>
 
-  <ion-item>
-    <ion-input type="text" [(ngModel)]="email" name="email" placeholder="Correo"></ion-input>
-  </ion-item>
+    <ion-slides pager ="true" class="slides">
 
-  <ion-item>
-    <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña"></ion-input>
-  </ion-item>
+      <ion-slide class="slide">
+        
+        <ion-card>
 
-  <ion-item>
-    <ion-button (click)="OnSubmitLogin()">Iniciar Sesion</ion-button>
-  </ion-item>
+          <img src="../../assets/icon/hambre.jpg"/>
 
-  <br>
-  <p style="text-align: center;">Ó Inicia con:</p>
-  
-  <ion-item>
-    <ion-button shape ="round" (click)="facebookLogin()">FACEBOOK</ion-button>
-    <ion-icon slot="start" name ="logo-facebook"></ion-icon>
-  </ion-item>
-  
-  <ion-item>
-    <ion-button  shape ="round" (click)="googleLogin()">GOOGLE</ion-button>
-    <ion-icon slot="start" name ="logo-google"></ion-icon>
-  </ion-item>
-
-  <p style="text-align: center;" routerLink ="/registro">Crear Cuenta</p>
-  <br>
-  <br>
-  <p style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
+        </ion-card>
+          
+        <ion-item>
+            <ion-input type="text" [(ngModel)]="email" name="email" placeholder="Correo"></ion-input>
+          </ion-item>
+          
+            <ion-item>
+            <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-button (click)="OnSubmitLogin()">Iniciar Sesion</ion-button>
+          </ion-item>
+        
+          <br>
+          <p style="text-align: center;">Ó Inicia con:</p>
+          
+          <ion-item>
+            <ion-button shape ="round" (click)="facebookLogin()">FACEBOOK</ion-button>
+            <ion-icon slot="start" name ="logo-facebook"></ion-icon>
+          </ion-item>
+          
+          <ion-item>
+            <ion-button  shape ="round" (click)="googleLogin()">GOOGLE</ion-button>
+            <ion-icon slot="start" name ="logo-google"></ion-icon>
+          </ion-item>
+        
+          <p style="text-align: center;" routerLink ="/registro">Crear Cuenta</p>
+          <br>
+          <p style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
+          <br>
+          
+      </ion-slide>
+      <ion-slide class="slide" >
+        <p>SEGUNDO</p>
+      </ion-slide>
+      <ion-slide class="slide" >
+        <p>TERCERO</p>
+      </ion-slide>
+    </ion-slides>
    
 </ion-content>

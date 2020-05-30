@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar color="dark">
+    <ion-button slot="start" fill ="none" routerLink="/perfil">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
     <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>
@@ -9,19 +12,22 @@
 
 <ion-content>
 
+  <h2 style="text-align: center;">Promociones</h2>
+  <br>
+
   <ion-slides pager ="true" class="slides">
-    <ion-slide *ngFor = "let res of Restaurantes" (click)="openRes(res)">
-      <img src = "{{res.promocion}}">
+    <ion-slide *ngFor = "let pro of Promos" (click)="openRes(pro)">
+      <img src = "{{pro.fotosPromocion}}">
     </ion-slide>
   </ion-slides>
 
   <br>
+  <h2 style="text-align: center;">Listado de Restaurantes</h2>
   <br>
 
   <div class="div" *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
-    <img src = "{{res.logo}}">
+    <img src = "{{res.imagenRes}}">
+    
   </div>
-
-  <br>
 
 </ion-content>

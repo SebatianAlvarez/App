@@ -92,15 +92,20 @@ export class MapaPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
+        text: 'Mi Perfil',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/perfil'])
+        }
+      }, {
         text: 'Editar Perfil',
         icon: 'settings',
         handler: () => {
-          
+          this.router.navigate(['/actualizar-perfil'])
         }
       }, {
         text: 'Cerrar Sesion',
-        icon: 'close',
-        role: 'logout',
+        icon: 'log-out',
         handler: () => {
          this.onLogout();
         }

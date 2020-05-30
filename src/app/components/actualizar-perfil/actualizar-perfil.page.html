@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Editar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h4 style="text-align: center;">Actualuzar Datos</h4>
+
+  <ion-item>
+    <ion-label>Nombre: </ion-label>
+    <br>
+    <ion-input type="text" [(ngModel)]="Usuario.nombre" name="nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Numero: </ion-label>
+    <br>
+    <ion-input type="text" [(ngModel)]="Usuario.numero" name="numero"></ion-input>
+  </ion-item>
+  <br>
+
+  <ion-button (click)="actualizarUsuario()">Actualizar Perfil</ion-button>
+
+</ion-content>

@@ -12,7 +12,9 @@ const routes: Routes = [
   { path: 'formulario-reserva', loadChildren: './components/formulario-reserva/formulario-reserva.module#FormularioReservaPageModule' },
   { path: 'registro', loadChildren: './components/registro/registro.module#RegistroPageModule' },
   { path: 'menu', loadChildren: './components/menu/menu.module#MenuPageModule' },
-  { path: 'listado', loadChildren: './components/listado/listado.module#ListadoPageModule', canActivate:[AuthGuard] },  { path: 'recuperar', loadChildren: './components/recuperar/recuperar.module#RecuperarPageModule' },
+  { path: 'listado', loadChildren: './components/listado/listado.module#ListadoPageModule', canActivate:[AuthGuard] },
+  { path: 'recuperar', loadChildren: './components/recuperar/recuperar.module#RecuperarPageModule' },
+  { path: 'actualizar-perfil', loadChildren: './components/actualizar-perfil/actualizar-perfil.module#ActualizarPerfilPageModule' },
 
 
 

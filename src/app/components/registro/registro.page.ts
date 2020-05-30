@@ -19,17 +19,19 @@ export class RegistroPage implements OnInit {
   ngOnInit() {
   }
 
+  /*
   OnSubmitRegister(){
     this.authSercive.register(this.email , this.password).then(auth =>{
       (this.router.navigate(['/home']))
     })
   }
+  */
 
-  /*
+  
   OnSubmitRegister(){
     this.authSercive.register(this.email , this.password, this.nombre, this.numero).then(auth =>{
       (this.router.navigate(['/home']))
     })
-  }*/
+  }
 
 }

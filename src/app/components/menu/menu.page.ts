@@ -38,7 +38,7 @@ export class MenuPage implements OnInit {
   }
 
   goRegreso(){
-    this.router.navigate(['/listado'])
+    this.router.navigate(['/perfil'])
   }
 
   onLogout(){
@@ -49,15 +49,20 @@ export class MenuPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
+        text: 'Mi Perfil',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/perfil'])
+        }
+      }, {
         text: 'Editar Perfil',
         icon: 'settings',
         handler: () => {
-          
+          this.router.navigate(['/perfil'])
         }
       }, {
         text: 'Cerrar Sesion',
-        icon: 'close',
-        role: 'logout',
+        icon: 'log-out',
         handler: () => {
          this.onLogout();
         }
