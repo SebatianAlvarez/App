@@ -1,59 +1,68 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map, take} from 'rxjs/operators';
 
-export interface menu{
+import { platos } from '../models/platos-interface';
 
-  id:string
-  entrada:string
-  segundo:string
-  jugo:string
-  precio:string
-}
-
-export interface menuApp{
-  idmenu: string,
-  nombre: string,
-  icono: string,
-  url: string,
-  roles: string[]
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  menuCambio = new Subject<menuApp[]>();
+  private menusCollection: AngularFirestoreCollection<platos>;
+  private menus: Observable<platos[]>;
 
-  constructor(private db:AngularFirestore) { }
+  constructor(private db:AngularFirestore) { 
+    this.menusCollection = this.db.collection<platos>('plato');
+    this.menus = this.menusCollection.snapshotChanges().pipe(map(
+      actions => {
+        return actions.map( x => {
+          const data = x.payload.doc.data();
+          const id = x.payload.doc.id;
+          return {id, ... data};
+        });
+      }
+    ));
+  }
 
-  getMenus(){
+  getMenus() : Observable<platos[]>{
+    return this.menus;
+  }
 
-    return this.db.collection("menu").snapshotChanges().pipe(map(res => {
-      return res.map(x => {
-        const data = x.payload.doc.data() as menu;
+  getMenu(id : string) : Observable<platos>{
+    return this.menusCollection.doc<platos>(id).valueChanges().pipe(
+      take(1),
+      map(menu => {
+        menu.id = id
+        return menu;
+      })
+    )
+  }
+
+  updateMenu(id: string, menu : platos): Promise<void>{
+    return this.menusCollection.doc(id).update(menu);
+  }
+
+  addMenu(menu: platos): Promise<DocumentReference>{
+    return this.menusCollection.add(menu)
+  }
+
+  deleteMenu(id: string): Promise<void>{
+    return this.menusCollection.doc(id).delete();
+  }
+
+  getPlatos(){
+    return this.db.collection("plato").snapshotChanges().pipe(map(plato => {
+      return plato.map(x => {
+        const data = x.payload.doc.data() as platos;
         data.id = x.payload.doc.id;
         return data;
       })
     }))
   }
+  
 
-  /*
-  listar(){
-    return this.db.collection<menuApp>('menusapp').valueChanges();
-  }
-  */
-
-  getListar(){
-    return this.db.collection('menusapp').snapshotChanges().pipe(map(res => {
-      return res.map(x => {
-        const data = x.payload.doc.data() as menuApp;
-        data.idmenu = x.payload.doc.id;
-        return data;
-      })
-    }))
-  }
 
 }

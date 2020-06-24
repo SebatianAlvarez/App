@@ -1,69 +1,57 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
+import { map, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-//crear el objeto
-
-export interface resta {
-
-  capacidadRestaurante : string
-  direccionRestaurante : any
-  fileRef: string
-  fotoRestaurante : string
-  horarioRestaurante : string
-  id : string
-  imagenRes: string
-  nombreRestaurante : string
-  tipoRestaurante: string
-  userUID: string
-
-}
-
-export interface promos {
-  
-  fileRef : string
-  id : string
-  imagenRes : string
-  userUID: string
-}
-
-export interface platos {
-  detalleDesayuno : string
-  entradaAlmuerzo: string
-  id : string
-  imgPlato : string
-  jugoAlmuerzo : string
-  precioAlmuerzo: string
-  precioDesayuno : string
-  segundoAlmuerzo : string
-  userUID: string
-}
+import { promos } from '../models/promos-interface';
+import { platos } from '../models/platos-interface';
+import { resta } from '../models/restaurante-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantesService {
 
-  constructor(private db: AngularFirestore) { }
+  private restaurantesCollection : AngularFirestoreCollection<resta>;
+  private restaurantes : Observable<resta[]>;
+
+  constructor(private db: AngularFirestore) {
+    this.restaurantesCollection = this.db.collection<resta>('perfiles');
+    this.restaurantes = this.restaurantesCollection.snapshotChanges().pipe(map(
+      actions => {
+        return actions.map( x => {
+          const data = x.payload.doc.data();
+          const id = x.payload.doc.id;
+          return {id, ... data};
+        })
+      }
+    ))
+   }
+
+   getRestaurantes() : Observable<resta[]>{
+    return this.restaurantes;
+  }
+
+  getRestaurante(id : string) : Observable<resta>{
+    return this.restaurantesCollection.doc<resta>(id).valueChanges().pipe(
+      take(1),
+      map(resta => {
+        resta.id = id
+        return resta;
+      })
+    )
+  }
 
   //consulta a la base
 
-  getRestaurantes(){
-    return this.db.collection("perfiles").snapshotChanges().pipe(map(res => {
+  
+
+  getResta(){
+    return this.db.collection('perfiles').snapshotChanges().pipe(map(res => {
       return res.map(x => {
         const data = x.payload.doc.data() as resta;
         data.id = x.payload.doc.id;
         return data;
-      })
-    }))
-  }
-
-  getDireccion(){
-    return this.db.collection("restaurantes").snapshotChanges().pipe(map(res => {
-      return res.map(x => {
-        const data = x.payload.doc.data() as resta;
-        data.id = x.payload.doc.id;
-        return data.direccionRestaurante;
       })
     }))
   }

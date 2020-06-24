@@ -51,7 +51,7 @@ export class MapaPage implements OnInit {
       ]
     }).then((latLong) =>{
       console.log(latLong);
-      this.showMarker(latLong);
+      this.showMarker(latLong)
     });
   }
 
@@ -63,21 +63,14 @@ export class MapaPage implements OnInit {
     this.map.setView(latLong);
   }
 
-  mostrarRestaurantes(){
-
-      this.restauranteService.getRestaurantes().subscribe(resta =>{
-      this.restaurantes = resta
-      console.log(this.restaurantes)
-      for (let  rest of this.restaurantes){
-        let latLong = [
-          rest.direccion._lat,
-          rest.direccion._long
-        ]
-        this.marker = marker(latLong);
-        this.marker.addTo(this.map).bindPopup('Restaurante');
+  mostrar(){
+    this.restauranteService.getRestaurantes().subscribe(data =>{
+      this.restaurantes = data
+      for(let res of this.restaurantes){
+        this.marker = marker([res.latitud,res.longitud]);
+        this.marker.addTo(this.map).bindPopup(res.nombreRestaurante);
       }
-      
-    });
+    })
   }
 
   goRegreso(){
@@ -112,6 +105,7 @@ export class MapaPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 
 }

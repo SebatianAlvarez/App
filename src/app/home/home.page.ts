@@ -46,7 +46,7 @@ export class HomePage {
       this.fb.login(['email']).then( (response) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
-          console.log('Info Facebook: '+ JSON.stringify(success));
+          console.log('Info facebook: '+ JSON.stringify(success));
           this.router.navigate(['/perfil']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));
@@ -90,7 +90,7 @@ export class HomePage {
       this.fb.login(['email']).then( (response) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
-          console.log('Info Facebook: '+ JSON.stringify(success));
+          console.log('Info google: '+ JSON.stringify(success));
           this.router.navigate(['/perfil']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));

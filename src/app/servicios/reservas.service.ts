@@ -52,4 +52,17 @@ export class ReservasService {
      return this.reservasCollection.doc(id).delete();
    }
 
+   recuperarDatos(): Observable<Reserva[]>{
+    return this.db
+      .collection('usuarios')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as Reserva;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
+  }
+
 }

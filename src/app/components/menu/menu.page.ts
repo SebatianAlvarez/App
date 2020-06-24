@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AuthService } from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthService } from '../../servicios/auth.service';
+import { MenuService } from '../../servicios/menu.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AlertController } from '@ionic/angular';
+import { platos } from '../../models/platos-interface';
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -11,30 +15,109 @@ import { AuthService } from '../../servicios/auth.service';
 })
 export class MenuPage implements OnInit {
 
-  public entrada:string
-  public segundo:string
-  public jugo:string
-  public precio:string
+  public menus : any = []
+  public usuarioLog:string
+  public menuID : platos[]
 
-  constructor(private db: AngularFirestore,private authservice: AuthService,
-    public actionSheetController: ActionSheetController, private router:Router) { }
+  constructor(private authservice: AuthService, private menuService : MenuService, private AFauth : AngularFireAuth,
+    public actionSheetController: ActionSheetController, private router:Router, private alertController : AlertController,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
-  }
-
-  actualizarMenu(){
-
-    return new Promise<any>((resolve, reject) => {
-      this.db.collection('menu').add({
-        entrada:this.entrada,
-        segundo:this.segundo,
-        jugo:this.jugo,
-        precio:this.precio,
-      }).then((res) =>{
-        resolve(res)
-      }).catch(err => reject(err))
+    this.menuService.getMenus().subscribe( data => {
+      this.menus = data;
+      console.log("sera: " + this.menus)
+      
     })
 
+    try {
+      let currentUser = this.AFauth.auth.currentUser;
+      this.usuarioLog = currentUser.uid;
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  async presentModal(id: string){
+    const alert = await this.alertController.create({
+      header: 'Actualizar Menu',
+      inputs: [
+        {
+          name: "detalleDesayuno",
+          type: "text",
+          placeholder: "Detalle del Desayuno"
+        },{
+          name: "precioDesayuno",
+          type: "text",
+          placeholder: "Precio del Desayuno"
+        },{
+          name: "entradaAlmuerzo",
+          type: "text",
+          placeholder: "Entrada del Almuerzo"
+        },{
+          name: "segundoAlmuerzo",
+          type: "text",
+          placeholder: "Segundo del Almuerzo"
+        },{
+          name: "jugoAlmuerzo",
+          type: "text",
+          placeholder: "Jugo del Almuerzo"
+        },{
+          name: "precioAlmuerzo",
+          type: "text",
+          placeholder: "Precio del Almuerzo"
+        }
+      ],
+      buttons : [
+        {
+          text : "Cancelar",
+          role : "cancel",
+          cssClass : "secondary",
+          handler: () =>{
+
+          }
+        },{
+          text : "Actualizar",
+          handler : datos =>{
+
+            let Menu :platos= {
+              detalleDesayuno : datos.detalleDesayuno,
+              precioDesayuno : datos.precioDesayuno,
+              entradaAlmuerzo: datos.entradaAlmuerzo,
+              segundoAlmuerzo : datos.segundoAlmuerzo,
+              jugoAlmuerzo : datos.jugoAlmuerzo,
+              precioAlmuerzo: datos.precioAlmuerzo
+            }
+
+            this.menuService.updateMenu(id, Menu).then(() =>{
+              
+            })
+           
+          }
+          
+        }
+      ]
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+
+  prueba(){
+  
+    this.menuService.getPlatos().subscribe(data => {
+      data.forEach((plato : platos) => {
+        if(this.usuarioLog == plato.userUID){
+          this.menuID = [plato]
+          for(let x of this.menuID){
+            console.log("y ahora : " + x.id)
+            
+          }
+        }
+      })
+    })
   }
 
   goRegreso(){
@@ -58,9 +141,21 @@ export class MenuPage implements OnInit {
         text: 'Editar Perfil',
         icon: 'settings',
         handler: () => {
-          this.router.navigate(['/perfil'])
+          this.router.navigate(['/actualizar-perfil'])
+        }
+      },{
+        text: 'Visualizar Peticiones',
+        icon: 'eye',
+        handler: () => {
+          this.router.navigate(['/reserva'])
         }
       }, {
+        text: 'Promociones',
+        icon: 'heart',
+        handler: () => {
+          this.router.navigate(['/promocion'])
+        }
+      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {
@@ -69,6 +164,7 @@ export class MenuPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 
 }

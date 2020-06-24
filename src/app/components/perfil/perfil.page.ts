@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, Usuario } from '../../servicios/auth.service';
+import { AuthService} from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
+import { Usuario } from '../../models/usuario-interface';
 
 @Component({
   selector: 'app-perfil',
@@ -32,12 +34,17 @@ export class PerfilPage implements OnInit {
     private router: Router, private AFauth : AngularFireAuth, private db:AngularFirestore ) { }
 
   ngOnInit() {
-
     this.usuarios$ = this.authservice.recuperarDatos();
     
-    let currentUser = this.AFauth.auth.currentUser;
-    this.usuarioLog = currentUser.uid;
 
+    try {
+      let currentUser = this.AFauth.auth.currentUser;
+      this.usuarioLog = currentUser.uid;
+      
+    } catch (error) {
+      console.log(error)
+    }
+  
   }
 
   onLogout(){
@@ -46,21 +53,18 @@ export class PerfilPage implements OnInit {
 
   getMenu(){
 
-    let currentUser = this.AFauth.auth.currentUser;
-    this.usuarioLog = currentUser.uid;
-
-    this.authservice.getUsuario().subscribe(data =>{
-      data.forEach((usuario: Usuario) => {
-
-        if (this.usuarioLog == usuario.uid){
-          this.UsuarioRoles = [usuario]
-          for(let user of this.UsuarioRoles){
+    this.authservice.getUsuario().subscribe( data =>{
+      for(let x of data){
+        if(this.usuarioLog == x.uid){
+          this.UsuarioRoles = [x]
+          for (let user of this.UsuarioRoles){
             this.rolActual = user.roles
             this.presentActionSheet(this.rolActual.toString())
           }
         }
-      })
+      }
     })
+    
   }
 
  async presentActionSheet(rol :string) {
@@ -72,7 +76,7 @@ export class PerfilPage implements OnInit {
         text: 'Editar Perfil',
         icon: 'settings',
         handler: () => {
-          this.router.navigate(['/reserva']);
+          this.router.navigate(['/actualizar-perfil']);
         }
       }, {
         text: 'Visualizar Peticiones',
@@ -87,6 +91,12 @@ export class PerfilPage implements OnInit {
           this.router.navigate(['/menu']);
         }
       },{
+        text: 'Promociones',
+        icon: 'heart',
+        handler: () => {
+          this.router.navigate(['/promocion']);
+        }
+      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {
@@ -95,7 +105,8 @@ export class PerfilPage implements OnInit {
       }]
     });
     await actionSheet.present();
-  }else if (rol = 'cliente'){
+    let result = await actionSheet.onDidDismiss();
+  }else if (rol == 'cliente'){
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
@@ -110,6 +121,12 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/actualizar-perfil'])
         }
+      },{
+        text: 'Mensajes',
+        icon: 'mail',
+        handler: () => {
+          this.router.navigate(['/mensajes'])
+        }
       }, {
         text: 'Cerrar Sesion',
         icon: 'log-out',
@@ -119,6 +136,28 @@ export class PerfilPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
+  }else{
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Menu',
+      buttons: [{
+        text: 'Informacion',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/error']);
+        }
+      },{
+        text: 'Cerrar Sesion',
+        icon: 'log-out',
+        handler: () => {
+         this.onLogout();
+        }
+      }]
+    });
+    await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
+
   }
 }
 

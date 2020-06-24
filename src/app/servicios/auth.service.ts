@@ -5,20 +5,18 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-export interface Usuario{
+import { Usuario } from '../models/usuario-interface';
 
-  uid:string,
-  email:string,
-  roles:string[],
-  numero:string,
-  nombre:string,
-}
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+
+  public numero ="";
+  public nombre ="";
 
 
   usuariocolencion: AngularFirestoreCollection<Usuario>;
@@ -27,6 +25,7 @@ export class AuthService {
     private router:Router) {
 
       this.usuariocolencion = db.collection<Usuario>('usuarios');
+
      }
 
   login(email:string, password:string){
@@ -68,8 +67,8 @@ export class AuthService {
           uid: usuario.uid,
           email: usuario.email,
           roles: ['cliente'],
-          numero : data.numero,
-          nombre: data.nombre
+          numero : this.numero,
+          nombre: this.nombre
         }
         return userRef.set(datos);
       }
@@ -90,13 +89,8 @@ export class AuthService {
   }
 
   getUsuario(){
-    return this.db.collection('usuarios').snapshotChanges().pipe(map(usu => {
-      return usu.map(x => {
-        const data = x.payload.doc.data() as Usuario;
-        data.uid = x.payload.doc.id;
-        return data;
-      })
-    }))
+
+    return this.db.collection<Usuario>('usuarios').valueChanges();
   }
 
   editarUsuario(usuario:Usuario){
@@ -113,7 +107,8 @@ export class AuthService {
 
   logout(){
     this.AFauth.auth.signOut().then(() =>{
-      this.router.navigate(['/home'])
+      window.location.reload(true);
+      this.router.navigate(['/home']);
     })
   }
 

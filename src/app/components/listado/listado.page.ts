@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, Usuario } from '../../servicios/auth.service';
-import { RestaurantesService, promos, platos, resta } from '../../servicios/restaurantes.service';
+import { AuthService } from '../../servicios/auth.service';
+import { RestaurantesService, } from '../../servicios/restaurantes.service';
 import { ModalController } from '@ionic/angular';
 import { PerfilResComponent } from '../perfil-res/perfil-res.component';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+import { promos } from '../../models/promos-interface';
+import { platos } from '../../models/platos-interface';
+import { resta } from '../../models/restaurante-interface';
 
 
 @Component({
@@ -17,13 +22,19 @@ export class ListadoPage implements OnInit {
   public Restaurantes : resta[]
   public Promos : promos[] 
   public Platos : platos[] 
+  public usuarioLog : string
 
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
-    private modal: ModalController,public actionSheetController: ActionSheetController,
-    private router:Router) { }
+    private modal: ModalController, public actionSheetController: ActionSheetController,
+    private router:Router, private AFauth : AngularFireAuth) { }
 
   ngOnInit() { 
-    this.restaurantesService.getRestaurantes().subscribe( resta => {
+
+    let currentUser = this.AFauth.auth.currentUser;
+    console.log("mmmmm " + currentUser)
+    this.usuarioLog = currentUser.uid;
+
+    this.restaurantesService.getResta().subscribe( resta => {
       this.Restaurantes = resta;
     })
 
@@ -77,6 +88,7 @@ export class ListadoPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 
 }

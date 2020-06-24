@@ -25,8 +25,11 @@
   <h2 style="text-align: center;">Listado de Restaurantes</h2>
   <br>
 
-  <div class="div" *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
-    <img src = "{{res.imagenRes}}">
+  <div class= "div" *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
+    <div *ngIf = "res.resVerificado.toString() === 'Aprovado'">
+      <img src = "{{res.imagenRes}}">
+    </div>
+    
     
   </div>
 

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" routerLink="/perfil">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Promociones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngFor = "let promos of promociones">
+    <div *ngIf = "usuarioLog === promos.userUID">
+
+      <h2 style="text-align: center;">{{promos.id}}</h2>
+     
+    </div>
+  </div>
+<br>
+<br>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Add New Todo</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form class="ion-padding" (submit)="aver()">
+      <ion-item>
+        <ion-label position="stacked">Add New</ion-label>
+        <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <input type="file" name = "inputFile" (change)="elegirImagen($event)" required>
+      </ion-item>
+  
+      <ion-button type="submit">Agregar Promocion</ion-button>
+    </form>
+  </ion-card-content>
+
+</ion-card>
+  
+</ion-content>

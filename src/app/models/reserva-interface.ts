@@ -6,4 +6,5 @@ export class Reserva {
     uid?:string
     uidResta?:string
     uidUsu?: string
+    estado?: string
   }

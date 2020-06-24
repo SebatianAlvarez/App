@@ -8,3 +8,14 @@
     height: 100%;
     width: 100%;
 }
+
+.google {
+    --background: #db4437;
+}
+.facebook {
+    --background: #3b5998;
+}
+
+ion-input, ion-item{
+    --background: transparent;
+}

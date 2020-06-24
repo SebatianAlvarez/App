@@ -3,7 +3,7 @@
     <ion-button slot="start" fill ="none" (click)= "goRegreso()">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+    <ion-button slot="end" fill ="none" (click)="getMenu()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>
     <ion-title style="text-align: center;">Perfil</ion-title>
@@ -13,8 +13,6 @@
   <img src ="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
 
 <ion-content class="ion-padding">
-
-  <button (click)="getRes()">AVER</button>
 
   <h3 style="text-align: center;">Pizarron</h3>
   
@@ -51,23 +49,35 @@
 
   <br>
   <br>
-
-  <ion-button (click)="getRestauranteActual()">Este</ion-button>
-  <br>
-  
   <h3 style="text-align: center;">Calificacion</h3>
 
   <ion-slides pager ="true" class="slides">
     <ion-slide>
       pregunta 1
     </ion-slide>
-    <ion-slide>
-      pregunta 2
-    </ion-slide>
   </ion-slides>
 
     </div>
+  </div>
+
+  <br>
+  <br>
+  <ion-button (click)="presentModal()">Realizar Reserva</ion-button>
+  <br>
+
+  <div id="Mapa" style="width: 90%; height: 70%;">
 
   </div>
+      <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
+        <br>
+
+  
+
+
+
+
+  
+
+  
 
 </ion-content>

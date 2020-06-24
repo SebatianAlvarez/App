@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" (click)= goRegreso()>
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Mensajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngFor ="let reser of reservas">
+    <div *ngIf = "usuarioLog === reser.uidUsu">
+
+      <ng-template [ngIf] = "reser.iud">
+        <p>No has realizado ninguna resarva todavia</p>
+      </ng-template>
+      <ng-template [ngIf] = "reser.estado.toString() === 'Aprovado'">
+        <p>Tu reserva fue Aprovada</p>
+      </ng-template>
+      <ng-template [ngIf] = "reser.estado.toString() === 'Rechazado'">
+        <p>Tu reserva fue Rechazada</p>
+      </ng-template>
+      <ng-template [ngIf] = "reser.estado.toString() === 'En Revision'">
+        <p>Tu reserva esta siendo Revisada</p>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <br>
+    
+  </div>
+
+</ion-content>

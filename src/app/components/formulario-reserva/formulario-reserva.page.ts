@@ -39,23 +39,6 @@ export class FormularioReservaPage implements OnInit {
     this.usuarioLog = currentUser.uid;
   }
 
-  /*
-  async actualizarReserva(){
-    const loading = await this.loadingController.create({
-      message:"Saving....."
-    });
-    await loading.present();
-
-    if (){
-      // update
-      this.reservaService.updateReserva(, this.Reserva).then(() =>{
-        loading.dismiss();
-        this.router.navigate(['/perfil'])
-      })
-    }
-  }
-*/
-
   Reservar(){
     
     return new Promise<any>((resolve, reject) => {

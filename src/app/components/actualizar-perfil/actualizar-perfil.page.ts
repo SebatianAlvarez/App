@@ -120,7 +120,8 @@ export class ActualizarPerfilPage implements OnInit {
       }]
     });
     await actionSheet.present();
-  }else if (rol = 'cliente'){
+    let result = await actionSheet.onDidDismiss();
+  }else if (rol == 'cliente'){
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
@@ -136,6 +137,12 @@ export class ActualizarPerfilPage implements OnInit {
           this.router.navigate(['/perfil'])
         }
       },{
+        text: 'Mensajes',
+        icon: 'mail',
+        handler: () => {
+          this.router.navigate(['/mensajes'])
+        }
+      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {
@@ -144,6 +151,7 @@ export class ActualizarPerfilPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 }
 
