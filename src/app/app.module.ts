@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 //librerias mapa
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { firebaseConfig } from '../environments/environment';
 
 //librerias firebase y autenticacion
@@ -40,7 +41,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
     SplashScreen,
     Facebook,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation,AngularFireDatabase,{provide: FirestoreSettingsToken, useValue: {}},
+    Geolocation,NativeGeocoder,AngularFireDatabase,{provide: FirestoreSettingsToken, useValue: {}},
   ],
   bootstrap: [AppComponent]
 })

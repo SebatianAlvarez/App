@@ -11,44 +11,32 @@
 </ion-header>
 
 <ion-content >
-      <ion-slides pager ="true" class="slides">
-        <ion-slide class="slide" *ngFor = "let reser of reservas">
 
-          <div *ngIf = "usuarioLog === reser.uidResta" >
-            <div *ngIf = "reser.estado.toString() === 'En Revision'">
-
-            <ion-item>
-              <ion-label>
-                <h4><b>Nombre: </b>{{reser.nombre}} </h4>
-              </ion-label>
-            </ion-item>
-            <br>
-            <ion-item>
-              <ion-label>
-                <h4><b>Numero: </b> {{reser.numero}}</h4>
-              </ion-label>
-            </ion-item>
-            <br>
-            <ion-item>
-              <ion-label>
-                <h4><b>Mesas: </b>{{reser.mesas}} </h4>
-              </ion-label>
-            </ion-item>
-            <br>
-            <ion-item>
-              <ion-label>
-                <h4><b>Tiempo Estimado: </b>{{reser.tiempo}} </h4>
-              </ion-label>
-            </ion-item>
-            <br>
-              <ion-button (click) ="aceptarReserva(reser.uid)" >ACEPTAR PETICION</ion-button>
-              <ion-button (click) ="rechazarReserva(reser.uid)">Rechazar PETICION</ion-button>
-            </div>
-          </div>
-
-        </ion-slide>
-      </ion-slides>
-
-  
+  <div *ngFor = "let reser of reservas">
+    <div *ngIf = "usuarioLog === reser.uidResta">
+      <ion-card *ngIf = "reser.estado.toString() === 'En Revision'">
+        <ion-card-header>
+          <ion-card-title style="text-align: center;">Reservas en Espera</ion-card-title>
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <h6><b>Nombre: </b>{{reser.nombre}} </h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Numero: </b> {{reser.numero}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Mesas: </b>{{reser.mesas}} </h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Tiempo Estimado: </b>{{reser.tiempo}} </h6>
+          </ion-item>
+        </ion-list>
+          <ion-button (click) ="aceptarReserva(reser.uid)" >Aceptar Peticion</ion-button>
+          <ion-button (click) ="rechazarReserva(reser.uid)">Rechazar Peticion</ion-button>
+      </ion-card>
+    </div>
+   
+  </div>
 
 </ion-content>

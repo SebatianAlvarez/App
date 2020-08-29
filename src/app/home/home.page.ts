@@ -13,6 +13,8 @@ import { auth } from 'firebase/app'
 
 import { MenuService } from '../servicios/menu.service';
 
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -28,10 +30,32 @@ export class HomePage {
 
   constructor(private authService: AuthService, private router: Router, private afBD: AngularFireDatabase,
     public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform,
-    private menuService: MenuService) {
+    private menuService: MenuService, private formBuilder: FormBuilder) {
 
      this.providerFb = new firebase.auth.FacebookAuthProvider();
     }
+
+    public errorMensajes ={
+      email : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'email', message: 'Ingrese un correo valido'}
+      ],
+      password : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 8 caracteres'}
+      ]
+    };
+  
+    public login = this.formBuilder.group ({
+      id: new FormControl (''),
+      email: new FormControl('', [Validators.required, Validators.email,]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  
+    });
+
+
+
+
 
     facebookLogin(){
       if(this.platform.is('cordova')){
@@ -111,7 +135,8 @@ export class HomePage {
     }
 
   OnSubmitLogin(){
-    this.authService.login(this.email, this.password).then(res => {
+    const valores = this.login.value
+    this.authService.login(valores.email, valores.password).then(res => {
       this.router.navigate(['/perfil']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
   }

@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { PromocionService} from '../../servicios/promocion.service';
 import { promos } from '../../models/promos-interface';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { ToastController } from '@ionic/angular';
+import { resta } from '../../models/restaurante-interface'
 import { AuthService } from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import { RestaurantesService } from '../../servicios/restaurantes.service';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-promocion',
@@ -17,25 +19,32 @@ import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/fires
 export class PromocionPage implements OnInit {
 
   promosRef: AngularFirestoreCollection;
-  newTodo: string = '';
   public uploadProgress = 0;
-  public promociones : any = []
+  public promociones : promos[]
   public usuarioLog:string
   selectedFile: any;
 
+  public restaurantes : resta[]
 
-  constructor(private promocionService : PromocionService, private storage : AngularFireStorage,
-     private toastCtrl : ToastController, private authservice: AuthService, public actionSheetController: ActionSheetController,
-     private router:Router, private AFauth : AngularFireAuth, private db: AngularFirestore) { 
 
-      this.promosRef = db.collection('promociones')
+  constructor( private storage : AngularFireStorage, private authservice: AuthService,
+     public actionSheetController: ActionSheetController, private router:Router,
+      private AFauth : AngularFireAuth, private db: AngularFirestore, private restauranteService : RestaurantesService,
+      private formBuilder: FormBuilder) { 
 
+      this.promosRef = this.db.collection('promociones')
      }
 
+     public foto = this.formBuilder.group ({
+      id: new FormControl (''),
+      inputFile: new FormControl ('', [Validators.required]),
+  
+    });
 
   ngOnInit() {
-    this.promocionService.getPromos().subscribe(data =>{
-      this.promociones = data
+
+    this.restauranteService.getRestaurantes().subscribe( data => {
+      this.restaurantes = data
     })
 
     try {
@@ -55,28 +64,16 @@ export class PromocionPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mi Perfil',
-        icon: 'person',
+        text: 'Promociones Activas',
+        icon: 'done-all',
         handler: () => {
-          this.router.navigate(['/perfil'])
+          this.router.navigate(['/promo-activa']);
         }
-      }, {
-        text: 'Editar Perfil',
-        icon: 'settings',
+      },{
+        text: 'Promociones Ocultas',
+        icon: 'eye-off',
         handler: () => {
-          this.router.navigate(['/actualizar-perfil'])
-        }
-      }, {
-        text: 'Visualizar Peticiones',
-        icon: 'eye',
-        handler: () => {
-          this.router.navigate(['/reserva']);
-        }
-      }, {
-        text: 'Actualizar Menu',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/menu']);
+          this.router.navigate(['/promo-oculta']);
         }
       }, {
         text: 'Cerrar Sesion',
@@ -92,13 +89,21 @@ export class PromocionPage implements OnInit {
 
   elegirImagen(event){ 
     this.selectedFile = event.target.files
+    let fileName = document.getElementById("imagen").nodeValue;
+    let x = fileName.lastIndexOf(".") + 1 ;
+    let extFile = fileName.substr(x, fileName.length).toLowerCase();
+    if (extFile =="jpg" || extFile == "jpeg" || extFile == "png"){
+      
+      this.aver()
 
+    }else{
+      alert("Solo puede selecionar archivos que sean imagenes")
+    }
   }
 
   aver(){
 
     this.promosRef.add({
-      title: this.newTodo
     })
     .then(async resp => {
 
@@ -107,8 +112,11 @@ export class PromocionPage implements OnInit {
       this.promosRef.doc(resp.id).update({
         id: resp.id,
         fotosPromocion: imageUrl || null,
-        userUID : this.usuarioLog
+        userUID : this.usuarioLog,
+        estado: "verdadero"
       })
+      
+      this.router.navigate(['/promo-activa'])
     }).catch(error => {
       console.log(error);
     })

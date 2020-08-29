@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" routerLink="/perfil">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Afiliados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <div *ngFor = "let afi of afiliados">
+    <div *ngIf = "usuarioLog === afi.uidResta">
+      <ion-card *ngIf = "afi.estado === 'En Revision'">
+        <ion-card-header>
+          <ion-card-title>Afiliados en Espera</ion-card-title>
+        </ion-card-header>
+        <ion-list>
+          <ion-item>   
+            <h6><b>Nombre: </b>{{afi.nombre}} </h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Numero: </b> {{afi.numero}}</h6>
+          </ion-item>
+        </ion-list>
+          <ion-button (click) ="aceptarAfiliado(afi.id)" >Aceptar Afiliado</ion-button>
+          <ion-button (click) ="rechazarAfiliado(afi.id)">Rechazar Afiliado</ion-button>
+      </ion-card>
+    </div>
+   
+  </div>
+
+</ion-content>

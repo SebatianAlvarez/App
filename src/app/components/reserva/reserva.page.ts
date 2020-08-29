@@ -4,7 +4,6 @@ import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { Reserva } from '../../models/reserva-interface';
 
 @Component({
@@ -16,13 +15,12 @@ export class ReservaPage implements OnInit {
 
   public reservas: any =[];
   public usuarioLog:string;
-  reservaRef: AngularFirestoreCollection;
 
   constructor(public reservasService: ReservasService, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
-    private db: AngularFirestore) {
+    ) {
 
-      this.reservaRef = db.collection('promociones')
+      
      }
 
   ngOnInit() {
@@ -84,28 +82,10 @@ export class ReservaPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mi Perfil',
-        icon: 'person',
+        text: 'Peticiones Aceptadas',
+        icon: 'checkmark-circle-outline',
         handler: () => {
-          this.router.navigate(['/perfil'])
-        }
-      }, {
-        text: 'Editar Perfil',
-        icon: 'settings',
-        handler: () => {
-          this.router.navigate(['/actualizar-perfil'])
-        }
-      },{
-        text: 'Actualizar Menu',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/menu']);
-        }
-      },{
-        text: 'Promociones',
-        icon: 'heart',
-        handler: () => {
-          this.router.navigate(['/promocion'])
+          this.router.navigate(['/reserva-aceptada']);
         }
       },{
         text: 'Cerrar Sesion',

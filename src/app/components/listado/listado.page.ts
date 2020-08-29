@@ -8,8 +8,15 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { promos } from '../../models/promos-interface';
-import { platos } from '../../models/platos-interface';
 import { resta } from '../../models/restaurante-interface';
+
+import { almuerzo } from '../../models/almuerzo-interface';
+import { desayuno } from '../../models/desayuno-interface';
+import { merienda } from '../../models/merienda-interface';
+
+import { AlmuerzoService } from '../../servicios/almuerzo.service'
+import { MeriendaService } from '../../servicios/merienda.service'
+import { MenuService } from '../../servicios/menu.service'
 
 
 @Component({
@@ -21,29 +28,41 @@ export class ListadoPage implements OnInit {
 
   public Restaurantes : resta[]
   public Promos : promos[] 
-  public Platos : platos[] 
   public usuarioLog : string
+
+  public desayunos : desayuno[]
+  public almuerzos: almuerzo[]
+  public meriendas: merienda[]
+
 
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
     private modal: ModalController, public actionSheetController: ActionSheetController,
-    private router:Router, private AFauth : AngularFireAuth) { }
+    private router:Router, private AFauth : AngularFireAuth, private desayunoService : MenuService,
+    private almuerzoService : AlmuerzoService, private meriendaService : MeriendaService) { }
 
   ngOnInit() { 
 
     let currentUser = this.AFauth.auth.currentUser;
-    console.log("mmmmm " + currentUser)
     this.usuarioLog = currentUser.uid;
 
     this.restaurantesService.getResta().subscribe( resta => {
       this.Restaurantes = resta;
     })
 
-    this.restaurantesService.getPlatos().subscribe(plato => {
-      this.Platos = plato;
-    })
-
     this.restaurantesService.getPromos().subscribe(promo => {
       this.Promos = promo;
+    })
+
+    this.desayunoService.getDesas().subscribe(desa => {
+      this.desayunos = desa;
+    })
+    
+    this.almuerzoService.getAlmu().subscribe(almu =>{
+      this.almuerzos = almu;
+    })
+
+    this.meriendaService.getMeri().subscribe(meri => {
+      this.meriendas = meri
     })
 
   }
@@ -53,9 +72,10 @@ export class ListadoPage implements OnInit {
       component: PerfilResComponent,
       componentProps : {
         res: res,
-        //promo: this.Promos, todavia toy viendo las fotos de las promos
-        plato : this.Platos
-  
+        desayuno: this.desayunos,
+        almuerzo: this.almuerzos,
+        merienda: this.meriendas,
+        
       }
     }).then((modal) => modal.present())
   }
@@ -68,16 +88,10 @@ export class ListadoPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mi Perfil',
-        icon: 'person',
+        text: 'Mensajes',
+        icon: 'mail',
         handler: () => {
-          this.router.navigate(['/perfil'])
-        }
-      },{
-        text: 'Editar Perfil',
-        icon: 'settings',
-        handler: () => {
-          this.router.navigate(['/actualizar-perfil'])
+          this.router.navigate(['/mensajes'])
         }
       },{
         text: 'Cerrar Sesion',

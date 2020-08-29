@@ -8,7 +8,6 @@
 
 <ion-content>
 
-
     <ion-slides pager ="true" class="slides">
 
       <ion-slide class="slide">
@@ -18,21 +17,40 @@
           <img src="../../assets/icon/hambre.jpg"/>
 
         </ion-card>
-          
-        <ion-item>
-            <ion-input type="text" [(ngModel)]="email" name="email" placeholder="Correo"></ion-input>
-          </ion-item>
-          
-            <ion-item>
-            <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña"></ion-input>
-          </ion-item>
-        
+
+        <form [formGroup] ="login" (ngSubmit) = "OnSubmitLogin(login.value)">
+
           <ion-item>
-            <ion-button (click)="OnSubmitLogin()">Iniciar Sesion</ion-button>
+            <ion-input class="texto" placeholder="Correo" formControlName="email" type="text"  maxlength ="30"></ion-input>
           </ion-item>
+          <div >
+            <ng-container *ngFor ="let error of errorMensajes.email">
+              <div class="e" *ngIf ="login.get('email').hasError(error.type) && (login.get('email').dirty || login.get('email').touched)">
+                {{error.message}}
+              </div>
+            </ng-container> 
+          </div>
+          
+          <ion-item>
+            <ion-input class="texto" placeholder="Contraseña" formControlName="password" type="password" maxlength ="25"></ion-input>
+          </ion-item>
+          <div >
+            <ng-container *ngFor ="let error of errorMensajes.password">
+              <div class="e" *ngIf ="login.get('password').hasError(error.type) && (login.get('password').dirty || login.get('password').touched)">
+                {{error.message}}
+              </div>
+            </ng-container> 
+          </div>
+        
+          <ion-button [disabled] ="login.invalid" type = "submit" expand = "block">
+            Iniciar Sesion
+          </ion-button>
+        </form>
+          
+        
         
           <br>
-          <p style="text-align: center;">Ó Inicia con:</p>
+          <p class="texto" style="text-align: center;" >Ó Inicia con:</p>
         
             <ion-button (click)="facebookLogin()" class="facebook">
               <ion-icon slot="start" name ="logo-facebook"></ion-icon>
@@ -43,17 +61,15 @@
               <ion-icon  name ="logo-google"></ion-icon>
             </ion-button>
         
-          <p style="text-align: center;" routerLink ="/registro">Crear Cuenta</p>
-          <br>
-          <p style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
-          <br>
+          <p class="texto" style="text-align: center;" routerLink ="/registro">Crear Cuenta</p>
+          <p class="texto" style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
           
       </ion-slide>
       <ion-slide class="slide" >
-        <p>SEGUNDO</p>
+        <!--  <img src="../../assets/inicio.jpeg" width="100%" height="100%"> -->
       </ion-slide>
       <ion-slide class="slide" >
-        <p>TERCERO</p>
+        
       </ion-slide>
     </ion-slides>
    

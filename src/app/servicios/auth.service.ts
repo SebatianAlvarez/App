@@ -43,8 +43,8 @@ export class AuthService {
         roles: ['cliente'],
         numero : numero,
         nombre : nombre
-      })
-    })
+      });
+    });
 
   }
 

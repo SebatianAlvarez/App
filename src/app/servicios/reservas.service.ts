@@ -52,6 +52,10 @@ export class ReservasService {
      return this.reservasCollection.doc(id).delete();
    }
 
+
+
+   
+
    recuperarDatos(): Observable<Reserva[]>{
     return this.db
       .collection('usuarios')

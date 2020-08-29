@@ -14,23 +14,39 @@
 
   <h2 style="text-align: center;">Promociones</h2>
   <br>
-
-  <ion-slides pager ="true" class="slides">
-    <ion-slide *ngFor = "let pro of Promos" (click)="openRes(pro)">
-      <img src = "{{pro.fotosPromocion}}">
-    </ion-slide>
-  </ion-slides>
-
+    <ion-slides  pager ="true" class="slides">
+      <ion-slide *ngFor = "let pro of Promos" >
+        <div *ngFor = "let res of Restaurantes">
+          <div *ngIf ="res.userUID === pro.userUID && res.resVerificado === 'Aprobado'" (click)="openRes(res)">
+            <img src = "{{pro.fotosPromocion}}" >
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slides>
   <br>
+  <br>
+  
   <h2 style="text-align: center;">Listado de Restaurantes</h2>
   <br>
 
-  <div class= "div" *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
-    <div *ngIf = "res.resVerificado.toString() === 'Aprovado'">
-      <img src = "{{res.imagenRes}}">
+  <div  *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
+    <div *ngIf = "res.resVerificado.toString() === 'Aprobado'">
+
+      <ion-card>
+        <img *ngIf ="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <ion-card-header>
+          <ion-card-subtitle>{{res.tipoRestaurante}}</ion-card-subtitle>
+          <ion-card-title>{{res.nombreRestaurante}}</ion-card-title>
+        </ion-card-header>
+  
+      </ion-card>
+
     </div>
-    
-    
   </div>
+
+  <ng-template #foto>
+    <img src = "../../../assets/foto.png">
+  </ng-template>
+  
 
 </ion-content>

@@ -10,38 +10,41 @@
   </ion-toolbar>
 </ion-header>
 
+<h2 style="text-align: center;">Promociones Vigentes</h2>
+<br>
+
 <ion-content>
 
-  <div *ngFor = "let promos of promociones">
-    <div *ngIf = "usuarioLog === promos.userUID">
-
-      <h2 style="text-align: center;">{{promos.id}}</h2>
-     
+  <div *ngFor ="let resta of restaurantes">
+    <div *ngIf ="resta.userUID === usuarioLog">
+      <ng-template [ngIf] = "resta.resVerificado.toString() === 'Aprobado'">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Agrege una nueva Promocion</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <form class="ion-padding" [formGroup] ="foto" (submit)="aver()">
+              <ion-item lines="none">
+                <input type="file" formControlName="inputFile" id="imagen" accept="image/x-png,image/jpeg" (onchange)="elegirImagen($event)" required>
+              </ion-item>
+          
+              <ion-button [disabled] ="foto.invalid" type="submit">Agregar Promocion</ion-button>
+            </form>
+          </ion-card-content>
+        
+        </ion-card>
+      </ng-template>
+      <ng-template [ngIf] = "resta.resVerificado.toString() === 'En Revision'">
+        <p style="text-align: center;">Tu Restaurante esta siendo Verificado</p>
+      </ng-template>
+      <ng-template [ngIf] = "resta.resVerificado.toString() === 'Rechazado'">
+        <p style="text-align: center;">Tu Restaurante fue rechazado vuelve a realizar
+        la solicitud en nuestra pagina web</p>
+        <br>
+        <p style="text-align: center;">Alli te explicaremos el motivo del rechazo</p>
+      </ng-template>
     </div>
   </div>
-<br>
-<br>
-
-<ion-card>
-  <ion-card-header>
-    <ion-card-subtitle>Add New Todo</ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content>
-    <form class="ion-padding" (submit)="aver()">
-      <ion-item>
-        <ion-label position="stacked">Add New</ion-label>
-        <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
-      </ion-item>
-
-      <ion-item lines="none">
-        <input type="file" name = "inputFile" (change)="elegirImagen($event)" required>
-      </ion-item>
-  
-      <ion-button type="submit">Agregar Promocion</ion-button>
-    </form>
-  </ion-card-content>
-
-</ion-card>
   
 </ion-content>
