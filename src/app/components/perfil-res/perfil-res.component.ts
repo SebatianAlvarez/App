@@ -230,6 +230,7 @@ tiles.addTo(this.map);
         {
           text : "OK",
           handler: data =>{
+    
             
           }
         }

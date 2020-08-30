@@ -30,7 +30,7 @@ export class MapaPage implements AfterViewInit {
 
     ngAfterViewInit() : void {
 
-      this.map = L.map('Mapa', {
+      this.map = L.map('map', {
         center: [ -0.2104022, -78.4910514 ],
         zoom: 100
       });
