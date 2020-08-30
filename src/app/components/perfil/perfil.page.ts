@@ -137,10 +137,10 @@ export class PerfilPage implements OnInit {
           this.router.navigate(['/reserva']);
         }
       },{
-        text: 'Actualizar Menu',
+        text: 'Mi Menu',
         icon: 'refresh-circle',
         handler: () => {
-          this.router.navigate(['/menu']);
+          this.router.navigate(['/ver-menu']);
         }
       },{
         text: 'Promociones',

@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../servicios/auth.service';
-import { ActionSheetController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { MenuService } from '../../servicios/menu.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AlertController } from '@ionic/angular';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { resta } from '../../models/restaurante-interface';
 
@@ -53,10 +49,9 @@ export class MenuPage implements OnInit {
   }
 
 
-  constructor(private authservice: AuthService, private menuService : MenuService, private AFauth : AngularFireAuth,
-    public actionSheetController: ActionSheetController, private router:Router, private alertController : AlertController,
-    private restauranteService : RestaurantesService, private formBuilder: FormBuilder, private almuerzoService : AlmuerzoService,
-    private meriendaService: MeriendaService
+  constructor(private menuService : MenuService, private AFauth : AngularFireAuth,
+    private restauranteService : RestaurantesService, private formBuilder: FormBuilder,
+     private almuerzoService : AlmuerzoService, private meriendaService: MeriendaService
     ) { }
 
     public errorDesayunoMensajes ={
@@ -187,46 +182,5 @@ actualizarMerienda(id : string){
   this.meriendaService.updateMerienda(id , this.meri).then(() =>{
   })
 }
-
-  goRegreso(){
-    this.router.navigate(['/perfil'])
-  }
-
-  onLogout(){
-    this.authservice.logout();
-  }
-
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Menu',
-      buttons: [{
-        text: 'Mi Perfil',
-        icon: 'person',
-        handler: () => {
-          this.router.navigate(['/perfil'])
-        }
-      },{
-        text: 'Visualizar Peticiones',
-        icon: 'eye',
-        handler: () => {
-          this.router.navigate(['/reserva'])
-        }
-      },{
-        text: 'Promociones',
-        icon: 'heart',
-        handler: () => {
-          this.router.navigate(['/promocion'])
-        }
-      },{
-        text: 'Cerrar Sesion',
-        icon: 'log-out',
-        handler: () => {
-         this.onLogout();
-        }
-      }]
-    });
-    await actionSheet.present();
-    let result = await actionSheet.onDidDismiss();
-  }
 
 }
