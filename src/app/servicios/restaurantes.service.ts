@@ -42,6 +42,10 @@ export class RestaurantesService {
     )
   }
 
+  updateRestaurante(id: string, resta : resta): Promise<void>{
+    return this.restaurantesCollection.doc<resta>(id).update(resta);
+  }
+
   //consulta a la base
 
   

@@ -106,13 +106,35 @@
 
       <h3 style="text-align: center;">Calificacion</h3>
 
+
+
+      <!-- <form [formGroup] ="cali" (ngSubmit) = "Calificar(res.id)">
+        <ion-list>
+
+          <ion-select value=3 id="valor" formControlName="nota">
+            <ion-select-option value=1>Pesimo</ion-select-option>
+            <ion-select-option value=2>Malo</ion-select-option>
+            <ion-select-option value=3>Regular</ion-select-option>
+            <ion-select-option value=4>Bueno</ion-select-option>
+            <ion-select-option value=5>Excelente</ion-select-option>
+          </ion-select>
+    
+          <ion-button [disabled] ="cali.invalid" type = "submit" expand = "block">
+            ACTUALIZAR
+            <ion-icon slot="end" name ="refresh"></ion-icon>
+          </ion-button>
+        </ion-list>
+        
+      </form>  para comentar de una sola Ctrl + k &  Ctrl +     -->
+
+
       <ion-slides pager="true" class="slides">
         <ion-slide *ngFor="let pre of preguntas" class="slide">
           <img src="{{pre.pregunta}}">
           <br>
 
-          <!--
-
+          
+          
           <ng-template [ngIf]="pre.estado.toString() === 'suma'">
             <ion-select value=3 id="valor">
               <ion-select-option value=1>Pesimo</ion-select-option>
@@ -126,22 +148,8 @@
             <ion-button>Realizar Calificacion</ion-button>
           </ng-template>
 
-          -->
+          
 
-          <form style="text-align: center;">
-            <p class="clasificacion">
-              <input id="radio1" type="radio" name="estrellas" value="5"><!--
-              --><label for="radio1">★</label><!--
-              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
-              --><label for="radio2">★</label><!--
-              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
-              --><label for="radio3">★</label><!--
-              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
-              --><label for="radio4">★</label><!--
-              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
-              --><label for="radio5">★</label>
-            </p>
-          </form>
           
         </ion-slide>
       </ion-slides>

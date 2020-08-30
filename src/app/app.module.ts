@@ -8,6 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+
 
 //librerias mapa
 
@@ -34,7 +36,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
   entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,
-      BrowserAnimationsModule, AngularFireStorageModule],
+      BrowserAnimationsModule, AngularFireStorageModule, FormsModule],
   providers: [
     FCM,
     StatusBar,

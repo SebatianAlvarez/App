@@ -26,3 +26,16 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "~leaflet/dist/leaflet.css";
+
+
+
+.leaflet-routing-container{
+    //width: 100px;
+    //height: 100px;
+    //float: right;
+    //font-size: xx-small
+    visibility: hidden;
+
+}
+
+

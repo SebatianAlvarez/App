@@ -89,16 +89,17 @@ export class PromocionPage implements OnInit {
 
   elegirImagen(event){ 
     this.selectedFile = event.target.files
-    let fileName = document.getElementById("imagen").nodeValue;
-    let x = fileName.lastIndexOf(".") + 1 ;
-    let extFile = fileName.substr(x, fileName.length).toLowerCase();
-    if (extFile =="jpg" || extFile == "jpeg" || extFile == "png"){
+    
+    //let fileName = document.getElementById("imagen").nodeValue;
+    //let x = fileName.lastIndexOf(".") + 1 ;
+    //let extFile = fileName.substr(x, fileName.length).toLowerCase();
+    //if (extFile =="jpg" || extFile == "jpeg" || extFile == "png"){
       
-      this.aver()
+      //this.aver()
 
-    }else{
-      alert("Solo puede selecionar archivos que sean imagenes")
-    }
+    //}else{
+    //  alert("Solo puede selecionar archivos que sean imagenes")
+    // }
   }
 
   aver(){
@@ -109,9 +110,11 @@ export class PromocionPage implements OnInit {
 
       const imageUrl = await this.uploadFile(resp.id, this.selectedFile)
 
+      console.log("aver " + this.selectedFile)
+
       this.promosRef.doc(resp.id).update({
         id: resp.id,
-        fotosPromocion: imageUrl || null,
+        fotosPromocion: imageUrl,
         userUID : this.usuarioLog,
         estado: "verdadero"
       })

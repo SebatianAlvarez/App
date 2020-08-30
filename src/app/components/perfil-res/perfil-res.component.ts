@@ -28,9 +28,10 @@ import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
 import { merienda } from '../../models/merienda-interface';
 
-import leaflet from 'leaflet'; 
 import 'leaflet-routing-machine';
 import * as L from 'leaflet';
+
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil-res',
@@ -38,6 +39,8 @@ import * as L from 'leaflet';
   styleUrls: ['./perfil-res.component.scss'],
 })
 export class PerfilResComponent implements OnInit, AfterViewInit {
+
+  form: FormGroup;
 
   public res : resta
   public desayunos : desayuno[]
@@ -72,6 +75,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     private db: AngularFirestore, private alertController : AlertController, private perfil : PerfilesService,
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder) { }
+
 
   ngOnInit() {
 
@@ -118,9 +122,12 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() : void {
 
+}
+
+  ionViewDidEnter(){
     this.map = L.map('Mapa', {
       center: [ -0.2104022, -78.4910514 ],
-      zoom: 100
+      zoom: 17
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -129,12 +136,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 });
 
 tiles.addTo(this.map);
-
-}
-
-  //ionViewDidEnter(){
-  //  this.showMap();
-  //}
+  }
 
   existeAfiliacion( valor:boolean){
     if(valor){
@@ -392,19 +394,16 @@ aver(){
 //dibujar en mapa con en un punto fijo
 
 /*
-
 showMap() {
   
   this.map = L.map('Mapa', {
     center: [ -0.2104022, -78.4910514 ],
     zoom: 100
   });
-
   const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
-
 }
 */
 
@@ -419,21 +418,17 @@ getPositions(){
 
         /*
 showMarker(latLong){
-
   this.marker = marker(latLong, {draggable:true});
   this.marker.addTo(this.map).bindPopup('Estoy aqui');
   this.map.setView(latLong);
-
   this.marker.on("dragend", () =>{
     let pos = this.marker.getLatLng();
     //this.getAddress(pos.lat, pos.lng)
   })
-
 }
         */
 
 /*
-
 getAddress(lat: number, long : number){
   let options: NativeGeocoderOptions = {
     useLocale: true,
@@ -443,7 +438,6 @@ getAddress(lat: number, long : number){
     this.address = Object.values(res[0]).reverse();
   });
 }
-
 */
 
 alv(){
@@ -467,11 +461,17 @@ mostrar(id : string){
         this.marker = marker(latLong);
 
         L.Routing.control({
+          show: false,
+          draggable: false,
           waypoints: [
               L.latLng(data.latitud,data.longitud),
               L.latLng(latLong[0],latLong[1])
           ],
-          language: 'es'
+          
+          addWaypoints: false,
+          routeWhileDragging: false,
+          showAlternatives: false,
+          language: 'es',
         }).addTo(this.map);
       //this.marker.addTo(this.map).bindPopup('Estoy aqui');
       this.map.setView(latLong);

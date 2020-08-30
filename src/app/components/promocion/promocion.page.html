@@ -26,7 +26,7 @@
           <ion-card-content>
             <form class="ion-padding" [formGroup] ="foto" (submit)="aver()">
               <ion-item lines="none">
-                <input type="file" formControlName="inputFile" id="imagen" accept="image/x-png,image/jpeg" (onchange)="elegirImagen($event)" required>
+                <input type="file" formControlName="inputFile" id="imagen" accept="image/x-png,image/jpeg" (change)="elegirImagen($event)" required>
               </ion-item>
           
               <ion-button [disabled] ="foto.invalid" type="submit">Agregar Promocion</ion-button>
