@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
-      <ion-icon name = "arrow-back" ></ion-icon>
+    <ion-button slot="start" fill="none" (click)="goRegreso()">
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
-      <ion-icon name = "menu" ></ion-icon>
+    <ion-button slot="end" fill="none" (click)="presentActionSheet()">
+      <ion-icon name="menu"></ion-icon>
     </ion-button>
     <ion-title style="text-align: center;">Menú Diario</ion-title>
   </ion-toolbar>
@@ -12,31 +12,186 @@
 
 <ion-content>
 
-  <div *ngFor = "let m of menus">
-    <div *ngIf = "usuarioLog === m.userUID">
-      <h2 style="text-align: center;"> DESAYUNO</h2>
+  <div *ngFor="let resta of restaurantes">
+    <div *ngIf="resta.userUID === usuarioLog">
+      <ng-template [ngIf]="resta.resVerificado.toString() === 'Aprobado'">
+        <div *ngFor="let desa of desayunos$">
+          <div *ngIf="usuarioLog === desa.userUID">
+            <h3 style="text-align: center;"> DESAYUNO</h3>
 
-  <ion-item>
-    <ion-label>
-      <h5><b>Detalle del Desayuno: </b>{{m.detalleDesayuno}}</h5>
-      <h5><b>Precio : </b>{{m.precioDesayuno}}</h5>
-    </ion-label>
-  </ion-item>
-  <br>
-  <br>
-  <h2 style="text-align: center;"> ALMUERZO</h2>
-  <ion-item>
-    <ion-label>
-      <h5><b>Entrada : </b>{{m.entradaAlmuerzo}}</h5>
-      <h5><b>Segundo : </b>{{m.segundoAlmuerzo}}</h5>
-      <h5><b>Jugo : </b>{{m.jugoAlmuerzo}}</h5>
-      <h5><b>Precio : </b>{{m.precioAlmuerzo}}</h5>
-    </ion-label>
-  </ion-item>
-  <br>
-  <br>
-  <ion-button (click) ="presentModal(m.id)">Actualizar Menu</ion-button>  
-  <br>
+            <form [formGroup]="desayuno" (ngSubmit)="actualizarDesayuno(desa.id)">
+              <ion-list>
+                <ion-item>
+                  <ion-input placeholder="Tipo" formControlName="tipo" maxlength="25" minlength="3"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorDesayunoMensajes.tipo">
+                    <div class="e"
+                      *ngIf="desayuno.get('tipo').hasError(error.type) && (desayuno.get('tipo').dirty || desayuno.get('tipo').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Detalle" formControlName="detalle" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorDesayunoMensajes.detalle">
+                    <div class="e"
+                      *ngIf="desayuno.get('detalle').hasError(error.type) && (desayuno.get('detalle').dirty || desayuno.get('detalle').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Precio" formControlName="precio" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorDesayunoMensajes.precio">
+                    <div class="e"
+                      *ngIf="desayuno.get('precio').hasError(error.type) && (desayuno.get('precio').dirty || desayuno.get('precio').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-button [disabled]="desayuno.invalid" type="submit" expand="block">
+                  ACTUALIZAR
+                  <ion-icon slot="end" name="refresh"></ion-icon>
+                </ion-button>
+              </ion-list>
+            </form>
+          </div>
+        </div>
+
+        <div *ngFor="let almu of almuerzos$">
+          <div *ngIf="usuarioLog === almu.userUID">
+
+            <h3 style="text-align: center;"> ALMUERZO</h3>
+
+            <form [formGroup]="almuerzo" (ngSubmit)="actualizarAlmuerzo(almu.id)">
+              <ion-list>
+                <ion-item>
+                  <ion-input placeholder="Entrada" formControlName="entrada" maxlength="25" minlength="3"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorAlmuerzoMensajes.entrada">
+                    <div class="e"
+                      *ngIf="almuerzo.get('entrada').hasError(error.type) && (almuerzo.get('entrada').dirty || almuerzo.get('entrada').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Segundo" formControlName="segundo" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorAlmuerzoMensajes.segundo">
+                    <div class="e"
+                      *ngIf="almuerzo.get('segundo').hasError(error.type) && (almuerzo.get('segundo').dirty || almuerzo.get('segundo').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Jugo" formControlName="jugo" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorAlmuerzoMensajes.jugo">
+                    <div class="e"
+                      *ngIf="almuerzo.get('jugo').hasError(error.type) && (almuerzo.get('jugo').dirty || almuerzo.get('jugo').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Precio" formControlName="precio" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorAlmuerzoMensajes.precio">
+                    <div class="e"
+                      *ngIf="almuerzo.get('precio').hasError(error.type) && (almuerzo.get('precio').dirty || almuerzo.get('precio').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-button [disabled]="almuerzo.invalid" type="submit" expand="block">
+                  ACTUALIZAR
+                  <ion-icon slot="end" name="refresh"></ion-icon>
+                </ion-button>
+              </ion-list>
+            </form>
+          </div>
+        </div>
+
+        <div *ngFor="let meri of meriendas$">
+          <div *ngIf="usuarioLog === meri.userUID">
+
+            <h3 style="text-align: center;"> MERIENDA</h3>
+
+            <form [formGroup]="merienda" (ngSubmit)="actualizarMerienda(meri.id)">
+              <ion-list>
+                <ion-item>
+                  <ion-input placeholder="Detalle" formControlName="detalle" maxlength="25" minlength="3"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorMeriendaMensajes.detalle">
+                    <div class="e"
+                      *ngIf="merienda.get('detalle').hasError(error.type) && (merienda.get('detalle').dirty || merienda.get('detalle').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Plato" formControlName="plato" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorMeriendaMensajes.plato">
+                    <div class="e"
+                      *ngIf="merienda.get('plato').hasError(error.type) && (merienda.get('plato').dirty || merienda.get('plato').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-item>
+                  <ion-input placeholder="Precio" formControlName="precio" type="text"></ion-input>
+                </ion-item>
+                <div>
+                  <ng-container *ngFor="let error of errorMeriendaMensajes.precio">
+                    <div class="e"
+                      *ngIf="merienda.get('precio').hasError(error.type) && (merienda.get('precio').dirty || merienda.get('precio').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ion-button [disabled]="merienda.invalid" type="submit" expand="block">
+                  ACTUALIZAR
+                  <ion-icon slot="end" name="refresh"></ion-icon>
+                </ion-button>
+              </ion-list>
+            </form>
+
+          </div>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="resta.resVerificado.toString() === 'En Revision'">
+        <p style="text-align: center;">Tu Restaurante esta siendo Verificado</p>
+      </ng-template>
+      <ng-template [ngIf] = "resta.resVerificado.toString() === 'Rechazado'">
+        <p style="text-align: center;">Tu Restaurante fue rechazado vuelve a realizar
+        la solicitud en nuestra pagina web</p>
+        <br>
+        <p style="text-align: center;">Alli te explicaremos el motivo del rechazo</p>
+      </ng-template>
     </div>
   </div>
 

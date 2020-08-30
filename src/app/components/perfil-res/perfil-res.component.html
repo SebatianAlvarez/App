@@ -1,83 +1,259 @@
 <ion-header>
-  <ion-toolbar color ="dark">
-    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
-      <ion-icon name = "arrow-back" ></ion-icon>
+  <ion-toolbar color="dark">
+    <ion-button slot="start" fill="none" (click)="goRegreso()">
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill ="none" (click)="getMenu()">
-      <ion-icon name = "menu" ></ion-icon>
+    <ion-button slot="end" fill="none" (click)="getMenu()">
+      <ion-icon name="menu"></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Perfil</ion-title>
+    <ion-title style="text-align: center;">{{res.nombreRestaurante}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-  <img src ="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
+<img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
 
 <ion-content class="ion-padding">
 
-  <h3 style="text-align: center;">Pizarron</h3>
-  
-  
+  <div>
+    <h3 style="text-align: center;">Informacion Restaurante</h3>
 
-  <div *ngFor ="let plat of Platos">
+    <ion-list>
+      <ion-item>
+        <h6><b>Tipo Restaurante: </b>{{res.tipoRestaurante}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Capacidad: </b>{{res.capacidadRestaurante}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Hora de apertura: </b>{{res.horaApertura}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Hora de cierre: </b>{{res.horaCierre}}</h6>
+      </ion-item>
+    </ion-list>
+  </div>
 
-    <div *ngIf = "res.userUID == plat.userUID">
-
+  <div *ngFor="let desa of desayunos">
+    <div *ngIf="res.userUID === desa.userUID">
       <h4 style="text-align: center;">Desayuno</h4>
+      <ion-list>
+        <ion-item>
+          <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 
-    <ion-item >
-      <ion-label>
-        <h5><b>Detalle: </b>{{plat.detalleDesayuno}}</h5>
-        <h5><b>Precio: </b>{{plat.precioDesayuno}}</h5>
-      </ion-label>
-    </ion-item>
-  
-    <h4 style="text-align: center;">Almuerzo</h4>
-  
-    <ion-item>
-      <ion-label>
-        <h5><b>Entrada: </b>{{plat.entradaAlmuerzo}}</h5>
-        <h5><b>Segundo: </b>{{plat.segundoAlmuerzo}}</h5>
-        <h5><b>Jugo: </b>{{plat.jugoAlmuerzo}}</h5>
-        <h5><b>Precio: </b>{{plat.precioAlmuerzo}}</h5>
-      </ion-label>
-      
-    </ion-item>
+  <div *ngFor="let almu of almuerzos">
+    <div *ngIf="res.userUID === almu.userUID">
+      <h4 style="text-align: center;">Almuerzo</h4>
+      <ion-list>
+        <ion-item>
+          <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 
-    <h3 style="text-align: center;">Platos</h3>
-  
-  <img src ="{{plat.imgPlato}}">
+  <div *ngFor="let meri of meriendas">
+    <div *ngIf="res.userUID === meri.userUID">
+      <h4 style="text-align: center;">Merienda</h4>
 
-  <br>
-  <br>
-  <h3 style="text-align: center;">Calificacion</h3>
+      <ion-list>
+        <ion-item>
+          <h6><b>X: </b>{{meri.platoMerienda}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Detalle Merienda: </b>{{meri.detalleMerienda}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Precio: </b>{{meri.precioMerienda}}</h6>
+        </ion-item>
+      </ion-list>
 
-  <ion-slides pager ="true" class="slides">
-    <ion-slide>
-      pregunta 1
-    </ion-slide>
-  </ion-slides>
+    </div>
+  </div>
+
+  <div>
+    <div>
+
+      <h3 style="text-align: center;">Platos Especiales</h3>
+
+      <img>
 
     </div>
   </div>
 
   <br>
-  <br>
-  <ion-button (click)="presentModal()">Realizar Reserva</ion-button>
-  <br>
 
-  <div id="Mapa" style="width: 90%; height: 70%;">
+  <div>
+    <div>
 
+      <h3 style="text-align: center;">Calificacion</h3>
+
+      <ion-slides pager="true" class="slides">
+        <ion-slide *ngFor="let pre of preguntas" class="slide">
+          <img src="{{pre.pregunta}}">
+          <br>
+
+          <!--
+
+          <ng-template [ngIf]="pre.estado.toString() === 'suma'">
+            <ion-select value=3 id="valor">
+              <ion-select-option value=1>Pesimo</ion-select-option>
+              <ion-select-option value=2>Malo</ion-select-option>
+              <ion-select-option value=3>Regular</ion-select-option>
+              <ion-select-option value=4>Bueno</ion-select-option>
+              <ion-select-option value=5>Excelente</ion-select-option>
+            </ion-select>
+          </ng-template>
+          <ng-template [ngIf]="pre.estado.toString() === 'total'">
+            <ion-button>Realizar Calificacion</ion-button>
+          </ng-template>
+
+          -->
+
+          <form style="text-align: center;">
+            <p class="clasificacion">
+              <input id="radio1" type="radio" name="estrellas" value="5"><!--
+              --><label for="radio1">★</label><!--
+              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+              --><label for="radio2">★</label><!--
+              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+              --><label for="radio3">★</label><!--
+              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+              --><label for="radio4">★</label><!--
+              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+              --><label for="radio5">★</label>
+            </p>
+          </form>
+          
+        </ion-slide>
+      </ion-slides>
+
+    </div>
   </div>
-      <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
-        <br>
+
+  <br>
+
+  <div *ngFor="let afi of afiliados">
+    <div *ngIf="afi.uidUsu === usuarioLog && afi.uidResta === res.userUID">
+      <ng-template [ngIf]="afi.estado === 'verdadero'">
+        <ion-button (click)="presentModal()">Realizar Reserva</ion-button>
+      </ng-template>
+    </div>
+  </div>
+
+  <br>
+  <p>ss</p>
+  <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
+  <br>
+
+  <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
+
+  <div *ngFor="let afi of afiliados">
+    <div *ngIf= "afi.uidUsu === usuarioLog && afi.idres === res.id; else v" >
+      <p>existe </p>
+    </div>
+  </div>
+
+   <!--
+
+  <ng-template #v>
+    <p>no existe</p>
+    <div *ngFor="let afi of afiliados">
+      <ng-template [ngIf]="afi.uidUsu === usuarioLog && afi.idres === res.id && afi.estado === 'verdadero'" >
+        <p>boto reserva</p>
+      </ng-template>
+  
+      <ng-template [ngIf]="afi.uidUsu === usuarioLog && afi.idres === res.id && afi.estado === 'falso'" >
+        <p>afiliacion pendiente</p>
+      </ng-template>
+             <div *ngIf="afi.uidUsu === usuarioLog && afi.idres === res.id && afi.estado === 'verdadero'; else afiliar">
+          <ion-button (click)="afiliarse()">Afiliarse</ion-button>
+      </div> 
+
+    </div>
+
+  </ng-template>
+
+  -->
+
+  <!--
+
+  <div *ngIf="existeAfiliacion(validacion) === false">
+    <p>Afiliar</p>
+  </div>
+
+  
+  <ng-template #afiliar>
+    <div  *ngFor="let afi of afiliados">
+      <div  *ngIf="afi.uidUsu === usuarioLog && afi.idres === res.id && afi.estado === 'falso'">
+        <p>ssss</p>
+      </div>
+    </div>  
+  </ng-template>
+
+  -->
+
+  <!-- <ion-button (click)="afiliarse()">Afiliarse</ion-button> -->
+
+  <!--
+
+  <div *ngFor="let afi of afiliados">
+    <div *ngIf="afi.uidUsu != usuarioLog  ">
+     
+    </div>
+  </div>
+
+  -->
 
   
 
 
+<!--
+
+  <div *ngFor="let afi of afiliados">
+    <div *ngIf="afi.uidUsu === usuarioLog && afi.uidResta === res.userUID">
+      <ng-template [ngIf]="afi.estado === 'verdadero'">
+        <p style="text-align: center;">Estas Afiliado a este Restaurante</p>
+      </ng-template>
+      <ng-template [ngIf]="afi.estado === 'falso'">
+        <p style="text-align: center;">Tu Afiliacion ha sido rechazada</p>
+      </ng-template>
+    </div>
+  </div>
+
+-->
 
 
-  
+  <div >
+  <ion-button (click)="afiliarse()">Afiliarse</ion-button>
+    
+  </div>
+  <div [hidden]="validacionB">
 
-  
+    Reserva
+  </div>
+
+
+  <ng-template #foto>
+    <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">
+  </ng-template>
 
 </ion-content>

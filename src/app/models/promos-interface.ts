@@ -1,7 +1,8 @@
-export interface promos {
+export class promos {
   
     fileRef? : string
     id? : string
-    fotosPromocion : string
+    fotosPromocion? : string
     userUID?: string
+    estado: string
   }

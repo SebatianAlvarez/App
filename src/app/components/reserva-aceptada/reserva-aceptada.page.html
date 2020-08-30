@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color ="dark">
+    <ion-button slot="start" fill ="none" routerLink="/reserva">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Peticiones Aceptadas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <div *ngFor = "let reser of reservas">
+    <div *ngIf = "usuarioLog === reser.uidResta">
+      <ion-card *ngIf = "reser.estado.toString() === 'Aprovado'">
+        <ion-card-header>
+          <ion-card-title style="text-align: center;">Reserva Aceptada</ion-card-title>
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <h6><b>Nombre: </b>{{reser.nombre}} </h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Numero: </b> {{reser.numero}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Mesas: </b>{{reser.mesas}} </h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Tiempo Estimado: </b>{{reser.tiempo}} </h6>
+          </ion-item>
+        </ion-list>
+        <ion-button (click) ="eliminar(reser.uid)">Vaciar Peticion</ion-button>
+      </ion-card>
+    </div>
+  </div>
+
+
+</ion-content>

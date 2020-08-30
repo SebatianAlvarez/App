@@ -67,7 +67,7 @@ export class RestaurantesService {
   }
 
   getPlatos(){
-    return this.db.collection("plato").snapshotChanges().pipe(map(plato => {
+    return this.db.collection("platos").snapshotChanges().pipe(map(plato => {
       return plato.map(x => {
         const data = x.payload.doc.data() as platos;
         data.id = x.payload.doc.id;

@@ -2,6 +2,7 @@
 
 .slide {
     display: grid;
+    background-image: url(../../assets/inicio.jpeg);
 }
 
 .slides {
@@ -16,6 +17,18 @@
     --background: #3b5998;
 }
 
+.e{
+    color: #FF5A55;
+    font-size: 10px;
+    margin: 0%;
+    padding: 0%;
+}
+
+.texto{
+    color: white;
+}
+
 ion-input, ion-item{
     --background: transparent;
 }
+

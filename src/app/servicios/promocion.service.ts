@@ -63,4 +63,14 @@ export class PromocionService {
     return this.promosCollection.doc(id).delete();
   }
 
+  getPromociones(){
+    return this.db.collection('promociones').snapshotChanges().pipe(map(res => {
+      return res.map(x => {
+        const data = x.payload.doc.data() as promos;
+        data.id = x.payload.doc.id;
+        return data;
+      })
+    }))
+  }
+
 }

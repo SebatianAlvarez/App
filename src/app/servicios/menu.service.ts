@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, take} from 'rxjs/operators';
-
-import { platos } from '../models/platos-interface';
-
+import { desayuno } from '../models/desayuno-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  private menusCollection: AngularFirestoreCollection<platos>;
-  private menus: Observable<platos[]>;
+  private desayunoCollection: AngularFirestoreCollection<desayuno>;
+  private desayunos: Observable<desayuno[]>;
 
   constructor(private db:AngularFirestore) { 
-    this.menusCollection = this.db.collection<platos>('plato');
-    this.menus = this.menusCollection.snapshotChanges().pipe(map(
+    this.desayunoCollection = this.db.collection<desayuno>('platoDesayuno');
+    this.desayunos = this.desayunoCollection.snapshotChanges().pipe(map(
       actions => {
         return actions.map( x => {
           const data = x.payload.doc.data();
@@ -27,12 +25,12 @@ export class MenuService {
     ));
   }
 
-  getMenus() : Observable<platos[]>{
-    return this.menus;
+  getDesayunos() : Observable<desayuno[]>{
+    return this.desayunos;
   }
 
-  getMenu(id : string) : Observable<platos>{
-    return this.menusCollection.doc<platos>(id).valueChanges().pipe(
+  getDesayuno(id : string) : Observable<desayuno>{
+    return this.desayunoCollection.doc<desayuno>(id).valueChanges().pipe(
       take(1),
       map(menu => {
         menu.id = id
@@ -41,22 +39,22 @@ export class MenuService {
     )
   }
 
-  updateMenu(id: string, menu : platos): Promise<void>{
-    return this.menusCollection.doc(id).update(menu);
+  updateDesayuno(id: string, menu : desayuno): Promise<void>{
+    return this.desayunoCollection.doc(id).update(menu);
   }
 
-  addMenu(menu: platos): Promise<DocumentReference>{
-    return this.menusCollection.add(menu)
+  addDesayuno(menu: desayuno): Promise<DocumentReference>{
+    return this.desayunoCollection.add(menu)
   }
 
-  deleteMenu(id: string): Promise<void>{
-    return this.menusCollection.doc(id).delete();
+  deleteDesayuno(id: string): Promise<void>{
+    return this.desayunoCollection.doc(id).delete();
   }
 
-  getPlatos(){
-    return this.db.collection("plato").snapshotChanges().pipe(map(plato => {
+  getDesas(){
+    return this.db.collection("platoDesayuno").snapshotChanges().pipe(map(plato => {
       return plato.map(x => {
-        const data = x.payload.doc.data() as platos;
+        const data = x.payload.doc.data() as desayuno;
         data.id = x.payload.doc.id;
         return data;
       })

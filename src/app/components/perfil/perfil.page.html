@@ -12,21 +12,55 @@
 <div *ngIf="usuarios$ | async as usu">
   <div *ngFor ="let u of usu">
     <div *ngIf = "usuarioLog === u.uid">
-
       <h2 style="text-align: center;">Datos del Usuario</h2>
       <br>
-
-      <ion-item>
-        <ion-label>
-          <h5><b>Nombre: </b>{{u.nombre}}</h5>
-          <h5><b>Numero: </b>{{u.numero}}</h5>
-          <h5><b>Correo: </b>{{u.email}}</h5>
-        </ion-label>
-        
-      </ion-item>
+      <ion-list>
+        <ion-item>
+          <h6><b>Nombre: </b>{{u.nombre}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Numero: </b>{{u.numero}}</h6>
+        </ion-item>
+        <ion-item>
+          <h6><b>Correo: </b>{{u.email}}</h6>
+        </ion-item>
+      </ion-list>
     </div>
   </div>
-
 </div>
+
+<div *ngFor ="let resta of restaurantes">
+  <div *ngIf ="resta.userUID === usuarioLog">
+
+    <h2 style="text-align: center;">Datos del Restaurante</h2>
+
+    <ion-list>
+      <ion-item>
+        <h6><b>Nombre: </b>{{resta.nombreRestaurante}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Hora de Apertura: </b>{{resta.horaApertura}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Hora de Cierre: </b>{{resta.horaCierre}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Tipo Restaurante: </b>{{resta.tipoRestaurante}}</h6>
+      </ion-item>
+      <ion-item>
+        <h6><b>Capacidad: </b>{{resta.capacidadRestaurante}}</h6>
+      </ion-item>
+    </ion-list>
+
+    <img *ngIf="resta.imagenRes ; else foto" src ="{{resta.imagenRes}}" width="100%" height="17%" margin-top="5px">
+
+    <ng-template #foto>
+      <img src = "../../../assets/foto.png"  width="100%" height="17%" margin-top="5px">
+    </ng-template>
+
+  </div>
+</div>
+
+<ion-button routerLink="/actualizar-perfil">Editar Perfil</ion-button>
     
 </ion-content>

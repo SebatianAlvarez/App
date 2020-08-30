@@ -55,13 +55,7 @@ export class MensajesPage implements OnInit {
         text: 'Mi Perfil',
         icon: 'person',
         handler: () => {
-          this.router.navigate(['/mensajes'])
-        }
-      }, {
-        text: 'Editar Perfil',
-        icon: 'settings',
-        handler: () => {
-          this.router.navigate(['/actualizar-perfil'])
+          this.router.navigate(['/perfil'])
         }
       },{
         text: 'Cerrar Sesion',
