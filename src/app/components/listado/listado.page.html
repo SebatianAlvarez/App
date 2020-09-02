@@ -17,7 +17,7 @@
     <ion-slides  pager ="true" class="slides">
       <ion-slide *ngFor = "let pro of Promos" >
         <div *ngFor = "let res of Restaurantes">
-          <div *ngIf ="res.userUID === pro.userUID" (click)="openRes(res)">
+          <div *ngIf ="res.userUID === pro.userUID && res.resVerificado === 'Aprobado'" (click)="openRes(res)">
             <img src = "{{pro.fotosPromocion}}" >
           </div>
         </div>

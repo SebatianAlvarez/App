@@ -14,5 +14,6 @@ export interface resta {
     horaCierre : any
     latitud: any
     longitud: any
+    resVerificado: string
   
   }
