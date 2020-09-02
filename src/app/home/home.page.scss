@@ -1,17 +1,42 @@
 
 
-.slide {
+.slide1 {
     display: grid;
-    background-image: url(../../assets/inicio.jpeg);
+    // background-image: url(../../assets/Diapositiva1.JPG);
+    background-color : #eeeeee;
+
 }
 
+.slide2 {
+    display: grid;
+    background-color : #fdfdfd;
+}
+.slide3 {
+    display: grid;
+    background-color : #1dc0d4;
+}
+.slide4 {
+    display: grid;
+    background-color : #1dc0d4;
+}
+
+
+.logo{
+    margin-left: 90px;
+    margin-right: 90px;
+}
+.epn{
+    margin-left: 25%;
+    width: 200px;
+    height: 210px;
+}
 .slides {
     height: 100%;
     width: 100%;
 }
 
 .google {
-    --background: #db4437;
+    --background: #c2807a;
 }
 .facebook {
     --background: #3b5998;
@@ -19,13 +44,14 @@
 
 .e{
     color: #FF5A55;
-    font-size: 10px;
+    font-size: 13px;
     margin: 0%;
     padding: 0%;
 }
 
 .texto{
-    color: white;
+    color: black;
+    
 }
 
 ion-input, ion-item{

@@ -10,13 +10,11 @@
 
     <ion-slides pager ="true" class="slides">
 
-      <ion-slide class="slide">
+      <ion-slide class="slide1">
         
-        <ion-card>
+          <img class="logo" src="../../assets/icon/logo1.png"/>
 
-          <img src="../../assets/icon/hambre.jpg"/>
-
-        </ion-card>
+        
 
         <form [formGroup] ="login" (ngSubmit) = "OnSubmitLogin(login.value)">
 
@@ -41,9 +39,9 @@
               </div>
             </ng-container> 
           </div>
-        
+          <hr>
           <ion-button [disabled] ="login.invalid" type = "submit" expand = "block">
-            Iniciar Sesion
+            <p>Iniciar Sesión</p> 
           </ion-button>
         </form>
           
@@ -65,11 +63,35 @@
           <p class="texto" style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
           
       </ion-slide>
-      <ion-slide class="slide" >
-        <!--  <img src="../../assets/inicio.jpeg" width="100%" height="100%"> -->
+      <ion-slide class="slide2" >
+        <span>
+          <img src="../../assets/icon/logo1.png"/>
+        </span>
+        <img class="epn" src="../../assets/epn1.png"/>
+          <h5 class="texto">
+            Muertos de Hambre es la aplicación oficial de la Escuela Politécnica Nacional,
+             que permite a los estudiantes, maestros y todo el personal correspondiente a la EPN poder disfrutar de la variedad gastronómica del sector. 
+          </h5>
       </ion-slide>
-      <ion-slide class="slide" >
-        
+      <ion-slide class="slide3" >
+        <span>
+          <img src="../../assets/icon/logo1.png"/>
+        </span>
+        <img class="epn" src="../../assets/menu.png"/>
+          <h5 class="texto">
+            Revisa el munú diario y promociones de los restaurantes afiliados a 
+            la aplicación
+          </h5>
+      </ion-slide>
+      <ion-slide class="slide4" >
+        <span>
+          <img src="../../assets/icon/logo1.png"/>
+        </span>
+        <img class="epn" src="../../assets/mapa.png"/>
+          <h5 class="texto">
+            Dirígete al restaurante que más te guste con la ayuda del mapa en tiempo real que te ofrece la aplicación
+
+          </h5>
       </ion-slide>
     </ion-slides>
    
