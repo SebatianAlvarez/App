@@ -40,7 +40,7 @@ export class AuthService {
       this.db.collection('usuarios').doc(res.user.uid).set({
         uid : res.user.uid,
         email : email,
-        roles: ['cliente'],
+        roles: 'cliente',
         numero : numero,
         nombre : nombre
       });
@@ -66,7 +66,7 @@ export class AuthService {
         const datos : Usuario = {
           uid: usuario.uid,
           email: usuario.email,
-          roles: ['cliente'],
+          roles: 'cliente',
           numero : this.numero,
           nombre: this.nombre
         }
