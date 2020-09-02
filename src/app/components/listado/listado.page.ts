@@ -47,6 +47,8 @@ export class ListadoPage implements OnInit {
 
     this.restaurantesService.getResta().subscribe( resta => {
       this.Restaurantes = resta;
+      console.log("resta:", resta);
+      
     })
 
     this.restaurantesService.getPromos().subscribe(promo => {
