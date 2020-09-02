@@ -16,7 +16,7 @@ import { Usuario } from '../../models/usuario-interface';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
-  styleUrls: ['./perfil.page.scss'],
+  styleUrls: ['./perfil.page.css'],
 })
 export class PerfilPage implements OnInit {
 
