@@ -126,6 +126,8 @@ export class MenuPage implements OnInit {
     });
 
   ngOnInit() {
+
+
     this.menuService.getDesayunos().subscribe( data => {
       this.desayunos$ = data;
     })

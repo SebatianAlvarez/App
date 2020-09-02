@@ -467,7 +467,6 @@ mostrar(id : string){
               L.latLng(data.latitud,data.longitud),
               L.latLng(latLong[0],latLong[1])
           ],
-          
           addWaypoints: false,
           routeWhileDragging: false,
           showAlternatives: false,
