@@ -15,5 +15,5 @@ export interface resta {
     latitud?: any
     longitud?: any
     calificacion?: number
-  
+    resVerificado?: string
   }
