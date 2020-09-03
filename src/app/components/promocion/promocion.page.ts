@@ -9,6 +9,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { PromocionService } from '../../servicios/promocion.service';
 
 
 @Component({
@@ -23,14 +25,24 @@ export class PromocionPage implements OnInit {
   public promociones : promos[]
   public usuarioLog:string
   selectedFile: any;
+  file: string;
+  estaSeleccionado: boolean;
 
   public restaurantes : resta[]
+  restaurante$: Observable<resta[]>;
+  promociones$: Observable<promos[]>;
 
 
-  constructor( private storage : AngularFireStorage, private authservice: AuthService,
-     public actionSheetController: ActionSheetController, private router:Router,
-      private AFauth : AngularFireAuth, private db: AngularFirestore, private restauranteService : RestaurantesService,
-      private formBuilder: FormBuilder) { 
+
+  constructor( private storage : AngularFireStorage, 
+    private authservice: AuthService,
+    public actionSheetController: ActionSheetController, 
+    private router:Router,
+    private AFauth : AngularFireAuth, 
+    private db: AngularFirestore, 
+    private restauranteService : RestaurantesService,
+    private promocionesService: PromocionService,
+    private formBuilder: FormBuilder) { 
 
       this.promosRef = this.db.collection('promociones')
      }
@@ -43,9 +55,15 @@ export class PromocionPage implements OnInit {
 
   ngOnInit() {
 
-    this.restauranteService.getRestaurantes().subscribe( data => {
-      this.restaurantes = data
-    })
+    this.estaSeleccionado = false;
+
+    this.restaurante$ = this.restauranteService.recuperarDatos();
+    this.promociones$ = this.promocionesService.recuperarDatos();
+
+
+    // this.restauranteService.getRestaurantes().subscribe( data => {
+    //   this.restaurantes = data
+    // })
 
     try {
       let currentUser = this.AFauth.auth.currentUser;
@@ -88,6 +106,9 @@ export class PromocionPage implements OnInit {
   }
 
   elegirImagen(event){ 
+    this.estaSeleccionado = true;
+    this.file = event.target.files[0].name;
+    
     this.selectedFile = event.target.files
     
     //let fileName = document.getElementById("imagen").nodeValue;

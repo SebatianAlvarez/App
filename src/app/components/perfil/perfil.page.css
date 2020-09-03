@@ -8,6 +8,6 @@
   color: white;
 }
 
-.ion-padding{
-  background-color: #ededed;
+ion-toolbar{
+  --background: #eeeeee ;
 }

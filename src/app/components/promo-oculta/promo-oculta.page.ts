@@ -5,6 +5,7 @@ import { AuthService } from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-promo-oculta',
@@ -13,16 +14,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class PromoOcultaPage implements OnInit {
 
-  public promociones : promos[]
+  // public promociones : promos[]
+  promociones$: Observable<promos[]>;
+
   public usuarioLog:string
 
   constructor(private promocionService : PromocionService, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth) { }
 
   ngOnInit() {
-    this.promocionService.getPromos().subscribe(data =>{
-      this.promociones = data
-   })
+
+  //   this.promocionService.getPromos().subscribe(data =>{
+  //     this.promociones = data
+  //  })
+
+  this.promociones$ = this.promocionService.recuperarDatos();
+
+
    try {
      let currentUser = this.AFauth.auth.currentUser;
      this.usuarioLog = currentUser.uid;

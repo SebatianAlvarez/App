@@ -20,7 +20,7 @@
   <br>
     <ion-slides  pager ="true" class="slides">
       <ion-slide *ngFor = "let pro of Promos" >
-        <div *ngFor = "let res of Restaurantes">
+        <div *ngFor = "let res of restaurante$ | async">
           <div *ngIf ="res.userUID === pro.userUID" (click)="openRes(res)">
             <img src = "{{pro.fotosPromocion}}" >
           </div>
@@ -36,7 +36,7 @@
   </ion-card-header>
   <br>
 
-  <div  *ngFor = "let res of Restaurantes" (click) ="openRes(res)">
+  <div  *ngFor = "let res of restaurante$ | async" (click) ="openRes(res)">
     <div *ngIf = "res.resVerificado.toString() === 'Aprobado'">
 
       <ion-card>

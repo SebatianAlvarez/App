@@ -26,7 +26,8 @@ export class PerfilPage implements OnInit {
   public usuarioLog:string;
   public UsuarioRoles: Usuario[];
 
-  public rolActual: string[];
+  // public rolActual: string[];
+  public rolActual: string;
 
   public perfil : any = [];
   public perfilID:Usuario[];
@@ -46,9 +47,9 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
     this.usuarios$ = this.authservice.recuperarDatos();
 
-    this.restauranteService.getRestaurantes().subscribe(data => {
-      this.restaurantes = data
-    })
+    // this.restauranteService.getRestaurantes().subscribe(data => {
+    //   this.restaurantes = data
+    // })
     
 
     try {
@@ -131,6 +132,12 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
+        text: 'Mi Restaurante',
+        icon: 'pizza',
+        handler: () => {
+          this.router.navigate(['/perfil-restaurante']);
+        }
+      },{
         text: 'Visualizar Peticiones',
         icon: 'eye',
         handler: () => {
