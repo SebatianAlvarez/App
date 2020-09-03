@@ -1,0 +1,13 @@
+
+.titulo{
+  border: 6px solid #1dbfd4;
+  border-radius: 3%;
+  /* margin-top: 100px; */
+  /* margin-bottom: 100px; */
+  background-color: #1dbfd4;
+  color: white;
+}
+
+ion-toolbar{
+  --background: #eeeeee ;
+}

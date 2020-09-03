@@ -8,41 +8,51 @@
 </ion-header>
 
 <ion-content>
+  <ion-card-header>
+    <div  class="titulo">
+      <h3 style="text-align: center;">Actualizar Datos Usuario</h3>
+    </div><br>
 
-  <h3 style="text-align: center;">Actualizar Datos Usuario</h3>
+    <form [formGroup] ="actualizar" (ngSubmit) = "actualizarUsuario(actualizar.value)">
+      <ion-list>
+        <ion-item>
+          <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"
+          minlength ="3"></ion-input>
+        </ion-item>
+        <div >
+          <ng-container *ngFor ="let error of errorMensajes.nombre">
+            <div class="e" *ngIf ="actualizar.get('nombre').hasError(error.type) && (actualizar.get('nombre').dirty || actualizar.get('nombre').touched)">
+              {{error.message}}
+            </div>
+          </ng-container> 
+        </div>
+      
+        <ion-item>
+          <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
+        </ion-item>
+        <div >
+          <ng-container *ngFor ="let error of errorMensajes.numero">
+            <div class="e" *ngIf ="actualizar.get('numero').hasError(error.type) && (actualizar.get('numero').dirty || actualizar.get('numero').touched)">
+              {{error.message}}
+            </div>
+          </ng-container> 
+        </div>
 
-  <form [formGroup] ="actualizar" (ngSubmit) = "actualizarUsuario(actualizar.value)">
-    <ion-list>
-      <ion-item>
-        <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"
-        minlength ="3"></ion-input>
-      </ion-item>
-      <div >
-        <ng-container *ngFor ="let error of errorMensajes.nombre">
-          <div class="e" *ngIf ="actualizar.get('nombre').hasError(error.type) && (actualizar.get('nombre').dirty || actualizar.get('nombre').touched)">
-            {{error.message}}
-          </div>
-        </ng-container> 
-      </div>
-    
-      <ion-item>
-        <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
-      </ion-item>
-      <div >
-        <ng-container *ngFor ="let error of errorMensajes.numero">
-          <div class="e" *ngIf ="actualizar.get('numero').hasError(error.type) && (actualizar.get('numero').dirty || actualizar.get('numero').touched)">
-            {{error.message}}
-          </div>
-        </ng-container> 
-      </div>
+        <ion-card-content>
+          <ion-button expand="block" color="danger" [disabled] ="actualizar.invalid" type = "submit" expand = "block">
+            ACTUALIZAR
+            <ion-icon slot="end" name ="refresh"></ion-icon>
+          </ion-button>
 
-      <ion-button [disabled] ="actualizar.invalid" type = "submit" expand = "block">
-        ACTUALIZAR
-        <ion-icon slot="end" name ="refresh"></ion-icon>
-      </ion-button>
-    </ion-list>
-    
-  </form>
+        </ion-card-content>
+  
+        
+      </ion-list>
+      
+    </form>
+  </ion-card-header>  
+
+ 
 
 </ion-content>
 

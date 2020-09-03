@@ -17,6 +17,7 @@ import { merienda } from '../../models/merienda-interface';
 import { AlmuerzoService } from '../../servicios/almuerzo.service'
 import { MeriendaService } from '../../servicios/merienda.service'
 import { MenuService } from '../../servicios/menu.service'
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -26,9 +27,12 @@ import { MenuService } from '../../servicios/menu.service'
 })
 export class ListadoPage implements OnInit {
 
-  public Restaurantes : resta[]
+  // public Restaurantes : resta[]
+  restaurante$: Observable<resta[]>;
+
   public Promos : promos[] 
   public usuarioLog : string
+
 
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
@@ -45,11 +49,13 @@ export class ListadoPage implements OnInit {
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
 
-    this.restaurantesService.getResta().subscribe( resta => {
-      this.Restaurantes = resta;
-      console.log("resta:", resta);
-      
-    })
+    this.restaurante$ = this.restaurantesService.recuperarDatos();
+
+    
+    // this.restaurantesService.getResta().subscribe( resta => {
+    //   this.Restaurantes = resta;
+    //   console.log("resta:", resta); 
+    // })
 
     this.restaurantesService.getPromos().subscribe(promo => {
       this.Promos = promo;

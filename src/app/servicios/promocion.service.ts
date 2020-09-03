@@ -13,16 +13,18 @@ export class PromocionService {
   private promos: Observable<promos[]>;
 
   constructor(private db:AngularFirestore) { 
-    this.promosCollection = this.db.collection<promos>('promociones');
-    this.promos = this.promosCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ... data};
-        });
-      }
-    ));
+    // this.promosCollection = this.db.collection<promos>('promociones');
+    // this.promos = this.promosCollection.snapshotChanges().pipe(map(
+    //   actions => {
+    //     return actions.map( x => {
+    //       const data = x.payload.doc.data();
+    //       const id = x.payload.doc.id;
+    //       return {id, ... data};
+    //     });
+    //   }
+    // ));
+    this.promosCollection = db.collection<promos>('promociones');
+
   }
    recuperarDatos(): Observable<promos[]>{
     return this.db
@@ -71,6 +73,20 @@ export class PromocionService {
         return data;
       })
     }))
+  }
+
+  deshabilitarPromo(promo: promos){
+    console.log("promo?", promo);
+    console.log("id", promo.id);
+    
+    let idRPromo = promo.id;
+      if(idRPromo){
+        const promoObj = {
+          id: promo.id,
+          estado: "falso"
+        };
+        return this.promosCollection.doc(promo.id).update(promoObj); 
+    }
   }
 
 }

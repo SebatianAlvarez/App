@@ -5,6 +5,7 @@ import { AuthService } from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -15,7 +16,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class PromoActivaPage implements OnInit {
 
  
-  public promociones : promos[]
+  // public promociones : promos[]
+  promociones$: Observable<promos[]>;
+
   public usuarioLog:string
 
   constructor(private promocionService : PromocionService, private authservice: AuthService,
@@ -23,9 +26,13 @@ export class PromoActivaPage implements OnInit {
 
   ngOnInit() {
 
-    this.promocionService.getPromos().subscribe(data =>{
-       this.promociones = data
-    })
+
+    this.promociones$ = this.promocionService.recuperarDatos();
+
+    // this.promocionService.getPromos().subscribe(data =>{
+    //    this.promociones = data
+    // })
+
     try {
       let currentUser = this.AFauth.auth.currentUser;
       this.usuarioLog = currentUser.uid;
@@ -34,13 +41,21 @@ export class PromoActivaPage implements OnInit {
     }
  }
 
- ocultar(id : string){
-   this.promocionService.getPromo(id).subscribe(data =>{
-    let promo : promos = {
-      estado: "falso"
-    }
-      this.promocionService.updatePromo(id, promo)
-   })
+
+
+ ocultar(promocionId : promos){
+   console.log("que es esto", promocionId);
+   
+
+  this.promocionService.deshabilitarPromo(promocionId);
+  console.log("Promocion Deshabilitada");
+  
+  //  this.promocionService.getPromo(id).subscribe(data =>{
+  //   let promo : promos = {
+  //     estado: "falso"
+  //   }
+  //     this.promocionService.updatePromo(id, promo)
+  //  })
  }
 
 }

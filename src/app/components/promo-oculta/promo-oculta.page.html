@@ -1,18 +1,18 @@
 <ion-header>
-  <ion-toolbar color ="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill ="none" routerLink="/promocion">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Promociones Ocultas</ion-title>
+    <ion-title style="text-align: center;">Promociones Deshabilitadas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-<div *ngFor ="let promo of promociones">
-  <ion-card *ngIf =" promo.userUID === usuarioLog">
-    <div *ngIf ="promo.estado === 'falso'">
-      <img src = "{{promo.fotosPromocion}}">
+<div *ngFor="let promo of promociones$  |async ">
+  <ion-card *ngIf=" promo.userUID === usuarioLog && promo.fotosPromocion; else sinPromos">
+    <div *ngIf="promo.estado === 'falso'">
+      <img src= "{{promo.fotosPromocion}}">
     <ion-card-header>
       <ion-card-title>Mis Promociones</ion-card-title>
       <ion-button (click)="activar(promo.id)">Activar Promocion</ion-button>
@@ -21,5 +21,14 @@
     </div>
   </ion-card>
 </div>
+
+<ng-template #sinPromos>
+
+  <ion-card>
+    <ion-card-header>
+      Sin Promociones ocultas
+    </ion-card-header>
+  </ion-card>
+</ng-template>
 
 </ion-content>

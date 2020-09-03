@@ -16,17 +16,35 @@ export class RestaurantesService {
   private restaurantes : Observable<resta[]>;
 
   constructor(private db: AngularFirestore) {
+
     this.restaurantesCollection = this.db.collection<resta>('perfiles');
-    this.restaurantes = this.restaurantesCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ... data};
-        })
-      }
-    ))
+
+
+    // ESTO ERA EL MOTIVO DE PORQUE HAY QUE RECARGAR PARA VER LA INFO
+    
+    // this.restaurantes = this.restaurantesCollection.snapshotChanges().pipe(map(
+    //   actions => {
+    //     return actions.map( x => {
+    //       const data = x.payload.doc.data();
+    //       const id = x.payload.doc.id;
+    //       return {id, ... data};
+    //     })
+    //   }
+    // ))
    }
+
+   recuperarDatos(): Observable<resta[]>{
+    return this.db
+      .collection('perfiles')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as resta;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
+  }
 
    getRestaurantes() : Observable<resta[]>{
     return this.restaurantes;
