@@ -51,7 +51,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
   public usuarioLog : string;
   public UsuarioRoles : Usuario[]
-  public rolActual : string[]
+  public rolActual : string
 
   public mostarMapa : boolean = false
 
