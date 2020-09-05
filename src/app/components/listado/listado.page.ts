@@ -18,6 +18,7 @@ import { AlmuerzoService } from '../../servicios/almuerzo.service'
 import { MeriendaService } from '../../servicios/merienda.service'
 import { MenuService } from '../../servicios/menu.service'
 import { Observable } from 'rxjs';
+import { PromocionService } from '../../servicios/promocion.service';
 
 
 @Component({
@@ -30,8 +31,17 @@ export class ListadoPage implements OnInit {
   // public Restaurantes : resta[]
   restaurante$: Observable<resta[]>;
 
-  public Promos : promos[] 
+  public Promos : promos[]
+   
+
+  promociones$: Observable<promos[]>;
+  promociones: promos;
+
   public usuarioLog : string
+
+  listPromo: any[] = [];
+
+  promoL: promos[] = [];
 
 
   public desayunos : desayuno[]
@@ -42,7 +52,7 @@ export class ListadoPage implements OnInit {
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
     private modal: ModalController, public actionSheetController: ActionSheetController,
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : MenuService,
-    private almuerzoService : AlmuerzoService, private meriendaService : MeriendaService) { }
+    private almuerzoService : AlmuerzoService, private meriendaService : MeriendaService, private promocionesService: PromocionService) { }
 
   ngOnInit() { 
 
@@ -50,28 +60,40 @@ export class ListadoPage implements OnInit {
     this.usuarioLog = currentUser.uid;
 
     this.restaurante$ = this.restaurantesService.recuperarDatos();
+    this.promociones$ = this.promocionesService.recuperarDatos();
 
+    // this.promocionesService.listar().subscribe(data =>{
+    //   console.log(data);
+    //   const contador = 0;
+    //   for(let pro of data){
+    //     console.log(pro);
+    //   }
+      
+    // })
+
+    this.getPromos();
+    
     
     // this.restaurantesService.getResta().subscribe( resta => {
     //   this.Restaurantes = resta;
     //   console.log("resta:", resta); 
     // })
 
-    this.restaurantesService.getPromos().subscribe(promo => {
-      this.Promos = promo;
-    })
+    // this.restaurantesService.getPromos().subscribe(promo => {
+    //   this.Promos = promo;
+    // })
 
-    this.desayunoService.getDesas().subscribe(desa => {
-      this.desayunos = desa;
-    })
+    // this.desayunoService.getDesas().subscribe(desa => {
+    //   this.desayunos = desa;
+    // })
     
-    this.almuerzoService.getAlmu().subscribe(almu =>{
-      this.almuerzos = almu;
-    })
+    // this.almuerzoService.getAlmu().subscribe(almu =>{
+    //   this.almuerzos = almu;
+    // })
 
-    this.meriendaService.getMeri().subscribe(meri => {
-      this.meriendas = meri
-    })
+    // this.meriendaService.getMeri().subscribe(meri => {
+    //   this.meriendas = meri
+    // })
 
   }
 
@@ -90,6 +112,33 @@ export class ListadoPage implements OnInit {
 
   onLogout(){
     this.authservice.logout();
+  }
+
+  verMas(){
+    this.router.navigate(['/lista-promociones-habilitadas']);
+  }
+
+  getPromos(){
+    this.promoL =[];
+
+    this.promocionesService.listar().subscribe(data =>{
+      let i = 0;
+      for (let key$ in data){ 
+        let promos = data[key$];
+        console.log("lleng", data.length);
+        
+        if(promos['estado'] === "verdadero" && i < 10){
+          this.promoL.push(promos);
+        }else{
+          console.log("no");
+        }
+        i  = i + 1;
+        console.log();
+        
+      }
+      console.log("a ver", this.promoL);
+
+    })
   }
 
   async presentActionSheet() {

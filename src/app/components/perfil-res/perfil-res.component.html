@@ -146,7 +146,7 @@
   <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
 
   <div *ngFor="let afi of afiliados">
-    <div *ngIf= "afi.uidUsu === usuarioLog && afi.idres === res.id; else v" >
+    <div *ngIf="afi.uidUsu === usuarioLog && afi.idRes === res.id" >
       <p>existe </p>
     </div>
   </div>

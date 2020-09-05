@@ -181,10 +181,16 @@ export class PerfilPage implements OnInit {
           this.router.navigate(['/listado']);
         }
       },{
-        text: 'Mensajes',
-        icon: 'mail',
+        text: 'Promociones',
+        icon: 'gift',
         handler: () => {
-          this.router.navigate(['/mensajes'])
+          this.router.navigate(['/lista-promociones-habilitadas'])
+        }
+        },{
+          text: 'Mensajes',
+          icon: 'mail',
+          handler: () => {
+            this.router.navigate(['/mensajes'])
         }
       }, {
         text: 'Cerrar Sesion',
