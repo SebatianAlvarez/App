@@ -30,9 +30,14 @@ import { desayuno } from '../../models/desayuno-interface';
 import 'leaflet-routing-machine';
 import * as L from 'leaflet';
 
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+
 import { especial } from '../../models/especial-interface';
 import { promos } from '../../models/promos-interface';
+
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-perfil-res',
@@ -53,11 +58,13 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
   public usuarioLog : string;
   public UsuarioRoles : Usuario[]
+
   public rolActual : string;
+
 
   public mostarMapa : boolean = false
 
-  private map
+  private map;
   marker: any;
   latLong = [];
   address: string[];
@@ -76,7 +83,15 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfil : PerfilesService,
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
-    private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder) { }
+    private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
+    private formBuilder: FormBuilder) { }
+
+    public calificar = this.formBuilder.group ({
+
+      id: new FormControl (''),
+      estrellas: new FormControl ('', [Validators.required ]),
+     
+    });
 
 
   ngOnInit() {
@@ -140,6 +155,11 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 });
 
 tiles.addTo(this.map);
+  }
+
+  Calificacion(){
+    const valores = this.calificar
+    console.log("aver " + valores)
   }
 
   existeAfiliacion( valor:boolean){

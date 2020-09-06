@@ -30,13 +30,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { FCM } from '@ionic-native/fcm/ngx';
+
+import { ReactiveFormsModule } from '@angular/forms';
   
 @NgModule({
   declarations: [AppComponent, PerfilResComponent],
   entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,
-      BrowserAnimationsModule, AngularFireStorageModule, FormsModule],
+      BrowserAnimationsModule, AngularFireStorageModule, FormsModule, ReactiveFormsModule],
   providers: [
     FCM,
     StatusBar,

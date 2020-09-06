@@ -139,23 +139,24 @@
 
       <h3 style="text-align: center;">Calificacion</h3>
 
-      <!--
 
-       <form >
-        <ion-list>
-
-          <ion-select value=3 id="valor">
-            <ion-select-option value=1>Pesimo</ion-select-option>
-            <ion-select-option value=2>Malo</ion-select-option>
-            <ion-select-option value=3>Regular</ion-select-option>
-            <ion-select-option value=4>Bueno</ion-select-option>
-            <ion-select-option value=5>Excelente</ion-select-option>
-          </ion-select>
-
-        </ion-list>
-        
-      </form>  para comentar de una sola Ctrl + k &  Ctrl +     -->
-
+      <form [formGroup] ="calificar" (ngSubmit) = "Calificacion(calificar.value)" style="text-align: center;">
+        <p class="clasificacion">
+          <input id="radio1" type="radio" formControlName="estrellas" value="5"><!--
+          --><label for="radio1">★</label><!--
+          --><input id="radio2" type="radio" formControlName="estrellas" value="4"><!--
+          --><label for="radio2">★</label><!--
+          --><input id="radio3" type="radio" formControlName="estrellas" value="3"><!--
+          --><label for="radio3">★</label><!--
+          --><input id="radio4" type="radio" formControlName="estrellas" value="2"><!--
+          --><label for="radio4">★</label><!--
+          --><input id="radio5" type="radio" formControlName="estrellas" value="1"><!--
+          --><label for="radio5">★</label>
+        </p>
+        <ion-button [disabled] ="calificar.invalid" type = "submit" expand = "block" id="este">
+          <p>Calificar</p> 
+        </ion-button>
+      </form>
 
 
     </div>
@@ -179,7 +180,9 @@
   <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
 
   <div *ngFor="let afi of afiliados">
+    
     <div *ngIf="afi.uidUsu === usuarioLog && afi.idRes === res.id" >
+
       <p>existe </p>
     </div>
   </div>

@@ -64,6 +64,8 @@ export class ListadoPage implements OnInit {
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
 
+    console.log("aver " + this.restaurante$)
+
     
 
     // this.promocionesService.listar().subscribe(data =>{
