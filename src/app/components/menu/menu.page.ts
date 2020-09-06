@@ -6,7 +6,6 @@ import { resta } from '../../models/restaurante-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
-import { merienda } from '../../models/merienda-interface';
 
 import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { MeriendaService } from '../../servicios/merienda.service';
@@ -26,7 +25,6 @@ export class MenuPage implements OnInit {
 
   public desayunos$ : desayuno[]
   public almuerzos$ : almuerzo[]
-  public meriendas$ : merienda[]
 
   public desa: desayuno = {
 
@@ -35,11 +33,7 @@ export class MenuPage implements OnInit {
     precioDesayuno:''
   };
 
-  public meri: merienda = {
-    detalleMerienda: '',
-    platoMerienda: '',
-    precioMerienda: ''
-  }
+
 
   public almu: almuerzo = {
     entradaAlmuerzo: '',
@@ -136,10 +130,6 @@ export class MenuPage implements OnInit {
       this.almuerzos$ = data;
     })
 
-    this.meriendaService.getMeriendas().subscribe( data => {
-      this.meriendas$ = data;
-    })
-
     this.restauranteService.getRestaurantes().subscribe(data =>{
       this.restaurantes = data
     } )
@@ -175,14 +165,14 @@ export class MenuPage implements OnInit {
     })
 }
 
-actualizarMerienda(id : string){
+// actualizarMerienda(id : string){
 
-  const valores = this.merienda.value;
-  this.meri.detalleMerienda = valores.detalle
-  this.meri.platoMerienda = valores.plato
-  this.meri.precioMerienda = valores.precio
-  this.meriendaService.updateMerienda(id , this.meri).then(() =>{
-  })
-}
+//   const valores = this.merienda.value;
+//   this.meri.detalleMerienda = valores.detalle
+//   this.meri.platoMerienda = valores.plato
+//   this.meri.precioMerienda = valores.precio
+//   this.meriendaService.updateMerienda(id , this.meri).then(() =>{
+//   })
+// }
 
 }

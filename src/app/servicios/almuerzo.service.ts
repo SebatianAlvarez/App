@@ -13,20 +13,26 @@ export class AlmuerzoService {
   private almuerzos: Observable<almuerzo[]>;
 
   constructor(private db:AngularFirestore) { 
-    this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
-    this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ... data};
-        });
-      }
-    ));
+
+    // this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
+    // this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(map(
+    //   actions => {
+    //     return actions.map( x => {
+    //       const data = x.payload.doc.data();
+    //       const id = x.payload.doc.id;
+    //       return {id, ... data};
+    //     });
+    //   }
+    // ));
   }
 
   getAlmuerzos() : Observable<almuerzo[]>{
     return this.almuerzos;
+  }
+
+  // Con esto listo la colección 
+  listar() {
+    return this.db.collection<almuerzo>('platoAlmuerzo').valueChanges();
   }
 
   getAlmuerzo(id : string) : Observable<almuerzo>{

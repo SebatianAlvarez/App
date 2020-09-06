@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
-import { merienda } from '../../models/merienda-interface';
 
 import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { MeriendaService } from '../../servicios/merienda.service';
@@ -23,7 +22,6 @@ export class VerMenuPage implements OnInit {
 
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
-  public meriendas: merienda[]
 
   public usuarioLog : string
 
@@ -44,9 +42,7 @@ export class VerMenuPage implements OnInit {
       this.almuerzos = almu;
     })
 
-    this.meriendaService.getMeri().subscribe(meri => {
-      this.meriendas = meri
-    })
+
   }
 
   goRegreso(){

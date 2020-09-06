@@ -26,12 +26,13 @@ import { afiliado } from '../../models/afiliados-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
-import { merienda } from '../../models/merienda-interface';
 
 import 'leaflet-routing-machine';
 import * as L from 'leaflet';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { especial } from '../../models/especial-interface';
+import { promos } from '../../models/promos-interface';
 
 @Component({
   selector: 'app-perfil-res',
@@ -45,7 +46,8 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
   public res : resta
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
-  public meriendas: merienda[]
+  public especial: especial[]
+  public promocion: promos[]
 
   public resID : string
 
@@ -82,9 +84,11 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     this.res = this.navparams.get('res')
     this.desayunos = this.navparams.get('desayuno')
     this.almuerzos = this.navparams.get('almuerzo')
-    this.meriendas = this.navparams.get('merienda')
+    this.especial = this.navparams.get('especial')
+    this.promocion = this.navparams.get('promocion')
 
     console.log("aver " + this.almuerzos)
+    console.log("aver especial" + this.especial)
 
     this.preguntasService.getPreguntas().subscribe(data =>{
       this.preguntas = data

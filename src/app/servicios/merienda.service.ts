@@ -2,35 +2,35 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, take} from 'rxjs/operators';
-import { merienda } from '../models/merienda-interface'
+import { especial } from '../models/especial-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeriendaService {
 
-  private meriendaCollection: AngularFirestoreCollection<merienda>;
-  private meriendas: Observable<merienda[]>;
+  private meriendaCollection: AngularFirestoreCollection<especial>;
+  private meriendas: Observable<especial[]>;
 
   constructor(private db:AngularFirestore) { 
-    this.meriendaCollection = this.db.collection<merienda>('platoMerienda');
-    this.meriendas = this.meriendaCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ... data};
-        });
-      }
-    ));
+    this.meriendaCollection = this.db.collection<especial>('platoEspecial');
+    // this.meriendas = this.meriendaCollection.snapshotChanges().pipe(map(
+    //   actions => {
+    //     return actions.map( x => {
+    //       const data = x.payload.doc.data();
+    //       const id = x.payload.doc.id;
+    //       return {id, ... data};
+    //     });
+    //   }
+    // ));
   }
 
-  getMeriendas() : Observable<merienda[]>{
+  getMeriendas() : Observable<especial[]>{
     return this.meriendas;
   }
 
-  getMerienda(id : string) : Observable<merienda>{
-    return this.meriendaCollection.doc<merienda>(id).valueChanges().pipe(
+  getMerienda(id : string) : Observable<especial>{
+    return this.meriendaCollection.doc<especial>(id).valueChanges().pipe(
       take(1),
       map(menu => {
         menu.id = id
@@ -39,11 +39,16 @@ export class MeriendaService {
     )
   }
 
-  updateMerienda(id: string, menu : merienda): Promise<void>{
+  // Con esto listo la colección 
+  listar() {
+    return this.db.collection<especial>('platoEspecial').valueChanges();
+  }
+
+  updateMerienda(id: string, menu : especial): Promise<void>{
     return this.meriendaCollection.doc(id).update(menu);
   }
 
-  addMerienda(menu: merienda): Promise<DocumentReference>{
+  addMerienda(menu: especial): Promise<DocumentReference>{
     return this.meriendaCollection.add(menu)
   }
 
@@ -52,9 +57,9 @@ export class MeriendaService {
   }
 
   getMeri(){
-    return this.db.collection("platoMerienda").snapshotChanges().pipe(map(plato => {
+    return this.db.collection("platoEspecial").snapshotChanges().pipe(map(plato => {
       return plato.map(x => {
-        const data = x.payload.doc.data() as merienda;
+        const data = x.payload.doc.data() as especial;
         data.id = x.payload.doc.id;
         return data;
       })

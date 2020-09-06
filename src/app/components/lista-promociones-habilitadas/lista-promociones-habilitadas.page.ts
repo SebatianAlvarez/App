@@ -20,6 +20,8 @@ export class ListaPromocionesHabilitadasPage implements OnInit {
 
   restaurante$: Observable<resta[]>;
   promociones$: Observable<promos[]>;
+  public promocion: promos[]
+
 
   constructor(private router:Router,
               private authservice:AuthService,
@@ -34,6 +36,10 @@ export class ListaPromocionesHabilitadasPage implements OnInit {
   
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
+
+    this.promocionesService.listar().subscribe(promo =>{
+      this.promocion = promo;
+    })
   }
 
   onLogout(){
@@ -66,6 +72,7 @@ export class ListaPromocionesHabilitadasPage implements OnInit {
       component: PerfilResComponent,
       componentProps : {
         res: res,
+        promocion: this.promocion
       }
     }).then((modal) => modal.present())
   }

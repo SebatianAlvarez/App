@@ -12,13 +12,14 @@ import { resta } from '../../models/restaurante-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
-import { merienda } from '../../models/merienda-interface';
 
 import { AlmuerzoService } from '../../servicios/almuerzo.service'
 import { MeriendaService } from '../../servicios/merienda.service'
 import { MenuService } from '../../servicios/menu.service'
 import { Observable } from 'rxjs';
 import { PromocionService } from '../../servicios/promocion.service';
+import { DesayunoService } from '../../servicios/desayuno.service';
+import { especial } from '../../models/especial-interface';
 
 
 @Component({
@@ -42,17 +43,18 @@ export class ListadoPage implements OnInit {
   listPromo: any[] = [];
 
   promoL: promos[] = [];
+  promoLO: Observable<promos[]>;
 
 
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
-  public meriendas: merienda[]
+  public especial: especial[]
 
 
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
     private modal: ModalController, public actionSheetController: ActionSheetController,
-    private router:Router, private AFauth : AngularFireAuth, private desayunoService : MenuService,
-    private almuerzoService : AlmuerzoService, private meriendaService : MeriendaService, private promocionesService: PromocionService) { }
+    private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
+    private almuerzoService : AlmuerzoService, private promocionesService: PromocionService) { }
 
   ngOnInit() { 
 
@@ -61,6 +63,8 @@ export class ListadoPage implements OnInit {
 
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
+
+    
 
     // this.promocionesService.listar().subscribe(data =>{
     //   console.log(data);
@@ -83,13 +87,21 @@ export class ListadoPage implements OnInit {
     //   this.Promos = promo;
     // })
 
-    // this.desayunoService.getDesas().subscribe(desa => {
-    //   this.desayunos = desa;
-    // })
+    this.desayunoService.listar().subscribe(desa => {
+      this.desayunos = desa;
+    })
     
-    // this.almuerzoService.getAlmu().subscribe(almu =>{
-    //   this.almuerzos = almu;
-    // })
+    this.almuerzoService.listar().subscribe(almu =>{
+      this.almuerzos = almu;
+    })
+
+    this.especialService.listar().subscribe(espe => {
+      this.especial = espe;
+    })
+
+
+
+
 
     // this.meriendaService.getMeri().subscribe(meri => {
     //   this.meriendas = meri
@@ -104,7 +116,7 @@ export class ListadoPage implements OnInit {
         res: res,
         desayuno: this.desayunos,
         almuerzo: this.almuerzos,
-        merienda: this.meriendas,
+        especial: this.especial,
         
       }
     }).then((modal) => modal.present())
@@ -126,9 +138,8 @@ export class ListadoPage implements OnInit {
       for (let key$ in data){ 
         let promos = data[key$];
         console.log("lleng", data.length);
-        
         if(promos['estado'] === "verdadero" && i < 10){
-          this.promoL.push(promos);
+          this.promoL.push(promos)
         }else{
           console.log("no");
         }
