@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ReservasService } from '../../servicios/reservas.service';
+import { Reserva } from '../../models/reserva-interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mensajes',
@@ -18,11 +20,15 @@ export class MensajesPage implements OnInit {
     public usuarioLog:string;
     public reservas : any = [];
 
+    public reservas$: Observable<Reserva[]>;
+
   ngOnInit() {
 
-    this.reservasService.getReservas().subscribe(data =>{
-      this.reservas = data
-    })
+    //this.reservasService.getReservas().subscribe(data =>{
+    //  this.reservas = data
+    //})
+
+    this.reservas$ = this.reservasService.recuperarDatos()
 
     try {
       let currentUser = this.AFauth.auth.currentUser;

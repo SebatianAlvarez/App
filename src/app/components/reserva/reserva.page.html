@@ -12,9 +12,9 @@
 
 <ion-content >
 
-  <div *ngFor = "let reser of reservas">
-    <div *ngIf = "usuarioLog === reser.uidResta">
-      <ion-card *ngIf = "reser.estado.toString() === 'En Revision'">
+  <div *ngFor ="let reser of reservas$ | async">
+    <div *ngIf ="usuarioLog === reser.uidResta">
+      <ion-card *ngIf ="reser.estado.toString() === 'En Revision'">
         <ion-card-header>
           <ion-card-title style="text-align: center;">Reservas en Espera</ion-card-title>
         </ion-card-header>

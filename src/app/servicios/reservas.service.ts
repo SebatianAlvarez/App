@@ -15,16 +15,20 @@ export class ReservasService {
   constructor(private db: AngularFirestore ) {
 
     this.reservasCollection = this.db.collection<Reserva>('reservas');
-    this.reservas = this.reservasCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ...data};
-        });
-      }
-    ));
+    //this.reservas = this.reservasCollection.snapshotChanges().pipe(map(
+      //actions => {
+        //return actions.map( x => {
+          //const data = x.payload.doc.data();
+          //const id = x.payload.doc.id;
+          //return {id, ...data};
+        //});
+      //}
+    //));
    }
+
+   listar() {
+    return this.db.collection<Reserva>('reservas').valueChanges();
+  }
 
    getReservas() : Observable<Reserva[]>{
      return this.reservas;
@@ -52,13 +56,9 @@ export class ReservasService {
      return this.reservasCollection.doc(id).delete();
    }
 
-
-
-   
-
    recuperarDatos(): Observable<Reserva[]>{
     return this.db
-      .collection('usuarios')
+      .collection('reservas')
       .snapshotChanges()
       .pipe(
         map(actions => actions.map(a =>{

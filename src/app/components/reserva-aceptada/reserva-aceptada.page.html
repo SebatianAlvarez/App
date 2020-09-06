@@ -9,7 +9,7 @@
 
 <ion-content >
 
-  <div *ngFor = "let reser of reservas">
+  <div *ngFor = "let reser of reservas$ | async">
     <div *ngIf = "usuarioLog === reser.uidResta">
       <ion-card *ngIf = "reser.estado.toString() === 'Aprovado'">
         <ion-card-header>

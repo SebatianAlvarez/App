@@ -4,6 +4,8 @@ import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Reserva } from '../../models/reserva-interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-reserva-aceptada',
@@ -15,23 +17,27 @@ export class ReservaAceptadaPage implements OnInit {
   public reservas: any =[];
   public usuarioLog:string;
 
+  public reservas$: Observable<Reserva[]>;
+
   constructor(public reservasService: ReservasService, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth) { }
 
   ngOnInit() {
 
-    this.reservasService.getReservas().subscribe( data =>{
-      this.reservas = data;
+    this.reservas$ = this.reservasService.recuperarDatos()
 
-      try {
-        let currentUser = this.AFauth.auth.currentUser;
-        this.usuarioLog = currentUser.uid;
-        
-      } catch (error) {
-        console.log(error)
-      }
+    try {
+      let currentUser = this.AFauth.auth.currentUser;
+      this.usuarioLog = currentUser.uid;
       
-    })
+    } catch (error) {
+      console.log(error)
+    }
+
+    //this.reservasService.getReservas().subscribe( data =>{
+    //  this.reservas = data;
+    //})
+
   }
 
   eliminar(id :string){

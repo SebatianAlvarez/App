@@ -20,8 +20,8 @@ export class FormularioReservaPage implements OnInit {
   public tiempo:string
 
   public Reserva : Reserva = {
-    mesas:'',
-    tiempo:'',
+    mesas:0,
+    tiempo:0,
   }
 
   public usuarioLog:string;

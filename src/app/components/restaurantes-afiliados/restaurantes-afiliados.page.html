@@ -19,7 +19,7 @@
           <img [src]="r.imagenRes" *ngIf="r.imagenRes">
           <ion-button *ngIf="a.estado ==='verdadero'">Afiliado</ion-button>
           <ion-button *ngIf="a.estado ==='falso'" color="danger">Pendiente</ion-button>
-          <ion-button *ngIf="a.estado ==='verdadero'" color="danger">Realizar Reserva</ion-button>
+          <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>
 
 
         </div>

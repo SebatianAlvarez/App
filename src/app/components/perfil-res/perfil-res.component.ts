@@ -81,7 +81,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
-    private db: AngularFirestore, private alertController : AlertController, private perfil : PerfilesService,
+    private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
     private formBuilder: FormBuilder) { }
@@ -180,7 +180,7 @@ tiles.addTo(this.map);
     
     let afiliadoID = this.db.createId();
     afi.id = afiliadoID;
-    let usuario = this.perfil.getUsuario(this.usuarioLog);
+    let usuario = this.perfilService.getUsuario(this.usuarioLog);
     usuario.subscribe(data =>{
       this.db.collection('afiliados').doc(afiliadoID).set({
         uidUsu : this.usuarioLog,
@@ -220,6 +220,8 @@ tiles.addTo(this.map);
         }
       ]
     })
+    await alert.present()
+    let result = await alert.onDidDismiss();
   }
 
   async presentarCalificacion(){
@@ -277,7 +279,7 @@ tiles.addTo(this.map);
           placeholder: "Mesas a Reservar"
         },{
           name: "tiempo",
-          type: "text",
+          type: "number",
           placeholder: "Tiempo estimado para llegar"
         }
       ],
@@ -391,7 +393,7 @@ Reservar(mesa : string, tiempo: string ){
 
     let reservaID = this.db.createId();
     reserva.uid = reservaID;
-    let usuario = this.perfil.getUsuario(this.usuarioLog);
+    let usuario = this.perfilService.getUsuario(this.usuarioLog);
     usuario.subscribe(data =>{
       this.db.collection('reservas').doc(reservaID).set({
         uidUsu : this.usuarioLog,
@@ -410,7 +412,7 @@ Reservar(mesa : string, tiempo: string ){
 }
 
 aver(){
-  let usuario = this.perfil.getUsuario(this.usuarioLog);
+  let usuario = this.perfilService.getUsuario(this.usuarioLog);
   usuario.subscribe(data =>{
     console.log("aver : "+ data.nombre)
   })

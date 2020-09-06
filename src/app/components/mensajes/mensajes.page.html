@@ -12,13 +12,13 @@
 
 <ion-content>
 
-  <div *ngFor ="let reser of reservas">
+  <div *ngFor ="let reser of reservas$ | async">
     <div *ngIf = "usuarioLog === reser.uidUsu">
 
       <ng-template [ngIf] = "reser.iud">
         <p>No has realizado ninguna resarva todavia</p>
       </ng-template>
-      <ng-template [ngIf] = "reser.estado.toString() === 'Aprovado'">
+      <ng-template [ngIf] = "reser.estado.toString() === 'Aprobado'">
         <p>Tu reserva fue Aprovada</p>
       </ng-template>
       <ng-template [ngIf] = "reser.estado.toString() === 'Rechazado'">
