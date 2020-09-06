@@ -155,15 +155,23 @@ export class RestaurantesAfiliadosPage implements OnInit {
     let x = valores['estrellas']
 
     this.restauranteService.getRestaurante(id).subscribe( data => {
+      
 
        let a : number = (parseInt(x) + data.calificacion)
        let y : number = data.aux + 1
        let total = (a/y)
 
+       // Guardar en la base con 2 decimales
+       let total2 = total.toFixed(2)
+       console.log("total", total);
+       let totalF = parseFloat(total2)
+
+       console.log("total firebase", totalF);
+       
        let califica : resta = {
         aux:y,
         calificacion: a,
-        promedio : total
+        promedio : totalF
       }
 
       this.restauranteService.updateRestaurante(id, califica)

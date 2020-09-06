@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color ="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill ="none" (click)= goRegreso()>
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
@@ -11,29 +11,22 @@
 </ion-header>
 
 <ion-content>
+  <div class="titulo">
+    <h2 style="text-align: center;">Reservas</h2>
+  </div>
 
   <div *ngFor ="let reser of reservas$ | async">
     <div *ngIf = "usuarioLog === reser.uidUsu">
-
-      <ng-template [ngIf] = "reser.iud">
-        <p>No has realizado ninguna resarva todavia</p>
-      </ng-template>
       <ng-template [ngIf] = "reser.estado.toString() === 'Aprobado'">
-        <p>Tu reserva fue Aprovada</p>
+        <p style="text-align: center;">Tu reserva fue Aprovada</p>
       </ng-template>
       <ng-template [ngIf] = "reser.estado.toString() === 'Rechazado'">
-        <p>Tu reserva fue Rechazada</p>
+        <p style="text-align: center;">Tu reserva fue Rechazada</p>
       </ng-template>
       <ng-template [ngIf] = "reser.estado.toString() === 'En Revision'">
-        <p>Tu reserva esta siendo Revisada</p>
+        <p style="text-align: center;">Tu reserva esta siendo Revisada</p>
       </ng-template>
-
     </div>
-  </div>
-
-  <div style="text-align: center;">
-    <br>
-    
   </div>
 
 </ion-content>

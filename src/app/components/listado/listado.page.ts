@@ -18,10 +18,10 @@ import { MeriendaService } from '../../servicios/merienda.service'
 import { MenuService } from '../../servicios/menu.service'
 import { Observable } from 'rxjs';
 import { PromocionService } from '../../servicios/promocion.service';
-import { DesayunoService } from '../../servicios/desayuno.service';
-import { especial } from '../../models/especial-interface';
 
 import { PerfilesService } from '../../servicios/perfiles.service'
+import { especial } from '../../models/especial-interface';
+import { DesayunoService } from '../../servicios/desayuno.service';
 
 
 @Component({

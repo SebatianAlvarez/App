@@ -19,6 +19,7 @@ export class MensajesPage implements OnInit {
 
     public usuarioLog:string;
     public reservas : any = [];
+    public valorReserva: boolean =true;
 
     public reservas$: Observable<Reserva[]>;
 
@@ -38,6 +39,36 @@ export class MensajesPage implements OnInit {
       console.log(error)
     }
 
+    // this.sinReserva();
+
+  }
+
+  // Aun no funciona
+  sinReserva(){
+    this.reservasService.listar().subscribe(data =>{
+      console.log("reservas", data);
+      console.log("reservas", this.usuarioLog);
+      for(let reserva of data){
+        if(this.usuarioLog === reserva.uidUsu){
+          console.log("si existe");
+          break;
+        }else if(this.usuarioLog != reserva.uidUsu && reserva.uidUsu){
+          console.log("no");
+          this.valorReserva = false; 
+        }
+      }
+      this.validarReserva(this.valorReserva)
+      console.log(this.validarReserva(this.valorReserva));
+    })
+  }
+
+  // metodo para cambiar el estado de la variable
+  validarReserva(valor: boolean){
+    if (valor){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   goRegreso(){
