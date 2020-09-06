@@ -33,6 +33,10 @@ export class RestaurantesService {
     // ))
    }
 
+   listar() {
+    return this.db.collection<resta>('perfiles').valueChanges();
+  }
+
    recuperarDatos(): Observable<resta[]>{
     return this.db
       .collection('perfiles')

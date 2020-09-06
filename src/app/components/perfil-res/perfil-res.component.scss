@@ -7,6 +7,7 @@
     display: grid;
 }
 
+
 input[type="radio"] {
     display: none;
   }
@@ -29,4 +30,37 @@ input[type="radio"] {
   input[type="radio"]:checked ~ label {
     color: orange;
   }
+
+ion-card{
+    width: 50%;
+    margin-left: 25%;
+}
+
+img{
+    margin-top: 0px;
+}
+
+ion-toolbar{
+    --background: #eeeeee ;
+    --opacity: 5.9;
+  }
+
+.titulo{
+    border: 0px solid #1dbfd4;
+    border-radius: 3%;
+    background-color: #1dbfd4;
+    color: white;
+  } 
+
+.menu{
+    text-align: center;
+    background-color: #e73d39;
+    color: white;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.mapa{
+    border: 2px solid black;
+}
 

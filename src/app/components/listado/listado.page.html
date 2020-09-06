@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
@@ -10,25 +10,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+  <!-- Promociones con Slides no funcionan -->
   <ion-card-header>
     <div  class="titulo">
       <h2 style="text-align: center;">Promociones</h2>
     </div>
   </ion-card-header>
-
-  <br>
+ 
     <ion-slides  pager ="true" class="slides">
-      <ion-slide *ngFor = "let pro of Promos" >
-        <div *ngFor = "let res of restaurante$ | async">
-          <div *ngIf ="res.userUID === pro.userUID" (click)="openRes(res)">
-            <img src = "{{pro.fotosPromocion}}" >
-          </div>
-        </div>
+      <ion-slide *ngFor="let pro of promoL" (click)="verMas()">   
+        <div>
+          <img [src] ="pro.fotosPromocion">
+        </div><br>
+      </ion-slide>
+      <ion-slide>
+        <div>
+          <ion-button color="danger" (click)="verMas()">Ver mas -></ion-button></div>
       </ion-slide>
     </ion-slides>
-  <br>
-  <br>
+  <br> 
+
+  <ion-content>
+  
   <ion-card-header>
     <div class="titulo">
       <h2 style="text-align: center;">Restaurantes</h2>
@@ -39,8 +42,9 @@
   <div  *ngFor = "let res of restaurante$ | async" (click) ="openRes(res)">
     <div *ngIf = "res.resVerificado === 'Aprobado'">
 
+
       <ion-card>
-        <img *ngIf ="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
         <ion-card-header>
           <ion-card-subtitle>{{res.tipoRestaurante}}</ion-card-subtitle>
           <ion-card-title>{{res.nombreRestaurante}}</ion-card-title>

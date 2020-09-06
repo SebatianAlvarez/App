@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill ="none" routerLink="/listado">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Restaurantes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header>
+    <div  class="titulo">
+      <h2 style="text-align: center;">Promociones</h2>
+    </div>
+  </ion-card-header>
+
+  
+  <div *ngFor="let res of restaurante$ | async">
+    <div  *ngFor="let pro of promociones$ | async">
+        <div  *ngIf="res.userUID === pro.userUID && pro.estado === 'verdadero'" (click)="openRes(res)">
+          <ion-card>
+            <ion-slides pager="true">
+              <ion-slide>
+                <img [src]="pro.fotosPromocion">
+              </ion-slide>
+            </ion-slides>
+          </ion-card>
+        </div>
+      </div>
+  </div>

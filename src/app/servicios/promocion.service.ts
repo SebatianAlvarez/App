@@ -39,6 +39,10 @@ export class PromocionService {
       );
   }
 
+  listar() {
+    return this.db.collection<promos>('promociones').valueChanges();
+  }
+
   getPromos() : Observable<promos[]>{
     return this.promos;
   }

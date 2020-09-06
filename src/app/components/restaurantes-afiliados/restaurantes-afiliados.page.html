@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="none" (click)="goMapa()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title>restaurantes Afiliados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <div *ngFor="let a of afiliados$ | async">
+      <div *ngFor="let r of restaurante$ | async">
+        <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta">
+          <div class="titulo">
+            <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
+          </div>
+          <img [src]="r.imagenRes" *ngIf="r.imagenRes">
+          <ion-button *ngIf="a.estado ==='verdadero'">Afiliado</ion-button>
+          <ion-button *ngIf="a.estado ==='falso'" color="danger">Pendiente</ion-button>
+          <ion-button *ngIf="a.estado ==='verdadero'" color="danger">Realizar Reserva</ion-button>
+
+
+        </div>
+      </div>
+    </div>
+  </ion-card>
+
+</ion-content>

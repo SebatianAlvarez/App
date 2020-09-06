@@ -26,12 +26,17 @@ import { afiliado } from '../../models/afiliados-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
-import { merienda } from '../../models/merienda-interface';
 
 import 'leaflet-routing-machine';
 import * as L from 'leaflet';
 
+
+
+import { especial } from '../../models/especial-interface';
+import { promos } from '../../models/promos-interface';
+
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+
 
 
 @Component({
@@ -46,17 +51,20 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
   public res : resta
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
-  public meriendas: merienda[]
+  public especial: especial[]
+  public promocion: promos[]
 
   public resID : string
 
   public usuarioLog : string;
   public UsuarioRoles : Usuario[]
-  public rolActual : string
+
+  public rolActual : string;
+
 
   public mostarMapa : boolean = false
 
-  private map
+  private map;
   marker: any;
   latLong = [];
   address: string[];
@@ -91,9 +99,11 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     this.res = this.navparams.get('res')
     this.desayunos = this.navparams.get('desayuno')
     this.almuerzos = this.navparams.get('almuerzo')
-    this.meriendas = this.navparams.get('merienda')
+    this.especial = this.navparams.get('especial')
+    this.promocion = this.navparams.get('promocion')
 
     console.log("aver " + this.almuerzos)
+    console.log("aver especial" + this.especial)
 
     this.preguntasService.getPreguntas().subscribe(data =>{
       this.preguntas = data
@@ -155,6 +165,7 @@ tiles.addTo(this.map);
   existeAfiliacion( valor:boolean){
     if(valor){
       return true;
+      
     }else{
       return false;
     }
