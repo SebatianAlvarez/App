@@ -51,6 +51,8 @@ export class ListadoPage implements OnInit {
 
     this.restaurante$ = this.restaurantesService.recuperarDatos();
 
+    console.log("aver " + this.restaurante$)
+
     
     // this.restaurantesService.getResta().subscribe( resta => {
     //   this.Restaurantes = resta;

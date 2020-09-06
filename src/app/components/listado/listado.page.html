@@ -37,7 +37,7 @@
   <br>
 
   <div  *ngFor = "let res of restaurante$ | async" (click) ="openRes(res)">
-    <div *ngIf = "res.resVerificado.toString() === 'Aprobado'">
+    <div *ngIf = "res.resVerificado === 'Aprobado'">
 
       <ion-card>
         <img *ngIf ="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
@@ -47,7 +47,6 @@
         </ion-card-header>
   
       </ion-card>
-
     </div>
   </div>
 
