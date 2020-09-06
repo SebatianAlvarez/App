@@ -16,15 +16,15 @@ export class AfiliadosServiceService {
   constructor(private db:AngularFirestore) { 
     this.afiliadoCollection = this.db.collection<afiliado>('afiliados');
 
-    this.afiliados = this.afiliadoCollection.snapshotChanges().pipe(map(
-      actions => {
-        return actions.map( x => {
-          const data = x.payload.doc.data();
-          const id = x.payload.doc.id;
-          return {id, ... data};
-        });
-      }
-    ));
+    //this.afiliados = this.afiliadoCollection.snapshotChanges().pipe(map(
+    //  actions => {
+    //    return actions.map( x => {
+    //      const data = x.payload.doc.data();
+    //      const id = x.payload.doc.id;
+    //      return {id, ... data};
+    //    });
+    //  }
+    //));
   }
 
   listar() {

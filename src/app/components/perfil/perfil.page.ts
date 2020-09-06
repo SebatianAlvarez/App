@@ -175,31 +175,6 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Restaurantes',
-        icon: 'restaurant',
-        handler: () => {
-          this.router.navigate(['/listado']);
-        }
-      },
-      {
-        text: 'Promociones',
-        icon: 'gift',
-        handler: () => {
-          this.router.navigate(['/lista-promociones-habilitadas'])
-      }},
-      {
-        text: 'Restaurantes Afiliados',
-        icon: 'restaurant',
-        handler: () => {
-          this.router.navigate(['/restaurantes-afiliados'])
-      }},
-      {
-          text: 'Mensajes',
-          icon: 'mail',
-          handler: () => {
-            this.router.navigate(['/mensajes'])
-        }
-      }, {
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

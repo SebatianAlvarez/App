@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { RestaurantesAfiliadosPage } from './restaurantes-afiliados.page';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 const routes: Routes = [
   {
     path: '',
@@ -18,6 +20,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

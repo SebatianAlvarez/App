@@ -34,6 +34,7 @@ import * as L from 'leaflet';
 
 import { especial } from '../../models/especial-interface';
 import { promos } from '../../models/promos-interface';
+import { Observable } from 'rxjs';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -79,6 +80,8 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
   validacionA: boolean = false;
   validacionB: boolean = true;
 
+  public afiliados$: Observable<afiliado[]>;
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
@@ -109,11 +112,13 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
       this.preguntas = data
     })
 
-    this.afiliadosService.getAfiliados().subscribe(x =>{
-      this.afiliados = x
-    })
+    this.afiliados$ = this.afiliadosService.recuperarDatos()
 
-    this.afiliadosService.getAfiliados().subscribe(data =>{
+    //this.afiliadosService.getAfiliados().subscribe(x =>{
+    // this.afiliados = x
+    //})
+
+    this.afiliadosService.listar().subscribe(data =>{
       for (let x of data){
         if(this.usuarioLog === x['uidUsu'] && x['idres'] === this.res.id){
           console.log(x['uidUsu']);
@@ -158,8 +163,10 @@ tiles.addTo(this.map);
   }
 
   Calificacion(){
-    const valores = this.calificar
-    console.log("aver " + valores)
+    const valores = this.calificar.value
+    let x = valores['estrellas']
+
+    console.log("aver " + x)
   }
 
   existeAfiliacion( valor:boolean){

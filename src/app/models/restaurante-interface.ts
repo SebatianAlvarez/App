@@ -14,7 +14,9 @@ export interface resta {
     horaCierre? : any
     latitud?: any
     longitud?: any
-    calificacion?: number
     resVerificado?: any
+    calificacion?: number
+    aux?: number
+    promedio?: number
 
   }

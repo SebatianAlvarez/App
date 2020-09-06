@@ -57,9 +57,9 @@ export class RestaurantesService {
   getRestaurante(id : string) : Observable<resta>{
     return this.restaurantesCollection.doc<resta>(id).valueChanges().pipe(
       take(1),
-      map(resta => {
-        resta.id = id
-        return resta;
+      map(x => {
+        x.id = id
+        return x;
       })
     )
   }

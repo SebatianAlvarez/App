@@ -12,9 +12,9 @@
 
 <ion-content >
 
-  <div *ngFor = "let afi of afiliados">
+  <div *ngFor = "let afi of afiliados$ | async">
     <div *ngIf = "usuarioLog === afi.uidResta">
-      <ion-card *ngIf = "afi.estado === 'En Revision'">
+      <ion-card *ngIf = "afi.estado === 'falso'">
         <ion-card-header>
           <ion-card-title>Afiliados en Espera</ion-card-title>
         </ion-card-header>

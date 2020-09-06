@@ -1,3 +1,6 @@
 export interface pregunta {
-    pregunta: string
+    calificacion: number
+    aux: number
+    promedio: number
+    id?: string
 }

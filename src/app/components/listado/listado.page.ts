@@ -21,6 +21,8 @@ import { PromocionService } from '../../servicios/promocion.service';
 import { DesayunoService } from '../../servicios/desayuno.service';
 import { especial } from '../../models/especial-interface';
 
+import { PerfilesService } from '../../servicios/perfiles.service'
+
 
 @Component({
   selector: 'app-listado',
@@ -54,12 +56,21 @@ export class ListadoPage implements OnInit {
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
     private modal: ModalController, public actionSheetController: ActionSheetController,
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
-    private almuerzoService : AlmuerzoService, private promocionesService: PromocionService) { }
+    private almuerzoService : AlmuerzoService, private promocionesService: PromocionService,
+    private perfilService : PerfilesService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
+
+    
 
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
+
+    this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
+      if(data.roles === "dueño"){
+        this.router.navigate(['/perfil'])
+      }
+    })
 
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
@@ -156,6 +167,24 @@ export class ListadoPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
+        text: 'Mi Perfil',
+        icon: 'person',
+        handler: () => {
+          this.router.navigate(['/perfil'])
+        }
+      },{
+        text: 'Restaurantes Afiliados',
+        icon: 'restaurant',
+        handler: () => {
+          this.router.navigate(['/restaurantes-afiliados'])
+        }
+      },{
+        text: 'Promociones',
+        icon: 'gift',
+        handler: () => {
+          this.router.navigate(['/lista-promociones-habilitadas'])
+        }
+      },{
         text: 'Mensajes',
         icon: 'mail',
         handler: () => {

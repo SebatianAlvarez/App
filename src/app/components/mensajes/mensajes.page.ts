@@ -41,7 +41,7 @@ export class MensajesPage implements OnInit {
   }
 
   goRegreso(){
-    this.router.navigate(['/perfil'])
+    this.router.navigate(['/listado'])
   }
 
   onLogout(){
@@ -52,18 +52,6 @@ export class MensajesPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Restaurantes',
-        icon: 'restaurant',
-        handler: () => {
-          this.router.navigate(['/listado']);
-        }
-      },{
-        text: 'Mi Perfil',
-        icon: 'person',
-        handler: () => {
-          this.router.navigate(['/perfil'])
-        }
-      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

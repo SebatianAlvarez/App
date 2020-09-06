@@ -11,6 +11,14 @@ import { Reserva } from '../../models/reserva-interface';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { PerfilesService } from '../../servicios/perfiles.service';
 
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+
+import { CalificarService } from '../../servicios/calificar.service'
+import { pregunta } from '../../models/preguntas';
+
+import { AuthService } from '../../servicios/auth.service';
+
+
 @Component({
   selector: 'app-restaurantes-afiliados',
   templateUrl: './restaurantes-afiliados.page.html',
@@ -21,11 +29,25 @@ export class RestaurantesAfiliadosPage implements OnInit {
   restaurante$: Observable<resta[]>;
   afiliados$: Observable<afiliado[]>;
 
+  suma : number = 0
+  auxi : number = 0
+
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
               private restauranteService: RestaurantesService, private alertController : AlertController,
-              private AFauth : AngularFireAuth, private db: AngularFirestore,
-              private router : Router, private perfilService : PerfilesService) { }
+              private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
+              private router : Router, private perfilService : PerfilesService,
+              private  calificarService : CalificarService,
+              public ActionSheetController: ActionSheetController, private authservice:AuthService,) { 
+
+              }
+
+              public calificar = this.formBuilder.group ({
+
+                id: new FormControl (''),
+                estrellas: new FormControl ('', [Validators.required]),
+               
+              });
 
   ngOnInit() {
     this.restaurante$ = this.restauranteService.recuperarDatos();
@@ -100,6 +122,56 @@ export class RestaurantesAfiliadosPage implements OnInit {
         }).catch(err => reject(err))
       })
     })
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.ActionSheetController.create({
+      header: 'Menu',
+      buttons: [{
+        text: 'Mensajes',
+        icon: 'mail',
+        handler: () => {
+          this.router.navigate(['/mensajes'])
+        }
+      },{
+        text: 'Cerrar Sesion',
+        icon: 'log-out',
+        handler: () => {
+         this.onLogout();
+        }
+      }]
+    });
+    await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
+  }
+
+  onLogout(){
+    this.authservice.logout();
+  }
+
+  Calificacion(id : string){
+
+    const valores: number = this.calificar.value
+    let x = valores['estrellas']
+
+    this.restauranteService.getRestaurante(id).subscribe( data => {
+
+       let a : number = (parseInt(x) + data.calificacion)
+       let y : number = data.aux + 1
+       let total = (a/y)
+
+       let califica : resta = {
+        aux:y,
+        calificacion: a,
+        promedio : total
+      }
+
+      this.restauranteService.updateRestaurante(id, califica)
+
+
+      
+    })
+    
   }
 
 }

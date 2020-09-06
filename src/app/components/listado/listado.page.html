@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start" fill ="none" routerLink="/perfil">
-      <ion-icon name = "arrow-back" ></ion-icon>
-    </ion-button>
     <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>
@@ -42,7 +39,18 @@
   <div  *ngFor = "let res of restaurante$ | async" (click) ="openRes(res)">
     <div *ngIf = "res.resVerificado === 'Aprobado'">
 
-
+      <ng-template [ngIf] = 'res.promedio >= 1 && res.promedio <=  1.9'>
+        <img src="../../../assets//icon/1estrellas.jpg">
+      </ng-template>
+      <ng-template [ngIf] = "res.promedio >= 2 && res.promedio <=  2.9">
+        <img src="../../../assets//icon/2estrellas.jpg">
+      </ng-template>
+      <ng-template [ngIf] = "res.promedio >= 3 && res.promedio <=  3.9">
+        <img src="../../../assets//icon/3estrellas.jpg">
+      </ng-template>
+      <ng-template [ngIf] = "res.promedio >= 4 && res.promedio <=  5">
+        <img src="../../../assets//icon/4estrellas.jpg">
+      </ng-template>
       <ion-card>
         <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
         <ion-card-header>
