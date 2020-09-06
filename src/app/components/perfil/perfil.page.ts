@@ -180,13 +180,20 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/listado']);
         }
-      },{
+      },
+      {
         text: 'Promociones',
         icon: 'gift',
         handler: () => {
           this.router.navigate(['/lista-promociones-habilitadas'])
-        }
-        },{
+      }},
+      {
+        text: 'Restaurantes Afiliados',
+        icon: 'restaurant',
+        handler: () => {
+          this.router.navigate(['/restaurantes-afiliados'])
+      }},
+      {
           text: 'Mensajes',
           icon: 'mail',
           handler: () => {

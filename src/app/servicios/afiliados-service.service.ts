@@ -15,6 +15,7 @@ export class AfiliadosServiceService {
 
   constructor(private db:AngularFirestore) { 
     this.afiliadoCollection = this.db.collection<afiliado>('afiliados');
+
     this.afiliados = this.afiliadoCollection.snapshotChanges().pipe(map(
       actions => {
         return actions.map( x => {
@@ -24,6 +25,23 @@ export class AfiliadosServiceService {
         });
       }
     ));
+  }
+
+  listar() {
+    return this.db.collection<afiliado>('afiliados').valueChanges();
+  }
+
+  recuperarDatos(): Observable<afiliado[]>{
+    return this.db
+      .collection('afiliados')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as afiliado;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
   }
 
   getAfiliados() : Observable<afiliado[]>{

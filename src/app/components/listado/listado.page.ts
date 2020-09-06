@@ -141,11 +141,9 @@ export class ListadoPage implements OnInit {
         if(promos['estado'] === "verdadero" && i < 10){
           this.promoL.push(promos)
         }else{
-          console.log("no");
         }
         i  = i + 1;
         console.log();
-        
       }
       console.log("a ver", this.promoL);
 
