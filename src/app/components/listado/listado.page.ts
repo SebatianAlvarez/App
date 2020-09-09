@@ -33,6 +33,9 @@ export class ListadoPage implements OnInit {
 
   // public Restaurantes : resta[]
   restaurante$: Observable<resta[]>;
+  resHabilitados: resta[] = []; 
+  resHabilitados2: resta[]; 
+
 
   public Promos : promos[]
    
@@ -66,6 +69,8 @@ export class ListadoPage implements OnInit {
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
 
+
+
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
         this.router.navigate(['/perfil'])
@@ -75,7 +80,21 @@ export class ListadoPage implements OnInit {
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
 
-    console.log("aver " + this.restaurante$)
+
+    // De esta manera evito poner los NgIf en el HTML
+    this.restaurantesService.listar().subscribe(x =>{
+      this.resHabilitados = []
+      x.forEach(element => {
+        if(element['resVerificado'] === 'Aprobado'){
+          console.log("xxx", element);
+          this.resHabilitados.push(element)
+        }else{
+          console.log("no", element);
+        }
+      });
+      console.log("array", this.resHabilitados);
+      
+    })
 
     
 
@@ -112,6 +131,10 @@ export class ListadoPage implements OnInit {
       this.especial = espe;
     })
 
+    this.restaurantesService.restaurantesHabilitados();
+    console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
+    
+
 
 
 
@@ -121,6 +144,24 @@ export class ListadoPage implements OnInit {
     // })
 
   }
+
+  restaurantesHabilitados(){
+    this.resHabilitados = [];
+    this.restaurantesService.recuperarDatos()
+      .subscribe(
+        data =>{
+          for(let key$ in data){
+            let habilitados = data[key$];
+            if(habilitados['resVerificado'] === 'Aprobado'){
+              this.resHabilitados.push(habilitados);
+            }
+          }
+          this.resHabilitados2 = this.resHabilitados;
+        }
+      )
+  }
+
+
 
   openRes(res){
     this.modal.create({

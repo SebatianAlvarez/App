@@ -1,3 +1,4 @@
+import { resta } from './../../models/restaurante-interface';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { ReservasService } from '../../servicios/reservas.service';
 import { Reserva } from '../../models/reserva-interface';
 import { Observable } from 'rxjs';
+import { RestaurantesService } from '../../servicios/restaurantes.service';
 
 @Component({
   selector: 'app-mensajes',
@@ -14,7 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class MensajesPage implements OnInit {
 
-  constructor(public actionSheetController: ActionSheetController, private router:Router, 
+  constructor(public actionSheetController: ActionSheetController, private router:Router, private restauranteSvc: RestaurantesService,
     private authservice: AuthService, private AFauth : AngularFireAuth, private reservasService : ReservasService) { }
 
     public usuarioLog:string;
@@ -22,6 +24,7 @@ export class MensajesPage implements OnInit {
     public valorReserva: boolean =true;
 
     public reservas$: Observable<Reserva[]>;
+    public restaurante$: Observable<resta[]>;
 
   ngOnInit() {
 
@@ -30,6 +33,7 @@ export class MensajesPage implements OnInit {
     //})
 
     this.reservas$ = this.reservasService.recuperarDatos()
+    this.restaurante$ = this.restauranteSvc.recuperarDatos()
 
     try {
       let currentUser = this.AFauth.auth.currentUser;
