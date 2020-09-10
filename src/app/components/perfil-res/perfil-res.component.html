@@ -135,22 +135,23 @@
     </div>
   </div>
 
-  <br>
 
-  <div *ngFor="let afi of afiliados$ | async">
+  <!-- <div *ngFor="let afi of afiliados$ | async">
     <div *ngIf="afi.uidUsu === usuarioLog && afi.uidResta === res.userUID">
       <ng-template [ngIf]="afi.estado === 'verdadero'">
         <ion-button (click)="presentModal()">Realizar Reserva</ion-button>
       </ng-template>
     </div>
-  </div>
+  </div> -->
 
-  <br>
-  <p>ss</p>
+  <div class="titulo">
+    <h2 style="text-align: center;">Ubicación</h2>
+  </div>
+  
   <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
   <br>
 
-  <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button>
+  <!-- <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button> -->
 
   <div *ngFor="let afi of afiliados$ | async">
     
@@ -230,15 +231,9 @@
 -->
 
 
-  <div >
-  <ion-button (click)="presentarMensaje()">Afiliarse</ion-button>
-    
+  <div style="text-align: center;">
+  <ion-button style="text-align: center;" (click)="presentarMensaje()"  color="danger" >Afiliarse</ion-button>
   </div>
-  <div [hidden]="validacionB">
-
-    Reserva
-  </div>
-
 
   <ng-template #foto>
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">

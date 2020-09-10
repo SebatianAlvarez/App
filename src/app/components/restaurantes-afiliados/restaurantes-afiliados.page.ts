@@ -89,6 +89,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           text : "Confirmar Reserva",
           handler : data =>{
             this.Reservar(data.mesas, data.tiempo ,id);
+            this.presentReserva();
           }
         }
       ]
@@ -96,6 +97,87 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
+  }
+
+  // Mensaje despues de calificar el restaurante
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Gracias por tu opinón',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  // Reservas
+  async presentReserva() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Tu reserva sera verificada en minutos',
+      // subHeader: 'Subtitle',
+      message: 'Puedes ir al menu Mensajes.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  // Calificacion Alert
+  async presentAlertConfirm(id: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Calificar este Restaurante?!',
+      // message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            console.log('Confirm Okay');
+            const valores: number = this.calificar.value
+            let x = valores['estrellas']
+
+            this.restauranteService.getRestaurante(id).subscribe( data => {
+      
+
+              let a : number = (parseInt(x) + data.calificacion)
+              let y : number = data.aux + 1
+              let total = (a/y)
+
+              // Guardar en la base con 2 decimales
+              let total2 = total.toFixed(2)
+              console.log("total", total);
+              let totalF = parseFloat(total2)
+
+              console.log("total firebase", totalF);
+              
+              let califica : resta = {
+                aux:y,
+                calificacion: a,
+                promedio : totalF
+              }
+
+              this.restauranteService.updateRestaurante(id, califica)
+              this.presentAlert();
+              this.router.navigate(['/listado']);
+
+              
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   Reservar(mesa : string, tiempo: string , id : string ){
@@ -155,15 +237,23 @@ export class RestaurantesAfiliadosPage implements OnInit {
     let x = valores['estrellas']
 
     this.restauranteService.getRestaurante(id).subscribe( data => {
+      
 
        let a : number = (parseInt(x) + data.calificacion)
        let y : number = data.aux + 1
        let total = (a/y)
 
+       // Guardar en la base con 2 decimales
+       let total2 = total.toFixed(2)
+       console.log("total", total);
+       let totalF = parseFloat(total2)
+
+       console.log("total firebase", totalF);
+       
        let califica : resta = {
         aux:y,
         calificacion: a,
-        promedio : total
+        promedio : totalF
       }
 
       this.restauranteService.updateRestaurante(id, califica)

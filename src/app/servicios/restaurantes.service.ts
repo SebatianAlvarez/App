@@ -14,6 +14,8 @@ export class RestaurantesService {
 
   private restaurantesCollection : AngularFirestoreCollection<resta>;
   private restaurantes : Observable<resta[]>;
+  resHabilitados: resta[] = []; 
+  // resHabilitados2: resta[] = []; 
 
   constructor(private db: AngularFirestore) {
 
@@ -37,6 +39,8 @@ export class RestaurantesService {
     return this.db.collection<resta>('perfiles').valueChanges();
   }
 
+  
+
    recuperarDatos(): Observable<resta[]>{
     return this.db
       .collection('perfiles')
@@ -44,10 +48,27 @@ export class RestaurantesService {
       .pipe(
         map(actions => actions.map(a =>{
           const data = a.payload.doc.data() as resta;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc.id;        
+                 
           return {id, ...data}; //SPREAD OPERATOR
         }))
       );
+  }
+
+  restaurantesHabilitados(){
+    let resHabilitados = [];
+    this.recuperarDatos()
+      .subscribe(
+        data =>{
+          for(let key$ in data){
+            let habilitados = data[key$];
+            if(habilitados['resVerificado'] === 'Aprobado'){
+              return this.resHabilitados.push(habilitados);
+            }
+          }
+          // return this.resHabilitados;
+        }
+      )
   }
 
    getRestaurantes() : Observable<resta[]>{

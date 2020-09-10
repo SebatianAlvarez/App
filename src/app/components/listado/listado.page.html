@@ -36,31 +36,237 @@
   </ion-card-header>
   <br>
 
-  <div  *ngFor = "let res of restaurante$ | async" (click) ="openRes(res)">
-    <div *ngIf = "res.resVerificado === 'Aprobado'">
+  <ion-content [fullscreen]="true">
+    <ion-searchbar
+      showcancelbutton=""
+      (ionInput)="filterList2($event)"
+      
+    ></ion-searchbar>
 
-      <ng-template [ngIf] = 'res.promedio >= 1 && res.promedio <=  1.9'>
-        <img src="../../../assets//icon/1estrellas.jpg">
-      </ng-template>
-      <ng-template [ngIf] = "res.promedio >= 2 && res.promedio <=  2.9">
-        <img src="../../../assets//icon/2estrellas.jpg">
-      </ng-template>
-      <ng-template [ngIf] = "res.promedio >= 3 && res.promedio <=  3.9">
-        <img src="../../../assets//icon/3estrellas.jpg">
-      </ng-template>
-      <ng-template [ngIf] = "res.promedio >= 4 && res.promedio <=  5">
-        <img src="../../../assets//icon/4estrellas.jpg">
-      </ng-template>
-      <ion-card>
-        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+    <!-- <ion-list lines="none">
+      <ion-item *ngFor="let foodItem of resHabilitados">
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h3>{{ foodItem.promedio }}</h3>
+            <h3>{{ foodItem.nombreRestaurante }}</h3>
+            <h3>{{ foodItem.tipoRestaurante }}</h3>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list> -->
+
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+      <ion-card  *ngFor="let res of resHabilitados"  (click) ="openRes(res)">
         <ion-card-header>
-          <ion-card-subtitle>{{res.tipoRestaurante}}</ion-card-subtitle>
-          <ion-card-title>{{res.nombreRestaurante}}</ion-card-title>
+          <ion-card-subtitle style="text-align: center;">{{res.nombreRestaurante}}</ion-card-subtitle>
+          <ion-card-title style="text-align: center;">{{res.tipoRestaurante}}</ion-card-title>
         </ion-card-header>
+        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <ion-card-content>
+          <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 1" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 1" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/1estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 2 && res.promedio <=  2.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 2" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 2" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/2estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 3 && res.promedio <=  3.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 3" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 3" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/3estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 4 && res.promedio <=  4.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 4" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 4" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/4estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 5">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 5" name="star"></ion-icon>
+              <span>
+                <img class="estrellas1" src="../../../assets//icon/5estrellas.jpg" width="10px" height="50px">
+              </span>
+            </ion-card-title>
+          </ng-template>
+        </ion-card-content>
+  
+      </ion-card>
+  
+    </div>
+  </ion-content>
+
+  
+<!--     
+  <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <ion-card *ngFor="let res of restaurante$ | async" (click) ="openRes(res)">
+      <ion-card *ngIf="res.resVerificado === 'Aprobado'">
+        <ion-card-header>
+          <ion-card-subtitle style="text-align: center;">{{res.nombreRestaurante}}</ion-card-subtitle>
+          <ion-card-title style="text-align: center;">{{res.tipoRestaurante}}</ion-card-title>
+        </ion-card-header>
+        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <ion-card-content>
+          <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 1" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 1" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/1estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 2 && res.promedio <=  2.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 2" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 2" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/2estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 3 && res.promedio <=  3.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 3" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 3" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/3estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 4 && res.promedio <=  4.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 4" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 4" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/4estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 5">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 5" name="star"></ion-icon>
+              <span>
+                <img class="estrellas1" src="../../../assets//icon/5estrellas.jpg" width="10px" height="50px">
+              </span>
+            </ion-card-title>
+          </ng-template>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-card>
+  </div> -->
+
+  <!-- Se alinea pero al cambiar de un restaurante el estado se daña -->
+    <!-- <ion-row >
+      <ion-col col-12 *ngFor="let res of restaurante$ | async" (click) ="openRes(res)">
+        <ion-card *ngIf="res.resVerificado === 'Aprobado'">
+          <ion-card-header>
+            <ion-card-subtitle style="text-align: center;">{{res.nombreRestaurante}}</ion-card-subtitle>
+            <ion-card-title style="text-align: center;">{{res.tipoRestaurante}}</ion-card-title>
+          </ion-card-header>
+          <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+          <ion-card-content>
+            <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
+              <ion-card-title>{{res.promedio}}
+                <ion-icon *ngIf="res.promedio === 1" name="star"></ion-icon>
+                <ion-icon *ngIf="res.promedio != 1" name="star-half"></ion-icon>
+              </ion-card-title>
+              <img class="estrellas" src="../../../assets//icon/1estrellas.jpg" width="10px" height="50px">
+            </ng-template>
+            <ng-template [ngIf]="res.promedio >= 2 && res.promedio <=  2.9">
+              <ion-card-title>{{res.promedio}}
+                <ion-icon *ngIf="res.promedio === 2" name="star"></ion-icon>
+                <ion-icon *ngIf="res.promedio != 2" name="star-half"></ion-icon>
+              </ion-card-title>
+              <img class="estrellas" src="../../../assets//icon/2estrellas.jpg">
+            </ng-template>
+            <ng-template [ngIf]="res.promedio >= 3 && res.promedio <=  3.9">
+              <ion-card-title>{{res.promedio}}
+                <ion-icon *ngIf="res.promedio === 3" name="star"></ion-icon>
+                <ion-icon *ngIf="res.promedio != 3" name="star-half"></ion-icon>
+              </ion-card-title>
+              <img class="estrellas" src="../../../assets//icon/3estrellas.jpg">
+            </ng-template>
+            <ng-template [ngIf]="res.promedio >= 4 && res.promedio <=  4.9">
+              <ion-card-title>{{res.promedio}}
+                <ion-icon *ngIf="res.promedio === 4" name="star"></ion-icon>
+                <ion-icon *ngIf="res.promedio != 4" name="star-half"></ion-icon>
+              </ion-card-title>
+              <img class="estrellas" src="../../../assets//icon/4estrellas.jpg" width="10px" height="50px">
+            </ng-template>
+            <ng-template [ngIf]="res.promedio >= 5">
+              <ion-card-title>{{res.promedio}}
+                <ion-icon *ngIf="res.promedio === 5" name="star"></ion-icon>
+                <span>
+                  <img class="estrellas1" src="../../../assets//icon/5estrellas.jpg" width="10px" height="50px">
+                </span>
+              </ion-card-title>
+            </ng-template>
+          </ion-card-content>
+          </ion-card>
+      </ion-col>
+    
+  </ion-row> -->
+ 
+
+  <!-- <div class="row" *ngFor="let res of restaurante$ | async" (click) ="openRes(res)">
+    <div  class="col-md-12 mx-auto my-5" *ngIf="res.resVerificado === 'Aprobado'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle style="text-align: center;">{{res.nombreRestaurante}}</ion-card-subtitle>
+          <ion-card-title style="text-align: center;">{{res.tipoRestaurante}}</ion-card-title>
+        </ion-card-header>
+        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <ion-card-content>
+          <ion-card-title>
+            Valoraciones y opiniones
+          </ion-card-title>
+          <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 1" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 1" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/1estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 2 && res.promedio <=  2.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 2" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 2" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/2estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 3 && res.promedio <=  3.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 3" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 3" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/3estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 4 && res.promedio <=  4.9">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 4" name="star"></ion-icon>
+              <ion-icon *ngIf="res.promedio != 4" name="star-half"></ion-icon>
+            </ion-card-title>
+            <img class="estrellas" src="../../../assets//icon/4estrellas.jpg" width="10px" height="50px">
+          </ng-template>
+          <ng-template [ngIf]="res.promedio >= 5">
+            <ion-card-title>{{res.promedio}}
+              <ion-icon *ngIf="res.promedio === 5" name="star"></ion-icon>
+              <span>
+                <img class="estrellas1" src="../../../assets//icon/5estrellas.jpg" width="10px" height="50px">
+              </span>
+            </ion-card-title>
+          </ng-template>
+        </ion-card-content>
+
   
       </ion-card>
     </div>
-  </div>
+  </div> -->
 
   <ng-template #foto>
     <img src = "../../../assets/foto.png">

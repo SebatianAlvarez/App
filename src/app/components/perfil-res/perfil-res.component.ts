@@ -205,6 +205,16 @@ tiles.addTo(this.map);
   })
 }
 
+existeAfiliado(){
+  this.afiliadosService.listar().subscribe(data=>{
+    for(let a of data){
+      if(this.usuarioLog === a.uidUsu){
+        
+      }
+    }
+  })
+}
+
 
   async presentarMensaje(){
     const alert = await this.alertController.create({
@@ -425,6 +435,8 @@ aver(){
   })
 }
 
+
+
 //dibujar en mapa con en un punto fijo
 
 /*
@@ -474,11 +486,7 @@ getAddress(lat: number, long : number){
 }
 */
 
-alv(){
 
-  
-
-}
 
 mostrar(id : string){
   this.restauranteService.getRestaurante(id).subscribe(data =>{

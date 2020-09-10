@@ -17,11 +17,13 @@ import { AlmuerzoService } from '../../servicios/almuerzo.service'
 import { MeriendaService } from '../../servicios/merienda.service'
 import { MenuService } from '../../servicios/menu.service'
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { PromocionService } from '../../servicios/promocion.service';
-import { DesayunoService } from '../../servicios/desayuno.service';
-import { especial } from '../../models/especial-interface';
 
 import { PerfilesService } from '../../servicios/perfiles.service'
+import { especial } from '../../models/especial-interface';
+import { DesayunoService } from '../../servicios/desayuno.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -33,6 +35,13 @@ export class ListadoPage implements OnInit {
 
   // public Restaurantes : resta[]
   restaurante$: Observable<resta[]>;
+  resHabilitados: resta[] = []; 
+  resHabilitados2: resta[] = []; 
+
+
+  // busqueda
+  public resList: any[];
+
 
   public Promos : promos[]
    
@@ -57,14 +66,18 @@ export class ListadoPage implements OnInit {
     private modal: ModalController, public actionSheetController: ActionSheetController,
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
     private almuerzoService : AlmuerzoService, private promocionesService: PromocionService,
-    private perfilService : PerfilesService) { }
+    private perfilService : PerfilesService, private firestore: AngularFirestore) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.resList = await this.initializeItems();
 
     
 
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
+
+
 
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
@@ -75,7 +88,24 @@ export class ListadoPage implements OnInit {
     this.restaurante$ = this.restaurantesService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
 
-    console.log("aver " + this.restaurante$)
+
+    // De esta manera evito poner los NgIf en el HTML
+    this.restaurantesService.listar().subscribe(x =>{
+      this.resHabilitados = []
+      x.forEach(element => {
+        if(element['resVerificado'] === 'Aprobado'){
+          console.log("xxx", element);
+          this.resHabilitados.push(element)
+        }else{
+          console.log("no", element);
+        }
+      });
+      console.log("array", this.resHabilitados);
+      
+    })
+
+    this.resHabilitados = await this.initializeItems();
+
 
     
 
@@ -112,6 +142,10 @@ export class ListadoPage implements OnInit {
       this.especial = espe;
     })
 
+    this.restaurantesService.restaurantesHabilitados();
+    console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
+    
+
 
 
 
@@ -121,6 +155,77 @@ export class ListadoPage implements OnInit {
     // })
 
   }
+
+  async initializeItems(): Promise<any> {
+
+    
+    const restaList = await this.firestore.collection('perfiles')
+      .valueChanges().pipe(first()).toPromise();
+      console.log("que es esto", restaList);
+      this.resHabilitados2 = []
+      restaList.forEach(element => {
+        if(element['resVerificado'] === 'Aprobado'){
+          console.log("xxx", element);
+          this.resHabilitados2.push(element)
+        }else{
+          console.log("no", element);
+        }
+      
+      });
+      console.log("aaa", this.resHabilitados2);
+      
+      return this.resHabilitados2;
+
+      
+  }
+
+  async filterList(evt) {
+    this.resList = await this.initializeItems();
+    const searchTerm = evt.srcElement.value;
+  
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.resList = this.resList.filter(Food => {
+      if (Food.nombreRestaurante && searchTerm) {
+        return (Food.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || Food.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1  );
+      }
+    });
+  }
+
+  async filterList2(evt) {
+    this.resHabilitados = await this.initializeItems();
+    const searchTerm = evt.srcElement.value;
+  
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.resHabilitados = this.resList.filter(currentFood => {
+      if (currentFood.nombreRestaurante && searchTerm) {
+        return (currentFood.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || currentFood.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+  }
+
+  restaurantesHabilitados(){
+    this.resHabilitados = [];
+    this.restaurantesService.recuperarDatos()
+      .subscribe(
+        data =>{
+          for(let key$ in data){
+            let habilitados = data[key$];
+            if(habilitados['resVerificado'] === 'Aprobado'){
+              this.resHabilitados.push(habilitados);
+            }
+          }
+          this.resHabilitados2 = this.resHabilitados;
+        }
+      )
+  }
+
+
 
   openRes(res){
     this.modal.create({
