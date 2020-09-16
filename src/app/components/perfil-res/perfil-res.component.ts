@@ -54,6 +54,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
   public almuerzos: almuerzo[]
   public especial: especial[]
   public promocion: promos[]
+  public usu: Usuario[]
 
   public resID : string
 
@@ -104,9 +105,11 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     this.almuerzos = this.navparams.get('almuerzo')
     this.especial = this.navparams.get('especial')
     this.promocion = this.navparams.get('promocion')
+    this.usu = this.navparams.get('usuario')
 
     console.log("aver " + this.almuerzos)
     console.log("aver especial" + this.especial)
+    console.log("aver usu" + this.usu)
 
     this.preguntasService.getPreguntas().subscribe(data =>{
       this.preguntas = data
@@ -184,7 +187,6 @@ tiles.addTo(this.map);
     
   return new Promise<any>((resolve, reject) => {
 
-    
     let afiliadoID = this.db.createId();
     afi.id = afiliadoID;
     let usuario = this.perfilService.getUsuario(this.usuarioLog);
@@ -434,8 +436,6 @@ aver(){
     console.log("aver : "+ data.nombre)
   })
 }
-
-
 
 //dibujar en mapa con en un punto fijo
 

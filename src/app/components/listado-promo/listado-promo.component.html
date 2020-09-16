@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-button slot="start" fill="none" (click)="goRegreso()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">{{pro.estado}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="ion-padding"> 
+    <div class="titulo">
+      <h3 style="text-align: center;">Promociones</h3>
+    </div>
+    <ion-card>
+      
+      <ion-header>
+
+        <img src="{{pro.fotosPromocion}}" alt="">
+        <!-- <img *ngIf="pro.fotosPromocion" [src]=pro.fotosPromocion width="100%" height="17%" margin-top="5px"> -->
+      </ion-header>
+    </ion-card>
+
+  <!-- <div *ngFor="let r of res">
+      <div class="menu">
+      <h4 >Desayuno</h4>
+      </div>
+      <ion-list>
+        <ion-item>
+          <h6><b>Tipo Desayuno: </b>{{r.id}}</h6>
+        </ion-item>
+      </ion-list>
+  </div> -->
+</ion-content>

@@ -24,6 +24,8 @@ import { PerfilesService } from '../../servicios/perfiles.service'
 import { especial } from '../../models/especial-interface';
 import { DesayunoService } from '../../servicios/desayuno.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ListadoPromoComponent } from '../listado-promo/listado-promo.component';
+import { Usuario } from '../../models/usuario-interface';
 
 
 @Component({
@@ -36,6 +38,7 @@ export class ListadoPage implements OnInit {
   // public Restaurantes : resta[]
   restaurante$: Observable<resta[]>;
   resHabilitados: resta[] = []; 
+  promoHabilitados: promos[] = []; 
   resHabilitados2: resta[] = []; 
 
 
@@ -60,6 +63,9 @@ export class ListadoPage implements OnInit {
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
   public especial: especial[]
+  public promo: promos[]
+  public resta: resta[]
+  public usuarios: Usuario[]
 
 
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
@@ -104,10 +110,20 @@ export class ListadoPage implements OnInit {
       
     })
 
+    this.promocionesService.listar().subscribe(x =>{
+      this.promoHabilitados = []
+      x.forEach(element => {
+        if(element['estado'] === 'verdadero'){
+          console.log("xxx", element);
+          this.promoHabilitados.push(element)
+        }else{
+          console.log("no", element);
+        }
+      });
+      console.log("array", this.promoHabilitados);
+    })
+
     this.resHabilitados = await this.initializeItems();
-
-
-    
 
     // this.promocionesService.listar().subscribe(data =>{
     //   console.log(data);
@@ -145,10 +161,6 @@ export class ListadoPage implements OnInit {
     this.restaurantesService.restaurantesHabilitados();
     console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
     
-
-
-
-
 
     // this.meriendaService.getMeri().subscribe(meri => {
     //   this.meriendas = meri
@@ -235,10 +247,23 @@ export class ListadoPage implements OnInit {
         desayuno: this.desayunos,
         almuerzo: this.almuerzos,
         especial: this.especial,
-        
+        usuario: this.usuarios
       }
     }).then((modal) => modal.present())
   }
+
+  openPromo(pro){
+    this.modal.create({
+      component: ListadoPromoComponent,
+      componentProps : {
+        pro: pro,
+        resta: this.resta, 
+        especial: this.especial,
+        usuario: this.usuarios
+      }
+    }).then((modal) => modal.present())
+  }
+
 
   onLogout(){
     this.authservice.logout();
