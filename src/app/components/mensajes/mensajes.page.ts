@@ -1,6 +1,6 @@
 import { resta } from './../../models/restaurante-interface';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -17,7 +17,7 @@ import { RestaurantesService } from '../../servicios/restaurantes.service';
 export class MensajesPage implements OnInit {
 
   constructor(public actionSheetController: ActionSheetController, private router:Router, private restauranteSvc: RestaurantesService,
-    private authservice: AuthService, private AFauth : AngularFireAuth, private reservasService : ReservasService) { }
+    private authservice: AuthService, private AFauth : AngularFireAuth, private reservasService : ReservasService, public alertController: AlertController) { }
 
     public usuarioLog:string;
     public reservas : any = [];
@@ -45,6 +45,22 @@ export class MensajesPage implements OnInit {
 
     // this.sinReserva();
 
+  }
+
+  eliminarReserva(id: string){
+    this.reservasService.deleteReserva(id);
+  }
+
+  async alertEliminar(id: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Reserva Eliminada',
+      // subHeader: 'Subtitle',
+      message: 'Tu reserva ha sido eliminada.',
+      buttons: ['OK']
+    });
+    this.eliminarReserva(id);
+    await alert.present();
   }
 
   // Aun no funciona

@@ -27,3 +27,17 @@
   input[type="radio"]:checked ~ label {
     color: orange;
   }
+
+  ion-toolbar{
+    --background: #eeeeee ;
+  }
+
+  ion-card{
+    width: 60%;
+    display: grid;
+    margin-left: 80px;
+  }
+
+  ion-content{
+    background-color: brown;
+  }

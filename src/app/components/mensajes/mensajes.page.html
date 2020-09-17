@@ -20,9 +20,14 @@
     <div *ngFor="let reser of reservas$ | async">
       <div *ngIf="usuarioLog === reser.uidUsu">
         <ng-template [ngIf]="res.userUID === reser.uidResta && reser.estado.toString() === 'Aprobado'">
+          
           <ion-card>
             <ion-card-header>
               <p style="text-align: center;">Tu reserva ha sido <b style="color: green;">aprobada</b> </p>
+              <br>
+              <div class="imagen">
+                <img *ngIf="res.imagenRes;else foto" [src]="res.imagenRes" width="140px">
+              </div>
               <ion-card-subtitle>
                 Restaurante: {{res.nombreRestaurante}}
               </ion-card-subtitle>
@@ -33,15 +38,22 @@
                 Tiempo: {{reser.tiempo}} &nbsp; minutos<br> 
               </ion-card-subtitle>
               <ion-card-header>
-                <ion-button color="danger"><ion-icon name="trash"></ion-icon></ion-button>
+                <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
               </ion-card-header>
             </ion-card-header>
             </ion-card>
         </ng-template>
         <ng-template [ngIf]=" res.userUID === reser.uidResta && reser.estado.toString() === 'Rechazado'">
+          
           <ion-card>
             <ion-card-header>
               <p style="text-align: center;">Tu reserva fue <b style="color:red;">rechazada</b> </p>
+              <br>
+              <div class="imagen">
+                <img *ngIf="res.imagenRes;else foto" [src]="res.imagenRes" width="140px">
+              </div>
+              
+
               <ion-card-subtitle>
                 Restaurante: {{res.nombreRestaurante}}
               </ion-card-subtitle>
@@ -52,7 +64,7 @@
                 Tiempo: {{reser.tiempo}} &nbsp; minutos<br> 
               </ion-card-subtitle>
               <ion-card-header>
-                <ion-button color="danger"><ion-icon name="trash"></ion-icon></ion-button>
+                <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
               </ion-card-header>
             </ion-card-header>
             </ion-card>
@@ -61,6 +73,11 @@
           <ion-card>
             <ion-card-header>
               <p style="text-align: center;">Tu reserva esta siendo <b style="color: #1dbfd4;">revisada</b> </p>
+              <br>
+              <div class="imagen">
+                <img *ngIf="res.imagenRes;else foto" [src]="res.imagenRes" width="140px">
+              </div>
+              
               <ion-card-subtitle>
                 Restaurante: {{res.nombreRestaurante}}
               </ion-card-subtitle>
@@ -71,7 +88,7 @@
                 Tiempo: {{reser.tiempo}} &nbsp; minutos<br> 
               </ion-card-subtitle>
               <ion-card-header>
-                <ion-button color="danger"><ion-icon name="trash"></ion-icon></ion-button>
+                <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
               </ion-card-header>
             </ion-card-header>
             </ion-card>
@@ -80,5 +97,8 @@
     </div>
   </div>
   
-
+  <ng-template #foto>
+    <img src = "../../../assets/foto.png" width="10px">
+  </ng-template>
 </ion-content>
+
