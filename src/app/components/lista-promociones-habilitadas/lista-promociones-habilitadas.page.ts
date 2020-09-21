@@ -21,6 +21,7 @@ export class ListaPromocionesHabilitadasPage implements OnInit {
   restaurante$: Observable<resta[]>;
   promociones$: Observable<promos[]>;
   public promocion: promos[]
+  
 
 
   constructor(private router:Router,
@@ -40,6 +41,8 @@ export class ListaPromocionesHabilitadasPage implements OnInit {
     this.promocionesService.listar().subscribe(promo =>{
       this.promocion = promo;
     })
+
+       
   }
 
   onLogout(){

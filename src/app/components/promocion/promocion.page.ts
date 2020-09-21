@@ -3,7 +3,7 @@ import { promos } from '../../models/promos-interface';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { resta } from '../../models/restaurante-interface'
 import { AuthService } from '../../servicios/auth.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
@@ -29,6 +29,9 @@ export class PromocionPage implements OnInit {
   estaSeleccionado: boolean;
 
   public restaurantes : resta[]
+  promoHabilitados: promos[] = []; 
+
+
   restaurante$: Observable<resta[]>;
   promociones$: Observable<promos[]>;
 
@@ -42,7 +45,8 @@ export class PromocionPage implements OnInit {
     private db: AngularFirestore, 
     private restauranteService : RestaurantesService,
     private promocionesService: PromocionService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    public alertController: AlertController) { 
 
       this.promosRef = this.db.collection('promociones')
      }
@@ -55,10 +59,15 @@ export class PromocionPage implements OnInit {
 
   ngOnInit() {
 
+    
     this.estaSeleccionado = false;
+    // this.selectedFile = "";
+
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
+
+    
 
 
     // this.restauranteService.getRestaurantes().subscribe( data => {
@@ -72,6 +81,19 @@ export class PromocionPage implements OnInit {
     } catch (error) {
       console.log(error)
     }
+
+    this.promocionesService.listar().subscribe(x =>{
+      this.promoHabilitados = []
+      x.forEach(element => {
+        if( this.usuarioLog === element['userUID'] && element['estado'] === 'verdadero'){
+          console.log("xxx", element);
+          this.promoHabilitados.push(element)
+        }else{
+          console.log("no", element);
+        }
+      });
+      console.log("array", this.promoHabilitados);
+    })
   }
 
   onLogout(){
@@ -139,8 +161,10 @@ export class PromocionPage implements OnInit {
         userUID : this.usuarioLog,
         estado: "verdadero"
       })
+    this.resetForm()
       
       this.router.navigate(['/promo-activa'])
+
     }).catch(error => {
       console.log(error);
     })
@@ -156,6 +180,25 @@ export class PromocionPage implements OnInit {
         console.log(error);
       }
     }
+  }
+
+  async AlertSubida() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Promoción agregada con éxito',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+    this.aver();
+
+  }
+
+  resetForm() {
+    // this.file = null;
+    this.estaSeleccionado = false;
   }
 
 }

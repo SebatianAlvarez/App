@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill="none" (click)="goRegreso()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
     <ion-button slot="end" fill="none" (click)="presentActionSheet()">
       <ion-icon name="menu"></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Mi Menu Diario</ion-title>
+    <ion-title style="text-align: center;">Mi Menú</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div *ngFor="let meri of meriendas">
+  <!-- <div *ngFor="let meri of meriendas">
     <div *ngIf="usuarioLog === meri.userUID">
       <h4 style="text-align: center;">Merienda</h4>
 
@@ -66,7 +66,7 @@
       </ion-list>
 
     </div>
-  </div>
+  </div> -->
 
   <ion-button routerLink="/menu">Actualizar Menu Diario</ion-button>
 
