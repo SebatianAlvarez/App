@@ -9,26 +9,17 @@
 
 <ion-content>
 
-<div *ngFor="let promo of promociones$  |async ">
-  <ion-card *ngIf=" promo.userUID === usuarioLog && promo.fotosPromocion; else sinPromos">
-    <div *ngIf="promo.estado === 'falso'">
+<div style="display: grid; grid-template-columns: 1fr 1fr;">
+  
+  <ion-card *ngFor="let promo of promoDesHabilitados" >
+     <ion-card-header>
       <img src= "{{promo.fotosPromocion}}">
-    <ion-card-header>
-      <ion-card-title>Mis Promociones</ion-card-title>
-      <ion-button (click)="activar(promo.id)">Activar Promocion</ion-button>
-      <ion-button (click)="eliminar(promo.id)">Eliminar Promocion</ion-button>
     </ion-card-header>
-    </div>
+    <ion-card-subtitle style="text-align: center;">
+      <ion-button (click)="AlertHabilitar(promo.id)"><ion-icon name="checkbox"></ion-icon></ion-button>
+      <ion-button (click)="AlertConfirmEliminar(promo.id)" color="danger"><ion-icon name="close-circle">Eliminar</ion-icon></ion-button>
+    </ion-card-subtitle>
   </ion-card>
 </div>
-
-<ng-template #sinPromos>
-
-  <ion-card>
-    <ion-card-header>
-      Sin Promociones ocultas
-    </ion-card-header>
-  </ion-card>
-</ng-template>
 
 </ion-content>

@@ -9,5 +9,29 @@
     --background: #eeeeee ;
   }
 
+  ion-card .imagen{
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    width: 150px;
+    border-radius: 50%;
+
+  }
+  // .imagen{
+  //   border-radius: 50%;
+  // }
+
+  .alert-wrapper {
+    background: #e5e5e5;
+  }
+  
+  /* Works - pass "my-custom-class" in cssClass to increase specificity */
+  .my-custom-class .alert-wrapper {
+    background: #e5e5e5;
+  }
+
+  .my-custom-class {
+    --background: #e5e5e5;
+  }
 
   

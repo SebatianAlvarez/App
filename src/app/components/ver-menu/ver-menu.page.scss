@@ -1,3 +1,14 @@
+
+ion-toolbar{
+    --background: #eeeeee ;
+  }
+
+.titulo{
+    border: 0px solid #1dbfd4;
+    border-radius: 6px;
+    background-color: #1dbfd4;
+    color: white;
+
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
     background-color: #eee;
@@ -22,4 +33,5 @@
     background-color: white;
     display: none;
     overflow: hidden;
+
   } 

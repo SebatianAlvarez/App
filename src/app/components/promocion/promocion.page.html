@@ -16,7 +16,7 @@
   </div>
 </ion-card-header>
 
-<ion-content>
+<!-- <ion-content>
   <div *ngFor="let resta of restaurante$ | async">
     <div *ngFor="let promo of promociones$ | async">
       <ion-card>
@@ -27,7 +27,15 @@
 
     </div>
   </div>
-</ion-content>
+</ion-content> -->
+ 
+<ion-slides  pager ="true" class="slides">
+  <ion-slide *ngFor="let pro of promoHabilitados">   
+    <div>
+      <img [src] ="pro.fotosPromocion">
+    </div>
+  </ion-slide>
+</ion-slides>
 
 
 <ion-content>
@@ -43,12 +51,12 @@
           </ion-card-header>
         
           <ion-card-content>
-            <form class="ion-padding" [formGroup] ="foto" (submit)="aver()">
+            <form class="ion-padding" [formGroup] ="foto" (submit)="AlertSubida()">
               <ion-card-content>
                 <ion-button onclick="document.getElementById('input_subida').click()" type="button" expand="block" >
                 <ion-icon name="save" slot="start"></ion-icon>
                   Elegir promoción</ion-button>
-                  <p style="text-align: center; color: black;">{{file}}</p> 
+                  <p style="text-align: center; color: black;" *ngIf="estaSeleccionado">{{file}}</p> 
                 <input id="input_subida" style="display: none" type="file" formControlName="inputFile" accept="image/x-png,image/jpeg" (change)="elegirImagen($event)" required>
               </ion-card-content>
 

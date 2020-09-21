@@ -28,9 +28,25 @@
     color: orange;
   }
 
+
+  ion-toolbar{
+    --background: #eeeeee ;
+  }
+
+  ion-card{
+    width: 60%;
+    display: grid;
+    margin-left: 80px;
+  }
+
+  ion-content{
+    background-color: brown;
+  }
+
   .e{
     color: #FF5A55;
     font-size: 13px;
     margin: 0%;
     padding: 0%;
 }
+

@@ -1,4 +1,4 @@
-export interface resta {
+export class resta {
 
     capacidadRestaurante? : string
     direccionRestaurante? : any

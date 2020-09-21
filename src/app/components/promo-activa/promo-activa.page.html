@@ -8,17 +8,15 @@
 </ion-header>
 
 <ion-content>
-
-<div *ngFor="let promo of promociones$ | async">
-  <ion-card *ngIf=" promo.userUID === usuarioLog ">
-    <div *ngIf="promo.estado === 'verdadero'">
-      <img src = "{{promo.fotosPromocion}}">
-    <ion-card-header>
-      <ion-card-title>Mis Promociones</ion-card-title>
-      <ion-button (click)="ocultar(promo)">Ocultar Promocion</ion-button>
-    </ion-card-header>
-    </div>
-  </ion-card>
-</div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div *ngFor="let promo of promoHabilitados">
+      <ion-card>
+          <img src = "{{promo.fotosPromocion}}">
+        <ion-card-header style="text-align: center;">
+          <ion-button (click)="AlertConfirmDeshabilitar(promo)"><ion-icon name="close-circle"></ion-icon>&nbsp; Deshabilitar</ion-button>
+        </ion-card-header>
+      </ion-card>
+    </div>      
+  </div>
 
 </ion-content>

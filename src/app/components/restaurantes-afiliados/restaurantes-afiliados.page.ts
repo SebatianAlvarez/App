@@ -15,6 +15,10 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 
 import { CalificarService } from '../../servicios/calificar.service';
 import { AuthService } from '../../servicios/auth.service';
+
+import { first } from 'rxjs/operators';
+
+
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { comentarios } from '../../models/comentarios-interface';
 
@@ -28,6 +32,9 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   restaurante$: Observable<resta[]>;
   afiliados$: Observable<afiliado[]>;
+
+  // busqueda
+  public resList: any[];
 
   suma : number = 0
   auxi : number = 0
@@ -61,7 +68,10 @@ export class RestaurantesAfiliadosPage implements OnInit {
             
               });
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.resList = await this.initializeItems();
+
     this.restaurante$ = this.restauranteService.recuperarDatos();
     this.afiliados$ = this.afiliadosSvc.recuperarDatos();
 
@@ -70,6 +80,30 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
 
   }
+
+  async initializeItems(): Promise<any> {
+    const restaList = await this.db.collection('perfiles')
+      .valueChanges().pipe(first()).toPromise();
+      
+      return restaList;
+  }
+
+  async filterList(evt) {
+    this.restaurante$ = await this.initializeItems();
+    const searchTerm = evt.srcElement.value;
+  
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.resList = this.resList.filter(Food => {
+      if (Food.nombreRestaurante && searchTerm) {
+        return (Food.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || Food.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1  );
+      }
+    });
+  }
+
+
 
   goMapa(){
     this.router.navigate(['/listado']);
@@ -100,8 +134,15 @@ export class RestaurantesAfiliadosPage implements OnInit {
         },{
           text : "Confirmar Reserva",
           handler : data =>{
-            this.Reservar(data.mesas, data.tiempo ,id);
-            this.presentReserva();
+            let tiempo;
+            tiempo = parseInt(data.tiempo)
+            if(tiempo < 30){
+              this.reservaError();              
+            }else{
+              this.Reservar(data.mesas, data.tiempo ,id);
+              this.presentReserva();
+            }
+            
           }
         }
       ]
@@ -131,6 +172,18 @@ export class RestaurantesAfiliadosPage implements OnInit {
       header: 'Tu reserva sera verificada en minutos',
       // subHeader: 'Subtitle',
       message: 'Puedes ir al menu Mensajes.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async reservaError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '',
+      // subHeader: 'Subtitle',
+      message: 'Se debe realizar la reserva con 30 minutos de anticipación',
       buttons: ['OK']
     });
 
