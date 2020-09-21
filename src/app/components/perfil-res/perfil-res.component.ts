@@ -35,6 +35,10 @@ import * as L from 'leaflet';
 import { especial } from '../../models/especial-interface';
 import { promos } from '../../models/promos-interface';
 import { Observable } from 'rxjs';
+import { ComentariosService } from '../../servicios/comentarios.service';
+import { comentarios } from '../../models/comentarios-interface';
+import { CoordenadasService } from '../../servicios/coordenadas.service';
+import { coordenadas } from '../../models/coordenadas-interface'
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -45,7 +49,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
   templateUrl: './perfil-res.component.html',
   styleUrls: ['./perfil-res.component.scss'],
 })
-export class PerfilResComponent implements OnInit, AfterViewInit {
+export class PerfilResComponent implements OnInit {
 
   form: FormGroup;
 
@@ -76,6 +80,7 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
   public preguntas : pregunta[];
   public afiliados : afiliado[]
   public afi : afiliado
+  public coordenadas: any;
 
   validacion: boolean = true;
   validacionA: boolean = false;
@@ -83,12 +88,17 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
   public afiliados$: Observable<afiliado[]>;
 
+  public comentarios$: Observable<comentarios[]>;
+
+  public coordenadas$: Observable<coordenadas[]>;
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private comentariosService: ComentariosService,
+    private coordenadaService: CoordenadasService) { }
 
     public calificar = this.formBuilder.group ({
 
@@ -99,6 +109,25 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+  
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+      this.classList.toggle("active");
+  
+      /* Toggle between hiding and showing the active panel */
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  } 
 
     this.res = this.navparams.get('res')
     this.desayunos = this.navparams.get('desayuno')
@@ -116,6 +145,10 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     })
 
     this.afiliados$ = this.afiliadosService.recuperarDatos()
+
+    this.comentarios$ = this.comentariosService.recuperarDatos()
+
+    this.coordenadas$ = this.coordenadaService.recuperarDatos()
 
     //this.afiliadosService.getAfiliados().subscribe(x =>{
     // this.afiliados = x
@@ -146,10 +179,6 @@ export class PerfilResComponent implements OnInit, AfterViewInit {
     }
 
   }
-
-  ngAfterViewInit() : void {
-
-}
 
   ionViewDidEnter(){
     this.map = L.map('Mapa', {
@@ -239,51 +268,6 @@ existeAfiliado(){
         }
       ]
     })
-    await alert.present()
-    let result = await alert.onDidDismiss();
-  }
-
-  async presentarCalificacion(){
-    const alert = await this.alertController.create({
-      header: 'Selecione una Nota',
-      inputs:[
-        {
-          name: "pesimo",
-          type: "radio",
-          label: "Pesimo",
-          value: 1,
-        }, {
-          name: "malo",
-          type: "radio",
-          label: "Malo",
-          value: 2,
-        }, {
-          name: "regular",
-          type: "radio",
-          label: "Regular",
-          value: 3,
-        }, {
-          name: "bueno",
-          type: "radio",
-          label: "Bueno",
-          value: 4,
-        }, {
-          name: "excelente",
-          type: "radio",
-          label: "Excelente",
-          value: 5,
-        }
-      ],
-      buttons : [
-        {
-          text : "OK",
-          handler: data =>{
-    
-            
-          }
-        }
-      ]
-    });
     await alert.present()
     let result = await alert.onDidDismiss();
   }
@@ -455,10 +439,6 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 //adquirir coordenadas
 
-getPositions(){
-  
-}
-
 //mostrar Popup
 
 
@@ -488,7 +468,7 @@ getAddress(lat: number, long : number){
 
 
 
-mostrar(id : string){
+mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
     this.restaurantes = data
     this.marker = marker([data.latitud,data.longitud]);
@@ -500,13 +480,15 @@ mostrar(id : string){
           res.coords.longitude    
         ]
       }).then((latLong) =>{
+
+        
         this.marker = marker(latLong);
 
         L.Routing.control({
           show: false,
           draggable: false,
           waypoints: [
-              L.latLng(data.latitud,data.longitud),
+              L.latLng(lat,lng),
               L.latLng(latLong[0],latLong[1])
           ],
           addWaypoints: false,

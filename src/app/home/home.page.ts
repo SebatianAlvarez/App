@@ -138,7 +138,7 @@ export class HomePage {
     const valores = this.login.value
     this.authService.login(valores.email, valores.password).then(res => {
     
-      this.router.navigate(['/listado']);
+      //this.router.navigate(['/listado']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
   }
 

@@ -18,11 +18,8 @@
 
 <ion-content class="ion-padding">
 
-  <div>
-    <div class="titulo">
-      <h3 style="text-align: center;">Información</h3>
-    </div>
-
+  <button class="accordion">Informacion</button>
+  <div class="panel">
     <ion-list>
       <ion-item>
         <h6><b>Tipo Restaurante: </b>{{res.tipoRestaurante}}</h6>
@@ -41,87 +38,101 @@
       </ion-item>
     </ion-list>
   </div>
-
-  <div class="titulo">
-    <h3 style="text-align: center;">Menú del día</h3>
-  </div>
-
-  <div *ngFor="let desa of desayunos">
-    <div *ngIf="res.userUID === desa.userUID">
-      <div class="menu">
-      <h4 >Desayuno</h4>
-      </div>
-      <ion-list>
-        <ion-item>
-          <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Ingredientes</b></h6>
-        </ion-item>
-        <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
-          <ion-item>
-            <ion-icon name="play" slot="start"></ion-icon>
-            {{i['ingrediente']}} <br>
-          </ion-item>
+  
+  <button class="accordion">Desayunos</button>
+  <div class="panel">
+    <div *ngFor="let desa of desayunos">
+      <div *ngIf="res.userUID === desa.userUID">
+        <div class="menu">
         </div>
-      </ion-list>
-    </div>
-  </div>
-
-  <div *ngFor="let almu of almuerzos">
-    <div *ngIf="res.userUID === almu.userUID">
-      <div class="menu">
-        <h4>Almuerzo</h4>
-      </div>
-      <ion-list>
-        <ion-item>
-          <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
-        </ion-item>
-      </ion-list>
-    </div>
-  </div>
-
-  <br>
-
-  <div *ngFor="let espe of especial">
-    <div *ngIf="res.userUID === espe.userUID">
-      <div class="menu">
-      <h4 >Plato Especial</h4>
-      </div>
-      <ion-list>
-        <ion-item>
-          <h6><b>Tipo Desayuno: </b>{{espe.platoEspecial}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{espe.precioEspecial}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Ingredientes</b></h6>
-        </ion-item>
-        <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
+        <ion-list>
           <ion-item>
-            <ion-icon name="play" slot="start"></ion-icon>
-            {{i['ingrediente']}} <br>
+            <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
           </ion-item>
-        </div>
-      </ion-list>
+          <ion-item>
+            <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Ingredientes</b></h6>
+          </ion-item>
+          <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
+            <ion-item>
+              <ion-icon name="play" slot="start"></ion-icon>
+              {{i['ingrediente']}} <br>
+            </ion-item>
+          </div>
+        </ion-list>
+      </div>
     </div>
   </div>
+  
+  <button class="accordion">Almuerzos</button>
+  <div class="panel">
+    <div *ngFor="let almu of almuerzos">
+      <div *ngIf="res.userUID === almu.userUID">
+        <div class="menu">
+        </div>
+        <ion-list>
+          <ion-item>
+            <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </div> 
+
+  <button class="accordion">Platos Especiales</button>
+  <div class="panel">
+    <div *ngFor="let espe of especial">
+      <div *ngIf="res.userUID === espe.userUID">
+        <div class="menu">
+        </div>
+        <ion-list>
+          <ion-item>
+            <h6><b>Plato: </b>{{espe.platoEspecial}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{espe.precioEspecial}}</h6>
+          </ion-item>
+          <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
+            <ion-item>
+              <ion-icon name="play" slot="start"></ion-icon>
+              {{i['ingrediente']}} <br>
+            </ion-item>
+          </div>
+        </ion-list>
+      </div>
+    </div>
+  </div>
+
+  <button class="accordion">Comentarios</button>
+  <div class="panel">
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
+        <div class="menu">
+        </div>
+        <ion-list>
+          <ion-item>
+            <h6><b>{{comen.nombreUsu}} : </b>{{comen.comentario}}</h6>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </div> 
+
+  
 
   <div *ngFor="let pro of promocion">
     <div *ngIf="res.userUID === pro.userUID && pro.estado=== 'verdadero'">
@@ -147,11 +158,19 @@
   <div class="titulo">
     <h2 style="text-align: center;">Ubicación</h2>
   </div>
-  
+
   <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
+  
+  
   <br>
 
-  <!-- <ion-button (click)="mostrar(res.id)">¿Cómo Llegar?</ion-button> -->
+  <div *ngFor ="let coor of coordenadas$ | async">
+    <div *ngIf = "coor.userUID === res.userUID" >
+      <ion-button (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+    </div>
+  </div>
+
+  
 
   <div *ngFor="let afi of afiliados$ | async">
     

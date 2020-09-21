@@ -14,7 +14,7 @@ export class AlmuerzoService {
 
   constructor(private db:AngularFirestore) { 
 
-    // this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
+    this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
     // this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(map(
     //   actions => {
     //     return actions.map( x => {
@@ -46,7 +46,7 @@ export class AlmuerzoService {
   }
 
   updateAlmuerzo(id: string, menu : almuerzo): Promise<void>{
-    return this.almuerzoCollection.doc(id).update(menu);
+    return this.almuerzoCollection.doc<almuerzo>(id).update(menu);
   }
 
   addAlmuerzo(menu: almuerzo): Promise<DocumentReference>{
@@ -65,5 +65,18 @@ export class AlmuerzoService {
         return data;
       })
     }))
+  }
+
+  recuperarDatos(): Observable<almuerzo[]>{
+    return this.db
+      .collection('platoAlmuerzo')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as almuerzo;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
   }
 }

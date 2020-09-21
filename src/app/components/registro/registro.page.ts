@@ -57,7 +57,7 @@ export class RegistroPage implements OnInit {
   OnSubmitRegister(){
     const valores = this.registro.value;
     this.authSercive.register(valores.email, valores.password, valores.nombre,valores.numero).then(auth =>{
-      (this.router.navigate(['/home']))
+      //(this.router.navigate(['/home']))
     })
   }
 

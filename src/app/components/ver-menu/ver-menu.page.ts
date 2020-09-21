@@ -10,6 +10,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { ActionSheetController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { especial } from '../../models/especial-interface'
 
 
 
@@ -24,6 +26,8 @@ export class VerMenuPage implements OnInit {
   public almuerzos: almuerzo[]
 
   public usuarioLog : string
+
+  public especiales$: Observable<especial[]>;
 
   constructor(private desayunoService : MenuService, private AFauth : AngularFireAuth,
     private almuerzoService : AlmuerzoService, private meriendaService : MeriendaService,
@@ -41,6 +45,27 @@ export class VerMenuPage implements OnInit {
     this.almuerzoService.getAlmu().subscribe(almu =>{
       this.almuerzos = almu;
     })
+
+    this.especiales$ = this.meriendaService.recuperarDatos()
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+  
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+      this.classList.toggle("active");
+  
+      /* Toggle between hiding and showing the active panel */
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  } 
 
 
   }
