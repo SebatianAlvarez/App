@@ -66,4 +66,17 @@ export class MeriendaService {
     }))
   }
 
+  recuperarDatos(): Observable<especial[]>{
+    return this.db
+      .collection('platoEspecial')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as especial;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
+  }
+
 }

@@ -60,6 +60,19 @@ export class MenuService {
       })
     }))
   }
+
+  recuperarDatos(): Observable<desayuno[]>{
+    return this.db
+      .collection('platoDesayuno')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a =>{
+          const data = a.payload.doc.data() as desayuno;
+          const id = a.payload.doc.id;
+          return {id, ...data}; //SPREAD OPERATOR
+        }))
+      );
+  }
   
 
 

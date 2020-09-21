@@ -12,61 +12,69 @@
 
 <ion-content>
 
-  <div *ngFor="let desa of desayunos">
-    <div *ngIf="usuarioLog === desa.userUID">
-      <h4 style="text-align: center;">Desayuno</h4>
-      <ion-list>
-        <ion-item>
-          <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
-        </ion-item>
-      </ion-list>
+  <button class="accordion">DESAYUNOS</button>
+  <div class="panel">
+    <div *ngFor="let desa of desayunos">
+      <div *ngIf="usuarioLog === desa.userUID">
+        <ion-list>
+          <ion-item>
+            <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
   </div>
 
-  <div *ngFor="let almu of almuerzos">
-    <div *ngIf="usuarioLog === almu.userUID">
-      <h4 style="text-align: center;">Almuerzo</h4>
-      <ion-list>
-        <ion-item>
-          <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
-        </ion-item>
-      </ion-list>
+  <button class="accordion">ALMUERZOS</button>
+  <div class="panel">
+    <div *ngFor="let almu of almuerzos">
+      <div *ngIf="usuarioLog === almu.userUID">
+        <ion-list>
+          <ion-item>
+            <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
-  </div>
+  </div> 
 
-  <div *ngFor="let meri of meriendas">
-    <div *ngIf="usuarioLog === meri.userUID">
-      <h4 style="text-align: center;">Merienda</h4>
-
-      <ion-list>
-        <ion-item>
-          <h6><b>X: </b>{{meri.platoMerienda}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Detalle Merienda: </b>{{meri.detalleMerienda}}</h6>
-        </ion-item>
-        <ion-item>
-          <h6><b>Precio: </b>{{meri.precioMerienda}}</h6>
-        </ion-item>
-      </ion-list>
-
+  <button class="accordion">PLATOS ESPECIALES</button>
+  <div class="panel">
+    <div *ngFor="let espe of especiales$ | async">
+      <div *ngIf="usuarioLog === espe.userUID">
+        <ion-list>
+          <ion-item>
+            <h6><b>Plato: </b>{{espe.platoEspecial}}</h6>
+          </ion-item>
+          <ion-item>
+            <h6><b>Precio: </b>{{espe.precioEspecial}}</h6>
+          </ion-item>
+          <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
+            <ion-item>
+              <ion-icon name="play" slot="start"></ion-icon>
+              {{i['ingrediente']}} <br>
+            </ion-item>
+          </div>
+        </ion-list>
+      </div>
     </div>
-  </div>
+  </div> 
+
 
   <ion-button routerLink="/menu">Actualizar Menu Diario</ion-button>
 

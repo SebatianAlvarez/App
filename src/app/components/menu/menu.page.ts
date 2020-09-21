@@ -6,11 +6,15 @@ import { resta } from '../../models/restaurante-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
+import { especial } from '../../models/especial-interface';
 
 import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { MeriendaService } from '../../servicios/merienda.service';
 
 import { FormControl , Validators, FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,8 +27,12 @@ export class MenuPage implements OnInit {
   public usuarioLog:string
   public restaurantes : resta[]
 
-  public desayunos$ : desayuno[]
-  public almuerzos$ : almuerzo[]
+  public desayunos$ : Observable<desayuno[]>;
+  public almuerzos$ : Observable<almuerzo[]>;
+
+  public especiales$: Observable<especial[]>;
+
+  public restaurantes$: Observable<resta[]>;
 
   public desa: desayuno = {
 
@@ -45,7 +53,8 @@ export class MenuPage implements OnInit {
 
   constructor(private menuService : MenuService, private AFauth : AngularFireAuth,
     private restauranteService : RestaurantesService, private formBuilder: FormBuilder,
-     private almuerzoService : AlmuerzoService, private meriendaService: MeriendaService
+     private almuerzoService : AlmuerzoService, private meriendaService: MeriendaService,
+     private router:Router
     ) { }
 
     public errorDesayunoMensajes ={
@@ -121,18 +130,14 @@ export class MenuPage implements OnInit {
 
   ngOnInit() {
 
+    this.desayunos$ = this.menuService.recuperarDatos()
 
-    this.menuService.getDesayunos().subscribe( data => {
-      this.desayunos$ = data;
-    })
 
-    this.almuerzoService.getAlmuerzos().subscribe(data =>{
-      this.almuerzos$ = data;
-    })
+    this.almuerzos$ = this.almuerzoService.recuperarDatos()
 
-    this.restauranteService.getRestaurantes().subscribe(data =>{
-      this.restaurantes = data
-    } )
+    this.especiales$ = this.meriendaService.recuperarDatos()
+
+    this.restaurantes$ = this.restauranteService.recuperarDatos()
 
     try {
       let currentUser = this.AFauth.auth.currentUser;
@@ -162,6 +167,7 @@ export class MenuPage implements OnInit {
     this.almu.jugoAlmuerzo = valores.jugo
     this.almu.precioAlmuerzo = valores.precio
     this.almuerzoService.updateAlmuerzo(id , this.almu).then(() =>{
+      this.router.navigate(['ver-menu'])
     })
 }
 

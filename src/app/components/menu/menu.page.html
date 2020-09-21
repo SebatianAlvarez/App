@@ -9,12 +9,14 @@
 
 <ion-content>
 
-  <div *ngFor="let resta of restaurantes">
+  <div *ngFor="let resta of restaurantes$ | async">
     <div *ngIf="resta.userUID === usuarioLog">
       <ng-template [ngIf]="resta.resVerificado.toString() === 'Aprobado'">
-        <div *ngFor="let desa of desayunos$">
+        <div *ngFor="let desa of desayunos$ | async">
           <div *ngIf="usuarioLog === desa.userUID">
             <h3 style="text-align: center;"> DESAYUNO</h3>
+
+            <p style="text-align: center;">{{desa.platoDesayuno}}</p>
 
             <form [formGroup]="desayuno" (ngSubmit)="actualizarDesayuno(desa.id)">
               <ion-list>
@@ -63,7 +65,7 @@
           </div>
         </div>
 
-        <div *ngFor="let almu of almuerzos$">
+        <div *ngFor="let almu of almuerzos$ | async">
           <div *ngIf="usuarioLog === almu.userUID">
 
             <h3 style="text-align: center;"> ALMUERZO</h3>

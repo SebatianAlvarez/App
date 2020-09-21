@@ -1,6 +1,6 @@
 import { resta } from './../../models/restaurante-interface';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { afiliado } from '../../models/afiliados-interface';
 import { AfiliadosServiceService } from '../../servicios/afiliados-service.service';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
@@ -13,10 +13,10 @@ import { PerfilesService } from '../../servicios/perfiles.service';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { CalificarService } from '../../servicios/calificar.service'
-import { pregunta } from '../../models/preguntas';
-
+import { CalificarService } from '../../servicios/calificar.service';
 import { AuthService } from '../../servicios/auth.service';
+import { ComentariosService } from '../../servicios/comentarios.service';
+import { comentarios } from '../../models/comentarios-interface';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
               private restauranteService: RestaurantesService, private alertController : AlertController,
               private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
               private router : Router, private perfilService : PerfilesService,
-              private  calificarService : CalificarService,
+              private comentarioService : ComentariosService,
               public ActionSheetController: ActionSheetController, private authservice:AuthService,) { 
 
               }
@@ -47,6 +47,18 @@ export class RestaurantesAfiliadosPage implements OnInit {
                 id: new FormControl (''),
                 estrellas: new FormControl ('', [Validators.required]),
                
+              });
+
+              public errorMensajes ={
+                comentario : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' }
+                ]
+              };
+            
+              public comentar = this.formBuilder.group ({
+                id: new FormControl (''),
+                comentario: new FormControl('', [Validators.required])
+            
               });
 
   ngOnInit() {
@@ -231,6 +243,32 @@ export class RestaurantesAfiliadosPage implements OnInit {
     this.authservice.logout();
   }
 
+  Comentar(id : string){
+
+    let comentario = new comentarios();
+      
+    return new Promise<any>((resolve, reject) => {
+  
+      let comentarioID = this.db.createId();
+      comentario.uid = comentarioID;
+      let usuario = this.perfilService.getUsuario(this.usuarioLog);
+      usuario.subscribe(data =>{
+        const valores = this.comentar.value;
+
+        this.db.collection('comentarios').doc(comentarioID).set({
+          uidUsu : this.usuarioLog,
+          uidResta : id,
+          uid : comentario.uid,
+          nombreUsu : data.nombre,
+          comentario: valores.comentario
+        }).then((res) =>{
+          resolve(res)
+        }).catch(err => reject(err))
+      })
+    })
+
+  }
+
   Calificacion(id : string){
 
     const valores: number = this.calificar.value
@@ -257,9 +295,6 @@ export class RestaurantesAfiliadosPage implements OnInit {
       }
 
       this.restauranteService.updateRestaurante(id, califica)
-
-
-      
     })
     
   }

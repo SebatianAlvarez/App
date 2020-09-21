@@ -15,8 +15,6 @@ import { Usuario } from '../models/usuario-interface';
 
 export class AuthService {
 
-  public numero ="";
-  public nombre ="";
 
 
   usuariocolencion: AngularFirestoreCollection<Usuario>;
@@ -30,22 +28,42 @@ export class AuthService {
 
   login(email:string, password:string){
     return this.AFauth.auth.signInWithEmailAndPassword(email, password).then(res =>{
-      this.actualizarUsuario(res.user);
+      if(res.user.emailVerified){
+        this.actualizarUsuario(res.user);
+        this.router.navigate(['listado'])
+      } else{
+        this.router.navigate(['verificar-email'])
+      }
+      
     });
   }
 
   register(email:string, password:string, nombre:string, numero:string){
     
     return this.AFauth.auth.createUserWithEmailAndPassword(email,password).then(res =>{
-      this.db.collection('usuarios').doc(res.user.uid).set({
-        uid : res.user.uid,
-        email : email,
-        roles: 'cliente',
-        numero : numero,
-        nombre : nombre
-      });
+
+      
+
+      if(res.user.emailVerified){
+        this.db.collection('usuarios').doc(`usuarios/${res.user.uid}`).set({
+          uid : res.user.uid,
+          email : email,
+          roles: 'cliente',
+          numero : numero,
+          nombre : nombre
+        });
+        this.enviarEmailVerificacion()
+        this.router.navigate(['home'])
+      } else {
+        this.router.navigate(['verificar-email'])
+      }
+      
     });
 
+  }
+
+  enviarEmailVerificacion(){
+    return this.AFauth.auth.currentUser.sendEmailVerification()
   }
 
   actualizarUsuario(usuario:any){
@@ -67,8 +85,8 @@ export class AuthService {
           uid: usuario.uid,
           email: usuario.email,
           roles: 'cliente',
-          numero : this.numero,
-          nombre: this.nombre
+          numero : data.numero,
+          nombre: data.nombre
         }
         return userRef.set(datos);
       }
