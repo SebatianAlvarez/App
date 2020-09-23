@@ -482,11 +482,11 @@ mostrar(id : string, lat: number, lng: number){
       }).then((latLong) =>{
 
         
-        this.marker = marker(latLong);
+        this.marker = marker(latLong,  {draggable:false});
 
         L.Routing.control({
           show: false,
-          draggable: false,
+          
           waypoints: [
               L.latLng(lat,lng),
               L.latLng(latLong[0],latLong[1])
@@ -495,6 +495,7 @@ mostrar(id : string, lat: number, lng: number){
           routeWhileDragging: false,
           showAlternatives: false,
           language: 'es',
+          draggable: false,
         }).addTo(this.map);
       //this.marker.addTo(this.map).bindPopup('Estoy aqui');
       this.map.setView(latLong);
