@@ -1,29 +1,35 @@
-
-
-.slide1 {
-    display: grid;
-    // background-image: url(../../assets/Diapositiva1.JPG);
-    background-color : #eeeeee;
-
+@font-face{
+    font-family: 'titulo1';
+    src: url(../../assets/Tipografia/titulo1.otf);
 }
 
-.slide2 {
-    display: grid;
-    background-color : #fdfdfd;
-}
-.slide3 {
-    display: grid;
-    background-color : #1dc0d4;
-}
-.slide4 {
-    display: grid;
-    background-color : #1dc0d4;
+@font-face{
+    font-family: 'titulo2';
+    src: url(../../assets/Tipografia/titulo2.otf);
 }
 
+@font-face{
+    font-family: 'texto';
+    src: url(../../assets/Tipografia/texto.otf);
+}
+
+.intro{
+    font-family: 'texto';
+    color: white;
+    font-size: 25px;
+    line-height: 100%;
+}
+
+.intro2{
+    font-family: 'texto';
+    color: black;
+    font-size: 25px;
+    line-height: 100%;
+}
 
 .logo{
-    margin-left: 90px;
-    margin-right: 90px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .epn{
     margin-left: 25%;
@@ -42,6 +48,10 @@
     --background: #3b5998;
 }
 
+.registro {
+    --background:  #16212B;
+}
+
 .e{
     color: #FF5A55;
     font-size: 13px;
@@ -56,5 +66,80 @@
 
 ion-input, ion-item{
     --background: transparent;
+}
+
+ion-toolbar{
+    --background: #D85C00
+}
+
+.slide1{
+    background: #16212B;
+    display: inline;
+    object-fit: contain;
+    background-size: contain;
+}
+
+.aver1{
+    display: flex;
+    margin-top: 50%;
+}
+.aver2{
+    display: flex;
+}
+
+.slide2{
+    display: inline;
+    background-image: url(../../assets/maquetacion_cel.svg);
+    object-fit: contain;
+    background-size: contain;
+}
+
+.slide3{
+    display: inline;
+    background-image: url(../../assets/maquetacion_cel.svg);
+    object-fit: contain;
+    background-size: contain;
+}
+
+.slide4{
+    display: inline;
+    background-image: url(../../assets/maquetacion_cel.svg);
+    object-fit: contain;
+    background-size: contain;
+}
+
+.slide5{
+    display: inline;
+    object-fit: contain;
+    background-size: contain;
+    background-image: url(../../assets/maquetacion_cel.svg);
+}
+
+.tool{
+    background:#D85C00;
+}
+
+.titulo1{
+    font-family: 'titulo1';
+    color: white;
+    font-size: 25px;
+}
+
+.titulo2{
+    font-family: 'titulo2';
+    color: white;
+    font-size: 15px;
+}
+
+.centro{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.esquina{
+    text-align: left;
+    text-align: top;
+    width: 25%;
+    height: 25%;
 }
 

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-button slot="start" fill="none" (click)="goRegreso()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
@@ -93,7 +93,10 @@
     </div>
   </div> 
 
-  <button class="accordion">Platos Especiales</button>
+
+  <ion-button class="accordion">Platos Especiales
+    <ion-icon name="arrow-dropdown" slot="end" fill="none"></ion-icon>
+  </ion-button>
   <div class="panel">
     <div *ngFor="let espe of especial">
       <div *ngIf="res.userUID === espe.userUID">

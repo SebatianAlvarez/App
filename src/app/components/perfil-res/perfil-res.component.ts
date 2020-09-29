@@ -471,7 +471,7 @@ getAddress(lat: number, long : number){
 mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
     this.restaurantes = data
-    this.marker = marker([data.latitud,data.longitud]);
+    this.marker = marker([data.latitud,data.longitud], {draggable: false});
       //this.marker.addTo(this.map).bindPopup(data.nombreRestaurante);
 
       this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((res) =>{
@@ -481,15 +481,14 @@ mostrar(id : string, lat: number, lng: number){
         ]
       }).then((latLong) =>{
 
-        
-        this.marker = marker(latLong,  {draggable:false});
+        this.marker = marker(latLong, {draggable: false});
 
         L.Routing.control({
           show: false,
           
           waypoints: [
-              L.latLng(lat,lng),
-              L.latLng(latLong[0],latLong[1])
+              L.latLng(lat,lng, {draggable: false}),
+              L.latLng(latLong[0],latLong[1], {draggable: false})
           ],
           addWaypoints: false,
           routeWhileDragging: false,
