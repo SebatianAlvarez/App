@@ -28,6 +28,8 @@ const routes: Routes = [
   { path: 'lista-promociones-habilitadas', loadChildren: './components/lista-promociones-habilitadas/lista-promociones-habilitadas.module#ListaPromocionesHabilitadasPageModule', canActivate:[AuthGuard] },
   { path: 'restaurantes-afiliados', loadChildren: './components/restaurantes-afiliados/restaurantes-afiliados.module#RestaurantesAfiliadosPageModule', canActivate:[AuthGuard]  },  { path: 'comentarios', loadChildren: './components/comentarios/comentarios.module#ComentariosPageModule' },
   { path: 'verificar-email', loadChildren: './components/verificar-email/verificar-email.module#VerificarEmailPageModule' },
+  { path: 'tabs', loadChildren: './components/tabs/tabs.module#TabsPageModule' },
+  { path: 'reserva-rechazada', loadChildren: './components/reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule' },
 
 
 

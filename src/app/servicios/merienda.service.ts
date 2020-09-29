@@ -44,6 +44,13 @@ export class MeriendaService {
     return this.db.collection<especial>('platoEspecial').valueChanges();
   }
 
+  listar2() {
+    console.log("valores", this.db.collection<especial>('platoEspecial').valueChanges());
+    
+    return this.db.collection<especial>('platoEspecial').valueChanges();
+
+  }
+
   updateMerienda(id: string, menu : especial): Promise<void>{
     return this.meriendaCollection.doc(id).update(menu);
   }

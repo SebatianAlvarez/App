@@ -1,25 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-button slot="start" fill ="none" (click)= "goRegreso()">
-      <ion-icon name = "arrow-back" ></ion-icon>
-    </ion-button>
-    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
-      <ion-icon name = "menu" ></ion-icon>
-    </ion-button>
-    <ion-title style="text-align: center;">Reservas</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
+<br>
+<div class="titulo">
+  <h6 style="text-align: center;">Reservas Rechazadas</h6> 
+</div><br>
 
 <ion-content >
-
-  
   <div *ngFor="let reser of reservas$ | async"> 
-    <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'En Revision'">
+    <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'Rechazado'">
       <ion-card>
         <ion-card-header>
-          <ion-card-title style="text-align: center;">Reservas en Espera</ion-card-title>
           <div class="imagen">
             <img src="../../../assets/logoU.png" width="140px">
           </div>
@@ -44,13 +32,15 @@
           </h6>
         </ion-card-subtitle>
         <ion-card-header>
-          <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button>
-          <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
+          <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
+          <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
+          <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
         </ion-card-header>
           
       </ion-card>
     </div>
    
   </div>
+
 
 </ion-content>

@@ -141,7 +141,7 @@ export class PerfilPage implements OnInit {
         text: 'Visualizar Peticiones',
         icon: 'eye',
         handler: () => {
-          this.router.navigate(['/reserva']);
+          this.router.navigate(['/tabs/reserva']);
         }
       },{
         text: 'Mi Menu',

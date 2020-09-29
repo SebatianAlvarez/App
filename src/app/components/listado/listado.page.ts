@@ -100,10 +100,10 @@ export class ListadoPage implements OnInit {
       this.resHabilitados = []
       x.forEach(element => {
         if(element['resVerificado'] === 'Aprobado'){
-          console.log("xxx", element);
+          // console.log("xxx", element);
           this.resHabilitados.push(element)
         }else{
-          console.log("no", element);
+          // console.log("no", element);
         }
       });
       console.log("array", this.resHabilitados);
@@ -114,13 +114,13 @@ export class ListadoPage implements OnInit {
       this.promoHabilitados = []
       x.forEach(element => {
         if(element['estado'] === 'verdadero'){
-          console.log("xxx", element);
+          // console.log("xxx", element);
           this.promoHabilitados.push(element)
         }else{
-          console.log("no", element);
+          // console.log("no", element);
         }
       });
-      console.log("array", this.promoHabilitados);
+      // console.log("array", this.promoHabilitados);
     })
 
     this.resHabilitados = await this.initializeItems();
@@ -159,7 +159,7 @@ export class ListadoPage implements OnInit {
     })
 
     this.restaurantesService.restaurantesHabilitados();
-    console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
+    // console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
     
 
     // this.meriendaService.getMeri().subscribe(meri => {
@@ -173,18 +173,18 @@ export class ListadoPage implements OnInit {
     
     const restaList = await this.firestore.collection('perfiles')
       .valueChanges().pipe(first()).toPromise();
-      console.log("que es esto", restaList);
+      // console.log("que es esto", restaList);
       this.resHabilitados2 = []
       restaList.forEach(element => {
         if(element['resVerificado'] === 'Aprobado'){
-          console.log("xxx", element);
+          // console.log("xxx", element);
           this.resHabilitados2.push(element)
         }else{
-          console.log("no", element);
+          // console.log("no", element);
         }
       
       });
-      console.log("aaa", this.resHabilitados2);
+      // console.log("aaa", this.resHabilitados2);
       
       return this.resHabilitados2;
 
@@ -280,7 +280,7 @@ export class ListadoPage implements OnInit {
       let i = 0;
       for (let key$ in data){ 
         let promos = data[key$];
-        console.log("lleng", data.length);
+        // console.log("lleng", data.length);
         if(promos['estado'] === "verdadero" && i < 10){
           this.promoL.push(promos)
         }else{
@@ -288,7 +288,7 @@ export class ListadoPage implements OnInit {
         i  = i + 1;
         console.log();
       }
-      console.log("a ver", this.promoL);
+      // console.log("a ver", this.promoL);
 
     })
   }
@@ -315,7 +315,7 @@ export class ListadoPage implements OnInit {
           this.router.navigate(['/lista-promociones-habilitadas'])
         }
       },{
-        text: 'Mensajes',
+        text: 'Reservas',
         icon: 'mail',
         handler: () => {
           this.router.navigate(['/mensajes'])
