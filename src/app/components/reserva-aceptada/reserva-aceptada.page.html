@@ -1,37 +1,43 @@
-<ion-header>
-  <ion-toolbar color ="dark">
-    <ion-button slot="start" fill ="none" routerLink="/reserva">
-      <ion-icon name = "arrow-back" ></ion-icon>
-    </ion-button>
-    <ion-title style="text-align: center;">Peticiones Aceptadas</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content >
-
-  <div *ngFor = "let reser of reservas$ | async">
-    <div *ngIf = "usuarioLog === reser.uidResta">
-      <ion-card *ngIf = "reser.estado.toString() === 'Aprovado'">
-        <ion-card-header>
-          <ion-card-title style="text-align: center;">Reserva Aceptada</ion-card-title>
-        </ion-card-header>
-        <ion-list>
-          <ion-item>
-            <h6><b>Nombre: </b>{{reser.nombre}} </h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Numero: </b> {{reser.numero}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Mesas: </b>{{reser.mesas}} </h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Tiempo Estimado: </b>{{reser.tiempo}} </h6>
-          </ion-item>
-        </ion-list>
-        <ion-button (click) ="eliminar(reser.uid)">Vaciar Peticion</ion-button>
-      </ion-card>
+  <div *ngFor="let reser of reservas$ | async"> 
+    <div *ngIf="usuarioLog === reser.uidResta"> 
+      <ng-template [ngIf]="reser.estado.toString() === 'Aprobado'">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title style="text-align: center;">Reserva Aprobada</ion-card-title>
+            <div class="imagen">
+              <img src="../../../assets/logoU.png" width="140px">
+            </div>
+          </ion-card-header>
+          <ion-card-subtitle>
+            &nbsp;
+            <h6>&nbsp;
+              <ion-icon name="person"></ion-icon>&nbsp;
+            {{reser.nombre}}
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="phone-portrait"></ion-icon>&nbsp;
+            {{reser.numero}}
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="restaurant"></ion-icon>&nbsp;
+            {{reser.mesas}}&nbsp; mesas
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="time"></ion-icon>&nbsp;
+            {{reser.tiempo}}&nbsp; minutos
+            </h6>
+          </ion-card-subtitle>
+          <ion-card-header>
+            <ion-button color="secondary" (click)="alertEditar(reser.uid)" ><ion-icon name="close"></ion-icon>Cancelar&nbsp;</ion-button>
+            <ion-button  color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon>Eliminar</ion-button>
+          </ion-card-header>
+            
+        </ion-card>
+      </ng-template>
+      
     </div>
+   
   </div>
 
 
