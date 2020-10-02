@@ -3,16 +3,25 @@
     <ion-button slot="start" fill ="none" routerLink ="/home">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title>verificarEmail</ion-title>
+    <ion-title>Verificar Email</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<br><br>
 <ion-content>
 
-  <p>Por favor primero debes de verificar tu Correo</p>
+  <ion-card>
+    <ion-item>
+      <ion-icon name="mail" slot="start"></ion-icon>
+      <ion-label>Enviar e-mail</ion-label>
+      <ion-button (click)="presentAlert()" fill="outline" slot="end">Enviar</ion-button>
+    </ion-item>
+  
+    <ion-card-content>
+      Tu correo aun no ha sido verificado. 
+    </ion-card-content>
+  </ion-card>
 
-  <p>Todavia no te llega la verificacion a tu correo envia la peticion de nuevo</p>
 
-  <ion-button (click) = "verificarEmail()"> Enviar Verificacion </ion-button>
+  <!-- <ion-button (click) = "verificarEmail()"> Enviar Verificacion </ion-button> -->
 
 </ion-content>
