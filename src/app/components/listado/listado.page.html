@@ -49,38 +49,45 @@
         <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
         <ion-card-content>
           <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
-            <ion-card-title>{{res.promedio}}
+            <!-- <ion-card-title>{{res.promedio}}
               <ion-icon *ngIf="res.promedio === 1" name="star"></ion-icon>
               <ion-icon *ngIf="res.promedio != 1" name="star-half"></ion-icon>
-            </ion-card-title>
+            </ion-card-title> -->
             <img class="estrellas" src="../../../assets//icon/1estrellas.jpg" width="10px" height="50px">
+          <ion-list>Hora de atencion: {{res.horaApertura}} - {{res.horaCierre}}</ion-list>
           </ng-template>
           <ng-template [ngIf]="res.promedio >= 2 && res.promedio <=  2.9">
-            <ion-card-title>{{res.promedio}}
+            <!-- <ion-card-title>{{res.promedio}}
               <ion-icon *ngIf="res.promedio === 2" name="star"></ion-icon>
               <ion-icon *ngIf="res.promedio != 2" name="star-half"></ion-icon>
-            </ion-card-title>
+            </ion-card-title> -->
             <img class="estrellas" src="../../../assets//icon/2estrellas.jpg">
+          <ion-list>Hora de atencion: {{res.horaApertura}} - {{res.horaCierre}}</ion-list>
           </ng-template>
           <ng-template [ngIf]="res.promedio >= 3 && res.promedio <=  3.9">
-            <ion-card-title>{{res.promedio}}
+            <!-- <ion-card-title>{{res.promedio}}
               <ion-icon *ngIf="res.promedio === 3" name="star"></ion-icon>
               <ion-icon *ngIf="res.promedio != 3" name="star-half"></ion-icon>
-            </ion-card-title>
+            </ion-card-title> -->
             <img class="estrellas" src="../../../assets//icon/3estrellas.jpg">
+          <ion-list>Hora de atencion: {{res.horaApertura}} - {{res.horaCierre}}</ion-list>
           </ng-template>
           <ng-template [ngIf]="res.promedio >= 4 && res.promedio <=  4.9">
-            <ion-card-title>{{res.promedio}}
+            <!-- <ion-card-title>{{res.promedio}}
               <ion-icon *ngIf="res.promedio === 4" name="star"></ion-icon>
               <ion-icon *ngIf="res.promedio != 4" name="star-half"></ion-icon>
-            </ion-card-title>
+            </ion-card-title> -->
             <img class="estrellas" src="../../../assets//icon/4estrellas.jpg">
+          <ion-list>Hora de atencion: {{res.horaApertura}} - {{res.horaCierre}}</ion-list>
           </ng-template>
           <ng-template [ngIf]="res.promedio >= 5">
-            <ion-card-title>{{res.promedio}}
+            <!-- <ion-card-title>{{res.promedio}}
               <ion-icon *ngIf="res.promedio === 5" name="star"></ion-icon>
-            </ion-card-title>
-            <img class="estrellas" src="../../../assets//icon/5estrellas.jpg" >
+            </ion-card-title> -->
+            <ion-list>
+              <img class="estrellas" src="../../../assets//icon/5estrellas.jpg" >
+            </ion-list>
+          <ion-list>Hora de atencion: {{res.horaApertura}} - {{res.horaCierre}}</ion-list>
           </ng-template>
         </ion-card-content>
   
