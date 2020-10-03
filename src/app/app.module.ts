@@ -32,6 +32,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FCM } from '@ionic-native/fcm/ngx';
 
 import { ReactiveFormsModule } from '@angular/forms';
+
   
 @NgModule({
   declarations: [AppComponent, PerfilResComponent],

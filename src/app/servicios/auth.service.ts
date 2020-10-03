@@ -134,4 +134,12 @@ export class AuthService {
     this.AFauth.auth.sendPasswordResetEmail(email);
   }
 
+  getUserLog(){
+    return this.AFauth.authState
+  }
+
+  getUserLog2(){
+    return this.AFauth.auth.currentUser
+  }
+
 }

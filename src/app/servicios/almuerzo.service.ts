@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { Observable } from 'rxjs';
 import { map, take} from 'rxjs/operators';
 import { almuerzo } from '../models/almuerzo-interface';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +14,69 @@ export class AlmuerzoService {
   private almuerzoCollection: AngularFirestoreCollection<almuerzo>;
   private almuerzos: Observable<almuerzo[]>;
 
-  constructor(private db:AngularFirestore) { 
+  public currentUser = this.AFauth.auth.currentUser;
+  public usuarioLog
 
+
+  constructor(private db:AngularFirestore, private AFauth : AngularFireAuth, private router: Router) { 
+
+
+    // Revisar este error, de alguna manera se controla aqui
+    if(this.currentUser == null){
+      console.log("Sin usuario");
+      this.router.navigate(['/home']);
+    }else if(this.currentUser != null){
+      this.usuarioLog = this.currentUser.uid;
+    }
     this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
-    // this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(map(
-    //   actions => {
-    //     return actions.map( x => {
-    //       const data = x.payload.doc.data();
-    //       const id = x.payload.doc.id;
-    //       return {id, ... data};
-    //     });
-    //   }
-    // ));
+    this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return {id, ...data};
+        });
+      })
+    );
   }
+
+  // retorna la coleccion 
+  getTodosAlmuerzos(){
+    return this.almuerzos;
+  }
+
+  // retorna solo una coleccion
+  getAlmuerzoCollection(id: string){
+    return this.almuerzoCollection.doc<almuerzo>(id).valueChanges();
+  }
+
+  updateAlmuerzos(almu :almuerzo, id: string){
+    return this.almuerzoCollection.doc(id).update(almu);
+  }
+  
+  addAlmuerzos(almu: almuerzo){
+    return this.almuerzoCollection.add(almu);
+  }
+
+  addAlmuerzoNuevo(almu: almuerzo) {
+    
+    let idPlato = this.db.createId();
+    almu.id = idPlato;
+    return this.db.collection('platoAlmuerzo').doc(idPlato).set({
+      id: idPlato,
+      userUID: this.usuarioLog,
+      entradaAlmuerzo: almu.entradaAlmuerzo,
+      segundoAlmuerzo: almu.segundoAlmuerzo,
+      jugoAlmuerzo: almu.jugoAlmuerzo,
+      precioAlmuerzo: almu.precioAlmuerzo,
+    });
+   }
+  
+  removeAlmuerzo(id: string){
+    return this.almuerzoCollection.doc(id).delete();
+  }
+
+  // hasta aqui otra idea
 
   getAlmuerzos() : Observable<almuerzo[]>{
     return this.almuerzos;

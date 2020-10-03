@@ -149,7 +149,15 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/ver-menu']);
         }
-      },{
+      },
+      {
+        text: 'Mis platos',
+        icon: 'refresh-circle',
+        handler: () => {
+          this.router.navigate(['/menus']);
+        }
+      }
+      ,{
         text: 'Promociones',
         icon: 'heart',
         handler: () => {
