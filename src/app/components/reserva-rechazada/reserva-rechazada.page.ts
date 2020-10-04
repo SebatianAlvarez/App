@@ -4,7 +4,8 @@ import { Reserva } from '../../models/reserva-interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ReservasService } from '../../servicios/reservas.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController } from '@ionic/angular';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
   selector: 'app-reserva-rechazada',
@@ -21,7 +22,7 @@ export class ReservaRechazadaPage implements OnInit {
   public reservas$: Observable<Reserva[]>;
 
   constructor(public reservasService: ReservasService, private AFauth : AngularFireAuth, private router:Router,
-    public alertController: AlertController) { }
+    public alertController: AlertController, public actionSheetController: ActionSheetController, private authservice: AuthService) { }
 
   ngOnInit() {
 
@@ -58,6 +59,25 @@ export class ReservaRechazadaPage implements OnInit {
     });
     this.eliminarReserva(id);
     await alert.present();
+  }
+
+  onLogout(){
+    this.authservice.logout();
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Menu',
+      buttons: [{
+        text: 'Cerrar Sesion',
+        icon: 'log-out',
+        handler: () => {
+         this.onLogout();
+        }
+      }]
+    });
+    await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 
 }

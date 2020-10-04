@@ -162,8 +162,12 @@ export class ListadoPage implements OnInit {
       this.especial = espe;
     })
 
+    this.promocionesService.listar().subscribe(promo =>{
+      this.Promos = promo;
+
     this.coordenadaService.listar().subscribe(coor =>{
       this.coordenada =  coor
+
     })
 
     this.restaurantesService.restaurantesHabilitados();
@@ -256,7 +260,9 @@ export class ListadoPage implements OnInit {
         almuerzo: this.almuerzos,
         especial: this.especial,
         usuario: this.usuarios,
+        promocion: this.Promos,
         coordenada: this.coordenada
+
       }
     }).then((modal) => modal.present())
   }
@@ -321,7 +327,7 @@ export class ListadoPage implements OnInit {
         text: 'Reservas',
         icon: 'mail',
         handler: () => {
-          this.router.navigate(['/mensajes'])
+          this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
         text: 'Cerrar Sesion',

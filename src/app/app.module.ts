@@ -33,6 +33,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MenusPrincipalesPage } from './components/menus-principales/menus-principales.page';
+
   
 @NgModule({
   declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage],

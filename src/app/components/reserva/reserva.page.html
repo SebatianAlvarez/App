@@ -46,7 +46,7 @@
         </ion-card-subtitle>
         <ion-card-header>
           <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button>
-          <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
+          <ion-button  color="danger" (click)="presentModalRechazo(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
         </ion-card-header>
           
       </ion-card>

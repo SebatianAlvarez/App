@@ -23,7 +23,7 @@ export class ReservaAceptadaPage implements OnInit {
   public reservas$: Observable<Reserva[]>;
 
   constructor(public reservasService: ReservasService, private authservice: AuthService,
-    private router:Router, private AFauth : AngularFireAuth, private alertController: AlertController) { }
+    private router:Router, private AFauth : AngularFireAuth, private alertController: AlertController, public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
 
@@ -87,6 +87,25 @@ export class ReservaAceptadaPage implements OnInit {
     });
     this.eliminar(id);
     await alert.present();
+  }
+
+  onLogout(){
+    this.authservice.logout();
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Menu',
+      buttons: [{
+        text: 'Cerrar Sesion',
+        icon: 'log-out',
+        handler: () => {
+         this.onLogout();
+        }
+      }]
+    });
+    await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
   }
 
 }

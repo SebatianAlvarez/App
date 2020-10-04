@@ -10,9 +10,11 @@
   </ion-toolbar>
 </ion-header>
 
-{{coordenadas | json}}
+<ion-card class="fotoResta">
+
 
 <ion-card>
+
   <ion-header>
     <img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
   </ion-header>
@@ -20,27 +22,35 @@
 
 <ion-content class="ion-padding">
 
-  <button class="accordion">Informacion</button>
-  <div class="panel">
-    <ion-list>
-      <ion-item>
-        <h6><b>Tipo Restaurante: </b>{{res.tipoRestaurante}}</h6>
-      </ion-item>
-      <ion-item>
-        <h6><b>Capacidad: </b>{{res.capacidadRestaurante}}</h6>
-      </ion-item>
-      <ion-item>
-        <h6><b>Dirección: </b>{{res.direccionRestaurante}}</h6>
-      </ion-item>
-      <ion-item>
-        <h6><b>Hora de apertura: </b>{{res.horaApertura}}</h6>
-      </ion-item>
-      <ion-item>
-        <h6><b>Hora de cierre: </b>{{res.horaCierre}}</h6>
-      </ion-item>
-    </ion-list>
+  <button class="accordion">
+    <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Información
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon>
 
-    <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
+  </button>
+  <div class="panel">
+    <ion-card class="infomacionCard">
+      <ion-card-header>
+        <ion-card-subtitle>{{res.tipoRestaurante}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-item>
+        <ion-icon name="restaurant" slot="start"></ion-icon>
+        <ion-label>{{res.nombreRestaurante}}</ion-label>
+        <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{res.promedio}}
+        </ion-button>
+      </ion-item>
+
+      <ion-card-content>
+        Este restaurante tiene una capacidad para {{res.capacidadRestaurante}} personas, 
+        se encuentra ubicado en: {{res.direccionRestaurante}}, ven a visitarlo!
+        El restaurante abre sus puertas a las {{res.horaApertura}} a.m y cierra a las {{res.horaCierre}} p.m.
+
+      </ion-card-content>
+    </ion-card>
+  
+  <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
       <ion-item lines="none">
         <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
       </ion-item>
@@ -48,16 +58,43 @@
         <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" >Afiliarse</ion-button>
         </div>
     </form>
-  </div>
+    
+ </div>
   
-  
-  <button class="accordion">Desayunos</button>
+  <button class="accordion">
+    <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp; Desayunos &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
+  </button>
+
   <div class="panel">
+    
     <div *ngFor="let desa of desayunos">
       <div *ngIf="res.userUID === desa.userUID">
-        <div class="menu">
-        </div>
-        <ion-list>
+        <ion-card class="infomacionCard">
+          <ion-card-header>
+            <img src="../../../assets/desayuno.jpg" alt="des" width="100px" height="200px">
+            <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
+          </ion-card-header>
+          <ion-item>
+            <ion-icon name="restaurant" slot="start"></ion-icon>
+            <ion-label>{{desa.platoDesayuno}}</ion-label>
+            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{desa.precioDesayuno}}&nbsp;$
+            </ion-button>
+          </ion-item>
+    
+          <ion-card-content>
+            El desayuno del día es {{desa.detalleDesayuno}} <br>
+            Ingredientes:
+            <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
+              
+                <ion-icon name="remove" slot="start"></ion-icon>
+                {{i['ingrediente']}} <br>
+              
+            </div>
+            
+          </ion-card-content>
+        </ion-card>
+        <!-- <ion-list>
           <ion-item>
             <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
           </ion-item>
@@ -76,91 +113,135 @@
               {{i['ingrediente']}} <br>
             </ion-item>
           </div>
-        </ion-list>
+        </ion-list> -->
       </div>
     </div>
   </div>
   
-  <button class="accordion">Almuerzos</button>
+  <button class="accordion">
+    <ion-icon name="pizza"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+    Almuerzos&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <ion-icon name="pizza"></ion-icon>
+
+  </button>
   <div class="panel">
     <div *ngFor="let almu of almuerzos">
       <div *ngIf="res.userUID === almu.userUID">
-        <div class="menu">
-        </div>
-        <ion-list>
+        <ion-card class="infomacionCard">
+          <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
           <ion-item>
-            <h6><b>Entrada: </b>{{almu.entradaAlmuerzo}}</h6>
+            <ion-icon name="restaurant" slot="start"></ion-icon>
+            <ion-label>Tipo: {{almu.entradaAlmuerzo}}</ion-label>
+            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{almu.precioAlmuerzo}} &nbsp;$
+            </ion-button>
           </ion-item>
-          <ion-item>
-            <h6><b>Segundo: </b>{{almu.segundoAlmuerzo}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Jugo: </b>{{almu.jugoAlmuerzo}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Precio: </b>{{almu.precioAlmuerzo}}</h6>
-          </ion-item>
-        </ion-list>
+    
+          <ion-card-content>
+            Entrada: {{almu.entradaAlmuerzo}} <br>
+            Segundo: {{almu.segundoAlmuerzo}} <br>
+            Bebida: {{almu.jugoAlmuerzo}} <br>
+          </ion-card-content>
+        </ion-card>
+
       </div>
     </div>
   </div> 
 
 
-  <ion-button class="accordion">Platos Especiales
-    <ion-icon name="arrow-dropdown" slot="end" fill="none"></ion-icon>
-  </ion-button>
+  <button class="accordion">
+    <ion-icon name="cafe" slot="end" fill="none"></ion-icon>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Platos Especiales
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="cafe" slot="end" fill="none"></ion-icon>
+  </button>
   <div class="panel">
     <div *ngFor="let espe of especial">
       <div *ngIf="res.userUID === espe.userUID">
-        <div class="menu">
-        </div>
-        <ion-list>
+        <ion-card class="infomacionCard">
+          <ion-card-header>
+            <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
+            <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
+          </ion-card-header>
           <ion-item>
-            <h6><b>Plato: </b>{{espe.platoEspecial}}</h6>
+            <ion-icon name="restaurant" slot="start"></ion-icon>
+            <ion-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </ion-label>
+            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}&nbsp;$
+            </ion-button>
           </ion-item>
-          <ion-item>
-            <h6><b>Precio: </b>{{espe.precioEspecial}}</h6>
-          </ion-item>
-          <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
-            <ion-item>
-              <ion-icon name="play" slot="start"></ion-icon>
-              {{i['ingrediente']}} <br>
-            </ion-item>
-          </div>
-        </ion-list>
-      </div>
+    
+          <ion-card-content>
+            El desayuno del día es:  {{espe.platoEspecial}} <br>
+            Ingredientes:
+            <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
+              
+                <ion-icon name="remove" slot="start"></ion-icon>
+                {{i['ingrediente']}} <br>
+              
+            </div>
+            
+          </ion-card-content>
+        </ion-card>
+
+     </div>
     </div>
   </div>
 
-  <button class="accordion">Comentarios</button>
+  <button class="accordion">
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    Comentarios
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
+ 
+  </button>
   <div class="panel">
+    <ion-list>
+      <ion-item lines="full" *ngFor="let comen of comentarios$ | async">
+        <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
+        <ion-label>
+          <h3>{{comen.comentario}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-infinite-scroll threshold="5%" id="infinite-scroll">
+      <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="cargando ...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+<!-- 
     <div *ngFor="let comen of comentarios$ | async">
       <div *ngIf="res.userUID === comen.uidResta">
-        <div class="menu">
-        </div>
-        <ion-list>
-          <ion-item>
-            <h6><b>{{comen.nombreUsu}} : </b>{{comen.comentario}}</h6>
+
+
+          <ion-item href="#" class="ion-activated">
+            <ion-icon src="../../../assets/chatbubble-ellipses-outline.svg" slot="start">
+              <h1>{{comen.nombreUsu}}</h1>
+            </ion-icon>
+            <ion-label>{{comen.comentario}}</ion-label>
           </ion-item>
-        </ion-list>
+        
+
       </div>
-    </div>
+    </div> -->
   </div> 
 
-  
-
-  <div *ngFor="let pro of promocion">
-    <div *ngIf="res.userUID === pro.userUID && pro.estado=== 'verdadero'">
-      <div class="menu">
-      </div>
-      <ion-list>
-        <ion-item>
-          <img [src]="pro.fotosPromocion">
-        </ion-item>
-      </ion-list>
-    </div>
+  <button class="accordion">
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    Promociones
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
+  </button>
+  <div class="panel">
+    <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+      <ion-slide *ngFor="let pro of promosUsuario">   
+        <div>
+          <img [src] ="pro.fotosPromocion">
+        </div>
+      </ion-slide>
+    </ion-slides>
   </div>
-
 
   <!-- <div *ngFor="let afi of afiliados$ | async">
     <div *ngIf="afi.uidUsu === usuarioLog && afi.uidResta === res.userUID">
@@ -170,9 +251,13 @@
     </div>
   </div> -->
 
-  <div class="titulo">
-    <h2 style="text-align: center;">Ubicación</h2>
-  </div>
+  <button class="accordion">
+    <ion-icon name="compass" slot="end" fill="none"></ion-icon>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Ubicación
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="compass" slot="end" fill="none"></ion-icon>
+  </button>
 
   <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
   

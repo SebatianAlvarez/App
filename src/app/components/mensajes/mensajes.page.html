@@ -6,20 +6,20 @@
     <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Mensajes</ion-title>
+    <ion-title style="text-align: center;">Reservas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="titulo">
+  <!-- <div class="titulo">
     <h2 style="text-align: center;">Reservas</h2>
-  </div>
+  </div> -->
 
 
   <div *ngFor="let res of restaurante$ | async">
     <div *ngFor="let reser of reservas$ | async">
       <div *ngIf="usuarioLog === reser.uidUsu">
-        <ng-template [ngIf]="res.userUID === reser.uidResta && reser.estado.toString() === 'Aprobado'">
+        <!-- <ng-template [ngIf]="res.userUID === reser.uidResta && reser.estado.toString() === 'Aprobado'">
           
           <ion-card>
             <ion-card-header>
@@ -42,8 +42,9 @@
               </ion-card-header>
             </ion-card-header>
             </ion-card>
-        </ng-template>
-        <ng-template [ngIf]=" res.userUID === reser.uidResta && reser.estado.toString() === 'Rechazado'">
+        </ng-template> -->
+        
+        <!-- <ng-template [ngIf]=" res.userUID === reser.uidResta && reser.estado.toString() === 'Rechazado'">
           
           <ion-card>
             <ion-card-header>
@@ -63,12 +64,15 @@
               <ion-card-subtitle>
                 Tiempo: {{reser.tiempo}} &nbsp; minutos<br> 
               </ion-card-subtitle>
+              <ion-card-subtitle *ngIf="reser.motivo">
+                Motivo: {{reser.motivo}} &nbsp; <br> 
+              </ion-card-subtitle>
               <ion-card-header>
                 <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
               </ion-card-header>
             </ion-card-header>
             </ion-card>
-        </ng-template>
+        </ng-template> -->
         <ng-template [ngIf]="res.userUID === reser.uidResta && reser.estado.toString() === 'En Revision'">
           <ion-card>
             <ion-card-header>

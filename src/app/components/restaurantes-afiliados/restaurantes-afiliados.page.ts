@@ -275,10 +275,10 @@ export class RestaurantesAfiliadosPage implements OnInit {
     const actionSheet = await this.ActionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mensajes',
+        text: 'Reservas',
         icon: 'mail',
         handler: () => {
-          this.router.navigate(['/mensajes'])
+          this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
         text: 'Cerrar Sesion',

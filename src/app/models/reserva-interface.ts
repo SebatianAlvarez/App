@@ -1,6 +1,7 @@
 export class Reserva {
     nombre? : string
     numero?: string
+    motivo?: string
     mesas: number
     tiempo:number
     uid?:string
