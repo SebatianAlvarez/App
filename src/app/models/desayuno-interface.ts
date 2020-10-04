@@ -4,5 +4,5 @@ export class desayuno {
     precioDesayuno : string
     userUID?: string
     platoDesayuno: string
-    ingredientes?: string[]
+    // ingredientes?: string[]
   }

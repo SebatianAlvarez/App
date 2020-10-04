@@ -34,6 +34,13 @@ const routes: Routes = [
   { path: 'menus', loadChildren: './components/menus/menus.module#MenusPageModule' },
   { path: 'lista-menus/:id', loadChildren: './components/lista-menus/lista-menus.module#ListaMenusPageModule' },
   { path: 'lista-menus', loadChildren: './components/lista-menus/lista-menus.module#ListaMenusPageModule' },
+  { path: 'tabs-menu', loadChildren: './components/tabs-menu/tabs-menu.module#TabsMenuPageModule' },
+  { path: 'menu-desayuno', loadChildren: './components/menus/menu-desayuno/menu-desayuno.module#MenuDesayunoPageModule' },
+  { path: 'menue-especial', loadChildren: './components/menus/menue-especial/menue-especial.module#MenueEspecialPageModule' },
+  { path: 'lista-desayunos/:id', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
+  { path: 'lista-desayunos', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
+  { path: 'lista-especial', loadChildren: './components/listaMenus/lista-especial/lista-especial.module#ListaEspecialPageModule' },
+
 
 
 

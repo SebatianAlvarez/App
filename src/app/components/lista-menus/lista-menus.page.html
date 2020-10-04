@@ -1,13 +1,14 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/menus"></ion-back-button>
     </ion-buttons>
-    <ion-title>Details</ion-title>
+    <ion-title>Menú del día</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
   <ion-list lines="full">
+    {{almuerzo  | json}}
     <ion-item *ngIf="almuerzo">
       <ion-input required type="text" placeholder="Entrada" [(ngModel)]="almuerzo.entradaAlmuerzo"></ion-input>
     </ion-item>
@@ -21,9 +22,10 @@
       <ion-input required type="number" placeholder="Precio" [(ngModel)]="almuerzo.precioAlmuerzo"></ion-input>
     </ion-item>
   </ion-list>
-  <ion-button expand="full" (click)="saveAlmuerzo()">Save</ion-button>
+  <ion-button expand="full" (click)="saveAlmuerzo()">Guardar</ion-button>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-      <ion-fab-button color="danger" (click)="onRemoveAlmuerzo(almuerzoID)">
+      <ion-fab-button color="danger" *ngIf="almuerzo" (click)="onRemoveAlmuerzo(almuerzoID)">
           <ion-icon name="trash"></ion-icon>
       </ion-fab-button>
     </ion-fab>

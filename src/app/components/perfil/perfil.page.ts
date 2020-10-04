@@ -151,10 +151,10 @@ export class PerfilPage implements OnInit {
         }
       },
       {
-        text: 'Mis platos',
+        text: 'Actualizar Menus',
         icon: 'refresh-circle',
         handler: () => {
-          this.router.navigate(['/menus']);
+          this.router.navigate(['/tabs-menu/desayuno']);
         }
       }
       ,{

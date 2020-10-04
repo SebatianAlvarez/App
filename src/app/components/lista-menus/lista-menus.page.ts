@@ -4,6 +4,8 @@ import { almuerzo } from '../../models/almuerzo-interface';
 import { NavController, LoadingController } from '@ionic/angular';
 import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-lista-menus',
@@ -24,7 +26,7 @@ export class ListaMenusPage implements OnInit {
   almuerzoID= null;
 
   constructor(private route: ActivatedRoute, private nav: NavController, private almuerzoSVC: AlmuerzoService, private loadingController: LoadingController
-    ,private AFauth : AngularFireAuth) { }
+    ,private AFauth : AngularFireAuth, private router: Router) { }
 
   ngOnInit() {
     this.almuerzoID = this.route.snapshot.params['id'];
@@ -54,13 +56,17 @@ export class ListaMenusPage implements OnInit {
     if (this.almuerzoID) {
       this.almuerzoSVC.updateAlmuerzos(this.almuerzo, this.almuerzoID).then(() => {
         loading.dismiss();
-        this.nav.navigateForward('/menus');
+        // this.nav.navigateForward('tabs-menu/menus');
+      this.router.navigate(['tabs-menu/almuerzo'])
+
       });
     } else {
       
       this.almuerzoSVC.addAlmuerzoNuevo(this.almuerzo).then(() => {
         loading.dismiss();
-        this.nav.navigateForward('/menus');
+        // this.nav.navigateForward('tabs-menu/menus');
+        this.router.navigate(['tabs-menu/almuerzo'])
+
       });
     }
   }
@@ -71,7 +77,8 @@ export class ListaMenusPage implements OnInit {
     await loading.present();
     this.almuerzoSVC.removeAlmuerzo(idAlm);
     loading.dismiss();
-    this.nav.navigateForward('/menus');
+    this.router.navigate(['tabs-menu/almuerzo'])
+    // this.nav.navigateForward('tabs-menu/menus');
   }
 
 }

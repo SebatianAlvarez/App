@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu-desayuno"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menú del día</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  {{desayuno | json}}
+  <ion-list lines="full">
+    <ion-item *ngIf="desayuno">
+      <ion-input required type="text" placeholder="Nombre del Plato" [(ngModel)]="desayuno.platoDesayuno"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="desayuno">
+      <ion-input required type="text" placeholder="Detalles" [(ngModel)]="desayuno.detalleDesayuno"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="desayuno">
+      <ion-input required type="number" placeholder="Precio" [(ngModel)]="desayuno.precioDesayuno"></ion-input>
+    </ion-item>
+    <!-- <ion-item *ngIf="desayuno">
+      <ion-input required type="number" placeholder="Precio" [(ngModel)]="almuerzo.precioAlmuerzo"></ion-input>
+    </ion-item> -->
+  </ion-list>
+  <ion-button expand="full" (click)="saveDesayuno()">Guardar</ion-button>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+      <ion-fab-button color="danger" *ngIf="desayuno" (click)="onRemoveDesayuno(desayunoID)">
+          <ion-icon name="trash"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>
