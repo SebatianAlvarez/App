@@ -1,15 +1,12 @@
 <ion-header>
     <ion-toolbar>
-    <ion-buttons slot="primary">
-      <ion-button>
-        <ion-icon src="../../../assets/fast-food-outline.svg" slot="start"></ion-icon>
+      <ion-button slot="start" fill ="none" routerLink="/perfil">
+        <ion-icon name = "arrow-back" ></ion-icon>
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button>
-        <ion-icon src="../../../assets/fast-food-outline.svg" slot="start"></ion-icon>
+      
+      <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+        <ion-icon name = "menu" ></ion-icon>
       </ion-button>
-    </ion-buttons>
     <ion-title>Mi Restaurante</ion-title>
   </ion-toolbar>
 
@@ -67,12 +64,14 @@
       
         </div>
       </div>
+        <!--
       <ion-card-content>
+      
         <ion-button expand="block" color="danger" routerLink="/perfil">
         <ion-icon src="../../../assets/arrow-undo-circle.svg" slot="start"></ion-icon>
         Regresar</ion-button>
       </ion-card-content>
-
+        -->
     </ion-card-header>
   </ion-card>
   

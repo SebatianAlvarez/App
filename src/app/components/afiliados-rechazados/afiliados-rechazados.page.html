@@ -6,7 +6,7 @@
     <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Afiliados Activos</ion-title>
+    <ion-title style="text-align: center;">Afiliados Rechazados</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,11 +14,10 @@
 
   <div *ngFor = "let afi of afiliados$ | async">
     <div *ngIf = "usuarioLog === afi.uidResta">
-      <ion-card *ngIf = "afi.estado === 'verdadero'">
+      <ion-card *ngIf = "afi.estado === 'falso'">
         <ion-card-header>
-          <ion-card-title style="text-align: center;">Activos</ion-card-title>
+          <ion-card-title style="text-align: center;">Rechazado</ion-card-title>
         </ion-card-header>
-        <img src="{{afi.fotoAfi}}" width="140px">
         <ion-list>
           <ion-item>   
             <h6><b>Nombre: </b>{{afi.nombre}} </h6>

@@ -26,10 +26,15 @@ const routes: Routes = [
   { path: 'ver-menu', loadChildren: './components/ver-menu/ver-menu.module#VerMenuPageModule', canActivate:[AuthGuard] },
   { path: 'perfil-restaurante', loadChildren: './components/perfil-restaurante/perfil-restaurante.module#PerfilRestaurantePageModule', canActivate:[AuthGuard] },
   { path: 'lista-promociones-habilitadas', loadChildren: './components/lista-promociones-habilitadas/lista-promociones-habilitadas.module#ListaPromocionesHabilitadasPageModule', canActivate:[AuthGuard] },
-  { path: 'restaurantes-afiliados', loadChildren: './components/restaurantes-afiliados/restaurantes-afiliados.module#RestaurantesAfiliadosPageModule', canActivate:[AuthGuard]  },  { path: 'comentarios', loadChildren: './components/comentarios/comentarios.module#ComentariosPageModule' },
+  { path: 'restaurantes-afiliados', loadChildren: './components/restaurantes-afiliados/restaurantes-afiliados.module#RestaurantesAfiliadosPageModule', canActivate:[AuthGuard]  },
+  { path: 'comentarios', loadChildren: './components/comentarios/comentarios.module#ComentariosPageModule' },
   { path: 'verificar-email', loadChildren: './components/verificar-email/verificar-email.module#VerificarEmailPageModule' },
   { path: 'tabs', loadChildren: './components/tabs/tabs.module#TabsPageModule' },
   { path: 'reserva-rechazada', loadChildren: './components/reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule' },
+  { path: 'tabs2', loadChildren: './components/tabs2/tabs2.module#Tabs2PageModule' },
+  { path: 'afiliados-rechazados', loadChildren: './components/afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule' },
+  { path: 'tabs3', loadChildren: './components/tabs3/tabs3.module#Tabs3PageModule' },
+  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },
 
 
 

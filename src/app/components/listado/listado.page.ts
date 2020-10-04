@@ -26,7 +26,9 @@ import { DesayunoService } from '../../servicios/desayuno.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ListadoPromoComponent } from '../listado-promo/listado-promo.component';
 import { Usuario } from '../../models/usuario-interface';
-
+import { CoordenadasService } from '../../servicios/coordenadas.service';
+import { coordenadas } from '../../models/coordenadas-interface';
+import { MenuController } from '@ionic/angular'
 
 @Component({
   selector: 'app-listado',
@@ -63,6 +65,7 @@ export class ListadoPage implements OnInit {
   public desayunos : desayuno[]
   public almuerzos: almuerzo[]
   public especial: especial[]
+  public coordenada: coordenadas[]
   public promo: promos[]
   public resta: resta[]
   public usuarios: Usuario[]
@@ -72,7 +75,8 @@ export class ListadoPage implements OnInit {
     private modal: ModalController, public actionSheetController: ActionSheetController,
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
     private almuerzoService : AlmuerzoService, private promocionesService: PromocionService,
-    private perfilService : PerfilesService, private firestore: AngularFirestore) { }
+    private perfilService : PerfilesService, private firestore: AngularFirestore,
+    private coordenadaService: CoordenadasService) { }
 
   async ngOnInit() {
 
@@ -156,6 +160,10 @@ export class ListadoPage implements OnInit {
 
     this.especialService.listar().subscribe(espe => {
       this.especial = espe;
+    })
+
+    this.coordenadaService.listar().subscribe(coor =>{
+      this.coordenada =  coor
     })
 
     this.restaurantesService.restaurantesHabilitados();
@@ -247,7 +255,8 @@ export class ListadoPage implements OnInit {
         desayuno: this.desayunos,
         almuerzo: this.almuerzos,
         especial: this.especial,
-        usuario: this.usuarios
+        usuario: this.usuarios,
+        coordenada: this.coordenada
       }
     }).then((modal) => modal.present())
   }
@@ -307,12 +316,6 @@ export class ListadoPage implements OnInit {
         icon: 'restaurant',
         handler: () => {
           this.router.navigate(['/restaurantes-afiliados'])
-        }
-      },{
-        text: 'Promociones',
-        icon: 'gift',
-        handler: () => {
-          this.router.navigate(['/lista-promociones-habilitadas'])
         }
       },{
         text: 'Reservas',

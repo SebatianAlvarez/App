@@ -4,7 +4,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 import { PerfilesService } from '../../servicios/perfiles.service';
 
@@ -27,6 +27,7 @@ import { afiliado } from '../../models/afiliados-interface';
 import { almuerzo } from '../../models/almuerzo-interface';
 import { desayuno } from '../../models/desayuno-interface';
 
+
 import 'leaflet-routing-machine';
 import * as L from 'leaflet';
 
@@ -38,9 +39,12 @@ import { Observable } from 'rxjs';
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { comentarios } from '../../models/comentarios-interface';
 import { CoordenadasService } from '../../servicios/coordenadas.service';
-import { coordenadas } from '../../models/coordenadas-interface'
+import { coordenadas } from '../../models/coordenadas-interface';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { forEach } from 'www/cordova_plugins';
+
 
 
 
@@ -59,6 +63,7 @@ export class PerfilResComponent implements OnInit {
   public especial: especial[]
   public promocion: promos[]
   public usu: Usuario[]
+  public coor: coordenadas
 
   public resID : string
 
@@ -66,6 +71,8 @@ export class PerfilResComponent implements OnInit {
   public UsuarioRoles : Usuario[]
 
   public rolActual : string;
+
+  fotosRef: AngularFirestoreCollection;
 
 
   public mostarMapa : boolean = false
@@ -80,7 +87,9 @@ export class PerfilResComponent implements OnInit {
   public preguntas : pregunta[];
   public afiliados : afiliado[]
   public afi : afiliado
-  public coordenadas: any;
+  public coordenadas: coordenadas[]= [];
+  public latitud : number
+  public longitud :  number
 
   validacion: boolean = true;
   validacionA: boolean = false;
@@ -92,18 +101,33 @@ export class PerfilResComponent implements OnInit {
 
   public coordenadas$: Observable<coordenadas[]>;
 
+  selectedFile: any;
+  file: string;
+  estaSeleccionado: boolean;
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
     private formBuilder: FormBuilder, private comentariosService: ComentariosService,
-    private coordenadaService: CoordenadasService) { }
+    private coordenadaService: CoordenadasService, private storage : AngularFireStorage)
+    
+    {
+      this.fotosRef = this.db.collection('afiliados')
+     }
 
     public calificar = this.formBuilder.group ({
 
       id: new FormControl (''),
       estrellas: new FormControl ('', [Validators.required ]),
+     
+    });
+
+    public afiliacion = this.formBuilder.group ({
+
+      id: new FormControl (''),
+      inputFile: new FormControl ('', [Validators.required ]),
      
     });
 
@@ -135,6 +159,7 @@ export class PerfilResComponent implements OnInit {
     this.especial = this.navparams.get('especial')
     this.promocion = this.navparams.get('promocion')
     this.usu = this.navparams.get('usuario')
+    this.coor = this.navparams.get('coordenada')
 
     console.log("aver " + this.almuerzos)
     console.log("aver especial" + this.especial)
@@ -180,7 +205,49 @@ export class PerfilResComponent implements OnInit {
 
   }
 
+  
+
+  marcador(lat : number, lng : number){
+    this.marker = L.marker([lat, lng], {draggable:false});
+    this.marker.addTo(this.map).bindPopup('Mi restaurante');
+  }
+  
+  verCoordenadas(){
+    this.coordenadaService.listar().subscribe( data =>{
+  
+      for(let element of data){
+        console.log("userUID: ", element.userUID);
+        console.log("usrrlog: ", this.usuarioLog);
+        console.log("elemente??", element);
+        
+        if(element.userUID ===  this.res.userUID){
+          this.latitud = element['lat'];
+          this.longitud = element['lng'];
+          
+          //var lat = parseFloat(this.latitud);
+          //var lon = parseFloat(this.longitud);
+          
+          this.marcador(this.latitud, this.longitud); // Aqui agrego el pop-up con las coordenadas de la base de datos`
+          break;
+        }else{
+          console.log("no es");
+        }
+        // break;
+      }
+    })
+  
+  }
+  
+
   ionViewDidEnter(){
+
+    //this.coordenadaService.listar().subscribe( data => {
+    //  this.coordenadas =  data
+    //  this.coordenadas.forEach
+    //})
+
+    console.log("coor " + this.coordenadas)
+
     this.map = L.map('Mapa', {
       center: [ -0.2104022, -78.4910514 ],
       zoom: 17
@@ -192,6 +259,10 @@ export class PerfilResComponent implements OnInit {
 });
 
 tiles.addTo(this.map);
+this.verCoordenadas();
+
+//this.marker = marker([-0.2104022, -78.4910514]);
+//this.marker.addTo(this.map)
   }
 
   Calificacion(){
@@ -210,6 +281,25 @@ tiles.addTo(this.map);
     }
   }
 
+  elegirImagen(event){ 
+    this.estaSeleccionado = true;
+    this.file = event.target.files[0].name;
+    
+    this.selectedFile = event.target.files
+  }
+
+  async uploadFile(id, file): Promise<any> {
+    if(file && file.length) {
+      try {
+      
+        const task = await this.storage.ref('imagenesAfiliacion').child(id).put(file[0])
+        return this.storage.ref(`imagenesAfiliacion/${id}`).getDownloadURL().toPromise();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   afiliarse(){
     this.validacionA = true;
     let afi = new afiliado();
@@ -220,17 +310,27 @@ tiles.addTo(this.map);
     afi.id = afiliadoID;
     let usuario = this.perfilService.getUsuario(this.usuarioLog);
     usuario.subscribe(data =>{
-      this.db.collection('afiliados').doc(afiliadoID).set({
-        uidUsu : this.usuarioLog,
-        uidResta : this.res.userUID,
-        id : afi.id,
-        nombre : data.nombre,
-        numero : data.numero,
-        estado : "falso",
-        idres : this.res.id
-      }).then((res) =>{
-        resolve(res)
-      }).catch(err => reject(err))
+      this.fotosRef.add({
+
+      }).then(async resp =>{
+
+        const imageUrl = await this.uploadFile(resp.id, this.selectedFile)
+
+        this.db.collection('afiliados').doc(afiliadoID).set({
+          uidUsu : this.usuarioLog,
+          uidResta : this.res.userUID,
+          id : afi.id,
+          nombre : data.nombre,
+          numero : data.numero,
+          estado : "pendiente",
+          idres : this.res.id,
+          fotoAfi: imageUrl
+        }).then((res) =>{
+          resolve(res)
+        }).catch(err => reject(err))
+
+      })
+      
     })
     
   })
@@ -344,6 +444,10 @@ existeAfiliado(){
     this.authservice.logout();
   }
 
+  goAfiliados(){
+    this.modal.dismiss(this.router.navigate(['/restaurantes-afiliados']))
+  }
+
   getMenu(){
 
     this.authservice.getUsuario().subscribe(data =>{
@@ -370,6 +474,12 @@ existeAfiliado(){
       handler: () => {
         this.goPerfil();
       }
+    },{
+      text: 'Restaurantes Afiliados',
+      icon: 'restaurant',
+        handler: () => {
+         this.goAfiliados();
+        }
     },{
       text: 'Mensajes',
       icon: 'mail',
@@ -471,7 +581,7 @@ getAddress(lat: number, long : number){
 mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
     this.restaurantes = data
-    this.marker = marker([data.latitud,data.longitud], {draggable: false});
+    //this.marker = marker([data.latitud,data.longitud], {draggable: false});
       //this.marker.addTo(this.map).bindPopup(data.nombreRestaurante);
 
       this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((res) =>{
@@ -485,7 +595,6 @@ mostrar(id : string, lat: number, lng: number){
 
         L.Routing.control({
           show: false,
-          
           waypoints: [
               L.latLng(lat,lng, {draggable: false}),
               L.latLng(latLong[0],latLong[1], {draggable: false})

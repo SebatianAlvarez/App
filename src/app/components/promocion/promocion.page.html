@@ -42,7 +42,7 @@
 
   <div *ngFor ="let resta of restaurante$ | async">
     <div *ngIf ="resta.userUID === usuarioLog">
-      <ng-template [ngIf] = "resta.resVerificado.toString() === 'Aprobado'">
+      <ng-template [ngIf] = "resta.resVerificado === 'Aprobado'">
         <ion-card>
           <ion-card-header>
             <div class="titulo">
@@ -72,10 +72,10 @@
         
         </ion-card>
       </ng-template>
-      <ng-template [ngIf] = "resta.resVerificado.toString() === 'En Revision'">
+      <ng-template [ngIf] = "resta.resVerificado === 'En Revision'">
         <p style="text-align: center;">Tu Restaurante esta siendo Verificado</p>
       </ng-template>
-      <ng-template [ngIf] = "resta.resVerificado.toString() === 'Rechazado'">
+      <ng-template [ngIf] = "resta.resVerificado === 'Rechazado'">
         <p style="text-align: center;">Tu Restaurante fue rechazado vuelve a realizar
         la solicitud en nuestra pagina web</p>
         <br>

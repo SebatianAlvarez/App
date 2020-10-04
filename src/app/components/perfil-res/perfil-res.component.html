@@ -10,6 +10,8 @@
   </ion-toolbar>
 </ion-header>
 
+{{coordenadas | json}}
+
 <ion-card>
   <ion-header>
     <img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
@@ -37,7 +39,17 @@
         <h6><b>Hora de cierre: </b>{{res.horaCierre}}</h6>
       </ion-item>
     </ion-list>
+
+    <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
+      <ion-item lines="none">
+        <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
+      </ion-item>
+      <div style="text-align: center;">
+        <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" >Afiliarse</ion-button>
+        </div>
+    </form>
   </div>
+  
   
   <button class="accordion">Desayunos</button>
   <div class="panel">
@@ -251,11 +263,6 @@
   </div>
 
 -->
-
-
-  <div style="text-align: center;">
-  <ion-button style="text-align: center;" (click)="presentarMensaje()"  color="danger" >Afiliarse</ion-button>
-  </div>
 
   <ng-template #foto>
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">

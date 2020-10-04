@@ -116,12 +116,6 @@ export class ReservaPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Peticiones Aceptadas',
-        icon: 'checkmark-circle-outline',
-        handler: () => {
-          this.router.navigate(['/reserva-aceptada']);
-        }
-      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

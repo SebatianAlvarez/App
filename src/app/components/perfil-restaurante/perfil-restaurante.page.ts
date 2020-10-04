@@ -3,6 +3,10 @@ import { resta } from '../../models/restaurante-interface';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { ActionSheetController } from '@ionic/angular';
+import { AuthService } from '../../servicios/auth.service';
+
+
 
 @Component({
   selector: 'app-perfil-restaurante',
@@ -19,8 +23,8 @@ export class PerfilRestaurantePage implements OnInit {
 
 
 
-  constructor(private restauranteService : RestaurantesService,
-              private AFauth : AngularFireAuth) { }
+  constructor(private restauranteService : RestaurantesService, public actionSheetController: ActionSheetController,
+              private AFauth : AngularFireAuth, private authservice: AuthService) { }
 
   ngOnInit() {
 
@@ -39,6 +43,25 @@ export class PerfilRestaurantePage implements OnInit {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Menu',
+      buttons: [{
+        text: 'Cerrar Sesion',
+        icon: 'log-out',
+        handler: () => {
+         this.onLogout();
+        }
+      }]
+    });
+    await actionSheet.present();
+    let result = await actionSheet.onDidDismiss();
+  }
+
+  onLogout(){
+    this.authservice.logout();
   }
 
 }
