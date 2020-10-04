@@ -60,6 +60,9 @@ export class PerfilResComponent implements OnInit {
   public promocion: promos[]
   public usu: Usuario[]
 
+  public promosUsuario: promos[] =[]
+  slideOpts: any
+
   public resID : string
 
   public usuarioLog : string;
@@ -110,6 +113,11 @@ export class PerfilResComponent implements OnInit {
 
   ngOnInit() {
 
+    this.slideOpts = {
+      initialSlide: 1,
+      speed: 400
+    };
+
     var acc = document.getElementsByClassName("accordion");
     var i;
   
@@ -139,6 +147,9 @@ export class PerfilResComponent implements OnInit {
     console.log("aver " + this.almuerzos)
     console.log("aver especial" + this.especial)
     console.log("aver usu" + this.usu)
+    console.log("promc??", this.promocion);
+    
+    
 
     this.preguntasService.getPreguntas().subscribe(data =>{
       this.preguntas = data
@@ -178,6 +189,17 @@ export class PerfilResComponent implements OnInit {
       console.log(error)
     }
 
+    this.promocionesUsuario();
+
+  }
+
+  promocionesUsuario(){
+    this.promosUsuario = [];
+    this.promocion.forEach(element => {
+      if(element['userUID'] === this.res.userUID && element['estado'] === 'verdadero' ){
+        this.promosUsuario.push(element);
+      }
+    });
   }
 
   ionViewDidEnter(){
@@ -369,12 +391,6 @@ existeAfiliado(){
       icon: 'person',
       handler: () => {
         this.goPerfil();
-      }
-    },{
-      text: 'Mensajes',
-      icon: 'mail',
-      handler: () => {
-        this.goMensajes();
       }
     },{
       text: 'Cerrar Sesion',

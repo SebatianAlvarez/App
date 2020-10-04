@@ -212,20 +212,22 @@
     </div> -->
   </div> 
 
-  
-
-  <div *ngFor="let pro of promocion">
-    <div *ngIf="res.userUID === pro.userUID && pro.estado=== 'verdadero'">
-      <div class="menu">
-      </div>
-      <ion-list>
-        <ion-item>
-          <img [src]="pro.fotosPromocion">
-        </ion-item>
-      </ion-list>
-    </div>
+  <button class="accordion">
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    Promociones
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
+  </button>
+  <div class="panel">
+    <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+      <ion-slide *ngFor="let pro of promosUsuario">   
+        <div>
+          <img [src] ="pro.fotosPromocion">
+        </div>
+      </ion-slide>
+    </ion-slides>
   </div>
-
 
   <!-- <div *ngFor="let afi of afiliados$ | async">
     <div *ngIf="afi.uidUsu === usuarioLog && afi.uidResta === res.userUID">

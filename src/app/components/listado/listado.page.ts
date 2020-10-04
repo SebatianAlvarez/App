@@ -158,6 +158,10 @@ export class ListadoPage implements OnInit {
       this.especial = espe;
     })
 
+    this.promocionesService.listar().subscribe(promo =>{
+      this.Promos = promo;
+    })
+
     this.restaurantesService.restaurantesHabilitados();
     // console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
     
@@ -247,7 +251,8 @@ export class ListadoPage implements OnInit {
         desayuno: this.desayunos,
         almuerzo: this.almuerzos,
         especial: this.especial,
-        usuario: this.usuarios
+        usuario: this.usuarios,
+        promocion: this.Promos
       }
     }).then((modal) => modal.present())
   }
