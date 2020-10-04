@@ -1,7 +1,14 @@
-<br>
-<div class="titulo">
-  <h6 style="text-align: center;">Reservas Rechazadas</h6> 
-</div><br>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/listado"></ion-back-button>
+    </ion-buttons>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Reservas</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content >
   <div *ngFor="let reser of reservas$ | async"> 
@@ -29,6 +36,10 @@
           <h6>&nbsp;
             <ion-icon name="time"></ion-icon>&nbsp;
           {{reser.tiempo}}&nbsp; minutos
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="person"></ion-icon>&nbsp;
+          {{reser.motivo}}&nbsp; 
           </h6>
         </ion-card-subtitle>
         <ion-card-header>

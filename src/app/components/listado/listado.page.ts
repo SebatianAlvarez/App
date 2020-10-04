@@ -318,7 +318,7 @@ export class ListadoPage implements OnInit {
         text: 'Reservas',
         icon: 'mail',
         handler: () => {
-          this.router.navigate(['/mensajes'])
+          this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
         text: 'Cerrar Sesion',

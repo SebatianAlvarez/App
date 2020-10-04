@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservasService } from '../../servicios/reservas.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -22,7 +22,7 @@ export class ReservaPage implements OnInit {
 
   public reservas$: Observable<Reserva[]>;
 
-  constructor(public reservasService: ReservasService, private authservice: AuthService,
+  constructor(public reservasService: ReservasService, private authservice: AuthService, public alertController: AlertController,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     ) {
 
@@ -57,6 +57,8 @@ export class ReservaPage implements OnInit {
     // this.numeroReserva();
   }
 
+  
+
   // numeroReserva(){
   //   this.contador = 0;
   //   this.reservasService.listar().subscribe(data =>{
@@ -88,11 +90,14 @@ export class ReservaPage implements OnInit {
     })
   }
 
-  rechazarReserva(id : string){
+  
+
+  rechazarReserva(id : string, motivo: string){
     this.reservasService.getReserva(id).subscribe(data =>{
       let reserva : Reserva = {
         nombre : data.nombre,
         numero : data.numero,
+        motivo: motivo,
         mesas : data.mesas,
         tiempo :data.tiempo,
         uid : data.uid,
@@ -112,16 +117,40 @@ export class ReservaPage implements OnInit {
     this.authservice.logout();
   }
 
+  async presentModalRechazo(id : string){
+    const alert = await this.alertController.create({
+      header: '¿Rechazar reserva?',
+      inputs: [
+        {
+          name: "rechazo",
+          type: "text",
+          placeholder: "Motivo del rechazo (opcional)"
+        }
+      ],
+      buttons : [
+        {
+          text : "Cancelar",
+          role : "cancel",
+          cssClass : "secondary",
+          handler: () =>{
+
+          }
+        },{ 
+          text : "Confirmar Rechazo",
+          handler : data =>{  
+              this.rechazarReserva(id, data.rechazo);                        
+          }
+        }
+      ]
+    });
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+  
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Peticiones Aceptadas',
-        icon: 'checkmark-circle-outline',
-        handler: () => {
-          this.router.navigate(['/reserva-aceptada']);
-        }
-      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {
