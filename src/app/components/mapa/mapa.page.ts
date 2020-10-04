@@ -4,6 +4,8 @@ import * as L from 'leaflet';
 import 'leaflet';
 import 'leaflet-routing-machine';
 
+import { MenuController } from '@ionic/angular'
+
 
 
 @Component({
@@ -24,8 +26,12 @@ export class MapaPage implements AfterViewInit {
   routeControl: any;
   arrRoutesLatLng = [];
 
-  constructor( ) { 
+  constructor(private menu: MenuController ) { 
       
+    }
+
+    openMenu(){
+      this.menu.toggle();
     }
 
     ngAfterViewInit() : void {
@@ -41,8 +47,6 @@ export class MapaPage implements AfterViewInit {
   });
   
   tiles.addTo(this.map);
-  
-  
   
   }
 

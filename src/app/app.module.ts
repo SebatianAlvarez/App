@@ -32,10 +32,11 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FCM } from '@ionic-native/fcm/ngx';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MenusPrincipalesPage } from './components/menus-principales/menus-principales.page';
 
   
 @NgModule({
-  declarations: [AppComponent, PerfilResComponent],
+  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage],
   entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,
@@ -48,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,NativeGeocoder,AngularFireDatabase,{provide: FirestoreSettingsToken, useValue: {}},
   ],
+  exports:[MenusPrincipalesPage],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

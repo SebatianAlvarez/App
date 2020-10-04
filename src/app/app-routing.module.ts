@@ -39,24 +39,14 @@ const routes: Routes = [
   { path: 'menue-especial', loadChildren: './components/menus/menue-especial/menue-especial.module#MenueEspecialPageModule' },
   { path: 'lista-desayunos/:id', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
   { path: 'lista-desayunos', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
-  { path: 'lista-especial', loadChildren: './components/listaMenus/lista-especial/lista-especial.module#ListaEspecialPageModule' },  { path: 'tabs-reservas', loadChildren: './components/tabs-reservas/tabs-reservas.module#TabsReservasPageModule' },
+  { path: 'lista-especial', loadChildren: './components/listaMenus/lista-especial/lista-especial.module#ListaEspecialPageModule' },
+  { path: 'tabs-reservas', loadChildren: './components/tabs-reservas/tabs-reservas.module#TabsReservasPageModule' },
   { path: 'reservas-aprobadas', loadChildren: './components/mensajes/reservas-aprobadas/reservas-aprobadas.module#ReservasAprobadasPageModule' },
   { path: 'reservas-rechazadas', loadChildren: './components/mensajes/reservas-rechazadas/reservas-rechazadas.module#ReservasRechazadasPageModule' },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  { path: 'tabs2', loadChildren: './components/tabs2/tabs2.module#Tabs2PageModule' },
+  { path: 'afiliados-rechazados', loadChildren: './components/afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule' },
+  { path: 'tabs3', loadChildren: './components/tabs3/tabs3.module#Tabs3PageModule' },
+  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },
 
 
 ];
@@ -68,3 +58,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

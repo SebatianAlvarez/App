@@ -104,18 +104,6 @@ export class PromocionPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Promociones Activas',
-        icon: 'done-all',
-        handler: () => {
-          this.router.navigate(['/promo-activa']);
-        }
-      },{
-        text: 'Promociones Ocultas',
-        icon: 'eye-off',
-        handler: () => {
-          this.router.navigate(['/promo-oculta']);
-        }
-      }, {
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

@@ -8,11 +8,11 @@ import { ActionSheetController } from '@ionic/angular';
 import { AuthService } from '../../servicios/auth.service';
 
 @Component({
-  selector: 'app-afiliados-aceptados',
-  templateUrl: './afiliados-aceptados.page.html',
-  styleUrls: ['./afiliados-aceptados.page.scss'],
+  selector: 'app-afiliados-rechazados',
+  templateUrl: './afiliados-rechazados.page.html',
+  styleUrls: ['./afiliados-rechazados.page.scss'],
 })
-export class AfiliadosAceptadosPage implements OnInit {
+export class AfiliadosRechazadosPage implements OnInit {
 
   public afiliados: any =[];
   public usuarioLog:string;

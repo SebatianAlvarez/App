@@ -77,12 +77,6 @@ export class AfiliadosPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Afiliados Activos',
-        icon: 'star',
-        handler: () => {
-          this.router.navigate(['/afiliados-aceptados'])
-        }
-      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

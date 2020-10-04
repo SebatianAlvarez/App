@@ -168,13 +168,13 @@ export class PerfilPage implements OnInit {
         text: 'Promociones',
         icon: 'heart',
         handler: () => {
-          this.router.navigate(['/promocion']);
+          this.router.navigate(['/tabs3/Agregar']);
         }
       },{
         text: 'Afiliados',
         icon: 'body',
         handler: () => {
-          this.router.navigate(['/afiliados']);
+          this.router.navigate(['/tabs2/Afiliados']);
         }
       },{
         text: 'Cerrar Sesion',

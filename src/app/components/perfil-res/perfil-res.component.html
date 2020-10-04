@@ -11,6 +11,10 @@
 </ion-header>
 
 <ion-card class="fotoResta">
+
+
+<ion-card>
+
   <ion-header>
     <img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="17%" margin-top="5px">
   </ion-header>
@@ -45,6 +49,15 @@
 
       </ion-card-content>
     </ion-card>
+  
+  <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
+      <ion-item lines="none">
+        <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
+      </ion-item>
+      <div style="text-align: center;">
+        <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" >Afiliarse</ion-button>
+        </div>
+    </form>
     
  </div>
   
@@ -52,6 +65,7 @@
     <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp; Desayunos &nbsp;&nbsp;&nbsp;&nbsp;
     <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
   </button>
+
   <div class="panel">
     
     <div *ngFor="let desa of desayunos">
@@ -334,11 +348,6 @@
   </div>
 
 -->
-
-
-  <div style="text-align: center;">
-  <ion-button style="text-align: center;" (click)="presentarMensaje()"  color="danger" >Afiliarse</ion-button>
-  </div>
 
   <ng-template #foto>
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">
