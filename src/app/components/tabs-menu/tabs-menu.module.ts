@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'especial',
-        loadChildren: '../reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule'
+        loadChildren: '../menus/menue-especial/menue-especial.module#MenueEspecialPageModule'
       }
 
     ]

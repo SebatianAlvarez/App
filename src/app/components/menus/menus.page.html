@@ -21,9 +21,9 @@
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
       <ion-item lines="inset" button [routerLink]="['/lista-menus', alm.id]">
         <ion-label>
-          {{ alm.entradaAlmuerzo }}
+          {{ alm.tipoAlmuerzo }}
         </ion-label>
-        <ion-note slot="end" color="primary">{{ alm.precioAlmuerzo }}</ion-note>
+        <ion-note style="font-size: 20px;" slot="end" color="primary">{{ alm.precioAlmuerzo }} &nbsp;$</ion-note>
       </ion-item>
  
       <ion-item-options side="end">

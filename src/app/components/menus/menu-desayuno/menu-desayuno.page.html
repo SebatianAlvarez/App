@@ -21,9 +21,9 @@
     <ion-item-sliding *ngFor="let des of desayunoUser">
       <ion-item lines="inset" button [routerLink]="['/lista-desayunos', des.id]">
         <ion-label>
-          {{ des.platoDesayuno }}
+          {{ des.detalleDesayuno }}
         </ion-label>
-        <ion-note slot="end" color="primary">{{ des.precioDesayuno }}</ion-note>
+        <ion-note style="font-size: 20px;" slot="end" color="primary">{{ des.precioDesayuno }} &nbsp;$</ion-note>
       </ion-item>
  
       <ion-item-options side="end">

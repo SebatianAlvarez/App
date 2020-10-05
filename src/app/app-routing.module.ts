@@ -39,6 +39,7 @@ const routes: Routes = [
   { path: 'menue-especial', loadChildren: './components/menus/menue-especial/menue-especial.module#MenueEspecialPageModule' },
   { path: 'lista-desayunos/:id', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
   { path: 'lista-desayunos', loadChildren: './components/listaMenus/lista-desayunos/lista-desayunos.module#ListaDesayunosPageModule' },
+  { path: 'lista-especial/:id', loadChildren: './components/listaMenus/lista-especial/lista-especial.module#ListaEspecialPageModule' },
   { path: 'lista-especial', loadChildren: './components/listaMenus/lista-especial/lista-especial.module#ListaEspecialPageModule' },
   { path: 'tabs-reservas', loadChildren: './components/tabs-reservas/tabs-reservas.module#TabsReservasPageModule' },
   { path: 'reservas-aprobadas', loadChildren: './components/mensajes/reservas-aprobadas/reservas-aprobadas.module#ReservasAprobadasPageModule' },

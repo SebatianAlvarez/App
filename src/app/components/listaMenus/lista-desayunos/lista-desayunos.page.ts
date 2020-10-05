@@ -15,28 +15,24 @@ export class ListaDesayunosPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   desayuno: desayuno = {
-    platoDesayuno: '',
     detalleDesayuno: '',
+    platoDesayuno: '',
     precioDesayuno: ''
-    // ingredientes: [],
   };
 
-  desayunoID = null;
+  desayunoID= null;
 
-  constructor(private route: ActivatedRoute, private nav: NavController, private desayunoSVC: DesayunoService, private loadingController: LoadingController
-    ,private AFauth : AngularFireAuth, private router: Router) { }
+  constructor(private route: ActivatedRoute, 
+              private nav: NavController,
+              private desayunoSVC: DesayunoService,
+              private loadingController: LoadingController,
+              private AFauth : AngularFireAuth,
+              private router: Router) { }
 
   ngOnInit() {
     this.desayunoID = this.route.snapshot.params['id'];
     if (this.desayunoID){
-      console.log("mmmmm si?", this.desayunoID);
-      
       this.loadDesayuno();
-      console.log("que es esto", this.loadDesayuno() );
-      
-    }else{
-      console.log("mmmm");
-      
     }
   }
 
@@ -46,11 +42,9 @@ export class ListaDesayunosPage implements OnInit {
     });
     await loading.present();
 
-    this.desayunoSVC.getDesayunoCollection(this.desayunoID).subscribe(des => {
-      console.log("des", des);
-      
-      loading.dismiss();
-      this.desayunoID = des;
+    this.desayunoSVC.getDesayunoCollection(this.desayunoID).subscribe(todo => {
+      loading.dismiss();;
+      this.desayuno = todo;
     });
   }
 
@@ -61,14 +55,17 @@ export class ListaDesayunosPage implements OnInit {
     await loading.present();
  
     if (this.desayunoID) {
-      this.desayunoSVC.updateDesayun(this.desayuno, this.desayunoID).then(() => {
+      this.desayunoSVC.updateDesayuno(this.desayuno, this.desayunoID).then(() => {
         loading.dismiss();
+        // this.nav.navigateForward('tabs-menu/menus');
       this.router.navigate(['tabs-menu/desayuno'])
+
       });
     } else {
       
       this.desayunoSVC.addDesayunoNuevo(this.desayuno).then(() => {
         loading.dismiss();
+        // this.nav.navigateForward('tabs-menu/menus');
         this.router.navigate(['tabs-menu/desayuno'])
 
       });
@@ -82,6 +79,6 @@ export class ListaDesayunosPage implements OnInit {
     this.desayunoSVC.removerDesayuno(idDes);
     loading.dismiss();
     this.router.navigate(['tabs-menu/desayuno'])
+    // this.nav.navigateForward('tabs-menu/menus');
   }
-
 }

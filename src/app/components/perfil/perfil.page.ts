@@ -68,6 +68,7 @@ export class PerfilPage implements OnInit {
     this.authservice.logout();
   }
 
+  
   async presentModal(){
     const alert = await this.alertController.create({
       header: 'Actualizar Datos',
@@ -109,6 +110,8 @@ export class PerfilPage implements OnInit {
     await alert.present();
     let result = await alert.onDidDismiss();
   }
+ 
+
 
   getMenu(){
 
@@ -125,6 +128,7 @@ export class PerfilPage implements OnInit {
     })
     
   }
+  
 
  async presentActionSheet(rol :string) {
     
@@ -155,13 +159,6 @@ export class PerfilPage implements OnInit {
         icon: 'refresh-circle',
         handler: () => {
           this.router.navigate(['/tabs-menu/desayuno']);
-        }
-      },
-      {
-        text: 'Menu desayuno',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/menu-desayuno']);
         }
       }
       ,{

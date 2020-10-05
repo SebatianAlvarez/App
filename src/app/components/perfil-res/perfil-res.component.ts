@@ -43,7 +43,7 @@ import { coordenadas } from '../../models/coordenadas-interface';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { forEach } from 'www/cordova_plugins';
+// import { forEach } from 'www/cordova_plugins';
 
 
 
