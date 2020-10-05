@@ -147,15 +147,9 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/tabs/reserva']);
         }
-      },{
-        text: 'Mi Menu',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/ver-menu']);
-        }
       },
       {
-        text: 'Actualizar Menus',
+        text: 'Mi Menú',
         icon: 'refresh-circle',
         handler: () => {
           this.router.navigate(['/tabs-menu/desayuno']);

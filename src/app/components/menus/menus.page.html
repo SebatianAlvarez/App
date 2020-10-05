@@ -19,12 +19,43 @@
       </div>
     </ng-container>
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
-      <ion-item lines="inset" button [routerLink]="['/lista-menus', alm.id]">
+      <ion-card button [routerLink]="['/lista-menus', alm.id]">
+        <ion-card-header >
+          <div class="imagen">
+            <img src="../../../assets/almuerz.png" width="140px">
+          </div>
+        </ion-card-header>
+        <ion-card-subtitle>
+          &nbsp;
+          <h2>&nbsp;
+            <ion-icon name="person"></ion-icon>
+            Tipo: {{alm.tipoAlmuerzo}}
+          </h2>
+          <h6>&nbsp;
+            <ion-icon name="phone-portrait"></ion-icon>
+          Entrada: {{alm.entradaAlmuerzo}}
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="restaurant"></ion-icon>
+          Segundo: {{alm.segundoAlmuerzo}}&nbsp; 
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="time"></ion-icon>
+          Bebida: {{alm.jugoAlmuerzo}}&nbsp; 
+          </h6>
+          <ion-item>
+            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{alm.precioAlmuerzo}}
+            </ion-button>
+          </ion-item>
+        </ion-card-subtitle>
+      </ion-card>
+
+      <!-- <ion-item lines="inset" button [routerLink]="['/lista-menus', alm.id]">
         <ion-label>
           {{ alm.tipoAlmuerzo }}
         </ion-label>
         <ion-note style="font-size: 20px;" slot="end" color="primary">{{ alm.precioAlmuerzo }} &nbsp;$</ion-note>
-      </ion-item>
+      </ion-item> -->
  
       <ion-item-options side="end">
         <ion-item-option (click)="onRemove(alm)" color="secondary">
