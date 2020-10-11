@@ -117,11 +117,10 @@ export class ListadoPage implements OnInit {
     this.promocionesService.listar().subscribe(x =>{
       this.promoHabilitados = []
       x.forEach(element => {
-        if(element.estado === 'falso'){
+        if(element.estado === 'verdadero'){
           this.promoHabilitados.push(element)
         }else{
           console.log("no");
-          
         }
       });
     })
@@ -311,13 +310,6 @@ export class ListadoPage implements OnInit {
         icon: 'person',
         handler: () => {
           this.router.navigate(['/perfil'])
-        }
-      },
-      {
-        text: 'Mi Menú',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/tabs-menu/desayuno']);
         }
       },
       {
