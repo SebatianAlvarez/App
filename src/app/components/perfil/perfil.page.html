@@ -66,7 +66,7 @@
       <div  class="titulo">
         <h2 style="text-align: center;">Usuario</h2>
       </div><br> -->
-      <img src = "../../../assets/logoU.png"  width="10px" margin-top="5px">
+      <img class="fotoPerfil" src = "../../../assets/logoU.png">
 
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">
@@ -76,15 +76,15 @@
               <ion-item>
                 <!-- <ion-icon name="warning" slot="start"></ion-icon> -->
                 <ion-icon name="people" slot="start"></ion-icon>
-                <h6><b></b>{{u.nombre}}</h6>
+                <h6 class="datos">{{u.nombre}}</h6>
               </ion-item>
               <ion-item>
                 <ion-icon name="call" slot="start"></ion-icon>
-                <h6><b></b>{{u.numero}}</h6>
+                <h6 class="datos">{{u.numero}}</h6>
               </ion-item>
               <ion-item>
                 <ion-icon name="mail" slot="start"></ion-icon>
-                <h6><b></b>{{u.email}}</h6>
+                <h6 class="datos">{{u.email}}</h6>
               </ion-item>
             </ion-list>
           </div>

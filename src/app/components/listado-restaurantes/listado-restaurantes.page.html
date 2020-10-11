@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>listadoRestaurantes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-slides pager="true" class="slides">
+  <ion-slide *ngFor="let pro of promoHabilitados">   
+    <div>
+      <img [src] ="pro.fotosPromocion">
+    </div><br>
+  </ion-slide>
+</ion-slides>
+
+<ion-content>
+
+</ion-content>

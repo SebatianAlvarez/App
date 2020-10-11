@@ -8,7 +8,7 @@
 
 <ion-content>
 
-  <form [formGroup] ="registro" (ngSubmit) = "OnSubmitRegister(registro.value)">
+  <form [formGroup]="registro" (ngSubmit)="OnSubmitRegister(registro.value)">
     <ion-list>
       <ion-item>
         <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"

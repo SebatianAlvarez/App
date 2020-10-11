@@ -8,7 +8,9 @@
 </ion-header>
 <ion-content padding>
   <ion-list lines="full">
-    {{almuerzo  | json}}
+    <ion-item *ngIf="almuerzo">
+      <ion-input required type="text" placeholder="Tipo de Almuerzo" [(ngModel)]="almuerzo.tipoAlmuerzo"></ion-input>
+    </ion-item>
     <ion-item *ngIf="almuerzo">
       <ion-input required type="text" placeholder="Entrada" [(ngModel)]="almuerzo.entradaAlmuerzo"></ion-input>
     </ion-item>

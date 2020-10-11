@@ -3,5 +3,6 @@ export class especial {
     userUID?: string
     platoEspecial: string
     precioEspecial: string
-    ingredientes: string[]
+    // ingredientes?: string[]
+    ingredientes?: string[]
   }

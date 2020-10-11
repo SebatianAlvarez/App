@@ -17,6 +17,7 @@ export class ListaMenusPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   almuerzo: almuerzo = {
+    tipoAlmuerzo: '',
     entradaAlmuerzo: '',
     segundoAlmuerzo: '',
     jugoAlmuerzo: '',

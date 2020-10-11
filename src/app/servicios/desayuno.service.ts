@@ -52,7 +52,7 @@ export class DesayunoService {
     return this.desayunoCollection.doc<desayuno>(id).valueChanges();
   }
 
-  updateDesayun(des :desayuno, id: string){
+  updateDesayuno(des :desayuno, id: string){
     return this.desayunoCollection.doc(id).update(des);
   }
 
@@ -87,17 +87,17 @@ export class DesayunoService {
     return this.db.collection<desayuno>('platoDesayuno').valueChanges();
   }
 
-  updateDesayuno(id: string, menu : desayuno): Promise<void>{
-    return this.desayunoCollection.doc(id).update(menu);
-  }
+  // updateDesayuno(id: string, menu : desayuno): Promise<void>{
+  //   return this.desayunoCollection.doc(id).update(menu);
+  // }
 
-  addDesayuno(menu: desayuno): Promise<DocumentReference>{
-    return this.desayunoCollection.add(menu)
-  }
+  // addDesayuno(menu: desayuno): Promise<DocumentReference>{
+  //   return this.desayunoCollection.add(menu)
+  // }
 
-  deleteDesayuno(id: string): Promise<void>{
-    return this.desayunoCollection.doc(id).delete();
-  }
+  // deleteDesayuno(id: string): Promise<void>{
+  //   return this.desayunoCollection.doc(id).delete();
+  // }
 
   getDes(){
     return this.db.collection("platoDesayuno").snapshotChanges().pipe(map(plato => {

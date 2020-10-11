@@ -44,6 +44,7 @@ export class MenuPage implements OnInit {
 
 
   public almu: almuerzo = {
+    tipoAlmuerzo: '',
     entradaAlmuerzo: '',
     segundoAlmuerzo: '',
     jugoAlmuerzo: '',

@@ -19,12 +19,28 @@
       </div>
     </ng-container>
     <ion-item-sliding *ngFor="let des of desayunoUser">
-      <ion-item lines="inset" button [routerLink]="['/lista-desayunos', des.id]">
-        <ion-label>
-          {{ des.platoDesayuno }}
-        </ion-label>
-        <ion-note slot="end" color="primary">{{ des.precioDesayuno }}</ion-note>
-      </ion-item>
+      <ion-card button [routerLink]="['/lista-desayunos', des.id]">
+        <ion-card-header >
+          <div class="imagen">
+            <img src="../../../assets/menu.png" width="140px">
+          </div>
+        </ion-card-header>
+        <ion-card-subtitle>
+          &nbsp;
+          <h6>&nbsp;
+            Plato:
+            {{des.platoDesayuno}}
+          </h6>
+          <h6>&nbsp;
+            Detalle:
+           {{des.detalleDesayuno}} &nbsp;
+          </h6>
+          <ion-item>
+            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{des.precioDesayuno}}
+            </ion-button>
+          </ion-item>
+        </ion-card-subtitle>
+      </ion-card>
  
       <ion-item-options side="end">
         <ion-item-option (click)="onRemove(des)" color="secondary">

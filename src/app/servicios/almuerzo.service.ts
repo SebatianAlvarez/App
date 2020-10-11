@@ -28,6 +28,7 @@ export class AlmuerzoService {
     }else if(this.currentUser != null){
       this.usuarioLog = this.currentUser.uid;
     }
+
     this.almuerzoCollection = this.db.collection<almuerzo>('platoAlmuerzo');
     this.almuerzos = this.almuerzoCollection.snapshotChanges().pipe(
       map(actions => {
@@ -65,6 +66,7 @@ export class AlmuerzoService {
     return this.db.collection('platoAlmuerzo').doc(idPlato).set({
       id: idPlato,
       userUID: this.usuarioLog,
+      tipoAlmuerzo: almu.tipoAlmuerzo,
       entradaAlmuerzo: almu.entradaAlmuerzo,
       segundoAlmuerzo: almu.segundoAlmuerzo,
       jugoAlmuerzo: almu.jugoAlmuerzo,
