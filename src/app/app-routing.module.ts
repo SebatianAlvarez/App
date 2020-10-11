@@ -47,7 +47,9 @@ const routes: Routes = [
   { path: 'tabs2', loadChildren: './components/tabs2/tabs2.module#Tabs2PageModule' },
   { path: 'afiliados-rechazados', loadChildren: './components/afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule' },
   { path: 'tabs3', loadChildren: './components/tabs3/tabs3.module#Tabs3PageModule' },
-  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },
+  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },  { path: 'prueba-menus', loadChildren: './menus/prueba-menus/prueba-menus.module#PruebaMenusPageModule' },
+  { path: 'listado-restaurantes', loadChildren: './components/listado-restaurantes/listado-restaurantes.module#ListadoRestaurantesPageModule' },
+
 
 
 ];

@@ -3,11 +3,15 @@ ion-toolbar{
     --opacity: 5.9;
   }
 
-ion-card .imagen{
+  ion-card .imagen{
     position: absolute;
-    left: 30%;
-    top: 70px;
+    left: 50%;
+    top: 40px;
     width: 150px;
     border-radius: 50%;
 
   }
+
+h6{
+  color: black;
+}

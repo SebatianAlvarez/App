@@ -74,6 +74,39 @@ export class MeriendaService {
     return this.meriendaCollection.doc(id).delete();
   }
 
+  subirMenu(espe: especial, id: string): void{    
+    this.guardarEspecial(espe, id);
+  }
+
+  guardarEspecial(platoEsp: especial, idExiste: string) {
+
+    //this.idRes =perfil.id;
+    platoEsp.id = idExiste;
+    console.log("idExiste??", idExiste);
+    console.log("idExiste222??", platoEsp.id);
+    
+    if(idExiste){
+      const menuDesObj = {
+        id: idExiste,
+        userUID: this.usuarioLog,
+        platoEspecial: platoEsp.platoEspecial,
+        precioEspecial: platoEsp.precioEspecial, 
+        ingredientes: platoEsp.ingredientes
+      };
+      return this.meriendaCollection.doc(platoEsp.id).update(menuDesObj);      
+    }else{      
+      let idPlato = this.db.createId();
+      platoEsp.id = idPlato;
+      this.db.collection('platoEspecial').doc(idPlato).set({
+        id: platoEsp.id,
+        userUID: this.usuarioLog,
+        platoEspecial: platoEsp.platoEspecial,
+        precioEspecial: platoEsp.precioEspecial, 
+        ingredientes: platoEsp.ingredientes
+      });
+    }
+  }
+
 
 
   getMeriendas() : Observable<especial[]>{

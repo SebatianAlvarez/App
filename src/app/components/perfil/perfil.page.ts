@@ -126,13 +126,13 @@ export class PerfilPage implements OnInit {
         }
       }
     })
-    
   }
   
 
  async presentActionSheet(rol :string) {
     
   if( rol == 'dueño'){
+    
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
@@ -167,7 +167,8 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/tabs2/Afiliados']);
         }
-      },{
+      }
+      ,{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

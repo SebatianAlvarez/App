@@ -15,7 +15,6 @@ import { desayuno } from '../../models/desayuno-interface';
 
 import { AlmuerzoService } from '../../servicios/almuerzo.service'
 import { MeriendaService } from '../../servicios/merienda.service'
-import { MenuService } from '../../servicios/menu.service'
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { PromocionService } from '../../servicios/promocion.service';
@@ -28,7 +27,6 @@ import { ListadoPromoComponent } from '../listado-promo/listado-promo.component'
 import { Usuario } from '../../models/usuario-interface';
 import { CoordenadasService } from '../../servicios/coordenadas.service';
 import { coordenadas } from '../../models/coordenadas-interface';
-import { MenuController } from '@ionic/angular'
 
 @Component({
   selector: 'app-listado',
@@ -40,7 +38,10 @@ export class ListadoPage implements OnInit {
   // public Restaurantes : resta[]
   restaurante$: Observable<resta[]>;
   resHabilitados: resta[] = []; 
-  promoHabilitados: promos[] = []; 
+  promoHabilitados: promos[] = [];
+  promoHabilitado2: Observable<promos[]>;
+  
+  
   resHabilitados2: resta[] = []; 
 
 
@@ -79,24 +80,24 @@ export class ListadoPage implements OnInit {
     private coordenadaService: CoordenadasService) { }
 
   async ngOnInit() {
-
-    this.resList = await this.initializeItems();
-
-    
-
-    let currentUser = this.AFauth.auth.currentUser;
-    this.usuarioLog = currentUser.uid;
-
-
+    // this.resList = await this.initializeItems();
+    try {
+      let currentUser = this.AFauth.auth.currentUser;
+      this.usuarioLog = currentUser.uid;
+      
+    } catch (error) {
+      console.log(error)
+    }
 
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
-        this.router.navigate(['/perfil'])
+        window.location.replace("http://localhost:8100/perfil")
+        // this.router.navigate(['/perfil'])
       }
     })
 
-    this.restaurante$ = this.restaurantesService.recuperarDatos();
-    this.promociones$ = this.promocionesService.recuperarDatos();
+    // this.restaurante$ = this.restaurantesService.recuperarDatos();
+    // this.promociones$ = this.promocionesService.recuperarDatos();
 
 
     // De esta manera evito poner los NgIf en el HTML
@@ -111,23 +112,20 @@ export class ListadoPage implements OnInit {
         }
       });
       console.log("array", this.resHabilitados);
-      
     })
 
     this.promocionesService.listar().subscribe(x =>{
       this.promoHabilitados = []
       x.forEach(element => {
-        if(element['estado'] === 'verdadero'){
-          // console.log("xxx", element);
+        if(element.estado === 'falso'){
           this.promoHabilitados.push(element)
         }else{
-          // console.log("no", element);
+          console.log("no");
+          
         }
       });
-      // console.log("array", this.promoHabilitados);
     })
-
-    this.resHabilitados = await this.initializeItems();
+    // this.resHabilitados = await this.initializeItems();
 
     // this.promocionesService.listar().subscribe(data =>{
     //   console.log(data);
@@ -138,7 +136,7 @@ export class ListadoPage implements OnInit {
       
     // })
 
-    this.getPromos();
+    // this.getPromos();
     
     
     // this.restaurantesService.getResta().subscribe( resta => {
@@ -171,15 +169,11 @@ export class ListadoPage implements OnInit {
 
     })
 
-    this.restaurantesService.restaurantesHabilitados();
-    // console.log("SADDSADSA", this.restaurantesService.restaurantesHabilitados());
-    
-
-    // this.meriendaService.getMeri().subscribe(meri => {
-    //   this.meriendas = meri
-    // })
+    // this.restaurantesService.restaurantesHabilitados();
 
   }
+
+
 
   async initializeItems(): Promise<any> {
 
@@ -309,7 +303,7 @@ export class ListadoPage implements OnInit {
     })
   }
 
-  async presentActionSheet() {
+  async presentActionSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
@@ -318,7 +312,15 @@ export class ListadoPage implements OnInit {
         handler: () => {
           this.router.navigate(['/perfil'])
         }
-      },{
+      },
+      {
+        text: 'Mi Menú',
+        icon: 'refresh-circle',
+        handler: () => {
+          this.router.navigate(['/tabs-menu/desayuno']);
+        }
+      },
+      {
         text: 'Restaurantes Afiliados',
         icon: 'restaurant',
         handler: () => {

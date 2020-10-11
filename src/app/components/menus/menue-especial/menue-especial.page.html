@@ -28,10 +28,14 @@
         </ion-card-header>
         <ion-card-subtitle>
           &nbsp;
-          <h2>&nbsp;
-            <ion-icon name="person"></ion-icon>
+          <h6>
+            Nombre: 
             {{espe.platoEspecial}}
-          </h2>
+          </h6>
+          <h6>Ingredientes</h6>
+          <div *ngFor="let i of espe.ingredientes">
+            <p style="color: black;">- {{i['ingrediente']}}</p>
+          </div>
           <ion-item>
             <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
             </ion-button>
