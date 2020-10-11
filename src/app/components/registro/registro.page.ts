@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service'; 
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Usuario } from '../../models/usuario-interface';
 
 
 @Component({
@@ -13,8 +14,9 @@ export class RegistroPage implements OnInit {
 
   public nombre:string;
   public email:string;
-  public numero:string;
+  public numero:"123456";
   public password:string;
+  public rol: "cliente";
 
   constructor(private authSercive: AuthService, public router: Router,
     private formBuilder: FormBuilder) { }
@@ -43,20 +45,21 @@ export class RegistroPage implements OnInit {
 
     public registro = this.formBuilder.group ({
       id: new FormControl (''),
-      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       email: new FormControl('', [Validators.required, Validators.email,]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
-  
+      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
     });
 
   ngOnInit() {
 
   }
 
-  OnSubmitRegister(){
-    const valores = this.registro.value;
-    this.authSercive.register(valores.email, valores.password, valores.nombre,valores.numero).then(auth =>{
+  OnSubmitRegister(user: Usuario){
+    console.log("aaaa", user);
+    
+    this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
+      console.log(auth);
       //(this.router.navigate(['/home']))
     })
   }

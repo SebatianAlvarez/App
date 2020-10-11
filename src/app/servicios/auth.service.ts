@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Usuario } from '../models/usuario-interface';
+import { async } from '@angular/core/testing';
 
 
 
@@ -26,39 +27,56 @@ export class AuthService {
 
      }
 
-  login(email:string, password:string){
-    return this.AFauth.auth.signInWithEmailAndPassword(email, password).then(res =>{
+  async login(email:string, password:string){
+    return await this.AFauth.auth.signInWithEmailAndPassword(email, password).then(res =>{
+      console.log("que es", email, password);
+      
+      this.actualizarUsuario(res.user);
+      
       if(res.user.emailVerified){
-        this.actualizarUsuario(res.user);
+        // this.actualizarUsuario(res.user);
         this.router.navigate(['listado'])
       } else{
         this.router.navigate(['verificar-email'])
       }
-      
     });
   }
 
-  register(email:string, password:string, nombre:string, numero:string){
+  async register(email:string, password:string, nombre:string, numero:string, usuario?:any){
     
-    return this.AFauth.auth.createUserWithEmailAndPassword(email,password).then(res =>{
+    return await this.AFauth.auth.createUserWithEmailAndPassword(email,password).then(res =>{
+      const uid = res.user.uid;
+      console.log("s", uid);
+      // console.log("s", usuario.uid);
+      
 
+      const userRef : AngularFirestoreDocument<Usuario> = this.db.doc(`usuarios/${uid}`);
+      userRef.valueChanges().subscribe(data =>{
+        console.log("existe aqui?", data);
+      console.log("X", uid);
+        
+        const datos : Usuario = {
+          uid: uid,
+          email: email,
+          roles: 'cliente',
+          numero : numero,
+          nombre: nombre
+        }
+        return userRef.set(datos);
+      })
+      console.log("se registro??", res.user.emailVerified );
       
 
       if(res.user.emailVerified){
-        this.db.collection('usuarios').doc(`usuarios/${res.user.uid}`).set({
-          uid : res.user.uid,
-          email : email,
-          roles: 'cliente',
-          numero : numero,
-          nombre : nombre
-        });
-        this.enviarEmailVerificacion()
+        // this.enviarEmailVerificacion()
         this.router.navigate(['home'])
       } else {
         this.router.navigate(['verificar-email'])
       }
+      //  this.router.navigate(['home'])
       
     });
+    
 
   }
 
@@ -71,7 +89,11 @@ export class AuthService {
     const userRef : AngularFirestoreDocument<Usuario> = this.db.doc(`usuarios/${usuario.uid}`);
 
     userRef.valueChanges().subscribe(data =>{
+      console.log("existe data?", data);
+      
       if(data){
+        console.log("existe");
+        
         const datos : Usuario = {
           uid: usuario.uid,
           email: usuario.email,
@@ -81,15 +103,37 @@ export class AuthService {
         }
         return userRef.set(datos);
       }else{
+        console.log("no existe", data);
+        
         const datos : Usuario = {
           uid: usuario.uid,
           email: usuario.email,
           roles: 'cliente',
-          numero : data.numero,
-          nombre: data.nombre
+          //numero : '555555',
+          // nombre: 'k'
         }
         return userRef.set(datos);
       }
+    });
+  }
+
+  guardarUsuario(usuario:any, nombre:string, numero:string){
+    
+    const userRef : AngularFirestoreDocument<Usuario> = this.db.doc(`usuarios/${usuario.uid}`);
+
+    userRef.valueChanges().subscribe(data =>{
+      console.log("existe data?", data);
+
+        console.log("no existe", data);
+        
+        const datos : Usuario = {
+          uid: usuario.uid,
+          email: usuario.email,
+          roles: 'cliente',
+          numero : '555555',
+          // nombre: 'k'
+        }
+        return userRef.set(datos);
     });
   }
 
