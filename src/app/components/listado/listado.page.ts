@@ -164,6 +164,7 @@ export class ListadoPage implements OnInit {
 
     this.promocionesService.listar().subscribe(promo =>{
       this.Promos = promo;
+        })
 
     this.coordenadaService.listar().subscribe(coor =>{
       this.coordenada =  coor

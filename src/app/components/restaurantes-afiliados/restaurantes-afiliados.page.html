@@ -45,12 +45,31 @@
                     </ion-button>
                   </form>
                 </div>
+                <div *ngIf="a.estado ==='verdadero'">
+                  <ion-button  (click) ="presentModalComentario(r.userUID)" type = "submit" expand = "block">Comentar</ion-button>
+                  <!--
+                  <form [formGroup] ="comentar" (ngSubmit) = "Comentar(r.userUID)" style="text-align: center;">
+                    <ion-item>
+                      <ion-input class="texto" placeholder="Agregar Comentario" formControlName="comentario" type="text"  maxlength ="30"></ion-input>
+                    </ion-item>
+                    <div >
+                      <ng-container *ngFor ="let error of errorMensajes.comentario">
+                        <div class="e" *ngIf ="comentar.get('comentario').hasError(error.type) && (comentar.get('comentario').dirty || comentar.get('comentario').touched)">
+                          {{error.message}}
+                        </div>
+                      </ng-container> 
+                    </div> 
+                    <ion-button [disabled] ="comentar.invalid" type = "submit" expand = "block" id="este">
+                      <p>Comentar</p> 
+                    </ion-button>
+                  </form>
+                  -->
+                </div>
               
-                <ion-button *ngIf="a.estado ==='falso'" color="danger">Pendiente</ion-button>
+                <ion-button *ngIf="a.estado ==='pendiente'" color="danger">Pendiente</ion-button>
                 <!-- <ion-button color="danger" (click)="presentAlertConfirm()">aa</ion-button> -->
                 <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>
       
-  
               </ion-card> 
               <br>
             </div>

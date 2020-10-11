@@ -57,6 +57,10 @@ export class AfiliadosRechazadosPage implements OnInit {
     let result = await actionSheet.onDidDismiss();
   }
 
+  eliminarAfiliacion(id : string){
+    this.afiliadosService.deleteAfiliado(id)
+  }
+
   onLogout(){
     this.authservice.logout();
   }

@@ -37,7 +37,6 @@ export class TabsPage implements OnInit {
     this.numeroReserva();
     console.log("a ver", this.contador);
     
-    
   }
 
   numeroReserva(){

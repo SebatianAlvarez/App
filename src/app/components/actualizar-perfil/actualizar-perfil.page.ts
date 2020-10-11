@@ -8,6 +8,9 @@ import { PerfilesService } from '../../servicios/perfiles.service';
 
 import { NavController, LoadingController } from '@ionic/angular';
 import { FormControl , Validators, FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Foto } from '../../models/fotos-interface';
+import { FotosService } from '../../servicios/fotos.service';
 
 @Component({
   selector: 'app-actualizar-perfil',
@@ -25,6 +28,8 @@ export class ActualizarPerfilPage implements OnInit {
   public numero:string;
   public nombre:string;
 
+  public fotos$: Observable<Foto[]>;
+
   public Usuario: Usuario = {
 
     nombre : '',
@@ -35,7 +40,8 @@ export class ActualizarPerfilPage implements OnInit {
 
   constructor( private authservice: AuthService, private actionSheetController : ActionSheetController,
     private router: Router, private AFauth : AngularFireAuth,private perfilService : PerfilesService,
-     private loadingController: LoadingController, private formBuilder: FormBuilder ) { }
+     private loadingController: LoadingController, private formBuilder: FormBuilder,
+     private fotosService: FotosService ) { }
 
      public errorMensajes ={
       nombre : [
@@ -61,6 +67,8 @@ export class ActualizarPerfilPage implements OnInit {
     this.usuarioLog = currentUser.uid;
 
     this.UsuarioId = this.usuarioLog
+
+    this.fotos$ = this.fotosService.recuperarDatos();
 
     }
 

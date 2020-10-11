@@ -8,15 +8,20 @@
 </ion-header>
 
 <ion-content>
+
+
   <div style="display: grid; grid-template-columns: 1fr 1fr;">
-    <div *ngFor="let promo of promoHabilitados">
-      <ion-card>
-          <img src = "{{promo.fotosPromocion}}">
-        <ion-card-header style="text-align: center;">
-          <ion-button (click)="AlertConfirmDeshabilitar(promo)"><ion-icon name="close-circle"></ion-icon>&nbsp; Deshabilitar</ion-button>
-        </ion-card-header>
-      </ion-card>
-    </div>      
+  
+    <ion-card *ngFor="let promo of promoHabilitados" >
+       <ion-card-header>
+        <img src= "{{promo.fotosPromocion}}">
+      </ion-card-header>
+      <ion-card-subtitle style="text-align: center;">
+        <ion-button (click)="AlertHabilitar(promo.id)"><ion-icon name="checkbox"></ion-icon></ion-button>
+        <ion-button (click)="AlertConfirmEliminar(promo.id)" color="danger"><ion-icon name="eye-off">Eliminar</ion-icon></ion-button>
+      </ion-card-subtitle>
+    </ion-card>
   </div>
+
 
 </ion-content>

@@ -12,6 +12,7 @@ export class Tabs2Page implements OnInit {
 
   public usuarioLog:string;
   public currentUser = this.AFauth.auth.currentUser;
+  public contador: number
 
   constructor(private afiliadosService : AfiliadosServiceService, private AFauth : AngularFireAuth, private router: Router) { }
 
@@ -29,6 +30,26 @@ export class Tabs2Page implements OnInit {
       console.log(error)
       this.router.navigate(['/home']);
     } 
+
+    this.numeroAfiliado();
+    console.log("sera", this.contador);
+  }
+
+  numeroAfiliado(){
+    this.contador = 0;
+    let aux = 0
+    this.afiliadosService.listar().subscribe(data =>{
+      data.forEach(x => {
+        if(this.usuarioLog === x.uidResta && x.estado === 'pendiente'){
+          console.log("s", x);
+          aux ++;
+        }
+
+      });
+      this.contador = aux;
+      console.log("cuantos mismos ps", this.contador);
+      
+    })
   }
 
 }
