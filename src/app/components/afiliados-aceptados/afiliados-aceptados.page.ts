@@ -57,6 +57,15 @@ export class AfiliadosAceptadosPage implements OnInit {
     let result = await actionSheet.onDidDismiss();
   }
 
+  cancelarAfiliacion(id : string){
+    this.afiliadosService.getAfiliado(id).subscribe(x =>{
+      let afi : afiliado = {
+        estado : "falso",
+      }
+      this.afiliadosService.updateAfiliado(id , afi);
+    });
+  }
+
   onLogout(){
     this.authservice.logout();
   }

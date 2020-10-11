@@ -52,7 +52,14 @@
     </form>
   </ion-card-header>  
 
- 
+</ion-content>
 
+<ion-content>
+
+<ion-slides  options={{slideOpts}} pager ="true" class="slides">
+  <ion-slide *ngFor="let foto of fotos$ | async">
+    <img src= {{foto.foto}}>   
+  </ion-slide>
+</ion-slides>
 </ion-content>
 

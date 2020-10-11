@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -21,7 +21,7 @@ export class AfiliadosPage implements OnInit {
 
   constructor(private router:Router, public actionSheetController: ActionSheetController,
     private authservice: AuthService, private afiliadosService: AfiliadosServiceService,
-    private AFauth : AngularFireAuth) { }
+    private AFauth : AngularFireAuth, public alertController: AlertController) { }
 
   ngOnInit() {
 
@@ -58,16 +58,41 @@ export class AfiliadosPage implements OnInit {
     });
   }
 
-  rechazarAfiliado(id : string){
-    this.afiliadosService.getAfiliado(id).subscribe(data =>{
+  async presentModalRechazo(id : string){
+    const alert = await this.alertController.create({
+      header: '¿Rechazar afiliacion?',
+      inputs: [
+        {
+          name: "rechazo",
+          type: "text",
+          placeholder: "Motivo del rechazo (opcional)"
+        }
+      ],
+      buttons : [
+        {
+          text : "Cancelar",
+          role : "cancel",
+          cssClass : "secondary",
+          handler: () =>{
+
+          }
+        },{ 
+          text : "Confirmar Rechazo",
+          handler : data =>{  
+              this.rechazarAfiliado(id, data.rechazo);                        
+          }
+        }
+      ]
+    });
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+
+  rechazarAfiliado(id : string, rechazo  : string){
+    this.afiliadosService.getAfiliado(id).subscribe(x =>{
       let afi : afiliado = {
-        nombre : data.nombre,
-        numero : data.numero,
-        id : data.id,
-        uidResta : data.uidResta,
-        uidUsu : data.uidUsu,
         estado : "falso",
-        idRes : data.idRes
+        motivo: rechazo
       }
       this.afiliadosService.updateAfiliado(id , afi);
     });

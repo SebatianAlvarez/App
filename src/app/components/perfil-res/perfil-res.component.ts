@@ -43,10 +43,10 @@ import { coordenadas } from '../../models/coordenadas-interface';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
-// import { forEach } from 'www/cordova_plugins';
 
-
-
+import { DesayunoService } from '../../servicios/desayuno.service';
+import { AlmuerzoService } from '../../servicios/almuerzo.service';
+import { MeriendaService } from '../../servicios/merienda.service';
 
 @Component({
   selector: 'app-perfil-res',
@@ -93,6 +93,9 @@ export class PerfilResComponent implements OnInit {
   public coordenadas: coordenadas[]= [];
   public latitud : number
   public longitud :  number
+  desayunosRespectivos: desayuno[] = []; 
+  almuerzosRespectivos: almuerzo[] = [];
+  especialesRespectivos: especial[] = [];
 
   validacion: boolean = true;
   validacionA: boolean = false;
@@ -114,7 +117,8 @@ export class PerfilResComponent implements OnInit {
     private geolocation: Geolocation, private restauranteService : RestaurantesService, private preguntasService : PreguntasService,
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
     private formBuilder: FormBuilder, private comentariosService: ComentariosService,
-    private coordenadaService: CoordenadasService, private storage : AngularFireStorage)
+    private coordenadaService: CoordenadasService, private storage : AngularFireStorage,
+    private desayunoService  : DesayunoService, private almuerzoService : AlmuerzoService, private especialesService: MeriendaService)
     
     {
       this.fotosRef = this.db.collection('afiliados')
@@ -215,7 +219,58 @@ export class PerfilResComponent implements OnInit {
     }
 
     this.promocionesUsuario();
+    this.desayunosQueSon();
+    this.almuerzosQueSon();
+    this.especialesQueSon();
 
+  }
+
+  desayunosQueSon(){
+    this.desayunoService.listar().subscribe(x =>{
+      this.desayunosRespectivos = []
+      x.forEach(element => {
+        //console.log("q tiene" + x)
+        if(element['userUID'] === this.res.userUID){
+           //console.log("aca" + element);
+          this.desayunosRespectivos.push(element)
+        }else{
+          //console.log("no", element);
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
+  }
+
+  almuerzosQueSon(){
+    this.almuerzoService.listar().subscribe(x =>{
+      this.almuerzosRespectivos = []
+      x.forEach(element => {
+        //console.log("q tiene" + x)
+        if(element['userUID'] === this.res.userUID){
+           //console.log("aca" + element);
+          this.almuerzosRespectivos.push(element)
+        }else{
+          //console.log("no", element);
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
+  }
+
+  especialesQueSon(){
+    this.especialesService.listar().subscribe(x =>{
+      this.especialesRespectivos = []
+      x.forEach(element => {
+        //console.log("q tiene" + x)
+        if(element['userUID'] === this.res.userUID){
+           //console.log("aca" + element);
+          this.especialesRespectivos.push(element)
+        }else{
+          //console.log("no", element);
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
   }
 
   promocionesUsuario(){

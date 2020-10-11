@@ -6,4 +6,5 @@ export class afiliado {
     nombre?: string
     numero?: string
     idRes?: string
+    motivo?: string
 }

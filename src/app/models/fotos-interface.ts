@@ -1,4 +1,4 @@
 export interface Foto {
-    name? : string
-    imagen : File
+    foto? : string
+    id? : string
 }

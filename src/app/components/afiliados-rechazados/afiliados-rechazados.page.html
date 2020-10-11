@@ -12,22 +12,38 @@
 
 <ion-content >
 
-  <div *ngFor = "let afi of afiliados$ | async">
+  <div *ngFor = "let afi of afiliados$ | async"> 
     <div *ngIf = "usuarioLog === afi.uidResta">
       <ion-card *ngIf = "afi.estado === 'falso'">
         <ion-card-header>
-          <ion-card-title style="text-align: center;">Rechazado</ion-card-title>
+          <div class="imagen">
+            <img src="{{afi.fotoAfi}}" width="140px">
+          </div>
         </ion-card-header>
-        <ion-list>
-          <ion-item>   
-            <h6><b>Nombre: </b>{{afi.nombre}} </h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Numero: </b> {{afi.numero}}</h6>
-          </ion-item>
-        </ion-list>
+        <ion-card-subtitle>
+          &nbsp;
+          <h6>&nbsp;
+            <ion-icon name="person"></ion-icon>&nbsp;
+          {{afi.nombre}}
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="phone-portrait"></ion-icon>&nbsp;
+          {{afi.numero}}
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="flag"></ion-icon>&nbsp;
+          {{afi.motivo}}
+          </h6>
+        </ion-card-subtitle>
+        <ion-card-header>
+          <ion-button color="danger" (click)="eliminarAfiliacion(afi.id)"><ion-icon name="trash"></ion-icon></ion-button>
+          <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
+          <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
+        </ion-card-header>
+          
       </ion-card>
     </div>
+   
   </div>
 
 </ion-content>

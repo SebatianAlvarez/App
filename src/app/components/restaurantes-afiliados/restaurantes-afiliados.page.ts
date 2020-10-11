@@ -109,6 +109,37 @@ export class RestaurantesAfiliadosPage implements OnInit {
     this.router.navigate(['/listado']);
   }
 
+  async presentModalComentario(id : string){
+    const alert = await this.alertController.create({
+      header: 'Deja tu Comentario',
+      inputs: [
+        {
+          name: "comentario",
+          type: "text",
+          placeholder: "Comentario"
+        }
+      ],
+      buttons : [
+        {
+          text : "Cancelar",
+          role : "cancel",
+          cssClass : "secondary",
+          handler: () =>{
+
+          }
+        },{
+          text : "Realizar Comentario",
+          handler : data =>{
+            this.Comentar(data.comentario,  id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+
   async presentModal(id : string){
     const alert = await this.alertController.create({
       header: 'Realizar Reserva',
@@ -296,7 +327,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
     this.authservice.logout();
   }
 
-  Comentar(id : string){
+  Comentar(comen: string, id : string){
 
     let comentario = new comentarios();
       
@@ -313,7 +344,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           uidResta : id,
           uid : comentario.uid,
           nombreUsu : data.nombre,
-          comentario: valores.comentario
+          comentario: comen
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))

@@ -12,26 +12,33 @@
 
 <ion-content >
 
-  <div *ngFor = "let afi of afiliados$ | async">
+  <div *ngFor = "let afi of afiliados$ | async"> 
     <div *ngIf = "usuarioLog === afi.uidResta">
       <ion-card *ngIf = "afi.estado === 'pendiente'">
         <ion-card-header>
-          <ion-card-title>En Espera</ion-card-title>
+          <div class="imagen">
+            <img src="{{afi.fotoAfi}}" width="140px">
+          </div>
         </ion-card-header>
-        <img src="{{afi.fotoAfi}}" width="140px">
-        <ion-list>
-          <ion-item>   
-            <h6><b>Nombre: </b>{{afi.nombre}} </h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Numero: </b> {{afi.numero}}</h6>
-          </ion-item>
-        </ion-list>
-          <ion-button (click) ="aceptarAfiliado(afi.id)" >Aceptar Afiliado</ion-button>
-          <ion-button (click) ="rechazarAfiliado(afi.id)">Rechazar Afiliado</ion-button>
+        <ion-card-subtitle>
+          &nbsp;
+          <h6>&nbsp;
+            <ion-icon name="person"></ion-icon>&nbsp;
+          {{afi.nombre}}
+          </h6>
+          <h6>&nbsp;
+            <ion-icon name="phone-portrait"></ion-icon>&nbsp;
+          {{afi.numero}}
+          </h6>
+        </ion-card-subtitle>
+        <ion-card-header>
+          <ion-button color="secondary" (click)="aceptarAfiliado(afi.id)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button>
+          <ion-button  color="danger" (click)="presentModalRechazo(afi.id)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
+        </ion-card-header>
+          
       </ion-card>
     </div>
-   
+  
   </div>
 
 </ion-content>

@@ -47,11 +47,12 @@
     </ion-card>
   
   <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
-      <ion-item lines="none">
         <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
-      </ion-item>
+
       <div style="text-align: center;">
-        <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" >Afiliarse</ion-button>
+        <ion-button [disabled] ="afiliacion.invalid"  type="button" color="danger" expand="block">Afiliarse
+          <ion-icon name="save" slot="start"></ion-icon>
+        </ion-button>
         </div>
     </form>
     
@@ -63,56 +64,38 @@
   </button>
 
   <div class="panel">
-    
-    <div *ngFor="let desa of desayunos">
-      <div *ngIf="res.userUID === desa.userUID">
-        <ion-card class="infomacionCard">
-          <ion-card-header>
-            <img src="../../../assets/desayuno.jpg" alt="des" width="100px" height="200px">
-            <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
-          </ion-card-header>
-          <ion-item>
-            <ion-icon name="restaurant" slot="start"></ion-icon>
-            <ion-label>{{desa.platoDesayuno}}</ion-label>
-            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{desa.precioDesayuno}}&nbsp;$
-            </ion-button>
-          </ion-item>
-    
-          <ion-card-content>
-            El desayuno del día es {{desa.detalleDesayuno}} <br>
-            Ingredientes:
-            <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
-              
-                <ion-icon name="remove" slot="start"></ion-icon>
-                {{i['ingrediente']}} <br>
-              
-            </div>
-            
-          </ion-card-content>
-        </ion-card>
-        <!-- <ion-list>
-          <ion-item>
-            <h6><b>Tipo Desayuno: </b>{{desa.platoDesayuno}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Detalle: </b>{{desa.detalleDesayuno}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Precio: </b>{{desa.precioDesayuno}}</h6>
-          </ion-item>
-          <ion-item>
-            <h6><b>Ingredientes</b></h6>
-          </ion-item>
-          <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
+
+      <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+        <ion-slide *ngFor="let desa of desayunosRespectivos">   
+          <ion-card class="infomacionCard">
+            <ion-card-header>
+              <img src="../../../assets/desayuno.jpg" alt="des" width="100px" height="200px">
+              <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
+            </ion-card-header>
             <ion-item>
-              <ion-icon name="play" slot="start"></ion-icon>
-              {{i['ingrediente']}} <br>
+              <ion-icon name="restaurant" slot="start"></ion-icon>
+              <ion-label>{{desa.platoDesayuno}}</ion-label>
+              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{desa.precioDesayuno}}&nbsp;$
+              </ion-button>
             </ion-item>
-          </div>
-        </ion-list> -->
-      </div>
-    </div>
+      
+            <ion-card-content>
+              El desayuno del día es {{desa.detalleDesayuno}} <br>
+              Ingredientes:
+              <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
+                
+                  <ion-icon name="remove" slot="start"></ion-icon>
+                  {{i['ingrediente']}} <br>
+                
+              </div>
+              
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
   </div>
+
+ 
   
   <button class="accordion">
     <ion-icon name="pizza"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -122,8 +105,8 @@
 
   </button>
   <div class="panel">
-    <div *ngFor="let almu of almuerzos">
-      <div *ngIf="res.userUID === almu.userUID">
+    <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+      <ion-slide *ngFor="let almu of almuerzosRespectivos">  
         <ion-card class="infomacionCard">
           <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
           <ion-item>
@@ -139,10 +122,9 @@
             Bebida: {{almu.jugoAlmuerzo}} <br>
           </ion-card-content>
         </ion-card>
-
-      </div>
+      </ion-slide>
+    </ion-slides>
     </div>
-  </div> 
 
 
   <button class="accordion">
@@ -153,8 +135,8 @@
     <ion-icon name="cafe" slot="end" fill="none"></ion-icon>
   </button>
   <div class="panel">
-    <div *ngFor="let espe of especial">
-      <div *ngIf="res.userUID === espe.userUID">
+    <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+      <ion-slide *ngFor="let espe of especialesRespectivos">  
         <ion-card class="infomacionCard">
           <ion-card-header>
             <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
@@ -168,7 +150,7 @@
           </ion-item>
     
           <ion-card-content>
-            El desayuno del día es:  {{espe.platoEspecial}} <br>
+            El Especial del dia:  {{espe.platoEspecial}} <br>
             Ingredientes:
             <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
               
@@ -180,8 +162,9 @@
           </ion-card-content>
         </ion-card>
 
-     </div>
-    </div>
+      </ion-slide>
+    </ion-slides>
+    
   </div>
 
   <button class="accordion">
@@ -192,9 +175,11 @@
     <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
  
   </button>
-  <div class="panel">
+  <div class="panel" >
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
     <ion-list>
-      <ion-item lines="full" *ngFor="let comen of comentarios$ | async">
+      <ion-item lines="full">
         <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
         <ion-label>
           <h3>{{comen.comentario}}</h3>
@@ -220,6 +205,8 @@
 
       </div>
     </div> -->
+      </div>
+    </div>
   </div> 
 
   <button class="accordion">
