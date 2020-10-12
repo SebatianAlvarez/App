@@ -91,8 +91,8 @@ export class ListadoPage implements OnInit {
 
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
-        window.location.replace("http://localhost:8100/perfil")
-        // this.router.navigate(['/perfil'])
+        //window.location.replace("http://localhost:8100/perfil")
+        this.router.navigate(['/perfil'])
       }
     })
 
@@ -164,8 +164,7 @@ export class ListadoPage implements OnInit {
     })
 
     this.coordenadaService.listar().subscribe(coor =>{
-      this.coordenada =  coor
-
+      this.coordenada =  coor;
     })
 
     // this.restaurantesService.restaurantesHabilitados();
