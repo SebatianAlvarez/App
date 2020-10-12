@@ -1,9 +1,17 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start" fill="none" routerLink="/listado">
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-button>
+    <div *ngFor ="let usu of usuarios$ |  async">
+      <div  *ngIf="usuarioLog === usu.uid">
+        <div *ngIf ="usu.roles  === 'cliente'">
+          <ion-button slot="start" fill="none" routerLink="/listado">
+            <ion-icon name="arrow-back"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+     
+    </div>
+   
     <ion-button slot="end" fill ="none" (click)="getMenu()">
       <ion-icon name = "menu" ></ion-icon>
     </ion-button>

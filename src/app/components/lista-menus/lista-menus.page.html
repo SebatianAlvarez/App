@@ -9,7 +9,10 @@
 <ion-content padding>
   <ion-list lines="full">
     <ion-item *ngIf="almuerzo">
-      <ion-input required type="text" placeholder="Tipo de Almuerzo" [(ngModel)]="almuerzo.tipoAlmuerzo"></ion-input>
+      <ion-select placeholder="Tipo  de Almuerzo" required type="text" [(ngModel)]="almuerzo.tipoAlmuerzo">
+        <ion-select-option>Normal</ion-select-option>
+        <ion-select-option>Especial</ion-select-option> 
+      </ion-select>
     </ion-item>
     <ion-item *ngIf="almuerzo">
       <ion-input required type="text" placeholder="Entrada" [(ngModel)]="almuerzo.entradaAlmuerzo"></ion-input>

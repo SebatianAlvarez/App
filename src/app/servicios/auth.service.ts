@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Usuario } from '../models/usuario-interface';
@@ -40,6 +40,16 @@ export class AuthService {
         this.router.navigate(['verificar-email'])
       }
     });
+  }
+
+  getUsu(id : string) : Observable<Usuario>{
+    return this.usuariocolencion.doc<Usuario>(id).valueChanges().pipe(
+      take(1),
+      map(menu => {
+        menu.uid = id
+        return menu;
+      })
+    )
   }
 
   async register(email:string, password:string, nombre:string, numero:string, usuario?:any){

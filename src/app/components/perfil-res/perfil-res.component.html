@@ -179,6 +179,50 @@
     
   </div>
 
+  <button class="accordion">
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    Comentarios
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
+ 
+  </button>
+
+      <div class="panel" >
+        <div *ngFor="let comen of comentarios$ | async">
+          <div *ngIf="res.userUID === comen.uidResta">
+            <ion-item>
+              <h6>Usuario: {{comen.nombreUsu}}</h6>
+              <h6>Comentario: {{comen.comentario}}</h6>
+            </ion-item>
+             
+          </div>
+        </div>
+        <ion-infinite-scroll threshold="100px">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div> 
+
+      
+
+  <!-- 
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
+
+
+          <ion-item href="#" class="ion-activated">
+            <ion-icon src="../../../assets/chatbubble-ellipses-outline.svg" slot="start">
+              <h1>{{comen.nombreUsu}}</h1>
+            </ion-icon>
+            <ion-label>{{comen.comentario}}</ion-label>
+          </ion-item>
+        
+
+      </div>
+    </div> -->
 
   <button class="accordion">
     <!-- <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>   -->
@@ -217,6 +261,7 @@
       <div *ngIf = "coor.userUID === res.userUID" >
         <ion-button (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
       </div>
+
     </div>
   </div>
 
