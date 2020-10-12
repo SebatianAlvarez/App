@@ -7,27 +7,34 @@
 //     display: grid;
 // }
 
+ion-card .imagen{
+  position: absolute;
+  left: 50%;
+  top: 70px;
+  width: 150px;
+  border-radius: 50%;
 
+}
 
 input[type="radio"] {
     display: none;
   }
-  
+
   label {
     color: grey;
   }
-  
+
   .clasificacion {
     direction: rtl;
     unicode-bidi: bidi-override;
     font-size: xx-large;
   }
-  
+
   label:hover,
   label:hover ~ label {
     color: orange;
   }
-  
+
   input[type="radio"]:checked ~ label {
     color: orange;
   }
@@ -42,8 +49,12 @@ input[type="radio"] {
   // margin-left: 30%;
 }
 
-img{
-    margin-top: 0px;
+.infomacionCard2{
+  width: 95%;
+}
+
+ion-card-content{
+  color: black;
 }
 
 ion-toolbar{
@@ -56,7 +67,7 @@ ion-toolbar{
     border-radius: 3%;
     background-color: #1dbfd4;
     color: white;
-  } 
+  }
 
 .menu{
     text-align: center;
@@ -68,13 +79,15 @@ ion-toolbar{
 
 .mapa{
     border: 2px solid black;
+    // display: none;
 }
 
  /* Style the buttons that are used to open and close the accordion panel */
  .accordion {
-  width: 100%;
+  width: 50%;
   height: 30px;
-  margin: 2%;
+  // margin: 2%;
+  // display: inherit
   // transition: 0.9s;
   // background-color: #1dbfd4;
   // color: white;
@@ -83,10 +96,9 @@ ion-toolbar{
 .accordion:hover {
   // transition: 0.9s;
   background-color: #dc5c04;
-  width: 100%;
+  width: 50%;
   height: 30px;
-  margin: 2%;
-  border-radius: 0%;
+  // margin: 2%;
   //color: red;
 }
 
@@ -103,5 +115,8 @@ ion-toolbar{
 .panel {
   display: none;
   overflow: hidden;
-} 
+  padding-top: 5%;
+  padding-bottom: 30%
+
+}
 

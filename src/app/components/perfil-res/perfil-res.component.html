@@ -17,16 +17,15 @@
 </ion-card>
 
 <ion-content class="ion-padding">
-
-  <button class="accordion">
-    <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon>
+    <button class="accordion">
+    <!-- <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon> -->
     &nbsp;&nbsp;&nbsp;&nbsp;
     Información
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon>
+    <!-- <ion-icon src="../../../assets/information-circle-outline.svg"></ion-icon> -->
 
   </button>
-  <div class="panel">
+  <div class="panel" style="display: block">
     <ion-card class="infomacionCard">
       <ion-card-header>
         <ion-card-subtitle>{{res.tipoRestaurante}}</ion-card-subtitle>
@@ -44,23 +43,30 @@
         El restaurante abre sus puertas a las {{res.horaApertura}} a.m y cierra a las {{res.horaCierre}} p.m.
 
       </ion-card-content>
-    </ion-card>
-  
-  <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
-        <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
-
-      <div style="text-align: center;">
-        <ion-button [disabled] ="afiliacion.invalid"  type="button" color="danger" expand="block">Afiliarse
-          <ion-icon name="save" slot="start"></ion-icon>
-        </ion-button>
-        </div>
-    </form>
-    
+    </ion-card><hr>
+    <ion-card class="infomacionCard">
+      <button class="accordion">Afiliarse
+      </button>
+      <div class="panel">
+        <ion-card-content>
+          Al Afiliarte a este restaurante obtendras varios beneficios.
+        </ion-card-content>
+        <form [formGroup] ="afiliacion" (ngSubmit)="presentarMensaje(afiliacion.value)">
+          <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
+        <div style="text-align: center;">
+          <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" expand="block">Afiliarse
+            <ion-icon name="save" slot="start"></ion-icon>
+          </ion-button>
+          </div>
+      </form>
+      </div>
+    </ion-card>   
  </div>
-  
-  <button class="accordion">
-    <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp; Desayunos &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
+
+      <button class="accordion">
+    <!-- <ion-icon src="../../../assets/fast-food.svg"></ion-icon> -->
+    &nbsp;&nbsp;&nbsp;&nbsp; Desayunos &nbsp;&nbsp;&nbsp;&nbsp;
+    <!-- <ion-icon src="../../../assets/fast-food.svg"></ion-icon> -->
   </button>
 
   <div class="panel">
@@ -68,9 +74,10 @@
       <ion-slides  options={{slideOpts}} pager ="true" class="slides">
         <ion-slide *ngFor="let desa of desayunosRespectivos">   
           <ion-card class="infomacionCard">
-            <ion-card-header>
-              <img src="../../../assets/desayuno.jpg" alt="des" width="100px" height="200px">
-              <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
+            <ion-card-header >
+              <div class="imagen">
+                <img  src="../../../assets/menu.png" alt="des" width="100px" height="200px">
+              </div>
             </ion-card-header>
             <ion-item>
               <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -79,10 +86,10 @@
               </ion-button>
             </ion-item>
       
-            <ion-card-content>
+            <ion-card-content  style="text-align:left;">
               El desayuno del día es {{desa.detalleDesayuno}} <br>
               Ingredientes:
-              <div style="text-align: center;" *ngFor="let i of desa.ingredientes">
+              <div *ngFor="let i of desa.ingredientes">
                 
                   <ion-icon name="remove" slot="start"></ion-icon>
                   {{i['ingrediente']}} <br>
@@ -90,25 +97,28 @@
               </div>
               
             </ion-card-content>
+            <br><br><br><br><br>
           </ion-card>
         </ion-slide>
       </ion-slides>
   </div>
-
- 
-  
-  <button class="accordion">
-    <ion-icon name="pizza"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="accordion">
+    <!-- <ion-icon name="pizza"> </ion-icon> -->
+      &nbsp;&nbsp;&nbsp;&nbsp;
     Almuerzos&nbsp;&nbsp;&nbsp;&nbsp;
 
-    <ion-icon name="pizza"></ion-icon>
+    <!-- <ion-icon name="pizza"></ion-icon> -->
 
   </button>
   <div class="panel">
     <ion-slides  options={{slideOpts}} pager ="true" class="slides">
       <ion-slide *ngFor="let almu of almuerzosRespectivos">  
         <ion-card class="infomacionCard">
-          <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
+          <ion-card-header >
+            <div class="imagen">
+              <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
+            </div>
+          </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
             <ion-label>Tipo: {{almu.entradaAlmuerzo}}</ion-label>
@@ -116,50 +126,52 @@
             </ion-button>
           </ion-item>
     
-          <ion-card-content>
-            Entrada: {{almu.entradaAlmuerzo}} <br>
-            Segundo: {{almu.segundoAlmuerzo}} <br>
-            Bebida: {{almu.jugoAlmuerzo}} <br>
+          <ion-card-content style="text-align:left;">
+            <h5 style="color: black;">Entrada: {{almu.entradaAlmuerzo}} </h5>
+            <h5 style="color: black;">Segundo: {{almu.segundoAlmuerzo}} </h5>
+            <h5 style="color: black;">Bebida: {{almu.jugoAlmuerzo}}</h5>
           </ion-card-content>
+          <br><br><br><br><br><br>
         </ion-card>
       </ion-slide>
     </ion-slides>
     </div>
 
-
+  
+  
   <button class="accordion">
-    <ion-icon name="cafe" slot="end" fill="none"></ion-icon>
+    <!-- <ion-icon name="cafe" slot="end" fill="none"></ion-icon> -->
     &nbsp;&nbsp;&nbsp;&nbsp;
     Platos Especiales
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="cafe" slot="end" fill="none"></ion-icon>
+    <!-- <ion-icon name="cafe" slot="end" fill="none"></ion-icon> -->
   </button>
   <div class="panel">
     <ion-slides  options={{slideOpts}} pager ="true" class="slides">
       <ion-slide *ngFor="let espe of especialesRespectivos">  
-        <ion-card class="infomacionCard">
-          <ion-card-header>
-            <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
-            <!-- <ion-card-subtitle>{{desa.platoDesayuno}}</ion-card-subtitle> -->
+        <ion-card class="infomacionCard2">
+          <ion-card-header >
+            <div class="imagen">
+              <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
+            </div>
           </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
-            <ion-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </ion-label>
+            <ion-label>{{espe.platoEspecial}}</ion-label>
             <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}&nbsp;$
             </ion-button>
           </ion-item>
     
-          <ion-card-content>
+          <ion-card-content  style="text-align:left;">
             El Especial del dia:  {{espe.platoEspecial}} <br>
             Ingredientes:
-            <div style="text-align: center;" *ngFor="let i of espe.ingredientes">
+            <div *ngFor="let i of espe.ingredientes">
               
                 <ion-icon name="remove" slot="start"></ion-icon>
                 {{i['ingrediente']}} <br>
-              
             </div>
-            
           </ion-card-content>
+          <br><br><br><br><br>
         </ion-card>
 
       </ion-slide>
@@ -167,54 +179,13 @@
     
   </div>
 
-  <button class="accordion">
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
-    &nbsp;&nbsp;&nbsp;&nbsp;  
-    Comentarios
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
- 
-  </button>
-  <div class="panel" >
-    <div *ngFor="let comen of comentarios$ | async">
-      <div *ngIf="res.userUID === comen.uidResta">
-    <ion-list>
-      <ion-item lines="full">
-        <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
-        <ion-label>
-          <h3>{{comen.comentario}}</h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-infinite-scroll threshold="5%" id="infinite-scroll">
-      <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="cargando ...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-<!-- 
-    <div *ngFor="let comen of comentarios$ | async">
-      <div *ngIf="res.userUID === comen.uidResta">
-
-
-          <ion-item href="#" class="ion-activated">
-            <ion-icon src="../../../assets/chatbubble-ellipses-outline.svg" slot="start">
-              <h1>{{comen.nombreUsu}}</h1>
-            </ion-icon>
-            <ion-label>{{comen.comentario}}</ion-label>
-          </ion-item>
-        
-
-      </div>
-    </div> -->
-      </div>
-    </div>
-  </div> 
 
   <button class="accordion">
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
+    <!-- <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>   -->
     &nbsp;&nbsp;&nbsp;&nbsp;  
     Promociones
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
+    <!-- <ion-icon name="megaphone" slot="end" fill="none"></ion-icon> -->
   </button>
   <div class="panel">
     <ion-slides  options={{slideOpts}} pager ="true" class="slides">
@@ -234,35 +205,45 @@
     </div>
   </div> -->
 
-  <button class="accordion">
-    <ion-icon name="compass" slot="end" fill="none"></ion-icon>
+  <button class="accordion" style="padding-button: 50px">
+    <!-- <ion-icon name="compass" slot="end" fill="none"></ion-icon> -->
     &nbsp;&nbsp;&nbsp;&nbsp;
     Ubicación
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="compass" slot="end" fill="none"></ion-icon>
+    <!-- <ion-icon name="compass" slot="end" fill="none"></ion-icon> -->
   </button>
-
-  <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
-  
-  
-  <br>
-
-  <div *ngFor ="let coor of coordenadas$ | async">
-    <div *ngIf = "coor.userUID === res.userUID" >
-      <ion-button (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+  <div class="mapa" id="Mapa" style="width: 100%; height: 80%;">
+    <div *ngFor ="let coor of coordenadas$ | async">
+      <div *ngIf = "coor.userUID === res.userUID" >
+        <ion-button (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+      </div>
     </div>
   </div>
 
-  
 
-  <div *ngFor="let afi of afiliados$ | async">
-    
-    <div *ngIf="afi.uidUsu === usuarioLog && afi.idRes === res.id" >
 
-      <p>existe </p>
+  <br><br>
+  <button class="accordion">
+    Opiniones
+  </button>
+  <div class="panel" >
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
+    <ion-list>
+      <ion-item lines="full">
+        <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
+        <ion-label>
+          <h3>{{comen.comentario}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-infinite-scroll threshold="5%" id="infinite-scroll">
+      <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="cargando ...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+      </div>
     </div>
-  </div>
-
+  </div> 
    <!--
 
   <ng-template #v>
