@@ -442,6 +442,8 @@ existeAfiliado(){
           text : "Afiliarse",
           handler :() =>{
             this.afiliarse()
+            this.goRegreso()
+            this.router.navigate(['/restaurantes-afiliados'])
           }
         }
       ]
@@ -449,6 +451,7 @@ existeAfiliado(){
     await alert.present()
     let result = await alert.onDidDismiss();
   }
+
 
   async presentModal(){
     const alert = await this.alertController.create({
