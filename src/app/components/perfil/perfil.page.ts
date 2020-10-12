@@ -51,7 +51,6 @@ export class PerfilPage implements OnInit {
     //   this.restaurantes = data
     // })
     
-
     try {
       let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
@@ -61,13 +60,14 @@ export class PerfilPage implements OnInit {
     } catch (error) {
       console.log(error)
     }
+
+  
   
   }
 
   onLogout(){
     this.authservice.logout();
   }
-
   
   async presentModal(){
     const alert = await this.alertController.create({
@@ -110,9 +110,9 @@ export class PerfilPage implements OnInit {
     await alert.present();
     let result = await alert.onDidDismiss();
   }
+
+
  
-
-
   getMenu(){
 
     this.authservice.getUsuario().subscribe( data =>{
@@ -128,7 +128,6 @@ export class PerfilPage implements OnInit {
     })
   }
   
-
  async presentActionSheet(rol :string) {
     
   if( rol == 'dueño'){

@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild  } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';

@@ -46,11 +46,11 @@
       </ion-card-content>
     </ion-card>
   
-  <form [formGroup] ="afiliacion" (submit)="presentarMensaje(afiliacion.value)">
+  <form [formGroup] ="afiliacion" (ngSubmit)="presentarMensaje(afiliacion.value)">
         <input type="file" formControlName="inputFile" (change)="elegirImagen($event)" accept="image/x-png,image/jpeg" required>
 
       <div style="text-align: center;">
-        <ion-button [disabled] ="afiliacion.invalid"  type="button" color="danger" expand="block">Afiliarse
+        <ion-button [disabled] ="afiliacion.invalid"  type="submit" color="danger" expand="block">Afiliarse
           <ion-icon name="save" slot="start"></ion-icon>
         </ion-button>
         </div>
@@ -175,22 +175,28 @@
     <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
  
   </button>
-  <div class="panel" >
-    <div *ngFor="let comen of comentarios$ | async">
-      <div *ngIf="res.userUID === comen.uidResta">
-    <ion-list>
-      <ion-item lines="full">
-        <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
-        <ion-label>
-          <h3>{{comen.comentario}}</h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-infinite-scroll threshold="5%" id="infinite-scroll">
-      <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="cargando ...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-<!-- 
+
+      <div class="panel" >
+        <div *ngFor="let comen of comentarios$ | async">
+          <div *ngIf="res.userUID === comen.uidResta">
+            <ion-item>
+              <h6>Usuario: {{comen.nombreUsu}}</h6>
+              <h6>Comentario: {{comen.comentario}}</h6>
+            </ion-item>
+             
+          </div>
+        </div>
+        <ion-infinite-scroll threshold="100px">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div> 
+
+      
+
+  <!-- 
     <div *ngFor="let comen of comentarios$ | async">
       <div *ngIf="res.userUID === comen.uidResta">
 
@@ -205,9 +211,6 @@
 
       </div>
     </div> -->
-      </div>
-    </div>
-  </div> 
 
   <button class="accordion">
     <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
@@ -242,7 +245,7 @@
     <ion-icon name="compass" slot="end" fill="none"></ion-icon>
   </button>
 
-  <div class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
+  <div  class="mapa" id="Mapa" style="width: 95%; height: 80%;"></div>
   
   
   <br>
