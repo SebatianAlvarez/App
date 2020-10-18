@@ -1,57 +1,76 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/listado"></ion-back-button>
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
     </ion-buttons>
-    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+    <!-- <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
       <ion-icon name = "menu" ></ion-icon>
-    </ion-button>
+    </ion-button> -->
     <ion-title style="text-align: center;">Reservas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content >
-  <div *ngFor="let reser of reservas$ | async"> 
-    <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'Rechazado'">
-      <ion-card>
-        <ion-card-header>
-          <div class="imagen">
-            <img src="../../../assets/logoU.png" width="140px">
-          </div>
-        </ion-card-header>
-        <ion-card-subtitle>
-          &nbsp;
-          <h6>&nbsp;
-            <ion-icon name="person"></ion-icon>&nbsp;
-          {{reser.nombre}}
-          </h6>
-          <h6>&nbsp;
-            <ion-icon name="phone-portrait"></ion-icon>&nbsp;
-          {{reser.numero}}
-          </h6>
-          <h6>&nbsp;
-            <ion-icon name="restaurant"></ion-icon>&nbsp;
-          {{reser.mesas}}&nbsp; mesas
-          </h6>
-          <h6>&nbsp;
-            <ion-icon name="time"></ion-icon>&nbsp;
-          {{reser.tiempo}}&nbsp; minutos
-          </h6>
-          <h6>&nbsp;
-            <ion-icon name="person"></ion-icon>&nbsp;
-          {{reser.motivo}}&nbsp; 
-          </h6>
-        </ion-card-subtitle>
-        <ion-card-header>
-          <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
-          <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
-          <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
-        </ion-card-header>
-          
-      </ion-card>
+  <ng-template [ngIf]="validarDatos(existeDatos) === true">
+    <div *ngFor="let reser of reservas$ | async"> 
+      <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'Rechazado'">
+        <ion-card>
+          <ion-card-header>
+            <div class="imagen">
+              <img src="../../../assets/logoU.png" width="140px">
+            </div>
+          </ion-card-header>
+          <ion-card-subtitle>
+            &nbsp;
+            <h6>&nbsp;
+              <ion-icon name="person"></ion-icon>&nbsp;
+            {{reser.nombre}}
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="phone-portrait"></ion-icon>&nbsp;
+            {{reser.numero}}
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="restaurant"></ion-icon>&nbsp;
+            {{reser.mesas}}&nbsp; mesas
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="time"></ion-icon>&nbsp;
+            {{reser.tiempo}}&nbsp; minutos
+            </h6>
+            <h6>&nbsp;
+              <ion-icon name="person"></ion-icon>&nbsp;
+            {{reser.motivo}}&nbsp; 
+            </h6>
+          </ion-card-subtitle>
+          <ion-card-header>
+            <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
+            <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
+            <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
+          </ion-card-header>
+            
+        </ion-card>
+      </div>
+     
     </div>
-   
-  </div>
+  </ng-template>
+
+  
+  <ng-template [ngIf]="validarDatos(existeDatos) === false">
+    <ion-card class="sinDatos">
+      <ion-item>
+        <ion-label></ion-label> 
+      </ion-item>
+    
+      <ion-card-content style="text-align: center;">
+        No cuentas con ninguna solicitud de reserva 
+      </ion-card-content>
+      <ion-item>
+        <ion-label></ion-label>
+      </ion-item>
+    </ion-card>
+  </ng-template>
+
 
 
 </ion-content>

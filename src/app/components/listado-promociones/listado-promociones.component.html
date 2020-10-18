@@ -1,0 +1,23 @@
+<p>
+  listado-promociones works!
+</p>
+<ion-header>
+  <ion-toolbar >
+    <ion-button slot="start" fill="none" (click)="goRegreso()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+{{listRestaurante}}
+
+{{res}}
+
+<ion-content class="ion-padding"> 
+    <ion-card>
+      <ion-header>
+        <img src="{{pro.fotosPromocion}}" alt="">
+      </ion-header>
+    </ion-card>
+</ion-content>

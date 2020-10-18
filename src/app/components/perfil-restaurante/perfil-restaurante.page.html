@@ -7,7 +7,7 @@
       <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
         <ion-icon name = "menu" ></ion-icon>
       </ion-button>
-    <ion-title>Mi Restaurante</ion-title>
+    <ion-title style="text-align: center;"> Mi Restaurante</ion-title>
   </ion-toolbar>
 
 </ion-header>
@@ -16,27 +16,26 @@
 
   <ion-card>
     <ion-card-header>
-      <div class="titulo">
-        <h2 style="text-align: center;">Restaurante</h2>
-      </div>
       <div *ngFor ="let resta of restaurante$ | async">
         <div *ngIf ="resta.userUID === usuarioLog">
-
-          <ng-template [ngIf] = 'resta.promedio >= 1 && resta.promedio <=  1.9'>
-            <img src="../../../assets//icon/1estrellas.jpg">
+          <img *ngIf="resta.imagenRes ; else foto" src ="{{resta.imagenRes}}" width="100%" height="17%" margin-top="5px">
+          
+          <ng-template [ngIf]='resta.promedio >= 1 && resta.promedio <=  1.9'>
+            <img class="calificacion" src="../../../assets/icon/1estrellas.jpg">
           </ng-template>
           <ng-template [ngIf] = "resta.promedio >= 2 && resta.promedio <=  2.9">
-            <img src="../../../assets//icon/2estrellas.jpg">
+            <img class="calificacion" src="../../../assets/icon/2estrellas.jpg">
           </ng-template>
           <ng-template [ngIf] = "resta.promedio >= 3 && resta.promedio <=  3.9">
-            <img src="../../../assets//icon/3estrellas.jpg">
+            <img class="calificacion" src="../../../assets/icon/3estrellas.jpg">
           </ng-template>
-          <ng-template [ngIf] = "resta.promedio >= 4 && resta.promedio <=  5">
-            <img src="../../../assets//icon/4estrellas.jpg">
+          <ng-template [ngIf] = "resta.promedio >= 4 && resta.promedio <=  4.99">
+            <img class="calificacion" src="../../../assets/icon/4estrellas.jpg">
+          </ng-template>
+          <ng-template [ngIf] = "resta.promedio ===  5">
+            <img class="calificacion" src="../../../assets/icon/5estrellas.jpg">
           </ng-template>
 
-          <img *ngIf="resta.imagenRes ; else foto" src ="{{resta.imagenRes}}" width="100%" height="17%" margin-top="5px">
-                
           <ion-list>
             <ion-item>
               <h6><b>Nombre: </b>{{resta.nombreRestaurante}}</h6>

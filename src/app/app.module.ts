@@ -1,3 +1,4 @@
+import { ListadoPromoComponent } from './components/listado-promo/listado-promo.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -36,7 +37,7 @@ import { MenusPrincipalesPage } from './components/menus-principales/menus-princ
 
   
 @NgModule({
-  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage],
+  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent],
   entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,

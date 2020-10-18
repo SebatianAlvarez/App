@@ -518,7 +518,7 @@ existeAfiliado(){
   }
 
   goMensajes(){
-    this.modal.dismiss(this.router.navigate(['/mensajes']))
+    this.modal.dismiss(this.router.navigate(['/tabs-reservas/reserva']))
   }
 
   onLogout(){
@@ -562,7 +562,7 @@ existeAfiliado(){
          this.goAfiliados();
         }
     },{
-      text: 'Mensajes',
+      text: 'Reservas',
       icon: 'mail',
       handler: () => {
         this.goMensajes();

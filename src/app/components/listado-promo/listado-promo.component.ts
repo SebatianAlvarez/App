@@ -16,22 +16,36 @@ export class ListadoPromoComponent implements OnInit  {
   public especial : especial[];
   public usuario : Usuario[];
 
-  public promocion: promos
+  public promocion: promos;
+
+  // variable para cargar el restaurante seleccionado
+  listRestaurante: resta[] = [];
 
 
   constructor(private navparams: NavParams, private modal:ModalController) { }
 
   ngOnInit() {
+
     this.promocion = this.navparams.get('pro');
     this.res = this.navparams.get('resta');
     //this.especial = this.navparams.get('especial')
     //this.usuario = this.navparams.get('usuario');
 
 
-    console.log("aaasdsd", this.res);
+    console.log("restaurante??", this.res);
     console.log("aaasdsd", this.promocion);
-    console.log("aaasdsd", this.especial);
+    console.log("especial", this.especial);
     console.log("aaasdsd", this.usuario);
+
+
+    this.res.forEach(elementR => {
+      this.listRestaurante = [];
+        if(this.promocion.userUID === elementR.userUID){
+          this.listRestaurante.push(elementR);
+          console.log(this.listRestaurante);    
+      }      
+    });
+    console.log(this.listRestaurante);    
 
   }
 
@@ -40,5 +54,6 @@ export class ListadoPromoComponent implements OnInit  {
   goRegreso(){
     this.modal.dismiss();
   }
+
 
 }

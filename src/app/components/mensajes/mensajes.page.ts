@@ -9,6 +9,7 @@ import { Reserva } from '../../models/reserva-interface';
 import { Observable } from 'rxjs';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
 
+
 @Component({
   selector: 'app-mensajes',
   templateUrl: './mensajes.page.html',
@@ -26,12 +27,14 @@ export class MensajesPage implements OnInit {
     public reservas$: Observable<Reserva[]>;
     public restaurante$: Observable<resta[]>;
 
+    // Variables para almacenar y validar si hay datos
+    listaRestaurante: resta[]= [];
+    listaReservasP: Reserva[]=[];
+    existeDatos: boolean;
+
   ngOnInit() {
 
-    //this.reservasService.getReservas().subscribe(data =>{
-    //  this.reservas = data
-    //})
-
+    this.existeDatos = false;
     this.reservas$ = this.reservasService.recuperarDatos()
     this.restaurante$ = this.restauranteSvc.recuperarDatos()
 
@@ -43,8 +46,36 @@ export class MensajesPage implements OnInit {
       console.log(error)
     }
 
-    // this.sinReserva();
+    this.reservasService.listar().subscribe(rp =>{
+      this.listaReservasP = [];
+      this.listaRestaurante =[];
+      rp.forEach(elementRP => {
+        this.restauranteSvc.listar().subscribe(res =>{
 
+          res.forEach(elementR => {
+            if(this.usuarioLog === elementRP.uidUsu && elementR.userUID === elementRP.uidResta && elementRP.estado === 'En Revision'){
+              this.listaReservasP.push(elementRP);
+              this.listaRestaurante.push(elementR);
+              console.log(this.listaRestaurante);
+              console.log(this.listaReservasP);
+              this.existeDatos = true;
+              this.validarDatos(this.existeDatos);
+              
+            }
+          });
+        })
+      });
+    })
+  
+
+  }
+
+  validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   eliminarReserva(id: string){

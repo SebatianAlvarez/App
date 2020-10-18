@@ -72,6 +72,12 @@ export class ListadoPage implements OnInit {
   public usuarios: Usuario[]
 
 
+  slideOpts = {
+    initialSlide: 2,
+    speed: 500
+  };
+
+
   constructor(private authservice: AuthService, public restaurantesService: RestaurantesService,
     private modal: ModalController, public actionSheetController: ActionSheetController,
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
@@ -117,15 +123,15 @@ export class ListadoPage implements OnInit {
     })
 
     this.promocionesService.listar().subscribe(x =>{
-      this.promoHabilitados = []
+      this.promoHabilitados = [];
       x.forEach(element => {
         if(element.estado === 'verdadero'){
-          this.promoHabilitados.push(element)
-        }else{
-          console.log("no");
+          this.promoHabilitados.push(element);
+          console.log(this.promoHabilitados);
         }
       });
     })
+
     this.resHabilitados = await this.initializeItems();
 
     // this.promocionesService.listar().subscribe(data =>{
@@ -169,7 +175,13 @@ export class ListadoPage implements OnInit {
       this.coordenada =  coor;
     })
 
+    this.restaurantesService.listar().subscribe(res =>{
+      this.resta = res;
+    })
+
     this.restaurantesService.restaurantesHabilitados();
+
+    this.promociones$ = this.promocionesService.recuperarDatos();
 
   }
 
@@ -269,7 +281,6 @@ export class ListadoPage implements OnInit {
         pro: pro,
         resta: this.resta, 
         especial: this.especial,
-        usuario: this.usuarios
       }
     }).then((modal) => modal.present())
   }

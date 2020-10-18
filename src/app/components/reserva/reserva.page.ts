@@ -22,6 +22,11 @@ export class ReservaPage implements OnInit {
 
   public reservas$: Observable<Reserva[]>;
 
+  // Variables para validar si existen datos
+
+  listaReservas: Reserva[] = [];
+  existeDatos: boolean;
+
   constructor(public reservasService: ReservasService, private authservice: AuthService, public alertController: AlertController,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     ) {
@@ -31,6 +36,7 @@ export class ReservaPage implements OnInit {
 
   ngOnInit() {
     
+    this.existeDatos = false;
 
     try {
       if(this.currentUser != null){
@@ -50,11 +56,26 @@ export class ReservaPage implements OnInit {
 
     this.reservas$ = this.reservasService.recuperarDatos()
 
+    this.reservasService.listar().subscribe(r =>{
+      this.listaReservas = [];
+      r.forEach(element => {
+        if(this.usuarioLog === element.uidResta && element.estado === 'En Revision'){
+          this.listaReservas.push(element);
+          console.log(this.listaReservas);
+          this.existeDatos = true;
+          this.validarDatos(this.existeDatos);   
+        }
+      });
+    })
+    
+  }
 
-    //this.reservasService.getReservas().subscribe( data =>{
-    //  this.reservas = data;
-    //})
-    // this.numeroReserva();
+  validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   
