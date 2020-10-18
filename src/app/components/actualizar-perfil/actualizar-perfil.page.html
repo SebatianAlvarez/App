@@ -3,63 +3,63 @@
     <ion-button slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Actualizar Perfil</ion-title>
+    <ion-title style="text-align: center;">Actualizar perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card-header>
-    <div  class="titulo">
-      <h3 style="text-align: center;">Actualizar Datos Usuario</h3>
-    </div><br>
-
-    <form [formGroup] ="actualizar" (ngSubmit) = "actualizarUsuario(actualizar.value)">
-      <ion-list>
-        <ion-item>
-          <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"
-          minlength ="3"></ion-input>
-        </ion-item>
-        <div >
-          <ng-container *ngFor ="let error of errorMensajes.nombre">
-            <div class="e" *ngIf ="actualizar.get('nombre').hasError(error.type) && (actualizar.get('nombre').dirty || actualizar.get('nombre').touched)">
-              {{error.message}}
-            </div>
-          </ng-container> 
-        </div>
-      
-        <ion-item>
-          <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
-        </ion-item>
-        <div >
-          <ng-container *ngFor ="let error of errorMensajes.numero">
-            <div class="e" *ngIf ="actualizar.get('numero').hasError(error.type) && (actualizar.get('numero').dirty || actualizar.get('numero').touched)">
-              {{error.message}}
-            </div>
-          </ng-container> 
-        </div>
-
-        <ion-card-content>
-          <ion-button expand="block" color="danger" [disabled] ="actualizar.invalid" type = "submit" expand = "block">
-            ACTUALIZAR
-            <ion-icon slot="end" name ="refresh"></ion-icon>
-          </ion-button>
-
-        </ion-card-content>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <img class="fotoPerfil" src = "../../../assets/logoU.png">
   
+      <form [formGroup] ="actualizar" (ngSubmit) = "actualizarUsuario(actualizar.value)">
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"
+            minlength ="3"></ion-input>
+          </ion-item>
+          <div >
+            <ng-container *ngFor ="let error of errorMensajes.nombre">
+              <div class="e" *ngIf ="actualizar.get('nombre').hasError(error.type) && (actualizar.get('nombre').dirty || actualizar.get('nombre').touched)">
+                {{error.message}}
+              </div>
+            </ng-container> 
+          </div>
         
-      </ion-list>
-      
-    </form>
-  </ion-card-header>  
+          <ion-item>
+            <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
+          </ion-item>
+          <div >
+            <ng-container *ngFor ="let error of errorMensajes.numero">
+              <div class="e" *ngIf ="actualizar.get('numero').hasError(error.type) && (actualizar.get('numero').dirty || actualizar.get('numero').touched)">
+                {{error.message}}
+              </div>
+            </ng-container> 
+          </div>
+  
+          <ion-card-content>
+            <ion-button expand="block" color="danger" [disabled] ="actualizar.invalid" type = "submit" expand = "block">
+              ACTUALIZAR
+              <ion-icon slot="end" name ="refresh"></ion-icon>
+            </ion-button>
+  
+          </ion-card-content>
+    
+          
+        </ion-list>
+        
+      </form>
+    </ion-card-header>  
+  </ion-card>
 
+  <ion-slides pager ="true" class="slides">
+    <ion-slide *ngFor="let foto of fotos$ | async">
+      <img src= {{foto.foto}}>   
+    </ion-slide>
+  </ion-slides>
 </ion-content>
 
-<ion-content>
+<hr>
 
-<ion-slides  options={{slideOpts}} pager ="true" class="slides">
-  <ion-slide *ngFor="let foto of fotos$ | async">
-    <img src= {{foto.foto}}>   
-  </ion-slide>
-</ion-slides>
-</ion-content>
+
 

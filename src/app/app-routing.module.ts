@@ -49,6 +49,8 @@ const routes: Routes = [
   { path: 'tabs3', loadChildren: './components/tabs3/tabs3.module#Tabs3PageModule' },
   { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },  { path: 'prueba-menus', loadChildren: './menus/prueba-menus/prueba-menus.module#PruebaMenusPageModule' },
   { path: 'listado-restaurantes', loadChildren: './components/listado-restaurantes/listado-restaurantes.module#ListadoRestaurantesPageModule' },
+  { path: 'tabs-restaurantes-afiliados', loadChildren: './components/tabs-restaurantes-afiliados/tabs-restaurantes-afiliados.module#TabsRestaurantesAfiliadosPageModule' },
+  { path: 'restaurantes-no-afiliados', loadChildren: './components/restaurantes-no-afiliados/restaurantes-no-afiliados.module#RestaurantesNoAfiliadosPageModule' },
 
 
 

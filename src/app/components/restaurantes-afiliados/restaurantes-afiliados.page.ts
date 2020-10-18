@@ -12,15 +12,11 @@ import { AngularFirestore} from '@angular/fire/firestore';
 import { PerfilesService } from '../../servicios/perfiles.service';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-
-import { CalificarService } from '../../servicios/calificar.service';
 import { AuthService } from '../../servicios/auth.service';
-
-import { first } from 'rxjs/operators';
-
-
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { comentarios } from '../../models/comentarios-interface';
+import { first } from 'rxjs/operators';
+
 
 
 @Component({
@@ -33,11 +29,18 @@ export class RestaurantesAfiliadosPage implements OnInit {
   restaurante$: Observable<resta[]>;
   afiliados$: Observable<afiliado[]>;
 
+
+
   // busqueda
   public resList: any[];
 
   suma : number = 0
   auxi : number = 0
+
+  // variable para validar si hay datos
+  existeDatos: boolean = false;
+  listAfiliados: afiliado[] = []
+  listRestaurantes: resta[] = []
 
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
@@ -45,7 +48,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
               private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
               private router : Router, private perfilService : PerfilesService,
               private comentarioService : ComentariosService,
-              public ActionSheetController: ActionSheetController, private authservice:AuthService,) { 
+              public ActionSheetController: ActionSheetController, private authservice:AuthService,) {
 
               }
 
@@ -53,7 +56,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
                 id: new FormControl (''),
                 estrellas: new FormControl ('', [Validators.required]),
-               
+
               });
 
               public errorMensajes ={
@@ -61,41 +64,81 @@ export class RestaurantesAfiliadosPage implements OnInit {
                   { type: 'required', message: 'Este campo no puede estar vacio' }
                 ]
               };
-            
+
               public comentar = this.formBuilder.group ({
                 id: new FormControl (''),
                 comentario: new FormControl('', [Validators.required])
-            
+
               });
 
   async ngOnInit() {
+
+    this.existeDatos = false;
 
     this.resList = await this.initializeItems();
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
     this.afiliados$ = this.afiliadosSvc.recuperarDatos();
 
+
+
     let currentUser = this.AFauth.auth.currentUser;
-    this.usuarioLog = currentUser.uid;      
+    this.usuarioLog = currentUser.uid;
+
+    this.afiliadosSvc.listar().subscribe(a=>{
+      this.listAfiliados = []
+      this.listRestaurantes = [];
+
+      a.forEach(elementA => {
+        this.restauranteService.listar().subscribe(r =>{
+          // this.listRestaurantes = [];
+          r.forEach(elementR => {
+            // this.listRestaurantes = [];
+            if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta){
+              this.listAfiliados.push(elementA);
+              this.listRestaurantes.push(elementR);
+              console.log(this.listAfiliados);
+              console.log(this.listRestaurantes);
+              this.existeDatos = true;
+              this.validarDatos(this.existeDatos)
+            }
+          });
+        })
+      });
+    })
 
 
+
+
+    console.log("a ver", this.listAfiliados)
+
+
+
+  }
+
+  validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   async initializeItems(): Promise<any> {
     const restaList = await this.db.collection('perfiles')
       .valueChanges().pipe(first()).toPromise();
-      
+
       return restaList;
   }
 
   async filterList(evt) {
     this.restaurante$ = await this.initializeItems();
     const searchTerm = evt.srcElement.value;
-  
+
     if (!searchTerm) {
       return;
     }
-  
+
     this.resList = this.resList.filter(Food => {
       if (Food.nombreRestaurante && searchTerm) {
         return (Food.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || Food.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1  );
@@ -168,12 +211,12 @@ export class RestaurantesAfiliadosPage implements OnInit {
             let tiempo;
             tiempo = parseInt(data.tiempo)
             if(tiempo < 30){
-              this.reservaError();              
+              this.reservaError();
             }else{
               this.Reservar(data.mesas, data.tiempo ,id);
               this.presentReserva();
             }
-            
+
           }
         }
       ]
@@ -243,7 +286,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
             let x = valores['estrellas']
 
             this.restauranteService.getRestaurante(id).subscribe( data => {
-      
+
 
               let a : number = (parseInt(x) + data.calificacion)
               let y : number = data.aux + 1
@@ -255,7 +298,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
               let totalF = parseFloat(total2)
 
               console.log("total firebase", totalF);
-              
+
               let califica : resta = {
                 aux:y,
                 calificacion: a,
@@ -266,7 +309,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
               this.presentAlert();
               this.router.navigate(['/listado']);
 
-              
+
             })
           }
         }
@@ -279,9 +322,9 @@ export class RestaurantesAfiliadosPage implements OnInit {
   Reservar(mesa : string, tiempo: string , id : string ){
 
     let reserva = new Reserva();
-      
+
     return new Promise<any>((resolve, reject) => {
-  
+
       let reservaID = this.db.createId();
       reserva.uid = reservaID;
       let usuario = this.perfilService.getUsuario(this.usuarioLog);
@@ -330,9 +373,9 @@ export class RestaurantesAfiliadosPage implements OnInit {
   Comentar(comen: string, id : string){
 
     let comentario = new comentarios();
-      
+
     return new Promise<any>((resolve, reject) => {
-  
+
       let comentarioID = this.db.createId();
       comentario.uid = comentarioID;
       let usuario = this.perfilService.getUsuario(this.usuarioLog);
@@ -359,7 +402,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
     let x = valores['estrellas']
 
     this.restauranteService.getRestaurante(id).subscribe( data => {
-      
+
 
        let a : number = (parseInt(x) + data.calificacion)
        let y : number = data.aux + 1
@@ -371,7 +414,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
        let totalF = parseFloat(total2)
 
        console.log("total firebase", totalF);
-       
+
        let califica : resta = {
         aux:y,
         calificacion: a,
@@ -380,7 +423,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
       this.restauranteService.updateRestaurante(id, califica)
     })
-    
+
   }
 
 }

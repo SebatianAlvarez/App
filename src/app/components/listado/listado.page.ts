@@ -317,7 +317,7 @@ export class ListadoPage implements OnInit {
         text: 'Restaurantes Afiliados',
         icon: 'restaurant',
         handler: () => {
-          this.router.navigate(['/restaurantes-afiliados'])
+          this.router.navigate(['/tabs-restaurantes-afiliados/afiliados'])
         }
       },{
         text: 'Reservas',

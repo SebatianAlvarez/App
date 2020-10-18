@@ -443,7 +443,7 @@ existeAfiliado(){
           handler :() =>{
             this.afiliarse()
             this.goRegreso()
-            this.router.navigate(['/restaurantes-afiliados'])
+            this.router.navigate(['/tabs-restaurantes-afiliados/afiliados'])
           }
         }
       ]
@@ -526,7 +526,7 @@ existeAfiliado(){
   }
 
   goAfiliados(){
-    this.modal.dismiss(this.router.navigate(['/restaurantes-afiliados']))
+    this.modal.dismiss(this.router.navigate(['/tabs-restaurantes-afiliados/afiliados']))
   }
 
   getMenu(){
