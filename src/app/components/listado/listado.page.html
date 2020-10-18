@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-    <ion-slides pager="true" class="slides">
+    <ion-slides  pager ="true" class="slides">
       <ion-slide *ngFor="let pro of promoHabilitados" (click)="openPromo(pro)">   
         <div>
           <img [src] ="pro.fotosPromocion">
@@ -15,14 +15,16 @@
       </ion-slide>
     </ion-slides>
 
+    
+
+  <ion-content>
+
     <ion-searchbar
     showcancelbutton=""
     (ionInput)="filterList2($event)"  
   ></ion-searchbar>
 
-  <ion-content>
-
-  <ion-content [fullscreen]="false">
+  <ion-content [fullscreen]="true">
 
 
     <div style="display: grid; grid-template-columns: 1fr 1fr;">

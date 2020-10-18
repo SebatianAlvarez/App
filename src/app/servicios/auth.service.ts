@@ -81,7 +81,7 @@ export class AuthService {
         // this.enviarEmailVerificacion()
         this.router.navigate(['home'])
       } else {
-        this.router.navigate(['verificar-email'])
+        this.router.navigate(['home'])
       }
       //  this.router.navigate(['home'])
       

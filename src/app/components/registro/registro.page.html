@@ -1,27 +1,27 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-title style="text-align: center;">
-      REGISTRO
+      Crear Cuenta
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <form [formGroup]="registro" (ngSubmit)="OnSubmitRegister(registro.value)">
-    <ion-list>
+  <form [formGroup]="registro" (ngSubmit)="confirmarCorreo(registro.value)">
+    <ion-list class="lista">
       <ion-item>
         <ion-input placeholder="Nombre" formControlName="nombre" maxlength ="20"
         minlength ="3"></ion-input>
       </ion-item>
-      <div >
+      <div>
         <ng-container *ngFor ="let error of errorMensajes.nombre">
           <div class="e" *ngIf ="registro.get('nombre').hasError(error.type) && (registro.get('nombre').dirty || registro.get('nombre').touched)">
             {{error.message}}
           </div>
         </ng-container> 
       </div>
-
+      <br>
 
       <ion-item>
         <ion-input placeholder="Correo" formControlName="email" type="text"></ion-input>
@@ -33,6 +33,7 @@
           </div>
         </ng-container> 
       </div>
+      <br>
     
       <ion-item>
         <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
@@ -43,7 +44,7 @@
             {{error.message}}
           </div>
         </ng-container> 
-      </div>
+      </div><br>
     
       <ion-item>
         <ion-input placeholder="Contraseña" formControlName="password" type="password" maxlength ="25"></ion-input>
@@ -54,16 +55,24 @@
             {{error.message}}
           </div>
         </ng-container> 
+      </div><br><br>
+
+      <div class="mensaje">
+        <p>Tu clave debe tener entre 8 y 20 caracteres. No incluyas tu fecha de nacimiento, nombre o email en tu contraseña.</p>
+        <p>Asegurate de ingresar un correo válido</p>
       </div>
+      <br>
 
       <ion-button [disabled] ="registro.invalid" type = "submit" expand = "block">
         REGISTRARSE
         <ion-icon slot="end" name ="create"></ion-icon>
+      </ion-button><br>
+      <ion-button routerLink="/home" expand = "block">
+        Ya tengo una Cuenta
+        <ion-icon slot="end" name ="return"></ion-icon>
       </ion-button>
     </ion-list>
     
   </form>
-
-  <p style="text-align: center;" routerLink="/home">Ya tengo Cuenta</p>
-
+  
 </ion-content>

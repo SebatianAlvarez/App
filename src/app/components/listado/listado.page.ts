@@ -80,7 +80,9 @@ export class ListadoPage implements OnInit {
     private coordenadaService: CoordenadasService) { }
 
   async ngOnInit() {
-    // this.resList = await this.initializeItems();
+
+    this.resList = await this.initializeItems();
+    
     try {
       let currentUser = this.AFauth.auth.currentUser;
       this.usuarioLog = currentUser.uid;
@@ -124,7 +126,7 @@ export class ListadoPage implements OnInit {
         }
       });
     })
-    // this.resHabilitados = await this.initializeItems();
+    this.resHabilitados = await this.initializeItems();
 
     // this.promocionesService.listar().subscribe(data =>{
     //   console.log(data);
@@ -167,7 +169,7 @@ export class ListadoPage implements OnInit {
       this.coordenada =  coor;
     })
 
-    // this.restaurantesService.restaurantesHabilitados();
+    this.restaurantesService.restaurantesHabilitados();
 
   }
 
@@ -336,3 +338,5 @@ export class ListadoPage implements OnInit {
   }
 
 }
+
+

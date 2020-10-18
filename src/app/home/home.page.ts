@@ -1,8 +1,9 @@
-import { Component} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../servicios/auth.service'; 
 import { Router } from '@angular/router';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Platform } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular';
 
 //librerias para el uso Firebase
 
@@ -23,6 +24,13 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 })
 export class HomePage {
 
+  @ViewChild('slides') slides: IonSlides;
+
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
   providerFb: firebase.auth.FacebookAuthProvider;
 
   public email:string;
@@ -38,7 +46,7 @@ export class HomePage {
     public errorMensajes ={
       email : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'email', message: 'Ingrese un correo valido'}
+        { type: 'email', message: 'Ingrese un correo válido'}
       ],
       password : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -140,6 +148,14 @@ export class HomePage {
     
       //this.router.navigate(['/listado']);
     }).catch(err => alert("Correo o contraseña incorrecta"))
+  }
+
+  next() {
+    this.slides.slideNext();
+  }
+
+  prev() {
+    this.slides.slidePrev();
   }
 
 }
