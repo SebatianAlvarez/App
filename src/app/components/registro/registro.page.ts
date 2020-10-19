@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../servicios/auth.service'; 
+import { AuthService } from '../../servicios/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Usuario } from '../../models/usuario-interface';
-import { AlertController, ActionSheetController } from '@ionic/angular';
 
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -21,8 +21,11 @@ export class RegistroPage implements OnInit {
   public rol: "cliente";
 
   constructor(private authSercive: AuthService, public router: Router,
-    private formBuilder: FormBuilder, private alertController : AlertController) { }
-
+    private formBuilder: FormBuilder,
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
+    private authservice : AuthService) { }
+  
     public errorMensajes ={
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -30,7 +33,7 @@ export class RegistroPage implements OnInit {
       ],
       email : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'email', message: 'Ingrese un correo valido'}
+        { type: 'email', message: 'Asegúrate de tener acceso a este mail'}
       ],
       numero : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -43,7 +46,7 @@ export class RegistroPage implements OnInit {
       ]
     };
 
-    
+
 
     public registro = this.formBuilder.group ({
       id: new FormControl (''),
@@ -58,27 +61,70 @@ export class RegistroPage implements OnInit {
   }
 
   OnSubmitRegister(user: Usuario){
-    console.log("aaaa", user);
-    
     this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
       console.log(auth);
 
-      this.presentAlert()
+      this.OnSubmitLogin(user);
+      this.presentAlert();
+      
+    }).catch( e => alert(e))
+  }
 
-      //(this.router.navigate(['/home']))
-    })
+  OnSubmitLogin(user: Usuario){
+    
+    this.authSercive.login(user.email, user.password).then(res => {
+    
+      //this.router.navigate(['/listado']);
+    }).catch(err => alert("Correo o contraseña incorrecta"))
+  }
+
+  verificarEmail(){
+    this.authservice.enviarEmailVerificacion()
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Registro realizado con Exito',
-      // subHeader: 'Subtitle',
-      // message: 'This is an alert message.',
+      header: '¡Listo! Revisa tu correo!',
+      subHeader: '',
+      message: 'Esta acción requiere una verificación de correo. Por favor reviza tu bandeja de entrada o spam y sigue las instrucciones para activar tu cuenta',
       buttons: ['OK']
     });
-
+    this.verificarEmail();
     await alert.present();
+  }
+
+
+
+
+  async confirmarCorreo(user: Usuario) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Antes de continuar',
+      subHeader: "Confirma que tu email sea válido",
+      message: user.email,
+
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.OnSubmitRegister(user);
+            // this.OnSubmitLogin(user);
+            // this.verificarEmail();
+            // this.presentAlert();
+          }
+        }
+      ]
+    });
+    // this.verificarEmail();
+    await alert.present();
+
   }
 
 }

@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
@@ -55,10 +56,10 @@ const routes: Routes = [
   { path: 'quejas', loadChildren: './components/quejas/quejas.module#QuejasPageModule' , canActivate:[AuthGuard]},
   { path: 'visualizar-quejas', loadChildren: './components/visualizar-quejas/visualizar-quejas.module#VisualizarQuejasPageModule' , canActivate:[AuthGuard]},
   { path: 'quejas-aprobadas', loadChildren: './components/quejas-aprobadas/quejas-aprobadas.module#QuejasAprobadasPageModule' , canActivate:[AuthGuard]},
-  { path: 'quejas-rechazadas', loadChildren: './components/quejas-rechazadas/quejas-rechazadas.module#QuejasRechazadasPageModule' , canActivate:[AuthGuard]},  { path: 'tabs-quejas', loadChildren: './components/tabs-quejas/tabs-quejas.module#TabsQuejasPageModule' },
-
-
-
+  { path: 'quejas-rechazadas', loadChildren: './components/quejas-rechazadas/quejas-rechazadas.module#QuejasRechazadasPageModule' , canActivate:[AuthGuard]},
+  { path: 'tabs-quejas', loadChildren: './components/tabs-quejas/tabs-quejas.module#TabsQuejasPageModule' },
+  { path: 'tabs-restaurantes-afiliados', loadChildren: './components/tabs-restaurantes-afiliados/tabs-restaurantes-afiliados.module#TabsRestaurantesAfiliadosPageModule' },
+  { path: 'restaurantes-no-afiliados', loadChildren: './components/restaurantes-no-afiliados/restaurantes-no-afiliados.module#RestaurantesNoAfiliadosPageModule' },
 
 ];
 
@@ -69,4 +70,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

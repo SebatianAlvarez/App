@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListadoPromoComponent } from './listado-promo.component';
+import { RestaurantesNoAfiliadosPage } from './restaurantes-no-afiliados.page';
 
-describe('ListadoPromoComponent', () => {
-  let component: ListadoPromoComponent;
-  let fixture: ComponentFixture<ListadoPromoComponent>;
+describe('RestaurantesNoAfiliadosPage', () => {
+  let component: RestaurantesNoAfiliadosPage;
+  let fixture: ComponentFixture<RestaurantesNoAfiliadosPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListadoPromoComponent ],
+      declarations: [ RestaurantesNoAfiliadosPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListadoPromoComponent);
+    fixture = TestBed.createComponent(RestaurantesNoAfiliadosPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

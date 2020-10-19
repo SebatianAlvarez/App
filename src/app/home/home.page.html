@@ -8,7 +8,7 @@
 
 <ion-content>
 
-    <ion-slides pager ="true" class="slides">
+    <ion-slides pager ="true" class="slides" #slides>
       <ion-slide class="slide1" >
         <div class="aver1">
           <img class="centro" src="../../assets/blogo.svg" style="text-align: center;">
@@ -76,26 +76,28 @@
         <p class="texto" style="text-align: center;" >Ó Inicia con:</p>
       
           <ion-button (click)="facebookLogin()" class="facebook">
-            <ion-icon slot="start" name ="logo-facebook"></ion-icon>
+            <ion-icon name ="logo-facebook"></ion-icon>
           </ion-button>
           
         
           <ion-button (click)="googleLogin()" class="google">
-            <ion-icon  name ="logo-google"></ion-icon>
+            <ion-icon name ="logo-google"></ion-icon>
           </ion-button>
     
         <p class="texto" style="text-align: center;" routerLink="/recuperar">¿Olvidaste tu Contraseña?</p>
         <ion-button class="registro" routerLink="/registro">Registrarse</ion-button>
         
     </ion-slide>
+
     </ion-slides>
+
    
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <!-- <ion-title class="intro" style="text-align: start;">Atras</ion-title>
-    <ion-title class="intro" style="text-align: end;">Siguiente</ion-title> -->
+    <button type="submit" float-left ion-button  color="primary" class="btn" (click)="prev()">Anterior</button>
+    <button type="submit" float-right ion-button color="primary" class="btn" (click)="next()">Siguiente</button>
   </ion-toolbar>
 </ion-footer>
 

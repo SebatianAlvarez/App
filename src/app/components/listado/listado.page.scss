@@ -1,28 +1,40 @@
-// ion-toolbar{
-//     --background: #eeeeee ;
-//   }
-
-.slides{
-    height: 30%;
-    width: 90%;
+ion-toolbar{
+  --background: #eeeeee ;
 }
 
+.slides {
+  height: 16%;
+  width: 100%;
+}
+
+
 .div {
-    height: 25%;
-    width: 25%;
-    display: inline-block;
-    margin-left: 5px;
-    margin-right: 25px;
+  height: 25%;
+  width: 25%;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 25px;
+}
+
+.titulo{
+  border: 0px solid #1dbfd4;
+  border-radius: 6px;
+  background-color: #1dbfd4;
+  color: white;
 }
 
 img.estrellas{
-  padding-left: 15%;
-  width: 225px;
+padding-left: 5%;
+width: 225px;
 }
 img.estrellas1{
-  padding-left: 18%;
-  width: 220px;
-  height: 38px;
+padding-left: 18%;
+width: 220px;
+height: 38px;
 }
 
-  
+.hora{
+  padding: 0%;
+  margin: 0%;
+  text-align: center;
+}

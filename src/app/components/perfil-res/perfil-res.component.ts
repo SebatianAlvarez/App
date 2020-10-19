@@ -112,6 +112,20 @@ export class PerfilResComponent implements OnInit {
   file: string;
   estaSeleccionado: boolean;
 
+  // Variables para ocultar información
+  informacion: boolean;
+  desayuno: boolean;
+  almuerzo: boolean;
+  especiales: boolean;
+  promociones: boolean;
+  comentarios: boolean;
+  afiliar: boolean;
+
+  // variables para validar si el usuario esta afiliado al restaurante
+  listAfiliados: afiliado[] = [];
+  listRestaurant: resta[] = [];
+  existeA: boolean;
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
@@ -142,29 +156,15 @@ export class PerfilResComponent implements OnInit {
 
   ngOnInit() {
 
-    this.slideOpts = {
-      initialSlide: 1,
-      speed: 400
-    };
+    this.existeA = false;
 
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-  
-  for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-      /* Toggle between adding and removing the "active" class,
-      to highlight the button that controls the panel */
-      this.classList.toggle("active");
-  
-      /* Toggle between hiding and showing the active panel */
-      var panel = this.nextElementSibling;
-      if (panel.style.display === "block") {
-        panel.style.display = "none";
-      } else {
-        panel.style.display = "block";
-      }
-    });
-  } 
+    this.informacion = true;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.comentarios = false;
+    this.afiliar = false;
 
     this.res = this.navparams.get('res')
     this.desayunos = this.navparams.get('desayuno')
@@ -191,25 +191,9 @@ export class PerfilResComponent implements OnInit {
 
     this.coordenadas$ = this.coordenadaService.recuperarDatos()
 
-    //this.afiliadosService.getAfiliados().subscribe(x =>{
-    // this.afiliados = x
-    //})
 
-    this.afiliadosService.listar().subscribe(data =>{
-      for (let x of data){
-        if(this.usuarioLog === x['uidUsu'] && x['idres'] === this.res.id){
-          console.log(x['uidUsu']);
-          console.log("si");
-          this.validacion = true;
-          this.existeAfiliacion(this.validacion);
-        }else{
+        
 
-          console.log("no");
-          this.validacion = false;
-          this.existeAfiliacion(this.validacion);
-        }
-      }
-    })
 
     try {
       let currentUser = this.AFauth.auth.currentUser;
@@ -219,11 +203,120 @@ export class PerfilResComponent implements OnInit {
       console.log(error)
     }
 
+    this.afiliadosService.listar().subscribe(data =>{
+      this.listAfiliados =[];
+      this.listRestaurant = [];
+      data.forEach(elementA =>{
+        if(this.usuarioLog === elementA.uidUsu && elementA.idres === this.res.id){
+          this.listAfiliados.push(elementA);
+          // this.listRestaurant.push(this.res);
+          // console.log("res,", this.listRestaurant);
+          console.log("afil", this.listAfiliados);
+          console.log("res", this.res);
+          this.existeA = true;
+          this.existeAfiliacion(this.existeA);     
+        }
+      })
+    });
+
+
+
     this.promocionesUsuario();
     this.desayunosQueSon();
     this.almuerzosQueSon();
     this.especialesQueSon();
 
+  }
+
+  mostrarInformacion(){
+    this.informacion = true;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.comentarios = false;
+    this.afiliar = false;
+
+    this.ionViewDidEnter();
+  }
+
+  mostrarDesayuno(){
+    this.informacion = false;
+    this.desayuno = true;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.comentarios = false;
+    this.afiliar = false;
+
+
+  }
+
+  mostrarAlmuerzo(){
+    this.informacion = false;
+    this.desayuno = false;
+    this.almuerzo = true;
+    this.especiales = false;
+    this.promociones = false;
+    this.comentarios = false;
+    this.afiliar = false;
+
+
+  }
+
+  mostrarEspecial(){
+    this.informacion = false;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = true;
+    this.promociones = false;
+    this.comentarios = false;
+    this.afiliar = false;
+
+
+  }
+
+  mostrarPromocion(){
+    this.informacion = false;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = true;
+    this.comentarios = false;
+    this.afiliar = false;
+
+
+  }
+
+  mostrarComentarios(){
+    this.comentarios = true;
+    this.informacion = false;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.afiliar = false;
+
+  }
+
+  mostrarBotonAfiliar(){
+    this.comentarios = false;
+    this.informacion = true;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.afiliar = true;
+  }
+
+  ocultarBotonAfiliar(){
+    this.comentarios = false;
+    this.informacion = true;
+    this.desayuno = false;
+    this.almuerzo = false;
+    this.especiales = false;
+    this.promociones = false;
+    this.afiliar = false;
   }
 
   desayunosQueSon(){
@@ -290,13 +383,13 @@ export class PerfilResComponent implements OnInit {
     this.marker.addTo(this.map).bindPopup('Mi restaurante');
   }
   
-  verCoordenadas(){
+  async verCoordenadas(){
     this.coordenadaService.listar().subscribe( data =>{
   
       for(let element of data){
-        console.log("userUID: ", element.userUID);
-        console.log("usrrlog: ", this.usuarioLog);
-        console.log("elemente??", element);
+        // console.log("userUID: ", element.userUID);
+        // console.log("usrrlog: ", this.usuarioLog);
+        // console.log("elemente??", element);
         
         if(element.userUID ===  this.res.userUID){
           this.latitud = element['lat'];
@@ -304,11 +397,11 @@ export class PerfilResComponent implements OnInit {
           
           //var lat = parseFloat(this.latitud);
           //var lon = parseFloat(this.longitud);
+          // console.log(this.longitud);
+          // console.log(this.latitud);
           
           this.marcador(this.latitud, this.longitud); // Aqui agrego el pop-up con las coordenadas de la base de datos`
-          break;
-        }else{
-          console.log("no es");
+          // break;
         }
         // break;
       }
@@ -319,29 +412,26 @@ export class PerfilResComponent implements OnInit {
 
   ionViewDidEnter(){
 
-    //this.coordenadaService.listar().subscribe( data => {
-    //  this.coordenadas =  data
-    //  this.coordenadas.forEach
-    //})
+        //this.coordenadaService.listar().subscribe( data => {
+        //  this.coordenadas =  data
+        //  this.coordenadas.forEach
+        //})
 
-    console.log("coor " + this.coordenadas)
+        // console.log("coor " + this.coordenadas)
 
-    this.map = L.map('Mapa', {
-      center: [ -0.2104022, -78.4910514 ],
-      zoom: 17
-    });
+        this.map = L.map('Mapa', {
+          center: [ -0.2104022, -78.4910514 ],
+          zoom: 17
+        });
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+        const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      });
 
-tiles.addTo(this.map);
-this.verCoordenadas();
-
-//this.marker = marker([-0.2104022, -78.4910514]);
-//this.marker.addTo(this.map)
-  }
+      tiles.addTo(this.map);
+      this.verCoordenadas();
+}
 
   Calificacion(){
     const valores = this.calificar.value
@@ -350,7 +440,7 @@ this.verCoordenadas();
     console.log("aver " + x)
   }
 
-  existeAfiliacion( valor:boolean){
+  existeAfiliacion(valor:boolean){
     if(valor){
       return true;
       
@@ -443,6 +533,7 @@ existeAfiliado(){
           handler :() =>{
             this.afiliarse()
             this.goRegreso()
+
             this.router.navigate(['/tasb-afiliados/Pendientes'])
           }
         }
@@ -518,7 +609,7 @@ existeAfiliado(){
   }
 
   goMensajes(){
-    this.modal.dismiss(this.router.navigate(['/mensajes']))
+    this.modal.dismiss(this.router.navigate(['/tabs-reservas/reserva']))
   }
 
   onLogout(){
@@ -526,7 +617,7 @@ existeAfiliado(){
   }
 
   goAfiliados(){
-    this.modal.dismiss(this.router.navigate(['/restaurantes-afiliados']))
+    this.modal.dismiss(this.router.navigate(['/tabs-restaurantes-afiliados/afiliados']))
   }
 
   getMenu(){
@@ -562,7 +653,7 @@ existeAfiliado(){
          this.goAfiliados();
         }
     },{
-      text: 'Mensajes',
+      text: 'Reservas',
       icon: 'mail',
       handler: () => {
         this.goMensajes();
