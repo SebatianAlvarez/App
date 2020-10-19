@@ -34,6 +34,8 @@ import { FCM } from '@ionic-native/fcm/ngx';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MenusPrincipalesPage } from './components/menus-principales/menus-principales.page';
+import "leaflet/dist/images/marker-shadow.png";
+import "leaflet/dist/images/marker-icon-2x.png";
 
   
 @NgModule({

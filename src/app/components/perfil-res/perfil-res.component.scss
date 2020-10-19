@@ -1,4 +1,5 @@
-.panel .slides {
+
+.slides {
     height: 16%;
     width: 100%;
 }
@@ -120,3 +121,12 @@ ion-toolbar{
 
 }
 
+.botones{
+  display: inline-block;
+  margin-left: 20px; 
+}
+
+.botones ion-button{
+  width: 30%;
+  text-transform: capitalize;
+}
