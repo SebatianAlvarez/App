@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService} from '../../servicios/auth.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Usuario } from '../../models/usuario-interface';
@@ -11,6 +11,7 @@ import { FormControl , Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Foto } from '../../models/fotos-interface';
 import { FotosService } from '../../servicios/fotos.service';
+
 
 @Component({
   selector: 'app-actualizar-perfil',
@@ -29,6 +30,7 @@ export class ActualizarPerfilPage implements OnInit {
   public nombre:string;
 
   public fotos$: Observable<Foto[]>;
+  public usuarios$: Observable<Usuario[]>;
 
   public Usuario: Usuario = {
 
@@ -41,7 +43,7 @@ export class ActualizarPerfilPage implements OnInit {
   constructor( private authservice: AuthService, private actionSheetController : ActionSheetController,
     private router: Router, private AFauth : AngularFireAuth,private perfilService : PerfilesService,
      private loadingController: LoadingController, private formBuilder: FormBuilder,
-     private fotosService: FotosService ) { }
+     private fotosService: FotosService, private alertController : AlertController ) { }
 
      public errorMensajes ={
       nombre : [
@@ -69,6 +71,8 @@ export class ActualizarPerfilPage implements OnInit {
     this.UsuarioId = this.usuarioLog
 
     this.fotos$ = this.fotosService.recuperarDatos();
+
+    this.usuarios$ = this.authservice.recuperarDatos();
 
     }
 
@@ -204,5 +208,40 @@ export class ActualizarPerfilPage implements OnInit {
 }
 
 */
+
+async presentarMensaje(idu : string , idf : string){
+  const alert = await this.alertController.create({
+    header:'Cambiar Avatar',
+    message: 'Te gusta este Avatar',
+    buttons : [
+      {
+        text : "Cancelar",
+        role : "cancel",
+        cssClass : "secondary",
+        handler: () =>{
+
+        }
+      },{
+        text : "Cambiar",
+        handler :() =>{
+          this.cambiarAvatar(idu, idf)
+          this.router.navigate(['/perfil'])
+        }
+      }
+    ]
+  })
+  await alert.present()
+  let result = await alert.onDidDismiss();
+}
+
+cambiarAvatar(idu : string , idf : string){
+  
+  this.fotosService.getFoto(idf).subscribe(data =>{
+    let usu : Usuario = {
+      foto : data.foto
+    }
+    this.authservice.updateUser(idu, usu)
+  })
+}
 
 }

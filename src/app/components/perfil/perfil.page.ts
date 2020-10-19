@@ -166,6 +166,12 @@ export class PerfilPage implements OnInit {
         handler: () => {
           this.router.navigate(['/tabs2/Afiliados']);
         }
+      },{
+        text: 'Sugerencias',
+        icon: 'alert',
+        handler: () => {
+          this.router.navigate(['/tabs-quejas/pendientes']);
+        }
       }
       ,{
         text: 'Cerrar Sesion',

@@ -14,7 +14,8 @@ export class Tabs2Page implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
   public contador: number
 
-  constructor(private afiliadosService : AfiliadosServiceService, private AFauth : AngularFireAuth, private router: Router) { }
+  constructor(private afiliadosService : AfiliadosServiceService, private AFauth : AngularFireAuth,
+     private router: Router) { }
 
   ngOnInit() {
     try {

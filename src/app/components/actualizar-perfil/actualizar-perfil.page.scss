@@ -31,6 +31,17 @@ ion-card .fotoPerfil{
   .slides {
     height: 50%;
     width: 100%;
+    
+    object-fit: contain;
+}
+
+.slide{
+  display: grid;
+}
+
+.foto{
+  width: 125px;
+  height: 125px;
 }
 
 

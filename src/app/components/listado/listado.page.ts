@@ -183,6 +183,7 @@ export class ListadoPage implements OnInit {
 
     this.promociones$ = this.promocionesService.recuperarDatos();
 
+
   }
 
 
@@ -328,7 +329,8 @@ export class ListadoPage implements OnInit {
         text: 'Restaurantes Afiliados',
         icon: 'restaurant',
         handler: () => {
-          this.router.navigate(['/tabs-restaurantes-afiliados/afiliados'])
+
+          this.router.navigate(['/tasb-afiliados/Aprobados'])
         }
       },{
         text: 'Reservas',

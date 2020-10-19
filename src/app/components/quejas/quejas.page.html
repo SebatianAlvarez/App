@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill ="none" routerLink="/listado">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-title>Mis Sugerencias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-searchbar
+      showcancelbutton=""
+      (ionInput)="filterList($event)"  
+  ></ion-searchbar> -->
+  
+      <div *ngFor="let a of afiliados$ | async">
+        <div *ngFor="let r of restaurante$ | async">
+          <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta">
+            <div style="display: inline; grid-template-columns: 1fr 1fr;">
+              <div *ngIf="a.estado ==='verdadero'">
+                <ion-card>
+                  <div class="titulo">
+                    <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
+                  </div>
+                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
+                  <form [formGroup] ="queja" (ngSubmit) = "realizarQueja(r.userUID)" style="text-align: center;">
+                    <ion-list>
+                      <ion-item>
+                        <ion-select formControlName ="tipo"  placeholder="Tipo  de Almuerzo" required type="text">
+                          <ion-select-option>Queja</ion-select-option>
+                          <ion-select-option>Sugerencia</ion-select-option> 
+                        </ion-select>
+                      </ion-item>
+                      <div >
+                        <ng-container *ngFor ="let error of errorMensajes.tipo">
+                          <div class="e" *ngIf ="queja.get('tipo').hasError(error.type) && (queja.get('tipo').dirty || queja.get('tipo').touched)">
+                            {{error.message}}
+                          </div>
+                        </ng-container> 
+                      </div>
+                
+                
+                      <ion-item>
+                        <ion-input formControlName="detalle" placeholder="Detalles"  type="text"></ion-input>
+                      </ion-item>
+                      <div >
+                        <ng-container *ngFor ="let error of errorMensajes.detalle">
+                          <div class="e" *ngIf ="queja.get('detalle').hasError(error.type) && (queja.get('detalle').dirty || queja.get('detalle').touched)">
+                            {{error.message}}
+                          </div>
+                        </ng-container> 
+                      </div>
+                
+                      <ion-button [disabled] ="queja.invalid" type = "submit" expand = "block">
+                        Enviar
+                        <ion-icon slot="end" name ="create"></ion-icon>
+                      </ion-button>
+                    </ion-list>
+                    
+                  </form>
+                </ion-card> 
+              </div>
+              
+              <br>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+
+</ion-content>

@@ -3,10 +3,8 @@
     <ion-button slot="start" fill="none" (click)="goMapa()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
-      <ion-icon name = "menu" ></ion-icon>
-    </ion-button>
-    <ion-title></ion-title>
+
+    <ion-title>Restaurantes Afiliados</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,8 +43,7 @@
               <div *ngIf="a.estado ==='verdadero'">
                 <ion-button  (click) ="presentModalComentario(r.userUID)" type = "submit" expand = "block">Comentar</ion-button>
               </div>
-            
-              <ion-button *ngIf="a.estado ==='pendiente'" color="danger">Pendiente</ion-button>
+           
               <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>
     
             </ion-card> 
@@ -91,8 +88,5 @@
       </ion-item>
     </ion-card>
   </ng-template>
-  
-
-
 
 </ion-content>

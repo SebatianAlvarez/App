@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AfiliadosServiceService } from '../../servicios/afiliados-service.service'
-import { afiliado } from 'src/app/models/afiliados-interface';
+import { afiliado } from '../../models/afiliados-interface';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -55,6 +55,7 @@ export class AfiliadosPage implements OnInit {
         estado : "verdadero",
       }
       this.afiliadosService.updateAfiliado(id , afi);
+      this.presentAlert()
     });
   }
 
@@ -79,7 +80,8 @@ export class AfiliadosPage implements OnInit {
         },{ 
           text : "Confirmar Rechazo",
           handler : data =>{  
-              this.rechazarAfiliado(id, data.rechazo);                        
+              this.rechazarAfiliado(id, data.rechazo);     
+              this.presentAlertRechazo()                   
           }
         }
       ]
@@ -111,6 +113,30 @@ export class AfiliadosPage implements OnInit {
     });
     await actionSheet.present();
     let result = await actionSheet.onDidDismiss();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Afiliacion Aceptada',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertRechazo() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Afiliacion Rechazada',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

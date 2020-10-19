@@ -56,19 +56,19 @@ export class PromoActivaPage implements OnInit {
 
 
 
- ocultar(promocionId : promos){
-   console.log("que es esto", promocionId);
+ ocultar(id : string){
+   //console.log("que es esto", promocionId);
    
 
-  this.promocionService.deshabilitarPromo(promocionId);
-  console.log("Promocion Deshabilitada");
+  //this.promocionService.deshabilitarPromo(promocionId);
+  //console.log("Promocion Deshabilitada");
   
-  //  this.promocionService.getPromo(id).subscribe(data =>{
-  //   let promo : promos = {
-  //     estado: "falso"
-  //   }
-  //     this.promocionService.updatePromo(id, promo)
-  //  })
+    this.promocionService.getPromo(id).subscribe(data =>{
+     let promo : promos = {
+       estado: "falso"
+     }
+       this.promocionService.updatePromo(id, promo)
+    })
  }
 
  async AlertDeshabilitar() {
@@ -84,7 +84,7 @@ export class PromoActivaPage implements OnInit {
 }
 
 
- async AlertConfirmDeshabilitar(id: promos) {
+ async AlertConfirmDeshabilitar(id: string) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: '¿Desea deshabilitar la promoción?',

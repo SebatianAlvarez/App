@@ -9,7 +9,7 @@ import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/fires
 import { AlertController } from '@ionic/angular';
 import { PerfilesService } from '../../servicios/perfiles.service';
 
-import { Reserva } from 'src/app/models/reserva-interface';
+import { Reserva } from '../../models/reserva-interface'
 import { platos } from '../../models/platos-interface';
 import { resta } from '../../models/restaurante-interface';
 import { Usuario } from '../../models/usuario-interface';
@@ -533,7 +533,8 @@ existeAfiliado(){
           handler :() =>{
             this.afiliarse()
             this.goRegreso()
-            this.router.navigate(['/tabs-restaurantes-afiliados/afiliados'])
+
+            this.router.navigate(['/tasb-afiliados/Pendientes'])
           }
         }
       ]
@@ -748,8 +749,6 @@ getAddress(lat: number, long : number){
 }
 */
 
-
-
 mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
     this.restaurantes = data
@@ -763,19 +762,17 @@ mostrar(id : string, lat: number, lng: number){
         ]
       }).then((latLong) =>{
 
-        this.marker = marker(latLong, {draggable: false});
+        this.marker = marker(L.latLng(latLong[0],  latLong[1]));
 
         L.Routing.control({
           show: false,
           waypoints: [
-              L.latLng(lat,lng, {draggable: false}),
-              L.latLng(latLong[0],latLong[1], {draggable: false})
+              L.latLng(lat,lng),
+              L.latLng(latLong[0],latLong[1])
           ],
           addWaypoints: false,
           routeWhileDragging: false,
           showAlternatives: false,
-          language: 'es',
-          draggable: false,
         }).addTo(this.map);
       //this.marker.addTo(this.map).bindPopup('Estoy aqui');
       this.map.setView(latLong);

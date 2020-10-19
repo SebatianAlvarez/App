@@ -3,6 +3,7 @@ import { AuthService } from '../../servicios/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Usuario } from '../../models/usuario-interface';
+
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 
@@ -24,7 +25,7 @@ export class RegistroPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private authservice : AuthService) { }
-
+  
     public errorMensajes ={
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -62,6 +63,7 @@ export class RegistroPage implements OnInit {
   OnSubmitRegister(user: Usuario){
     this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
       console.log(auth);
+
       this.OnSubmitLogin(user);
       this.presentAlert();
       
@@ -122,6 +124,7 @@ export class RegistroPage implements OnInit {
     });
     // this.verificarEmail();
     await alert.present();
+
   }
 
 }

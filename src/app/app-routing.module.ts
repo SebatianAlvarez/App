@@ -1,4 +1,5 @@
-import { NgModule, Component } from '@angular/core';
+
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { NologinGuard } from './guards/nologin.guard';
@@ -50,8 +51,16 @@ const routes: Routes = [
   { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },
   { path: 'prueba-menus', loadChildren: './menus/prueba-menus/prueba-menus.module#PruebaMenusPageModule' },
   { path: 'listado-restaurantes', loadChildren: './components/listado-restaurantes/listado-restaurantes.module#ListadoRestaurantesPageModule' },
+  { path: 'tasb-afiliados', loadChildren: './components/tasb-afiliados/tasb-afiliados.module#TasbAfiliadosPageModule' },
+  { path: 'restaurantes-afiliados-pendientes', loadChildren: './components/restaurantes-afiliados-pendientes/restaurantes-afiliados-pendientes.module#RestaurantesAfiliadosPendientesPageModule' },
+  { path: 'quejas', loadChildren: './components/quejas/quejas.module#QuejasPageModule' , canActivate:[AuthGuard]},
+  { path: 'visualizar-quejas', loadChildren: './components/visualizar-quejas/visualizar-quejas.module#VisualizarQuejasPageModule' , canActivate:[AuthGuard]},
+  { path: 'quejas-aprobadas', loadChildren: './components/quejas-aprobadas/quejas-aprobadas.module#QuejasAprobadasPageModule' , canActivate:[AuthGuard]},
+  { path: 'quejas-rechazadas', loadChildren: './components/quejas-rechazadas/quejas-rechazadas.module#QuejasRechazadasPageModule' , canActivate:[AuthGuard]},
+  { path: 'tabs-quejas', loadChildren: './components/tabs-quejas/tabs-quejas.module#TabsQuejasPageModule' },
   { path: 'tabs-restaurantes-afiliados', loadChildren: './components/tabs-restaurantes-afiliados/tabs-restaurantes-afiliados.module#TabsRestaurantesAfiliadosPageModule' },
   { path: 'restaurantes-no-afiliados', loadChildren: './components/restaurantes-no-afiliados/restaurantes-no-afiliados.module#RestaurantesNoAfiliadosPageModule' },
+
 ];
 
 @NgModule({
@@ -61,4 +70,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

@@ -4,8 +4,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AfiliadosServiceService } from '../../servicios/afiliados-service.service';
 import { afiliado } from 'src/app/models/afiliados-interface';
 import { Observable } from 'rxjs';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { AuthService } from '../../servicios/auth.service';
+
 
 @Component({
   selector: 'app-afiliados-aceptados',
@@ -19,7 +20,8 @@ export class AfiliadosAceptadosPage implements OnInit {
   public afiliados$: Observable<afiliado[]>;
 
   constructor(private router:Router, private AFauth : AngularFireAuth,public actionSheetController: ActionSheetController,
-    private afiliadosService : AfiliadosServiceService,private authservice: AuthService) { }
+    private afiliadosService : AfiliadosServiceService,private authservice: AuthService,
+    public alertController: AlertController) { }
 
   ngOnInit() {
 
@@ -63,11 +65,24 @@ export class AfiliadosAceptadosPage implements OnInit {
         estado : "falso",
       }
       this.afiliadosService.updateAfiliado(id , afi);
+      this.presentAlert()
     });
   }
 
   onLogout(){
     this.authservice.logout();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Afiliacion Cancelada',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

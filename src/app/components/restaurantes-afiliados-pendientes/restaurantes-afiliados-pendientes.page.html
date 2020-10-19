@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="none" (click)="goMapa()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill ="none" (click)="presentActionSheet()">
+      <ion-icon name = "menu" ></ion-icon>
+    </ion-button>
+    <ion-title>Afiliaciones Pendientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-searchbar
+      showcancelbutton=""
+      (ionInput)="filterList($event)"  
+  ></ion-searchbar> -->
+  
+      <div *ngFor="let a of afiliados$ | async">
+        <div *ngFor="let r of restaurante$ | async">
+          <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta">
+            <div style="display: inline; grid-template-columns: 1fr 1fr;">
+              <div *ngIf="a.estado ==='pendiente'">
+                <ion-card>
+                  <div class="titulo">
+                    <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
+                  </div>
+                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes"> 
+        
+                </ion-card>
+              </div>
+              
+              <br>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+
+</ion-content>
