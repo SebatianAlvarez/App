@@ -1,0 +1,32 @@
+.slide {
+    display: grid;
+}
+
+.slides {
+    height: 100%;
+    width: 100%;
+}
+
+.div{
+    padding-top: 80px;
+}
+
+.titulo{
+    border: 0px solid #1dbfd4;
+    border-radius: 6px;
+    background-color: #1dbfd4;
+    color: white;
+  }
+
+  ion-toolbar{
+    --background: #eeeeee ;
+  }
+
+  ion-card .imagen{
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    width: 150px;
+    border-radius: 50%;
+
+  }

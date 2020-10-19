@@ -3,6 +3,8 @@ import { AuthService } from '../../servicios/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Usuario } from '../../models/usuario-interface';
+import { AlertController, ActionSheetController } from '@ionic/angular';
+
 
 
 @Component({
@@ -19,7 +21,7 @@ export class RegistroPage implements OnInit {
   public rol: "cliente";
 
   constructor(private authSercive: AuthService, public router: Router,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private alertController : AlertController) { }
 
     public errorMensajes ={
       nombre : [
@@ -60,8 +62,23 @@ export class RegistroPage implements OnInit {
     
     this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
       console.log(auth);
+
+      this.presentAlert()
+
       //(this.router.navigate(['/home']))
     })
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Registro realizado con Exito',
+      // subHeader: 'Subtitle',
+      // message: 'This is an alert message.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

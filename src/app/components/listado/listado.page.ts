@@ -80,7 +80,9 @@ export class ListadoPage implements OnInit {
     private coordenadaService: CoordenadasService) { }
 
   async ngOnInit() {
-    // this.resList = await this.initializeItems();
+
+    this.resList = await this.initializeItems();
+    
     try {
       let currentUser = this.AFauth.auth.currentUser;
       this.usuarioLog = currentUser.uid;
@@ -91,8 +93,8 @@ export class ListadoPage implements OnInit {
 
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
-        window.location.replace("http://localhost:8100/perfil")
-        // this.router.navigate(['/perfil'])
+        //window.location.replace("http://localhost:8100/perfil")
+        this.router.navigate(['/perfil'])
       }
     })
 
@@ -124,7 +126,7 @@ export class ListadoPage implements OnInit {
         }
       });
     })
-    // this.resHabilitados = await this.initializeItems();
+    this.resHabilitados = await this.initializeItems();
 
     // this.promocionesService.listar().subscribe(data =>{
     //   console.log(data);
@@ -164,11 +166,10 @@ export class ListadoPage implements OnInit {
     })
 
     this.coordenadaService.listar().subscribe(coor =>{
-      this.coordenada =  coor
-
+      this.coordenada =  coor;
     })
 
-    // this.restaurantesService.restaurantesHabilitados();
+    this.restaurantesService.restaurantesHabilitados();
 
   }
 
@@ -316,7 +317,7 @@ export class ListadoPage implements OnInit {
         text: 'Restaurantes Afiliados',
         icon: 'restaurant',
         handler: () => {
-          this.router.navigate(['/restaurantes-afiliados'])
+          this.router.navigate(['/tasb-afiliados/Aprobados'])
         }
       },{
         text: 'Reservas',
@@ -337,3 +338,5 @@ export class ListadoPage implements OnInit {
   }
 
 }
+
+

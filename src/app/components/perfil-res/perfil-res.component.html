@@ -179,32 +179,7 @@
     
   </div>
 
-  <button class="accordion">
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>  
-    &nbsp;&nbsp;&nbsp;&nbsp;  
-    Comentarios
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="megaphone" slot="end" fill="none"></ion-icon>
  
-  </button>
-
-      <div class="panel" >
-        <div *ngFor="let comen of comentarios$ | async">
-          <div *ngIf="res.userUID === comen.uidResta">
-            <ion-item>
-              <h6>Usuario: {{comen.nombreUsu}}</h6>
-              <h6>Comentario: {{comen.comentario}}</h6>
-            </ion-item>
-             
-          </div>
-        </div>
-        <ion-infinite-scroll threshold="100px">
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </div> 
 
       
 
@@ -249,7 +224,7 @@
     </div>
   </div> -->
 
-  <button class="accordion" style="padding-button: 50px">
+  <button class="accordion">
     <!-- <ion-icon name="compass" slot="end" fill="none"></ion-icon> -->
     &nbsp;&nbsp;&nbsp;&nbsp;
     Ubicación
@@ -269,26 +244,28 @@
 
   <br><br>
   <button class="accordion">
-    Opiniones
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    Comentarios
+    &nbsp;&nbsp;&nbsp;&nbsp; 
   </button>
-  <div class="panel" >
-    <div *ngFor="let comen of comentarios$ | async">
-      <div *ngIf="res.userUID === comen.uidResta">
-    <ion-list>
-      <ion-item lines="full">
-        <ion-avatar>{{comen.nombreUsu}}</ion-avatar>
-        <ion-label>
-          <h3>{{comen.comentario}}</h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-infinite-scroll threshold="5%" id="infinite-scroll">
-      <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="cargando ...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-      </div>
-    </div>
-  </div> 
+
+      <div class="panel" >
+        <div *ngFor="let comen of comentarios$ | async">
+          <div *ngIf="res.userUID === comen.uidResta">
+            <ion-item>
+              <h6>{{comen.nombreUsu}}</h6>&nbsp;&nbsp;&nbsp;
+              <h6>{{comen.comentario}}</h6>
+            </ion-item>
+             
+          </div>
+        </div>
+        <ion-infinite-scroll threshold="100px">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div> 
    <!--
 
   <ng-template #v>

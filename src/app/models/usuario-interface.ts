@@ -6,4 +6,5 @@ export class Usuario {
     password?: string;
     // roles?: string[];
     roles?: string;
+    foto?: string;
 }

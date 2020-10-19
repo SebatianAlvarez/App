@@ -47,8 +47,16 @@ const routes: Routes = [
   { path: 'tabs2', loadChildren: './components/tabs2/tabs2.module#Tabs2PageModule' },
   { path: 'afiliados-rechazados', loadChildren: './components/afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule' },
   { path: 'tabs3', loadChildren: './components/tabs3/tabs3.module#Tabs3PageModule' },
-  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },  { path: 'prueba-menus', loadChildren: './menus/prueba-menus/prueba-menus.module#PruebaMenusPageModule' },
+  { path: 'menus-principales', loadChildren: './components/menus-principales/menus-principales.module#MenusPrincipalesPageModule', canActivate:[AuthGuard] },
+  { path: 'prueba-menus', loadChildren: './menus/prueba-menus/prueba-menus.module#PruebaMenusPageModule' },
   { path: 'listado-restaurantes', loadChildren: './components/listado-restaurantes/listado-restaurantes.module#ListadoRestaurantesPageModule' },
+  { path: 'tasb-afiliados', loadChildren: './components/tasb-afiliados/tasb-afiliados.module#TasbAfiliadosPageModule' },
+  { path: 'restaurantes-afiliados-pendientes', loadChildren: './components/restaurantes-afiliados-pendientes/restaurantes-afiliados-pendientes.module#RestaurantesAfiliadosPendientesPageModule' },
+  { path: 'quejas', loadChildren: './components/quejas/quejas.module#QuejasPageModule' , canActivate:[AuthGuard]},
+  { path: 'visualizar-quejas', loadChildren: './components/visualizar-quejas/visualizar-quejas.module#VisualizarQuejasPageModule' , canActivate:[AuthGuard]},
+  { path: 'quejas-aprobadas', loadChildren: './components/quejas-aprobadas/quejas-aprobadas.module#QuejasAprobadasPageModule' , canActivate:[AuthGuard]},
+  { path: 'quejas-rechazadas', loadChildren: './components/quejas-rechazadas/quejas-rechazadas.module#QuejasRechazadasPageModule' , canActivate:[AuthGuard]},  { path: 'tabs-quejas', loadChildren: './components/tabs-quejas/tabs-quejas.module#TabsQuejasPageModule' },
+
 
 
 

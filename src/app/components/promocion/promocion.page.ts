@@ -151,7 +151,7 @@ export class PromocionPage implements OnInit {
       })
     this.resetForm()
       
-      this.router.navigate(['/promo-activa'])
+      this.router.navigate(['/tabs3/Activas'])
 
     }).catch(error => {
       console.log(error);

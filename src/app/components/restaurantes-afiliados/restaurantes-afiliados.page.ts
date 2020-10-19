@@ -131,6 +131,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
           text : "Realizar Comentario",
           handler : data =>{
             this.Comentar(data.comentario,  id)
+            this.presentComentario()
+            this.router.navigate(['/listado'])
           }
         }
       ]
@@ -203,6 +205,17 @@ export class RestaurantesAfiliadosPage implements OnInit {
       header: 'Tu reserva sera verificada en minutos',
       // subHeader: 'Subtitle',
       message: 'Puedes ir al menu Mensajes.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentComentario() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Gracias por tu comentario',
+      // subHeader: 'Subtitle',
       buttons: ['OK']
     });
 

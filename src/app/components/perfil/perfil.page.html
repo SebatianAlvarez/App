@@ -9,12 +9,17 @@
           </ion-button>
         </div>
       </div>
-     
     </div>
-   
-    <ion-button slot="end" fill ="none" (click)="getMenu()">
-      <ion-icon name = "menu" ></ion-icon>
-    </ion-button>
+
+    <div *ngFor ="let usu of usuarios$ |  async">
+      <div  *ngIf="usuarioLog === usu.uid">
+        <div *ngIf ="usu.roles  === 'dueño'">
+          <ion-button slot="start" fill ="none" (click)="getMenu()">
+            <ion-icon name = "menu" ></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
     <ion-title style="text-align: center;">Mi Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -74,7 +79,15 @@
       <div  class="titulo">
         <h2 style="text-align: center;">Usuario</h2>
       </div><br> -->
-      <img class="fotoPerfil" src = "../../../assets/logoU.png">
+      <div *ngIf="usuarios$ | async as usu">
+        <div *ngFor ="let u of usu">
+          <div *ngIf = "usuarioLog === u.uid">
+            <img class="fotoPerfil" src = {{u.foto}}>
+          </div>
+        </div>
+      </div>
+
+       <!-- <img class="fotoPerfil" src = "../../../assets/logoU.png"> -->
 
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">

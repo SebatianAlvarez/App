@@ -196,4 +196,8 @@ export class AuthService {
     return this.AFauth.auth.currentUser
   }
 
+  updateUser(id: string, x : Usuario): Promise<void>{
+    return this.usuariocolencion.doc(id).update(x);
+  }
+
 }
