@@ -55,6 +55,7 @@ import { MeriendaService } from '../../servicios/merienda.service';
   styleUrls: ['./perfil-res.component.scss'],
 })
 export class PerfilResComponent implements OnInit {
+  @ViewChild( IonInfiniteScroll, { static: true}) infititeScroll: IonInfiniteScroll
 
   form: FormGroup;
 
@@ -126,6 +127,10 @@ export class PerfilResComponent implements OnInit {
   listRestaurant: resta[] = [];
   existeA: boolean;
 
+  public limite : number  =15
+  public listaComentario: any = []
+  comentariosMas : comentarios[]
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
@@ -137,6 +142,7 @@ export class PerfilResComponent implements OnInit {
     
     {
       this.fotosRef = this.db.collection('afiliados')
+
      }
 
     public calificar = this.formBuilder.group ({
@@ -190,10 +196,6 @@ export class PerfilResComponent implements OnInit {
     this.comentarios$ = this.comentariosService.recuperarDatos()
 
     this.coordenadas$ = this.coordenadaService.recuperarDatos()
-
-
-        
-
 
     try {
       let currentUser = this.AFauth.auth.currentUser;
@@ -617,7 +619,7 @@ existeAfiliado(){
   }
 
   goAfiliados(){
-    this.modal.dismiss(this.router.navigate(['/tabs-restaurantes-afiliados/afiliados']))
+    this.modal.dismiss(this.router.navigate(['/tasb-afiliados/Aprobados']))
   }
 
   getMenu(){
@@ -782,6 +784,26 @@ mostrar(id : string, lat: number, lng: number){
   })
 
 }
+
+/*
+
+cargarComentario(event){
+
+  setTimeout(() => {
+    
+    if( this.comentariosMas.length == 10){
+      event.target.complete();
+      this.infititeScroll.disabled = true;
+      return;
+    }
+
+    var masComen  = Array(20);
+    this.comentariosMas.push( ...masComen);
+    event.target.complete();
+    
+  }, 1000);
+}
+*/
 
 /*comento para subir al git */
 

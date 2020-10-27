@@ -222,18 +222,12 @@
              
           </div>
         </div>
-        <ion-infinite-scroll threshold="100px">
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
       </div> 
 
 <!-- Ubicacion -->
 
     <br>
-    <ion-card>
+    <ion-card *ngIf="informacion">
       <ion-card-header style="text-align: center;">Ubicación</ion-card-header>
     </ion-card>
     <br>

@@ -109,7 +109,7 @@ export class HomePage {
     googleLogin(){
       if(this.platform.is('cordova')){
           console.log('platform: cordova')
-          this.googleCordova();
+          this.googleWeb();
           
       } else {
           console.log('platform: web')
