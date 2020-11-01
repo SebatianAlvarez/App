@@ -21,7 +21,7 @@
     </ion-searchbar>
 
   <ion-content [fullscreen]="true">
-    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 20%;">
       <ion-card  *ngFor="let res of resHabilitados"  (click) ="openRes(res)">
         <ion-card-header>
           <ion-card-subtitle style="text-align: center;">{{res.tipoRestaurante}}</ion-card-subtitle>

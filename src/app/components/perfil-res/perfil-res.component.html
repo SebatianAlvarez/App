@@ -14,7 +14,6 @@
      
 
 <ion-card class="fotoResta">
-
   <ion-header>
     <img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="7%" margin-top="5px">
   </ion-header>
@@ -98,9 +97,8 @@
    
 
 <!-- Desayunos -->
+<ng-template [ngIf]="existeDesayuno(existeDes) === true">
 <div class="desayuno" *ngIf="desayuno">
-
-
       <ion-slides  options={{slideOpts}} pager ="true" class="slides">
         <ion-slide *ngFor="let desa of desayunosRespectivos">   
           <ion-card class="infomacionCard">
@@ -132,9 +130,19 @@
         </ion-slide>
       </ion-slides>
 </div>
+</ng-template>
+
+<ng-template [ngIf]="existeDesayuno(existeDes) === false">
+  <ion-card class="infomacionCard" *ngIf="desayuno">
+        <ion-card-content>
+          El restaurante no cuenta con desayunos por el momento.
+        </ion-card-content>    
+  </ion-card>
+</ng-template>
+
 
 <!-- Almuerzos -->
-
+<ng-template [ngIf]="existeAlmuerzo(existeAlmu) === true">
 <div class="almuerzos" *ngIf="almuerzo">
     <ion-slides  options={{slideOpts}} pager ="true" class="slides">
       <ion-slide *ngFor="let almu of almuerzosRespectivos">  
@@ -161,9 +169,20 @@
       </ion-slide>
     </ion-slides>
 </div>
+</ng-template>
+
+<ng-template [ngIf]="existeAlmuerzo(existeAlmu) === false">
+  <ion-card class="infomacionCard" *ngIf="almuerzo">
+        <ion-card-content>
+          El restaurante no cuenta con almuerzos por el momento.
+        </ion-card-content>    
+  </ion-card>
+</ng-template>
+
 
 <!-- Especial -->
 
+  <ng-template [ngIf]="existeespecial(existeEsp) === true">
   <div class="especial" *ngIf="especiales">
     <ion-slides  options={{slideOpts}} pager ="true" class="slides">
       <ion-slide *ngFor="let espe of especialesRespectivos">  
@@ -186,7 +205,7 @@
             <div *ngFor="let i of espe.ingredientes">
               
                 <ion-icon name="remove" slot="start"></ion-icon>
-                {{i['ingrediente']}} <br>
+                {{ - i['ingrediente']}} <br>
             </div>
           </ion-card-content>
           <br><br><br><br><br>
@@ -195,10 +214,20 @@
       </ion-slide>
     </ion-slides>
     
-  </div>
+  </div>  
+  </ng-template>
+
+
+  <ng-template [ngIf]="existeespecial(existeEsp) === false">
+  <ion-card class="infomacionCard" *ngIf="especiales">
+        <ion-card-content>
+          El restaurante no cuenta con platos especiales por el momento.
+        </ion-card-content>    
+  </ion-card>
+</ng-template>
 
 <!-- promociones -->
-
+<ng-template [ngIf]="existePromocion(existePromo) === true">
   <div class="promocion" *ngIf="promociones">
 
     <ion-slides pager ="true" class="slides">
@@ -209,6 +238,16 @@
       </ion-slide>
     </ion-slides>
   </div>
+</ng-template>
+
+<ng-template [ngIf]="existePromocion(existePromo) === false">
+  <ion-card class="infomacionCard" *ngIf="promociones">
+    <ion-card-content>
+      El restaurante no cuenta con promociones por el momento.
+    </ion-card-content>    
+</ion-card>
+</ng-template>
+
 
 <!-- comentarios -->
 
@@ -233,12 +272,14 @@
 <!-- Ubicacion -->
 
     <br>
-    <ion-card>
-      <ion-card-header style="text-align: center;">Ubicación</ion-card-header>
+    <ion-card *ngIf="informacion">
+      <ion-card-header style="text-align: center;">Ubicación
+      <button style="position: absolute; right: 20px;" ion-button (click)="cargarMapa()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+      </ion-card-header>
     </ion-card>
     <br>
-
-    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 80%; height: 80%; margin-left:30px;"></div>
     <div *ngIf="informacion">
     <div *ngFor="let coor of coordenadas$ | async">
       <div *ngIf="coor.userUID === res.userUID" >
@@ -246,6 +287,9 @@
       </div>
     </div>
     </div>
+
+    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 80%; height: 80%; margin-left:30px;"></div>
+
 
   <ng-template #foto>
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">
