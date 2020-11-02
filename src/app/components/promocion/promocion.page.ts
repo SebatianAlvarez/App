@@ -101,6 +101,12 @@ export class PromocionPage implements OnInit {
       });
       console.log("array", this.promoHabilitados);
     })
+
+    // NOTIFICCION QUE REDIRIGI A UNA PAGINA
+    this.Notificiacion2();
+    this.Notificiacion4();
+    this.Notificiacion5();
+
   }
 
   Notificiacion1(){
@@ -118,10 +124,10 @@ export class PromocionPage implements OnInit {
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Notificacion de 5 segundos, se ira a una pagina',
-      text: 'Ejemplo de notificacion, foreground??',
-      data: {page: '/perfil'},
-      trigger: {in: 15, unit: ELocalNotificationTriggerUnit.SECOND},
+      title: 'Notificacion de prueba 12:00',
+      text: 'Ejemplo de notificacion',
+      data: {page: 'perfil'},
+      trigger: {every: {hour: 12, minute: 0} },
       foreground: true
     })
     
@@ -145,7 +151,7 @@ export class PromocionPage implements OnInit {
       title: 'Revisa el menu del dia ',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 12, minute: 0} }
+      trigger: { every: {hour: 12, minute: 10} }
       //foreground: true
     })
     
@@ -157,7 +163,7 @@ export class PromocionPage implements OnInit {
       title: 'Revisa el menu del dia ',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 22, minute: 59} }
+      trigger: { every: {hour: 19, minute: 40} }
       //foreground: true
     })   
   }
@@ -165,8 +171,8 @@ export class PromocionPage implements OnInit {
   Notificiacion6(){
     this.localNotification.schedule({
       id:6,
-      title: 'Revisa el menu del dia ',
-      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+      title: 'Revisa el menú del día ',
+      text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
       trigger: { every: {hour: 7, minute: 0} }
       //foreground: true

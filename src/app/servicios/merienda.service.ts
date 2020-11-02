@@ -90,6 +90,7 @@ export class MeriendaService {
       const menuDesObj = {
         id: idExiste,
         userUID: this.usuarioLog,
+        estado: platoEsp.estado,
         platoEspecial: platoEsp.platoEspecial,
         precioEspecial: platoEsp.precioEspecial, 
         ingredientes: platoEsp.ingredientes
@@ -101,6 +102,7 @@ export class MeriendaService {
       this.db.collection('platoEspecial').doc(idPlato).set({
         id: platoEsp.id,
         userUID: this.usuarioLog,
+        estado: 'Activo',
         platoEspecial: platoEsp.platoEspecial,
         precioEspecial: platoEsp.precioEspecial, 
         ingredientes: platoEsp.ingredientes

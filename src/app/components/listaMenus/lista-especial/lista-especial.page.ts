@@ -40,10 +40,6 @@ export class ListaEspecialPage implements OnInit {
     }
 
     // console.log("ingre", this.especialIng);  
-    
-
-    
-
     this.especial.ingredientes.map(i =>{
       console.log("sera??", i);
       
@@ -130,7 +126,7 @@ export class ListaEspecialPage implements OnInit {
       
       this.miform.patchValue({
         id: this.especialID,
-        estad: this.especial.estado,
+        estado: this.especial.estado,
         platoEspecial: this.especial.platoEspecial, 
         precioEspecial: this.especial.precioEspecial,
         ingredientes: this.especial.ingredientes

@@ -21,17 +21,24 @@
     <ion-item-sliding *ngFor="let des of desayunoUser">
       <ion-card button [routerLink]="['/lista-desayunos', des.id]">
         <ion-card-header >
-          <div class="imagen">
+          <!-- <div class="imagen">
             <img src="../../../assets/menu.png" width="140px">
-          </div>
+          </div> -->
+          <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
+            <ion-icon name="information-circle"></ion-icon>&nbsp;
+            {{des.estado}}</p>
+          <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
+            <ion-icon name="information-circle"></ion-icon>&nbsp;
+            {{des.estado}}</p>
         </ion-card-header>
         <ion-card-subtitle>
-          <p>{{des.estado}}</p>&nbsp;
           <h6>&nbsp;
+            <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
             Plato:
             {{des.platoDesayuno}}
           </h6>
           <h6>&nbsp;
+            <ion-icon name="restaurant"></ion-icon>
             Detalle:
            {{des.detalleDesayuno}} &nbsp;
           </h6>
