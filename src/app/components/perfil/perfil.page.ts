@@ -65,7 +65,7 @@ export class PerfilPage implements OnInit {
     }
 
     this.Notificiacion2();
-    this.Notificiacion3();
+    // this.Notificiacion3();
     this.Notificiacion4();
     this.Notificiacion5();
 
