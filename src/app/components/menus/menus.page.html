@@ -20,14 +20,12 @@
     </ng-container>
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
       <ion-card button [routerLink]="['/lista-menus', alm.id]">
-        <ion-card-header >
           <p class="almuerzoActivo" *ngIf="alm.estado === 'Activo'">
             <ion-icon name="information-circle"></ion-icon>&nbsp;
             {{alm.estado}}</p>
           <p class="almuerzoOculto" *ngIf="alm.estado === 'Deshabilitado'">
             <ion-icon name="information-circle"></ion-icon>&nbsp;
             {{alm.estado}}</p>
-        </ion-card-header>
         <ion-card-subtitle>
           <h6>&nbsp;&nbsp;
             <ion-icon name="person"></ion-icon>

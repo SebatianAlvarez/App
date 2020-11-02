@@ -3,6 +3,7 @@ import { NavParams, ModalController } from '@ionic/angular';
 import { especial } from '../../../models/especial-interface';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray, Form } from '@angular/forms';
 import { MeriendaService } from '../../../servicios/merienda.service';
+import { Router } from '@angular/router';
 
 
 
@@ -23,7 +24,8 @@ export class EditarEspeciaComponent implements OnInit {
 
   constructor(private navparams: NavParams, private fb: FormBuilder,
               private especialSvc: MeriendaService,
-              private modal:ModalController) { }
+              private modal:ModalController,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -79,6 +81,14 @@ export class EditarEspeciaComponent implements OnInit {
     this.modal.dismiss();
   }
 
+  async onRemoveEspecial(idEspe:string) {
+    this.especialSvc.removeEspecial(idEspe);
+    this.dismiss();
+    this.router.navigate(['tabs-menu/especial'])
+    // this.nav.navigateForward('tabs-menu/menus');
+  }
+
+  
   
   
   

@@ -20,7 +20,6 @@
     </ng-container>
     <ion-item-sliding *ngFor="let des of desayunoUser">
       <ion-card button [routerLink]="['/lista-desayunos', des.id]">
-        <ion-card-header >
           <!-- <div class="imagen">
             <img src="../../../assets/menu.png" width="140px">
           </div> -->
@@ -30,7 +29,6 @@
           <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
             <ion-icon name="information-circle"></ion-icon>&nbsp;
             {{des.estado}}</p>
-        </ion-card-header>
         <ion-card-subtitle>
           <h6>&nbsp;
             <ion-icon src="../../../assets/fast-food.svg"></ion-icon>

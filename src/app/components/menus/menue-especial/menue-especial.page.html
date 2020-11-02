@@ -23,7 +23,6 @@
       <!-- [routerLink]="['/lista-especial', espe.id]" -->
       
       <ion-card button>
-        <ion-card-header >
           <!-- <div class="imagen">
             <img src="../../../assets/menu.png" width="140px">
           </div> -->
@@ -33,16 +32,17 @@
           <p class="almuerzoOculto" *ngIf="espe.estado === 'Deshabilitado'">
             <ion-icon name="information-circle"></ion-icon>&nbsp;
             {{espe.estado}}</p>
-        </ion-card-header>
         <ion-card-subtitle>
-          <h6>
+          <h6>&nbsp;&nbsp;
             <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;
             Nombre: 
             {{espe.platoEspecial}}
           </h6>
-          <h6>Ingredientes</h6>
+          <h6>&nbsp;&nbsp;
+            <ion-icon name="restaurant"></ion-icon>&nbsp;
+            Ingredientes</h6>
           <div *ngFor="let i of espe.ingredientes">
-            <p style="color: black;">- {{i['ingrediente']}}</p>
+            <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
           </div>
           <ion-item>
             <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
@@ -53,7 +53,6 @@
 
       <ion-item-options side="end">
         <ion-item-option (click)="onRemove(espe)" color="secondary">
-          Check
           <ion-icon name="checkmark" slot="end"></ion-icon>
         </ion-item-option>
       </ion-item-options>
