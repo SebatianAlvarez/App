@@ -113,9 +113,9 @@ export class PromocionPage implements OnInit {
 
     this.localNotification.schedule({
       id:1,
-      title: 'Notificacion de 5 segundos',
-      text: 'Ejemplo de notificacion',
-      data: {mydata: 'Mensaje oculto'},
+      title: 'Existe nuevas promociones',
+      text: 'Un restaurante de la zona acaba de subir una promocion, ve a revisarla',
+      data: {mydata: 'Prueba'},
       trigger: {in: 5, unit: ELocalNotificationTriggerUnit.SECOND},
       //foreground: true
     })
@@ -134,6 +134,8 @@ export class PromocionPage implements OnInit {
   }
 
   Notificiacion3(){
+    console.log("notificacion enviada");
+    
     this.localNotification.schedule({
       id:3,
       title: 'Notificacion de 10 segundos, con otro formato de fecha',
@@ -253,7 +255,9 @@ export class PromocionPage implements OnInit {
         userUID : this.usuarioLog,
         estado: "verdadero"
       })
-    this.resetForm()
+      console.log("notificacion enviada");
+      this.Notificiacion1();
+      this.resetForm()
       
       this.router.navigate(['/tabs3/Activas'])
 
