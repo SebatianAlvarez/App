@@ -4,4 +4,5 @@ export class comentarios {
     uidUsu: string
     nombreUsu: string
     comentario: string
+    calificacion: string
   }

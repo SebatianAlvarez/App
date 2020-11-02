@@ -18,9 +18,11 @@
         </p>
       </div>
     </ng-container>
-    <ion-item-sliding *ngFor="let espe of especialUser">
+    <ion-item-sliding *ngFor="let espe of especialUser" (click)="openEsp(espe)">
 
-      <ion-card button [routerLink]="['/lista-especial', espe.id]">
+      <!-- [routerLink]="['/lista-especial', espe.id]" -->
+      
+      <ion-card button>
         <ion-card-header >
           <!-- <div class="imagen">
             <img src="../../../assets/menu.png" width="140px">

@@ -75,13 +75,14 @@ export class MeriendaService {
     return this.meriendaCollection.doc(id).delete();
   }
 
-  subirMenu(espe: especial, id: string): void{    
-    this.guardarEspecial(espe, id);
+  subirMenu(espe: especial, id?: string): void{    
+    this.guardarEspecial(espe);
   }
 
-  guardarEspecial(platoEsp: especial, idExiste: string) {
+  guardarEspecial(platoEsp: especial) {
 
     //this.idRes =perfil.id;
+    let idExiste = platoEsp.id;
     platoEsp.id = idExiste;
     console.log("idExiste??", idExiste);
     console.log("idExiste222??", platoEsp.id);

@@ -39,9 +39,10 @@ import "leaflet/dist/images/marker-icon-2x.png";
 
 // Notificaciones
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { EditarEspeciaComponent } from './components/editar-menu/editar-especia/editar-especia.component';
   
 @NgModule({
-  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent],
+  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent, EditarEspeciaComponent],
   entryComponents: [PerfilResComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,

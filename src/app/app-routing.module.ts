@@ -63,6 +63,7 @@ const routes: Routes = [
   { path: 'quejas-apro-usu', loadChildren: './components/quejas-apro-usu/quejas-apro-usu.module#QuejasAproUsuPageModule' },
   { path: 'quejas-recha-usu', loadChildren: './components/quejas-recha-usu/quejas-recha-usu.module#QuejasRechaUsuPageModule' },
   { path: 'quejas-pendi-usu', loadChildren: './components/quejas-pendi-usu/quejas-pendi-usu.module#QuejasPendiUsuPageModule' },
+  { path: 'editar-especial', loadChildren: './components/editar-menu/editar-especial/editar-especial.module#EditarEspecialPageModule' },
 
 
 ];
