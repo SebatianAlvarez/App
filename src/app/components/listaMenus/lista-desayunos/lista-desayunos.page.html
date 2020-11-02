@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <ion-list lines="full">
+  <!-- <ion-list lines="full">
   <ion-item *ngIf="desayunoID">
       <ion-select placeholder="Estado" required type="text" [(ngModel)]="desayuno.estado">
         <ion-select-option>Activo</ion-select-option>
@@ -23,9 +23,53 @@
     <ion-item *ngIf="desayuno">
       <ion-input required type="text" placeholder="Precio $" [(ngModel)]="desayuno.precioDesayuno"></ion-input>
     </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="saveDesayuno()">Guardar</ion-button>
+  </ion-list> -->
 
+  <ion-card>
+    <form [formGroup]="miform" (ngSubmit)="onSubmit(miform.value)">
+      <ion-item *ngIf="desayunoID">
+        <ion-select placeholder="Estado" required type="text" formControlName="estado">
+          <ion-select-option>Activo</ion-select-option>
+          <ion-select-option>Deshabilitado</ion-select-option> 
+        </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Plato:</ion-label>
+      <ion-input type="text" formControlName="platoDesayuno"></ion-input>
+    </ion-item>
+      <ion-item>
+        <ion-label>Detalle:</ion-label>
+        <ion-input type="text" formControlName="detalleDesayuno"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Precio: </ion-label>
+        <ion-textarea formControlName="precioDesayuno"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Ingredientes:</ion-label>
+      </ion-item>
+  
+      <div formArrayName="ingredientes" style="margin-left: 5%;">
+        <div *ngFor="let person of ingre.controls; let i=index;">
+          <ion-item  [formGroupName]="i">
+            <ion-input type="text" formControlName="ingrediente"></ion-input>
+            <ion-button color="danger" (click)="removeIngrediente(i)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-button (click)="addIngredientes()">
+            <ion-icon name="add"></ion-icon>
+            Agregar
+          </ion-button>
+        </ion-item>
+    </div> 
+      <ion-button expand="full"  type="submit" [disabled]="!miform.valid">Guardar</ion-button>
+      <!-- <button ion-button type="submit" [disabled]="!miform.valid">Submit</button> -->
+    </form>
+  </ion-card>
+  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
       <ion-fab-button color="danger"  (click)="onRemoveDesayuno(desayunoID)">
           <ion-icon name="trash"></ion-icon>

@@ -18,17 +18,21 @@
         </p>
       </div>
     </ng-container>
-    <ion-item-sliding *ngFor="let des of desayunoUser">
-      <ion-card button [routerLink]="['/lista-desayunos', des.id]">
+    <ion-item-sliding *ngFor="let des of desayunoUser" (click)="openDes(des)">
+      <ion-card button>
           <!-- <div class="imagen">
             <img src="../../../assets/menu.png" width="140px">
           </div> -->
-          <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{des.estado}}</p>
-          <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{des.estado}}</p>
+            <ion-item>
+              <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{des.estado}}</p>
+              <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{des.estado}}</p>
+              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{des.precioDesayuno}}
+              </ion-button>
+            </ion-item>
         <ion-card-subtitle>
           <h6>&nbsp;
             <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
@@ -40,19 +44,21 @@
             Detalle:
            {{des.detalleDesayuno}} &nbsp;
           </h6>
-          <ion-item>
-            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{des.precioDesayuno}}
-            </ion-button>
-          </ion-item>
+          <h6>&nbsp;&nbsp;
+            <ion-icon name="restaurant"></ion-icon>&nbsp;
+            Ingredientes</h6>
+          <div *ngFor="let i of des.ingredientes">
+            <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
+          </div>
         </ion-card-subtitle>
       </ion-card>
  
-      <ion-item-options side="end">
+      <!-- <ion-item-options side="end">
         <ion-item-option (click)="onRemove(des)" color="secondary">
-          Check
+          
           <ion-icon name="checkmark" slot="end"></ion-icon>
         </ion-item-option>
-      </ion-item-options>
+      </ion-item-options> -->
     </ion-item-sliding>
   </ion-list>
  <ion-fab vertical="bottom" horizontal="end" slot="fixed">

@@ -26,17 +26,9 @@ export class MenueEspecialPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   constructor(private especialSvc: MeriendaService, private AFauth : AngularFireAuth, private router:Router, 
-    private fb: FormBuilder,
     private modal: ModalController) { }
 
   ngOnInit() {
-
-    // this.miform = this.fb.group({
-    //   // platoDesayuno: ['', [Validators.required]],
-    //   platoEspecial: ['', [Validators.required]],
-    //   precioEspecial: ['',  [Validators.required, Validators.minLength(1), Validators.maxLength(3), Validators.pattern(/^[1-9]/)]],
-    //   ingredientes: this.fb.array([this.fb.group({ingrediente: ['']})])
-    // })
     
       // para listar en el modal
     this.especialSvc.listar().subscribe(espe => {

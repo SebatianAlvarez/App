@@ -20,12 +20,17 @@
     </ng-container>
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
       <ion-card button [routerLink]="['/lista-menus', alm.id]">
-          <p class="almuerzoActivo" *ngIf="alm.estado === 'Activo'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{alm.estado}}</p>
-          <p class="almuerzoOculto" *ngIf="alm.estado === 'Deshabilitado'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{alm.estado}}</p>
+
+            <ion-item>
+              <p class="almuerzoActivo" *ngIf="alm.estado === 'Activo'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{alm.estado}}</p>
+              <p class="almuerzoOculto" *ngIf="alm.estado === 'Deshabilitado'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{alm.estado}}</p>
+              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{alm.precioAlmuerzo}}
+              </ion-button>
+            </ion-item>
         <ion-card-subtitle>
           <h6>&nbsp;&nbsp;
             <ion-icon name="person"></ion-icon>
@@ -43,10 +48,7 @@
             <ion-icon name="wine"></ion-icon>
           Bebida: {{alm.jugoAlmuerzo}}&nbsp; 
           </h6>
-          <ion-item>
-            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{alm.precioAlmuerzo}}
-            </ion-button>
-          </ion-item>
+
         </ion-card-subtitle>
       </ion-card>
 

@@ -109,4 +109,43 @@ export class DesayunoService {
       })
     }))
   }
+
+  // ********* Metodos para subir el menu *******************
+
+  subirMenu(des: desayuno, id?: string): void{    
+    this.guardarDesayuno(des);
+  }
+
+  guardarDesayuno(platoDes: desayuno) {
+
+    //this.idRes =perfil.id;
+    let idExiste = platoDes.id;
+    platoDes.id = idExiste;
+    
+    if(idExiste){
+      const menuDesObj = {
+        id: idExiste,
+        userUID: this.usuarioLog,
+        estado: platoDes.estado,
+        platoDesayuno: platoDes.platoDesayuno,
+        detalleDesayuno: platoDes.detalleDesayuno,
+        precioDesayuno: platoDes.precioDesayuno, 
+        ingredientes: platoDes.ingredientes
+      };
+      return this.desayunoCollection.doc(platoDes.id).update(menuDesObj);      
+    }else{      
+      let idPlato = this.db.createId();
+      platoDes.id = idPlato;
+      this.db.collection('platoDesayuno').doc(idPlato).set({
+        id: platoDes.id,
+        userUID: this.usuarioLog,
+        estado: 'Activo',
+        platoDesayuno: platoDes.platoDesayuno,
+        detalleDesayuno: platoDes.detalleDesayuno,
+        precioDesayuno: platoDes.precioDesayuno, 
+        ingredientes: platoDes.ingredientes
+      });
+    }
+  }
+
 }

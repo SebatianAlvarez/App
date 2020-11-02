@@ -19,19 +19,17 @@
       </div>
     </ng-container>
     <ion-item-sliding *ngFor="let espe of especialUser" (click)="openEsp(espe)">
-
-      <!-- [routerLink]="['/lista-especial', espe.id]" -->
-      
       <ion-card button>
-          <!-- <div class="imagen">
-            <img src="../../../assets/menu.png" width="140px">
-          </div> -->
-          <p class="almuerzoActivo" *ngIf="espe.estado === 'Activo'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{espe.estado}}</p>
-          <p class="almuerzoOculto" *ngIf="espe.estado === 'Deshabilitado'">
-            <ion-icon name="information-circle"></ion-icon>&nbsp;
-            {{espe.estado}}</p>
+            <ion-item>
+              <p class="almuerzoActivo" *ngIf="espe.estado === 'Activo'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{espe.estado}}</p>
+              <p class="almuerzoOculto" *ngIf="espe.estado === 'Deshabilitado'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{espe.estado}}</p>
+              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
+              </ion-button>
+            </ion-item>
         <ion-card-subtitle>
           <h6>&nbsp;&nbsp;
             <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;
@@ -44,10 +42,6 @@
           <div *ngFor="let i of espe.ingredientes">
             <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
           </div>
-          <ion-item>
-            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
-            </ion-button>
-          </ion-item>
         </ion-card-subtitle>
       </ion-card>
 

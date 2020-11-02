@@ -59,11 +59,11 @@ const routes: Routes = [
   { path: 'quejas-rechazadas', loadChildren: './components/quejas-rechazadas/quejas-rechazadas.module#QuejasRechazadasPageModule' , canActivate:[AuthGuard]},
   { path: 'tabs-quejas', loadChildren: './components/tabs-quejas/tabs-quejas.module#TabsQuejasPageModule' },
   { path: 'tabs-restaurantes-afiliados', loadChildren: './components/tabs-restaurantes-afiliados/tabs-restaurantes-afiliados.module#TabsRestaurantesAfiliadosPageModule' },
-  { path: 'restaurantes-no-afiliados', loadChildren: './components/restaurantes-no-afiliados/restaurantes-no-afiliados.module#RestaurantesNoAfiliadosPageModule' },  { path: 'tabs-quejas-usu', loadChildren: './components/tabs-quejas-usu/tabs-quejas-usu.module#TabsQuejasUsuPageModule' },
+  { path: 'restaurantes-no-afiliados', loadChildren: './components/restaurantes-no-afiliados/restaurantes-no-afiliados.module#RestaurantesNoAfiliadosPageModule' },
+  { path: 'tabs-quejas-usu', loadChildren: './components/tabs-quejas-usu/tabs-quejas-usu.module#TabsQuejasUsuPageModule' },
   { path: 'quejas-apro-usu', loadChildren: './components/quejas-apro-usu/quejas-apro-usu.module#QuejasAproUsuPageModule' },
   { path: 'quejas-recha-usu', loadChildren: './components/quejas-recha-usu/quejas-recha-usu.module#QuejasRechaUsuPageModule' },
   { path: 'quejas-pendi-usu', loadChildren: './components/quejas-pendi-usu/quejas-pendi-usu.module#QuejasPendiUsuPageModule' },
-  { path: 'editar-especial', loadChildren: './components/editar-menu/editar-especial/editar-especial.module#EditarEspecialPageModule' },
 
 
 ];

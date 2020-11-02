@@ -16,13 +16,17 @@
           <ion-select-option>Deshabilitado</ion-select-option>
         </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label>Plato:</ion-label>
+      <ion-input type="text" formControlName="platoDesayuno"></ion-input>
+    </ion-item>
       <ion-item>
-        <ion-label>Plato:</ion-label>
-        <ion-input type="text" formControlName="platoEspecial"></ion-input>
+        <ion-label>Detalle:</ion-label>
+        <ion-input type="text" formControlName="detalleDesayuno"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Precio: </ion-label>
-        <ion-textarea formControlName="precioEspecial"></ion-textarea>
+        <ion-textarea formControlName="precioDesayuno"></ion-textarea>
       </ion-item> <br>
       <!-- <ion-item>
         <ion-label>ingredientes</ion-label>
@@ -40,7 +44,6 @@
               <ion-icon name="trash"></ion-icon>
               
             </ion-button>
-            
           </ion-item>
         </div>
         
@@ -61,7 +64,7 @@
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-    <ion-fab-button color="danger"  (click)="onRemoveEspecial(espe.id)">
+    <ion-fab-button color="danger"  (click)="onRemoveEspecial(desa.id)">
         <ion-icon name="trash"></ion-icon>
     </ion-fab-button>
   </ion-fab>
