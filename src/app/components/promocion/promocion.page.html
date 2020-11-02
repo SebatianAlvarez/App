@@ -69,6 +69,18 @@
           </ion-card-content>
         
         </ion-card>
+
+        <hr>
+        Prueba notificaciones
+
+        <ion-button expand="block" (click)="Notificiacion1()">Notificacion simple</ion-button>
+        <ion-button expand="block" (click)="Notificiacion2()">foreground??</ion-button>
+        <ion-button expand="block" (click)="Notificiacion3()">Notificacion simple con otro formato</ion-button>
+        <ion-button expand="block" (click)="Notificiacion4()">Notificacion cada dia</ion-button>
+        <ion-button expand="block" (click)="Notificiacion5()">Notificacion cada dia</ion-button>
+        <ion-button expand="block" (click)="Notificiacion6()">Notificacion cada dia</ion-button>
+        <ion-button expand="block" (click)="Notificiacion7()">Notificacion cada minuto</ion-button>
+
       </ng-template>
       <ng-template [ngIf] = "resta.resVerificado === 'En Revision'">
         <p style="text-align: center;">Tu Restaurante esta siendo Verificado</p>

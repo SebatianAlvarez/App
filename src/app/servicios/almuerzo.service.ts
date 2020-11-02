@@ -66,6 +66,7 @@ export class AlmuerzoService {
     return this.db.collection('platoAlmuerzo').doc(idPlato).set({
       id: idPlato,
       userUID: this.usuarioLog,
+      estado: "Activo",
       tipoAlmuerzo: almu.tipoAlmuerzo,
       entradaAlmuerzo: almu.entradaAlmuerzo,
       segundoAlmuerzo: almu.segundoAlmuerzo,

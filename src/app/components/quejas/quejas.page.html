@@ -3,17 +3,14 @@
     <ion-button slot="start" fill ="none" routerLink="/listado">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title>Mis Sugerencias</ion-title>
+    <ion-title>Restaurantes Afiliados</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-searchbar
-      showcancelbutton=""
-      (ionInput)="filterList($event)"  
-  ></ion-searchbar> -->
-  
+
+  <ng-template [ngIf]="validarDatos(existeDatos) === true" >
       <div *ngFor="let a of afiliados$ | async">
         <div *ngFor="let r of restaurante$ | async">
           <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta">
@@ -67,6 +64,26 @@
              
           </div>
         </div>
-      </div>
+      </div>  
+  </ng-template>
+
+  <ng-template [ngIf]="validarDatos(existeDatos) === false" >
+
+    <ion-card class="sinDatos">
+      <ion-item>
+        <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+        <ion-icon name="restaurant" slot="end"></ion-icon> -->
+        <ion-label></ion-label>
+        
+      </ion-item>
+    
+      <ion-card-content style="text-align: center;">
+        No cuentas con restaurantes afiliados 
+      </ion-card-content>
+      <ion-item>
+        <ion-label></ion-label>
+      </ion-item>
+    </ion-card>
+  </ng-template>
 
 </ion-content>

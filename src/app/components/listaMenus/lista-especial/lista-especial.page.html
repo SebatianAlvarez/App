@@ -26,6 +26,13 @@
   
 <form [formGroup]="miform" (ngSubmit)="onSubmit(miform.value)">
   <ion-item>
+  <ion-item *ngIf="especialID">
+      <ion-select placeholder="Estado" required type="text" formControlName="estado">
+        <ion-select-option>Activo</ion-select-option>
+        <ion-select-option>Deshabilitado</ion-select-option> 
+      </ion-select>
+    </ion-item>
+
     <ion-label>Plato:</ion-label>
     <ion-input type="text" formControlName="platoEspecial"></ion-input>
   </ion-item>

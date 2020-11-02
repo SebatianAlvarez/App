@@ -19,12 +19,17 @@ export class AfiliadosAceptadosPage implements OnInit {
   public usuarioLog:string;
   public afiliados$: Observable<afiliado[]>;
 
+  // variable para validar si hay datos
+  existeDatos: boolean;
+  listAfiliados: afiliado[] = [];
+
   constructor(private router:Router, private AFauth : AngularFireAuth,public actionSheetController: ActionSheetController,
     private afiliadosService : AfiliadosServiceService,private authservice: AuthService,
     public alertController: AlertController) { }
 
   ngOnInit() {
 
+    this.existeDatos = false;
     this.afiliados$ = this.afiliadosService.recuperarDatos()
 
     try {
@@ -35,9 +40,25 @@ export class AfiliadosAceptadosPage implements OnInit {
       console.log(error)
     }
     
-    //this.afiliadosService.getAfiliados().subscribe( data =>{
-    //  this.afiliados = data;
-    //})
+    this.afiliadosService.listar().subscribe(data =>{
+      this.listAfiliados = [];
+      data.forEach(element => {
+        if(this.usuarioLog === element.uidResta && element.estado === 'verdadero'){
+          this.listAfiliados.push(element);
+          console.log(this.listAfiliados);
+          this.existeDatos = true;
+          this.validarDatos(this.existeDatos)  
+        }
+      });
+    })
+  }
+
+  validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   goRegreso(){
@@ -62,7 +83,7 @@ export class AfiliadosAceptadosPage implements OnInit {
   cancelarAfiliacion(id : string){
     this.afiliadosService.getAfiliado(id).subscribe(x =>{
       let afi : afiliado = {
-        estado : "falso",
+        estado : "pendiente",
       }
       this.afiliadosService.updateAfiliado(id , afi);
       this.presentAlert()
@@ -76,7 +97,7 @@ export class AfiliadosAceptadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Afiliacion Cancelada',
+      header: 'Afiliación Cancelada',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']

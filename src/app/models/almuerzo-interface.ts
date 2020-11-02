@@ -5,5 +5,6 @@ export class almuerzo {
     jugoAlmuerzo : string
     precioAlmuerzo: string
     segundoAlmuerzo : string
+    estado?: string
     userUID?: string
   }

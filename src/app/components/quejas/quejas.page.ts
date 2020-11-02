@@ -33,6 +33,11 @@ export class QuejasPage implements OnInit {
   suma : number = 0
   auxi : number = 0
 
+  // variable para validar si hay datos
+  existeDatos: boolean;
+  listAfiliados: afiliado[] = []
+  listRestaurantes: resta[] = []
+
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
               private restauranteService: RestaurantesService, private alertController : AlertController,
@@ -60,6 +65,8 @@ public queja = this.formBuilder.group ({
 
   async ngOnInit() {
 
+    this.existeDatos = false;
+
     this.resList = await this.initializeItems();
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
@@ -68,6 +75,36 @@ public queja = this.formBuilder.group ({
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;      
 
+    this.afiliadosSvc.listar().subscribe(a=>{
+      this.listAfiliados = []
+      this.listRestaurantes = [];
+
+      a.forEach(elementA => {
+        this.restauranteService.listar().subscribe(r =>{
+          // this.listRestaurantes = [];
+          r.forEach(elementR => {
+            // this.listRestaurantes = [];
+            if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta && elementA.estado === 'verdadero'){
+              this.listAfiliados.push(elementA);
+              this.listRestaurantes.push(elementR);
+              console.log(this.listAfiliados);
+              console.log(this.listRestaurantes);
+              this.existeDatos = true;
+              this.validarDatos(this.existeDatos)              
+            }
+          });
+        })
+      });
+    })
+
+  }
+
+    validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   async initializeItems(): Promise<any> {
@@ -76,6 +113,7 @@ public queja = this.formBuilder.group ({
       
       return restaList;
   }
+
 
   async filterList(evt) {
     this.restaurante$ = await this.initializeItems();

@@ -68,9 +68,10 @@ export class DesayunoService {
       id: idPlato,
       userUID: this.usuarioLog,
       platoDesayuno: des.platoDesayuno,
+      estado: "Activo",
       detalleDesayuno: des.detalleDesayuno,
-      precioDesayuno: des.precioDesayuno,
-      // ingredientes: "",
+      precioDesayuno: des.precioDesayuno
+      // ingredientes: des.ingredientes,
     });
    }
 

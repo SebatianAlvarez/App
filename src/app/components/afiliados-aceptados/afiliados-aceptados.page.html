@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color ="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill ="none" (click)= "goRegreso()">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
@@ -8,8 +8,7 @@
 </ion-header>
 
 <ion-content >
-
-
+<ng-template [ngIf]="validarDatos(existeDatos) === true" >
   <div *ngFor = "let afi of afiliados$ | async"> 
     <div *ngIf = "usuarioLog === afi.uidResta">
       <ion-card *ngIf = "afi.estado === 'verdadero'">
@@ -29,8 +28,8 @@
           {{afi.numero}}
           </h6>
         </ion-card-subtitle>
-        <ion-card-header>
-          <ion-button (click)="cancelarAfiliacion(afi.id)"><ion-icon name="close-circle"></ion-icon></ion-button>
+        <ion-card-header style="margin-top: 50px;">
+          <ion-button (click)="cancelarAfiliacion(afi.id)"><ion-icon name="close-circle"></ion-icon>Cancelar</ion-button>
           <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
           <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
         </ion-card-header>
@@ -39,6 +38,27 @@
     </div>
    
   </div>
+</ng-template>
+
+
+    <ng-template [ngIf]="validarDatos(existeDatos) === false" >
+
+    <ion-card class="sinDatos">
+      <ion-item>
+        <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+        <ion-icon name="restaurant" slot="end"></ion-icon> -->
+        <ion-label></ion-label>
+        
+      </ion-item>
+    
+      <ion-card-content style="text-align: center;">
+        No cuentas con restaurantes afiliados 
+      </ion-card-content>
+      <ion-item>
+        <ion-label></ion-label>
+      </ion-item>
+    </ion-card>
+  </ng-template>
 
 <!--
   <div *ngFor = "let afi of afiliados$ | async">

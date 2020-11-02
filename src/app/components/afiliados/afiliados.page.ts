@@ -19,11 +19,17 @@ export class AfiliadosPage implements OnInit {
 
   public afiliados$: Observable<afiliado[]>;
 
+  // variable para validar si hay datos
+  existeDatos: boolean;
+  listAfiliados: afiliado[] = [];
+
   constructor(private router:Router, public actionSheetController: ActionSheetController,
     private authservice: AuthService, private afiliadosService: AfiliadosServiceService,
     private AFauth : AngularFireAuth, public alertController: AlertController) { }
 
   ngOnInit() {
+
+    this.existeDatos = false;
 
     this.afiliados$ = this.afiliadosService.recuperarDatos()
 
@@ -36,9 +42,30 @@ export class AfiliadosPage implements OnInit {
       console.log(error)
     }
 
-    //this.afiliadosService.getAfiliados().subscribe( data =>{
-    //  this.afiliados = data;
-    //})
+    // let currentUser = this.AFauth.auth.currentUser;
+    // this.usuarioLog = currentUser.uid;
+
+    this.afiliadosService.listar().subscribe(data =>{
+      this.listAfiliados = [];
+      data.forEach(element => {
+        if(this.usuarioLog === element.uidResta && element.estado === 'pendiente'){
+          this.listAfiliados.push(element);
+          console.log(this.listAfiliados);
+          this.existeDatos = true;
+          this.validarDatos(this.existeDatos)  
+        }
+      });
+    })
+
+
+ }
+
+  validarDatos(valor: boolean){
+    if(valor == true){
+      return true
+    }else if(valor == false){
+      return false
+    }
   }
 
   goRegreso(){
@@ -118,7 +145,7 @@ export class AfiliadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Afiliacion Aceptada',
+      header: 'Afiliación Aceptada',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']
@@ -130,7 +157,7 @@ export class AfiliadosPage implements OnInit {
   async presentAlertRechazo() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Afiliacion Rechazada',
+      header: 'Afiliación Rechazada',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']

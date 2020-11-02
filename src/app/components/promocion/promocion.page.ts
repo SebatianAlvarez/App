@@ -3,7 +3,7 @@ import { promos } from '../../models/promos-interface';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { resta } from '../../models/restaurante-interface'
 import { AuthService } from '../../servicios/auth.service';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
@@ -11,6 +11,7 @@ import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PromocionService } from '../../servicios/promocion.service';
+import { ELocalNotificationTriggerUnit, LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 
 @Component({
@@ -46,9 +47,27 @@ export class PromocionPage implements OnInit {
     private restauranteService : RestaurantesService,
     private promocionesService: PromocionService,
     private formBuilder: FormBuilder,
-    public alertController: AlertController) { 
+    public alertController: AlertController, 
+    private plt: Platform,
+    private localNotification: LocalNotifications) { 
 
       this.promosRef = this.db.collection('promociones')
+
+      // Notificaciones
+      this.plt.ready().then(() =>{
+        this.localNotification.on('click').subscribe(res =>{
+          console.log('click: ', res);
+          let msg = res.data ? res.data.mydata: '';
+          this.showAlert(res.title, res.text, msg);          
+        });
+
+        this.localNotification.on('trigger').subscribe(res =>{
+          console.log('trigger: ', res);
+          let msg = res.data ? res.data.mydata: '';
+          this.showAlert(res.title, res.text, msg); 
+
+        });
+      })
      }
 
      public foto = this.formBuilder.group ({
@@ -58,22 +77,10 @@ export class PromocionPage implements OnInit {
     });
 
   ngOnInit() {
-
-    
     this.estaSeleccionado = false;
-    // this.selectedFile = "";
-
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
     this.promociones$ = this.promocionesService.recuperarDatos();
-
-    
-
-
-    // this.restauranteService.getRestaurantes().subscribe( data => {
-    //   this.restaurantes = data
-    // })
-
     try {
       let currentUser = this.AFauth.auth.currentUser;
       this.usuarioLog = currentUser.uid;
@@ -95,6 +102,97 @@ export class PromocionPage implements OnInit {
       console.log("array", this.promoHabilitados);
     })
   }
+
+  Notificiacion1(){
+
+    this.localNotification.schedule({
+      id:1,
+      title: 'Notificacion de 5 segundos',
+      text: 'Ejemplo de notificacion',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: {in: 5, unit: ELocalNotificationTriggerUnit.SECOND},
+      //foreground: true
+    })
+  }
+
+  Notificiacion2(){
+    this.localNotification.schedule({
+      id:2,
+      title: 'Notificacion de 5 segundos, se ira a una pagina',
+      text: 'Ejemplo de notificacion, foreground??',
+      data: {page: '/perfil'},
+      trigger: {in: 15, unit: ELocalNotificationTriggerUnit.SECOND},
+      foreground: true
+    })
+    
+  }
+
+  Notificiacion3(){
+    this.localNotification.schedule({
+      id:3,
+      title: 'Notificacion de 10 segundos, con otro formato de fecha',
+      text: 'Ejemplo de notificacion',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: {at: new Date(new Date().getTime() + 10 * 1000)}
+      //foreground: true
+    })
+    
+  }
+
+  Notificiacion4(){
+    this.localNotification.schedule({
+      id:4,
+      title: 'Revisa el menu del dia ',
+      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: {hour: 12, minute: 0} }
+      //foreground: true
+    })
+    
+  }
+
+  Notificiacion5(){
+    this.localNotification.schedule({
+      id:5,
+      title: 'Revisa el menu del dia ',
+      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: {hour: 22, minute: 59} }
+      //foreground: true
+    })   
+  }
+
+  Notificiacion6(){
+    this.localNotification.schedule({
+      id:6,
+      title: 'Revisa el menu del dia ',
+      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: {hour: 7, minute: 0} }
+      //foreground: true
+    })   
+  }
+
+  Notificiacion7(){
+    this.localNotification.schedule({
+      id:7,
+      title: 'Revisa el menu del dia ',
+      text: 'Notificacion cada minuto',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
+      //foreground: true
+    })   
+  }
+
+  showAlert(header, sub, msg){
+    this.alertController.create({
+      header: header,
+      subHeader: sub,
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
+  }
+
 
   onLogout(){
     this.authservice.logout();

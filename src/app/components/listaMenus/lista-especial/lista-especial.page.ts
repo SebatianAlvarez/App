@@ -21,6 +21,7 @@ export class ListaEspecialPage implements OnInit {
     id:'',
     platoEspecial: '',
     precioEspecial: '',
+    estado: '',
     ingredientes : ['']
   };
 
@@ -56,6 +57,7 @@ export class ListaEspecialPage implements OnInit {
       id:[''],
       platoEspecial: [''],
       precioEspecial: [''],
+      estado: [''],
       ingredientes: this.fb.array(this.especial.ingredientes.map(i => this.fb.group({
         ingrediente: this.fb.control(i)
       })))
@@ -128,9 +130,11 @@ export class ListaEspecialPage implements OnInit {
       
       this.miform.patchValue({
         id: this.especialID,
+        estad: this.especial.estado,
         platoEspecial: this.especial.platoEspecial, 
         precioEspecial: this.especial.precioEspecial,
         ingredientes: this.especial.ingredientes
+
       });
     });
   }
@@ -145,6 +149,7 @@ export class ListaEspecialPage implements OnInit {
     console.log("no va haber..", this.especialID);
     const espe = new especial();
     espe.platoEspecial = formValue.platoEspecial,
+    espe.estado = formValue.estado,
     espe.precioEspecial = formValue.precioEspecial,
     espe.ingredientes = formValue.ingredientes;
     this.especialSvc.subirMenu(espe, this.especialID);

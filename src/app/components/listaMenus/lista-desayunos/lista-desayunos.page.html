@@ -8,6 +8,12 @@
 </ion-header>
 <ion-content padding>
   <ion-list lines="full">
+  <ion-item *ngIf="desayunoID">
+      <ion-select placeholder="Estado" required type="text" [(ngModel)]="desayuno.estado">
+        <ion-select-option>Activo</ion-select-option>
+        <ion-select-option>Deshabilitado</ion-select-option> 
+      </ion-select>
+    </ion-item>
     <ion-item *ngIf="desayuno">
       <ion-input required type="text" placeholder="Plato" [(ngModel)]="desayuno.platoDesayuno"></ion-input>
     </ion-item>

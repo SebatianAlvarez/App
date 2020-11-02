@@ -23,6 +23,7 @@ import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { PreguntasService } from '../../servicios/preguntas.service';
 import { pregunta } from '../../models/preguntas';
 import { AfiliadosServiceService } from '../../servicios/afiliados-service.service';
+import { PromocionService } from '../../servicios/promocion.service';
 import { afiliado } from '../../models/afiliados-interface';
 
 import { almuerzo } from '../../models/almuerzo-interface';
@@ -95,8 +96,10 @@ export class PerfilResComponent implements OnInit {
   public coordenadas: coordenadas[]= [];
   public latitud : number
   public longitud :  number
-  desayunosRespectivos: desayuno[] = []; 
+
+  desayunosRespectivos: desayuno[] = [];
   almuerzosRespectivos: almuerzo[] = [];
+  almuerzosRespectivos2: almuerzo[] = [];
   especialesRespectivos: especial[] = [];
 
   validacion: boolean = true;
@@ -126,6 +129,10 @@ export class PerfilResComponent implements OnInit {
   listAfiliados: afiliado[] = [];
   listRestaurant: resta[] = [];
   existeA: boolean;
+  existeAlmu: boolean;
+  existeDes: boolean;
+  existeEsp: boolean;
+  existePromo: boolean;
 
   public limite : number  =15
   public listaComentario: any = []
@@ -138,8 +145,9 @@ export class PerfilResComponent implements OnInit {
     private afiliadosService : AfiliadosServiceService, private geocoder: NativeGeocoder,
     private formBuilder: FormBuilder, private comentariosService: ComentariosService,
     private coordenadaService: CoordenadasService, private storage : AngularFireStorage,
-    private desayunoService  : DesayunoService, private almuerzoService : AlmuerzoService, private especialesService: MeriendaService)
-    
+    private desayunoService  : DesayunoService, private almuerzoService : AlmuerzoService, private especialesService: MeriendaService,
+    private promocionService: PromocionService)
+
     {
       this.fotosRef = this.db.collection('afiliados')
 
@@ -149,20 +157,24 @@ export class PerfilResComponent implements OnInit {
 
       id: new FormControl (''),
       estrellas: new FormControl ('', [Validators.required ]),
-     
+
     });
 
     public afiliacion = this.formBuilder.group ({
 
       id: new FormControl (''),
       inputFile: new FormControl ('', [Validators.required ]),
-     
+
     });
 
 
   ngOnInit() {
 
     this.existeA = false;
+    this.existeAlmu = false;
+    this.existeDes = false;
+    this.existeEsp = false;
+    this.existePromo = false;
 
     this.informacion = true;
     this.desayuno = false;
@@ -184,8 +196,8 @@ export class PerfilResComponent implements OnInit {
     console.log("aver especial" + this.especial)
     console.log("aver usu" + this.usu)
     console.log("promc??", this.promocion);
-    
-    
+
+
 
     this.preguntasService.getPreguntas().subscribe(data =>{
       this.preguntas = data
@@ -200,7 +212,7 @@ export class PerfilResComponent implements OnInit {
     try {
       let currentUser = this.AFauth.auth.currentUser;
       this.usuarioLog = currentUser.uid;
-      
+
     } catch (error) {
       console.log(error)
     }
@@ -216,18 +228,73 @@ export class PerfilResComponent implements OnInit {
           console.log("afil", this.listAfiliados);
           console.log("res", this.res);
           this.existeA = true;
-          this.existeAfiliacion(this.existeA);     
+          this.existeAfiliacion(this.existeA);
         }
       })
     });
 
+    this.almuerzoService.listar().subscribe(x =>{
+      this.almuerzosRespectivos = [];
+      x.forEach(element => {
+        //console.log("q tiene" + x)
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
+          console.log("aca" + element);
+          this.almuerzosRespectivos.push(element)
+          this.existeAlmu = true;
+          this.existeAlmuerzo(this.existeAlmu);
 
+        }else{
+          //console.log("no", element);
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
 
-    this.promocionesUsuario();
-    this.desayunosQueSon();
-    this.almuerzosQueSon();
-    this.especialesQueSon();
+      this.desayunoService.listar().subscribe(x =>{
+      this.desayunosRespectivos = []
+      x.forEach(element => {
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
+          this.desayunosRespectivos.push(element)
+          this.existeDes = true;
+          this.existeDesayuno(this.existeDes)
+        }else{
+          //console.log("no", element);
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
 
+    this.especialesService.listar().subscribe(x =>{
+    this.especialesRespectivos = []
+      x.forEach(element => {
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
+          this.especialesRespectivos.push(element)
+          this.existeEsp = true;
+          this.existeespecial(this.existeEsp)
+        }else{
+        }
+      });
+      //console.log("array", this.desayunosRespectivos);
+    })
+
+    this.promocionService.listar().subscribe(x =>{
+      this.promosUsuario = [];
+      x.forEach(element => {
+        if(element['userUID'] === this.res.userUID && element['estado'] === 'verdadero' ){
+        this.promosUsuario.push(element);
+        this.existePromo = true;
+        this.existePromocion(this.existePromo);
+        console.log("promos??",this.promosUsuario)
+      }
+      });
+
+    })
+
+    // this.promocionesUsuario();
+    // this.desayunosQueSon();
+    // this.almuerzosQueSon();
+    // this.especialesQueSon();
+    // this.cargarMapa();
   }
 
   mostrarInformacion(){
@@ -242,6 +309,10 @@ export class PerfilResComponent implements OnInit {
     this.ionViewDidEnter();
   }
 
+  cargarMapa(){
+    this.ionViewDidEnter();
+  }
+
   mostrarDesayuno(){
     this.informacion = false;
     this.desayuno = true;
@@ -250,8 +321,6 @@ export class PerfilResComponent implements OnInit {
     this.promociones = false;
     this.comentarios = false;
     this.afiliar = false;
-
-
   }
 
   mostrarAlmuerzo(){
@@ -321,109 +390,42 @@ export class PerfilResComponent implements OnInit {
     this.afiliar = false;
   }
 
-  desayunosQueSon(){
-    this.desayunoService.listar().subscribe(x =>{
-      this.desayunosRespectivos = []
-      x.forEach(element => {
-        //console.log("q tiene" + x)
-        if(element['userUID'] === this.res.userUID){
-           //console.log("aca" + element);
-          this.desayunosRespectivos.push(element)
-        }else{
-          //console.log("no", element);
-        }
-      });
-      //console.log("array", this.desayunosRespectivos);
-    })
-  }
 
-  almuerzosQueSon(){
-    this.almuerzoService.listar().subscribe(x =>{
-      this.almuerzosRespectivos = []
-      x.forEach(element => {
-        //console.log("q tiene" + x)
-        if(element['userUID'] === this.res.userUID){
-           //console.log("aca" + element);
-          this.almuerzosRespectivos.push(element)
-        }else{
-          //console.log("no", element);
-        }
-      });
-      //console.log("array", this.desayunosRespectivos);
-    })
-  }
+  // promocionesUsuario(){
+  //   this.promosUsuario = [];
+  //   this.promocion.forEach(element => {
+  //     if(element['userUID'] === this.res.userUID && element['estado'] === 'verdadero' ){
+  //       this.promosUsuario.push(element);
+  //     }
+  //   });
+  // }
 
-  especialesQueSon(){
-    this.especialesService.listar().subscribe(x =>{
-      this.especialesRespectivos = []
-      x.forEach(element => {
-        //console.log("q tiene" + x)
-        if(element['userUID'] === this.res.userUID){
-           //console.log("aca" + element);
-          this.especialesRespectivos.push(element)
-        }else{
-          //console.log("no", element);
-        }
-      });
-      //console.log("array", this.desayunosRespectivos);
-    })
-  }
 
-  promocionesUsuario(){
-    this.promosUsuario = [];
-    this.promocion.forEach(element => {
-      if(element['userUID'] === this.res.userUID && element['estado'] === 'verdadero' ){
-        this.promosUsuario.push(element);
-      }
-    });
-  }
-
-  
 
   marcador(lat : number, lng : number){
     this.marker = L.marker([lat, lng], {draggable:false});
     this.marker.addTo(this.map).bindPopup('Mi restaurante');
   }
-  
+
   async verCoordenadas(){
     this.coordenadaService.listar().subscribe( data =>{
-  
+
       for(let element of data){
-        // console.log("userUID: ", element.userUID);
-        // console.log("usrrlog: ", this.usuarioLog);
-        // console.log("elemente??", element);
-        
         if(element.userUID ===  this.res.userUID){
           this.latitud = element['lat'];
           this.longitud = element['lng'];
-          
-          //var lat = parseFloat(this.latitud);
-          //var lon = parseFloat(this.longitud);
-          // console.log(this.longitud);
-          // console.log(this.latitud);
-          
           this.marcador(this.latitud, this.longitud); // Aqui agrego el pop-up con las coordenadas de la base de datos`
-          // break;
         }
-        // break;
       }
     })
-  
+
   }
-  
+
 
   ionViewDidEnter(){
-
-        //this.coordenadaService.listar().subscribe( data => {
-        //  this.coordenadas =  data
-        //  this.coordenadas.forEach
-        //})
-
-        // console.log("coor " + this.coordenadas)
-
         this.map = L.map('Mapa', {
           center: [ -0.2104022, -78.4910514 ],
-          zoom: 17
+          zoom: 15
         });
 
         const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -445,23 +447,59 @@ export class PerfilResComponent implements OnInit {
   existeAfiliacion(valor:boolean){
     if(valor){
       return true;
-      
+
     }else{
       return false;
     }
   }
 
-  elegirImagen(event){ 
+  existeAlmuerzo(valor:boolean){
+    if(valor){
+      return true;
+
+    }else{
+      return false;
+    }
+  }
+
+  existeDesayuno(valor:boolean){
+    if(valor){
+      return true;
+
+    }else{
+      return false;
+    }
+  }
+
+  existeespecial(valor:boolean){
+    if(valor){
+      return true;
+
+    }else{
+      return false;
+    }
+  }
+
+  existePromocion(valor:boolean){
+    if(valor){
+      return true;
+
+    }else{
+      return false;
+    }
+  }
+
+  elegirImagen(event){
     this.estaSeleccionado = true;
     this.file = event.target.files[0].name;
-    
+
     this.selectedFile = event.target.files
   }
 
   async uploadFile(id, file): Promise<any> {
     if(file && file.length) {
       try {
-      
+
         const task = await this.storage.ref('imagenesAfiliacion').child(id).put(file[0])
         return this.storage.ref(`imagenesAfiliacion/${id}`).getDownloadURL().toPromise();
       } catch (error) {
@@ -473,7 +511,7 @@ export class PerfilResComponent implements OnInit {
   afiliarse(){
     this.validacionA = true;
     let afi = new afiliado();
-    
+
   return new Promise<any>((resolve, reject) => {
 
     let afiliadoID = this.db.createId();
@@ -500,9 +538,9 @@ export class PerfilResComponent implements OnInit {
         }).catch(err => reject(err))
 
       })
-      
+
     })
-    
+
   })
 }
 
@@ -510,7 +548,7 @@ existeAfiliado(){
   this.afiliadosService.listar().subscribe(data=>{
     for(let a of data){
       if(this.usuarioLog === a.uidUsu){
-        
+
       }
     }
   })
@@ -580,7 +618,7 @@ existeAfiliado(){
     await alert.present();
     let result = await alert.onDidDismiss();
   }
-  
+
 
   goRegreso(){
     this.modal.dismiss();
@@ -639,7 +677,7 @@ existeAfiliado(){
   }
 
  async presentActionSheet(rol :string) {
-    
+
   const actionSheet = await this.actionSheetController.create({
     header: 'Menu',
     buttons: [{
@@ -676,7 +714,7 @@ existeAfiliado(){
 Reservar(mesa : string, tiempo: string ){
 
   let reserva = new Reserva();
-    
+
   return new Promise<any>((resolve, reject) => {
 
     let reservaID = this.db.createId();
@@ -706,50 +744,6 @@ aver(){
   })
 }
 
-//dibujar en mapa con en un punto fijo
-
-/*
-showMap() {
-  
-  this.map = L.map('Mapa', {
-    center: [ -0.2104022, -78.4910514 ],
-    zoom: 100
-  });
-  const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 19,
-attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
-}
-*/
-
-//adquirir coordenadas
-
-//mostrar Popup
-
-
-        /*
-showMarker(latLong){
-  this.marker = marker(latLong, {draggable:true});
-  this.marker.addTo(this.map).bindPopup('Estoy aqui');
-  this.map.setView(latLong);
-  this.marker.on("dragend", () =>{
-    let pos = this.marker.getLatLng();
-    //this.getAddress(pos.lat, pos.lng)
-  })
-}
-        */
-
-/*
-getAddress(lat: number, long : number){
-  let options: NativeGeocoderOptions = {
-    useLocale: true,
-    maxResults: 5
-  };
-  this.geocoder.reverseGeocode(lat, long, options).then(res =>{
-    this.address = Object.values(res[0]).reverse();
-  });
-}
-*/
 
 mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
@@ -759,8 +753,8 @@ mostrar(id : string, lat: number, lng: number){
 
       this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((res) =>{
         return this.latLong = [
-          res.coords.latitude,  
-          res.coords.longitude    
+          res.coords.latitude,
+          res.coords.longitude
         ]
       }).then((latLong) =>{
 
@@ -778,33 +772,11 @@ mostrar(id : string, lat: number, lng: number){
         }).addTo(this.map);
       //this.marker.addTo(this.map).bindPopup('Estoy aqui');
       this.map.setView(latLong);
-    
+
       });
 
   })
 
 }
-
-/*
-
-cargarComentario(event){
-
-  setTimeout(() => {
-    
-    if( this.comentariosMas.length == 10){
-      event.target.complete();
-      this.infititeScroll.disabled = true;
-      return;
-    }
-
-    var masComen  = Array(20);
-    this.comentariosMas.push( ...masComen);
-    event.target.complete();
-    
-  }, 1000);
-}
-*/
-
-/*comento para subir al git */
 
 }
