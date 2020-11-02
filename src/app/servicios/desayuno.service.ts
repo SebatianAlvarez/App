@@ -70,8 +70,8 @@ export class DesayunoService {
       platoDesayuno: des.platoDesayuno,
       estado: "Activo",
       detalleDesayuno: des.detalleDesayuno,
-      precioDesayuno: des.precioDesayuno,
-      ingredientes: des.ingredientes,
+      precioDesayuno: des.precioDesayuno
+      // ingredientes: des.ingredientes,
     });
    }
 

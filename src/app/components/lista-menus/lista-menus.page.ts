@@ -18,6 +18,7 @@ export class ListaMenusPage implements OnInit {
 
   almuerzo: almuerzo = {
     tipoAlmuerzo: '',
+    estado: '',
     entradaAlmuerzo: '',
     segundoAlmuerzo: '',
     jugoAlmuerzo: '',

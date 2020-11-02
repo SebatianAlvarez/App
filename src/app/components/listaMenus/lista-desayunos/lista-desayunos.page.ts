@@ -17,7 +17,8 @@ export class ListaDesayunosPage implements OnInit {
   desayuno: desayuno = {
     detalleDesayuno: '',
     platoDesayuno: '',
-    precioDesayuno: ''
+    precioDesayuno: '',
+    estado: ''
   };
 
   desayunoID= null;

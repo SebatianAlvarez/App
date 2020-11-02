@@ -8,8 +8,14 @@
 </ion-header>
 <ion-content padding>
   <ion-list lines="full">
+    <ion-item *ngIf="almuerzoID">
+      <ion-select placeholder="Estado" required type="text" [(ngModel)]="almuerzo.estado">
+        <ion-select-option>Activo</ion-select-option>
+        <ion-select-option>Deshabilitado</ion-select-option> 
+      </ion-select>
+    </ion-item>
     <ion-item *ngIf="almuerzo">
-      <ion-select placeholder="Tipo  de Almuerzo" required type="text" [(ngModel)]="almuerzo.tipoAlmuerzo">
+      <ion-select placeholder="Tipo de Almuerzo" required type="text" [(ngModel)]="almuerzo.tipoAlmuerzo">
         <ion-select-option>Normal</ion-select-option>
         <ion-select-option>Especial</ion-select-option> 
       </ion-select>
