@@ -66,6 +66,7 @@ export class MeriendaService {
       id: idPlato,
       userUID: this.usuarioLog,
       platoEspecial: espe.platoEspecial,
+      estado: "Activo",
       precioEspecial: espe.precioEspecial,
     });
    }

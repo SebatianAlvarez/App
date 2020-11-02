@@ -231,7 +231,7 @@ export class PerfilResComponent implements OnInit {
       this.almuerzosRespectivos = [];
       x.forEach(element => {
         //console.log("q tiene" + x)
-        if(element['userUID'] === this.res.userUID){
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
           console.log("aca" + element);
           this.almuerzosRespectivos.push(element)
           this.existeAlmu = true;
@@ -247,7 +247,7 @@ export class PerfilResComponent implements OnInit {
       this.desayunoService.listar().subscribe(x =>{
       this.desayunosRespectivos = []
       x.forEach(element => {
-        if(element['userUID'] === this.res.userUID){
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
           this.desayunosRespectivos.push(element)
           this.existeDes = true;
           this.existeDesayuno(this.existeDes)
@@ -261,7 +261,7 @@ export class PerfilResComponent implements OnInit {
     this.especialesService.listar().subscribe(x =>{
     this.especialesRespectivos = []
       x.forEach(element => {
-        if(element['userUID'] === this.res.userUID){
+        if(element['userUID'] === this.res.userUID && element['estado']=== 'Activo'){
           this.especialesRespectivos.push(element)
           this.existeEsp = true;
           this.existeespecial(this.existeEsp)
@@ -651,7 +651,7 @@ existeAfiliado(){
   }
 
   goAfiliados(){
-    this.modal.dismiss(this.router.navigate(['/tabs-restaurantes-afiliados/afiliados']))
+    this.modal.dismiss(this.router.navigate(['/tasb-afiliados/Aprobados']))
   }
 
   getMenu(){

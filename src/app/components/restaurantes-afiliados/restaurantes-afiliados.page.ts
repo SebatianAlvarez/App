@@ -38,7 +38,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
   auxi : number = 0
 
   // variable para validar si hay datos
-  existeDatos: boolean = false;
+  existeDatos: boolean;
   listAfiliados: afiliado[] = []
   listRestaurantes: resta[] = []
 
@@ -94,13 +94,13 @@ export class RestaurantesAfiliadosPage implements OnInit {
           // this.listRestaurantes = [];
           r.forEach(elementR => {
             // this.listRestaurantes = [];
-            if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta){
+            if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta && elementA.estado === 'verdadero'){
               this.listAfiliados.push(elementA);
               this.listRestaurantes.push(elementR);
               console.log(this.listAfiliados);
               console.log(this.listRestaurantes);
               this.existeDatos = true;
-              this.validarDatos(this.existeDatos)
+              this.validarDatos(this.existeDatos)              
             }
           });
         })

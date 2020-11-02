@@ -103,9 +103,9 @@
         <ion-slide *ngFor="let desa of desayunosRespectivos">   
           <ion-card class="infomacionCard">
             <ion-card-header >
-              <div class="imagen">
+              <!-- <div class="imagen">
                 <img  src="../../../assets/menu.png" alt="des" width="100px" height="200px">
-              </div>
+              </div> -->
             </ion-card-header>
             <ion-item>
               <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -115,8 +115,8 @@
             </ion-item>
       
             <ion-card-content  style="text-align:left;">
-              El desayuno del día es {{desa.detalleDesayuno}} <br>
-              Ingredientes:
+              <b>El desayuno del día es: </b> {{desa.detalleDesayuno}} <br>
+              <b>Ingredientes:</b>
               <div *ngFor="let i of desa.ingredientes">
                 
                   <ion-icon name="remove" slot="start"></ion-icon>
@@ -125,7 +125,7 @@
               </div>
               
             </ion-card-content>
-            <br><br><br><br><br>
+            <br><br>
           </ion-card>
         </ion-slide>
       </ion-slides>
@@ -148,23 +148,23 @@
       <ion-slide *ngFor="let almu of almuerzosRespectivos">  
         <ion-card class="infomacionCard">
           <ion-card-header >
-            <div class="imagen">
+            <!-- <div class="imagen">
               <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
-            </div>
+            </div> -->
           </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
-            <ion-label>Tipo: {{almu.entradaAlmuerzo}}</ion-label>
+            <ion-label><b>Tipo: </b>{{almu.tipoAlmuerzo}}</ion-label>
             <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{almu.precioAlmuerzo}} &nbsp;$
             </ion-button>
           </ion-item>
     
           <ion-card-content style="text-align:left;">
-            <h5 style="color: black;">Entrada: {{almu.entradaAlmuerzo}} </h5>
-            <h5 style="color: black;">Segundo: {{almu.segundoAlmuerzo}} </h5>
-            <h5 style="color: black;">Bebida: {{almu.jugoAlmuerzo}}</h5>
+            <h5 style="color: black;"><b>Entrada:</b> {{almu.entradaAlmuerzo}} </h5><br>
+            <h5 style="color: black;"><b>Segundo:</b> {{almu.segundoAlmuerzo}} </h5><br>
+            <h5 style="color: black;"><b>Bebida:</b> {{almu.jugoAlmuerzo}}</h5><br>
           </ion-card-content>
-          <br><br><br><br><br><br>
+          <br><br>
         </ion-card>
       </ion-slide>
     </ion-slides>
@@ -188,9 +188,9 @@
       <ion-slide *ngFor="let espe of especialesRespectivos">  
         <ion-card class="infomacionCard2">
           <ion-card-header >
-            <div class="imagen">
+            <!-- <div class="imagen">
               <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
-            </div>
+            </div> -->
           </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -200,15 +200,15 @@
           </ion-item>
     
           <ion-card-content  style="text-align:left;">
-            El Especial del dia:  {{espe.platoEspecial}} <br>
-            Ingredientes:
+            <b>El Especial del dia:</b>  {{espe.platoEspecial}} <br>
+            <b>Ingredientes:</b>
             <div *ngFor="let i of espe.ingredientes">
               
                 <ion-icon name="remove" slot="start"></ion-icon>
                 {{ - i['ingrediente']}} <br>
             </div>
           </ion-card-content>
-          <br><br><br><br><br>
+          <br><br>
         </ion-card>
 
       </ion-slide>
