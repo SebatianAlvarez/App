@@ -177,6 +177,10 @@ export class AuthService {
     return this.db.collection('usuarios').snapshotChanges()
   }
 
+  listar() {
+    return this.db.collection<Usuario>('usuarios').valueChanges();
+  }
+
   /*  alt+96 = `
   */
 

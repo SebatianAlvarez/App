@@ -75,13 +75,14 @@ export class MeriendaService {
     return this.meriendaCollection.doc(id).delete();
   }
 
-  subirMenu(espe: especial, id: string): void{    
-    this.guardarEspecial(espe, id);
+  subirMenu(espe: especial, id?: string): void{    
+    this.guardarEspecial(espe);
   }
 
-  guardarEspecial(platoEsp: especial, idExiste: string) {
+  guardarEspecial(platoEsp: especial) {
 
     //this.idRes =perfil.id;
+    let idExiste = platoEsp.id;
     platoEsp.id = idExiste;
     console.log("idExiste??", idExiste);
     console.log("idExiste222??", platoEsp.id);
@@ -90,6 +91,7 @@ export class MeriendaService {
       const menuDesObj = {
         id: idExiste,
         userUID: this.usuarioLog,
+        estado: platoEsp.estado,
         platoEspecial: platoEsp.platoEspecial,
         precioEspecial: platoEsp.precioEspecial, 
         ingredientes: platoEsp.ingredientes
@@ -101,6 +103,7 @@ export class MeriendaService {
       this.db.collection('platoEspecial').doc(idPlato).set({
         id: platoEsp.id,
         userUID: this.usuarioLog,
+        estado: 'Activo',
         platoEspecial: platoEsp.platoEspecial,
         precioEspecial: platoEsp.precioEspecial, 
         ingredientes: platoEsp.ingredientes

@@ -20,14 +20,19 @@
     </ng-container>
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
       <ion-card button [routerLink]="['/lista-menus', alm.id]">
-        <ion-card-header >
-          <div class="imagen">
-            <img src="../../../assets/almuerz.png" width="140px">
-          </div>
-        </ion-card-header>
+
+            <ion-item>
+              <p class="almuerzoActivo" *ngIf="alm.estado === 'Activo'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{alm.estado}}</p>
+              <p class="almuerzoOculto" *ngIf="alm.estado === 'Deshabilitado'">
+                <ion-icon name="information-circle"></ion-icon>&nbsp;
+                {{alm.estado}}</p>
+              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{alm.precioAlmuerzo}}
+              </ion-button>
+            </ion-item>
         <ion-card-subtitle>
-          <p>{{alm.estado}}</p>
-          <h6>&nbsp;
+          <h6>&nbsp;&nbsp;
             <ion-icon name="person"></ion-icon>
             Tipo: {{alm.tipoAlmuerzo}}
           </h6>
@@ -40,13 +45,10 @@
           Segundo: {{alm.segundoAlmuerzo}}&nbsp; 
           </h6>
           <h6>&nbsp;
-            <ion-icon name="time"></ion-icon>
+            <ion-icon name="wine"></ion-icon>
           Bebida: {{alm.jugoAlmuerzo}}&nbsp; 
           </h6>
-          <ion-item>
-            <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{alm.precioAlmuerzo}}
-            </ion-button>
-          </ion-item>
+
         </ion-card-subtitle>
       </ion-card>
 
@@ -59,8 +61,6 @@
  
       <ion-item-options side="end">
         <ion-item-option (click)="onRemove(alm)" color="secondary">
-          Check
-          <ion-icon name="checkmark" slot="end"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

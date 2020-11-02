@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, ModalController } from '@ionic/angular';
 import { MeriendaService } from '../../../servicios/merienda.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { especial } from '../../../models/especial-interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { async } from '@angular/core/testing';
+import { EditarEspeciaComponent } from '../../editar-menu/editar-especia/editar-especia.component';
 
 @Component({
   selector: 'app-lista-especial',
@@ -16,6 +17,9 @@ export class ListaEspecialPage implements OnInit {
 
   public currentUser = this.AFauth.auth.currentUser;
   miform: FormGroup;
+
+  public especiales: especial[];
+
 
   especial: especial = {
     id:'',
@@ -29,10 +33,14 @@ export class ListaEspecialPage implements OnInit {
   especialIng: especial[] = [];
 
   constructor(private route: ActivatedRoute, private nav: NavController, private especialSvc: MeriendaService, private loadingController: LoadingController
-    ,private AFauth : AngularFireAuth, private router: Router, private fb: FormBuilder) {}
-
+    ,private AFauth : AngularFireAuth, private router: Router, private fb: FormBuilder, private modal: ModalController) {}
   ngOnInit() {
-    
+
+      // para listar en el modal
+    this.especialSvc.listar().subscribe(espe => {
+      this.especiales = espe;
+    })
+
     this.especialID = this.route.snapshot.params['id'];
     // this.especialIng = this.route.snapshot.params['platoEspecial'];
     if (this.especialID){
@@ -40,10 +48,6 @@ export class ListaEspecialPage implements OnInit {
     }
 
     // console.log("ingre", this.especialIng);  
-    
-
-    
-
     this.especial.ingredientes.map(i =>{
       console.log("sera??", i);
       
@@ -70,6 +74,16 @@ export class ListaEspecialPage implements OnInit {
     console.log("ccccccccc", this.getIngredientes());
 
     
+  }
+
+  openEsp(res){
+    this.modal.create({
+      component: EditarEspeciaComponent,
+      componentProps : {
+        res: res,
+        especiales: this.especiales,
+      }
+    }).then((modal) => modal.present())
   }
 
 
@@ -130,7 +144,7 @@ export class ListaEspecialPage implements OnInit {
       
       this.miform.patchValue({
         id: this.especialID,
-        estad: this.especial.estado,
+        estado: this.especial.estado,
         platoEspecial: this.especial.platoEspecial, 
         precioEspecial: this.especial.precioEspecial,
         ingredientes: this.especial.ingredientes

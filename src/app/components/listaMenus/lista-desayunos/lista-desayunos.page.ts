@@ -4,6 +4,7 @@ import { NavController, LoadingController } from '@ionic/angular';
 import { DesayunoService } from '../../../servicios/desayuno.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { desayuno } from '../../../models/desayuno-interface';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-desayunos',
@@ -18,23 +19,39 @@ export class ListaDesayunosPage implements OnInit {
     detalleDesayuno: '',
     platoDesayuno: '',
     precioDesayuno: '',
-    estado: ''
+    estado: '',
+    ingredientes: ['']
   };
 
   desayunoID= null;
+  miform: FormGroup;
+
 
   constructor(private route: ActivatedRoute, 
               private nav: NavController,
               private desayunoSVC: DesayunoService,
               private loadingController: LoadingController,
               private AFauth : AngularFireAuth,
-              private router: Router) { }
+              private router: Router,
+              private fb: FormBuilder) { }
 
   ngOnInit() {
+
     this.desayunoID = this.route.snapshot.params['id'];
     if (this.desayunoID){
       this.loadDesayuno();
     }
+
+    this.miform = this.fb.group({
+      id:[''],
+      platoDesayuno: [''],
+      detalleDesayuno: [''],
+      precioDesayuno: [''],
+      estado: [''],
+      ingredientes: this.fb.array(this.desayuno.ingredientes.map(i => this.fb.group({
+        ingrediente: this.fb.control(i)
+      })))
+    });
   }
 
   async loadDesayuno(){
@@ -47,6 +64,46 @@ export class ListaDesayunosPage implements OnInit {
       loading.dismiss();;
       this.desayuno = todo;
     });
+  }
+
+  IngredientesArray() {
+    return this.desayuno.ingredientes.map(i => this.fb.group({
+      ingrediente: this.fb.control(i)
+    }))
+  }
+
+  IngredientesArray2() {
+    return this.fb.group({
+      ingrediente: ""
+    })
+  }
+
+  
+  get ingre(){
+    return (<FormArray>this.miform.get('ingredientes'));
+  }
+
+  // Asi traigo los elementos al input 
+  get IngredienteArray() {
+    return (<FormArray>this.miform.get('ingredientes'));
+  }
+
+  getIngredientes(){
+    return this.miform.get('ingredientes') as FormArray;
+  }
+
+  IngredienteArray2() {
+    (<FormArray>this.miform.get('ingredientes'));
+  }
+
+  addIngredientes(ingrediente: string){
+    const control = <FormArray>this.miform.controls['ingredientes'];
+    control.push(this.fb.group({ingrediente: []}));
+  }
+
+  removeIngrediente(index: number){
+    const control = <FormArray>this.miform.controls['ingredientes'];
+    control.removeAt(index);
   }
 
   async saveDesayuno() {
@@ -72,6 +129,30 @@ export class ListaDesayunosPage implements OnInit {
       });
     }
   }
+
+  async onSubmit(formValue: any){
+
+    const loading = await this.loadingController.create({
+      message: 'Saving....'
+    });
+    await loading.present();
+
+    console.log("no va haber..", this.desayunoID);
+    const espe = new desayuno();
+    espe.platoDesayuno = formValue.platoDesayuno,
+    espe.detalleDesayuno = formValue.detalleDesayuno,
+    espe.estado = formValue.estado,
+    espe.precioDesayuno = formValue.precioDesayuno,
+    espe.ingredientes = formValue.ingredientes;
+    this.desayunoSVC.subirMenu(espe, this.desayunoID);
+
+    loading.dismiss();
+
+    this.router.navigate(['tabs-menu/desayuno'])
+
+
+  }
+
   async onRemoveDesayuno(idDes:string) {
     const loading = await this.loadingController.create({
       message: 'eliminando....'
