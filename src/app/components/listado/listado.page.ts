@@ -6,6 +6,7 @@ import { PerfilResComponent } from '../perfil-res/perfil-res.component';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AlertController } from '@ionic/angular';
 
 import { promos } from '../../models/promos-interface';
 import { resta } from '../../models/restaurante-interface';
@@ -83,7 +84,7 @@ export class ListadoPage implements OnInit {
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
     private almuerzoService : AlmuerzoService, private promocionesService: PromocionService,
     private perfilService : PerfilesService, private firestore: AngularFirestore,
-    private coordenadaService: CoordenadasService) { }
+    private coordenadaService: CoordenadasService, private alercontroller : AlertController) { }
 
   async ngOnInit() {
 
@@ -101,6 +102,8 @@ export class ListadoPage implements OnInit {
       if(data.roles === "dueño"){
         //window.location.replace("http://localhost:8100/perfil")
         this.router.navigate(['/perfil'])
+      }else if(data.roles ==="admin"){
+        this.presentarMensaje();
       }
     })
 
@@ -184,6 +187,23 @@ export class ListadoPage implements OnInit {
     this.promociones$ = this.promocionesService.recuperarDatos();
 
 
+  }
+
+  async presentarMensaje(){
+    const alert = await this.alercontroller.create({
+      header:'Rol incorrecto',
+      message: 'No tienes permisos para ingresar en la APP',
+      buttons : [
+        {
+          text : "OK",
+          handler :() =>{
+            this.router.navigate(['/home'])
+          }
+        }
+      ]
+    })
+    await alert.present()
+    let result = await alert.onDidDismiss();
   }
 
 
@@ -337,6 +357,12 @@ export class ListadoPage implements OnInit {
         icon: 'mail',
         handler: () => {
           this.router.navigate(['tabs-reservas/reserva'])
+        }
+      },{
+        text: 'Mis Sugerencias',
+        icon: 'medkit',
+        handler: () => {
+          this.router.navigate(['tabs-quejas-usu/pendientes'])
         }
       },{
         text: 'Cerrar Sesion',

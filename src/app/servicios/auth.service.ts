@@ -109,7 +109,8 @@ export class AuthService {
           email: usuario.email,
           roles: data.roles,
           numero : data.numero,
-          nombre: data.nombre
+          nombre: data.nombre,
+          foto: data.foto
         }
         return userRef.set(datos);
       }else{
@@ -119,6 +120,7 @@ export class AuthService {
           uid: usuario.uid,
           email: usuario.email,
           roles: 'cliente',
+          foto: "",
           //numero : '555555',
           // nombre: 'k'
         }
@@ -141,6 +143,7 @@ export class AuthService {
           email: usuario.email,
           roles: 'cliente',
           numero : '555555',
+          foto: "",
           // nombre: 'k'
         }
         return userRef.set(datos);

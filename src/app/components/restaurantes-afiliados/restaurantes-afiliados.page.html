@@ -20,7 +20,7 @@
               </div>
               <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
               <div *ngIf="a.estado ==='verdadero'"> 
-                <form [formGroup] ="calificar" (ngSubmit) = "presentAlertConfirm(r.id)" style="text-align: center;">
+                <form [formGroup] ="calificar" (ngSubmit) = "presentAlertConfirm(r.id, r.userUID)" style="text-align: center;">
                   <p class="clasificacion">
                     <input id="radio1" type="radio" formControlName="estrellas" value="5">
                     <label for="radio1">★</label>
@@ -37,9 +37,6 @@
                     <p>Calificar</p> 
                   </ion-button>
                 </form>
-              </div>
-              <div *ngIf="a.estado ==='verdadero'">
-                <ion-button  (click) ="presentModalComentario(r.userUID)" type = "submit" expand = "block">Comentar</ion-button>
               </div>
            
               <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>

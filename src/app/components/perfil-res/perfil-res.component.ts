@@ -56,6 +56,7 @@ import { MeriendaService } from '../../servicios/merienda.service';
   styleUrls: ['./perfil-res.component.scss'],
 })
 export class PerfilResComponent implements OnInit {
+  @ViewChild( IonInfiniteScroll, { static: true}) infititeScroll: IonInfiniteScroll
 
   form: FormGroup;
 
@@ -133,6 +134,10 @@ export class PerfilResComponent implements OnInit {
   existeEsp: boolean;
   existePromo: boolean;
 
+  public limite : number  =15
+  public listaComentario: any = []
+  comentariosMas : comentarios[]
+
   constructor( private navparams: NavParams, private modal:ModalController, private authservice: AuthService,
     public actionSheetController: ActionSheetController, private router:Router, private AFauth : AngularFireAuth,
     private db: AngularFirestore, private alertController : AlertController, private perfilService : PerfilesService,
@@ -145,6 +150,7 @@ export class PerfilResComponent implements OnInit {
 
     {
       this.fotosRef = this.db.collection('afiliados')
+
      }
 
     public calificar = this.formBuilder.group ({

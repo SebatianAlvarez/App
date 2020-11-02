@@ -256,30 +256,27 @@
           <div *ngIf="res.userUID === comen.uidResta">
             <ion-item>
               <h6>{{comen.nombreUsu}}</h6>&nbsp;&nbsp;&nbsp;
-              <h6>{{comen.comentario}}</h6>
+              {{comen.comentario}}
+              <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
+              </ion-button>
             </ion-item>
              
           </div>
         </div>
-        <ion-infinite-scroll threshold="100px">
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
       </div> 
 
 <!-- Ubicacion -->
 
     <br>
     <ion-card *ngIf="informacion">
+
       <ion-card-header style="text-align: center;">Ubicación
       <button style="position: absolute; right: 20px;" ion-button (click)="cargarMapa()">
         <ion-icon name="refresh"></ion-icon>
       </button>
       </ion-card-header>
     </ion-card>
-    <br>
+  
     <div *ngIf="informacion">
     <div *ngFor="let coor of coordenadas$ | async">
       <div *ngIf="coor.userUID === res.userUID" >
@@ -288,8 +285,9 @@
     </div>
     </div>
 
-    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 80%; height: 80%; margin-left:30px;"></div>
+    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 95%; height: 80%; margin-left:10px;"></div>
 
+  
 
   <ng-template #foto>
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">

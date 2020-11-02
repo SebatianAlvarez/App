@@ -10,7 +10,26 @@
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
-      <img class="fotoPerfil" src = "../../../assets/logoU.png">
+      <div *ngFor="let usu of usuarios$ | async">
+        <div *ngIf  ="usu.uid === usuarioLog">
+          <ion-slides  options={{slideOpts}} pager ="true" class="slides">
+            <ion-slide *ngFor="let foto of fotos$ | async"  class="slide">
+              <div style="text-align: center;">
+                <img id="avatar" src= {{foto.foto}}  class="foto"> 
+              </div>
+          
+              <div>
+                <ion-button expand="block" (click)="presentarMensaje(usu.uid ,foto.id)">
+                  Cambiar Avatar
+                <ion-icon slot="end" name ="refresh"></ion-icon>
+                </ion-button>
+                  
+              </div>
+              
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
   
       <form [formGroup] ="actualizar" (ngSubmit) = "actualizarUsuario(actualizar.value)">
         <ion-list>
@@ -44,34 +63,13 @@
             </ion-button>
   
           </ion-card-content>
-    
-          
+
         </ion-list>
         
       </form>
     </ion-card-header>  
   </ion-card>
 
-  <div *ngFor="let usu of usuarios$ | async">
-    <div *ngIf  ="usu.uid === usuarioLog">
-      <ion-slides  options={{slideOpts}} pager ="true" class="slides">
-        <ion-slide *ngFor="let foto of fotos$ | async"  class="slide">
-          <div>
-            <img id="avatar" src= {{foto.foto}}  class="foto"> 
-          </div>
-      
-          <div>
-            <ion-button expand="block" (click)="presentarMensaje(usu.uid ,foto.id)">
-              Cambiar Avatar
-            <ion-icon slot="end" name ="refresh"></ion-icon>
-            </ion-button>
-              
-          </div>
-          
-        </ion-slide>
-      </ion-slides>
-    </div>
-  </div>
 </ion-content>
 
 <hr>

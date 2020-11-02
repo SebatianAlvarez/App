@@ -153,6 +153,7 @@ public queja = this.formBuilder.group ({
           motivo : valores.detalle
         }).then((res) =>{
           this.presentAlert();
+          this.router.navigate(['/listado'])
           resolve(res)
         }).catch(err => reject(err))
       })

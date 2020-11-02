@@ -107,12 +107,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
       });
     })
 
-
-
-
     console.log("a ver", this.listAfiliados)
-
-
 
   }
 
@@ -146,8 +141,6 @@ export class RestaurantesAfiliadosPage implements OnInit {
     });
   }
 
-
-
   goMapa(){
     this.router.navigate(['/listado']);
   }
@@ -173,7 +166,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
         },{
           text : "Realizar Comentario",
           handler : data =>{
-            this.Comentar(data.comentario,  id)
+            
             this.presentComentario()
             this.router.navigate(['/listado'])
           }
@@ -278,27 +271,34 @@ export class RestaurantesAfiliadosPage implements OnInit {
   }
 
   // Calificacion Alert
-  async presentAlertConfirm(id: string) {
+  async presentAlertConfirm(id1: string, id2: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Calificar este Restaurante?!',
+      header: 'Deja tu comentario',
+      inputs: [
+        {
+          name: "comentario",
+          type: "text",
+          placeholder: "Comentario (opcional)"
+        }
+      ],
       // message: 'Message <strong>text</strong>!!!',
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {
+          handler: datos => {
             console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Si',
-          handler: () => {
+          handler: datos => {
             console.log('Confirm Okay');
             const valores: number = this.calificar.value
             let x = valores['estrellas']
 
-            this.restauranteService.getRestaurante(id).subscribe( data => {
+            this.restauranteService.getRestaurante(id1).subscribe( data => {
 
 
               let a : number = (parseInt(x) + data.calificacion)
@@ -312,13 +312,16 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
               console.log("total firebase", totalF);
 
+              this.Comentar(datos.comentario, x ,  id2)
+              
+
               let califica : resta = {
                 aux:y,
                 calificacion: a,
                 promedio : totalF
               }
 
-              this.restauranteService.updateRestaurante(id, califica)
+              this.restauranteService.updateRestaurante(id1, califica)
               this.presentAlert();
               this.router.navigate(['/listado']);
 
@@ -383,7 +386,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
     this.authservice.logout();
   }
 
-  Comentar(comen: string, id : string){
+  Comentar(comen: string,cali : any, id : string){
 
     let comentario = new comentarios();
 
@@ -400,7 +403,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
           uidResta : id,
           uid : comentario.uid,
           nombreUsu : data.nombre,
-          comentario: comen
+          comentario: comen,
+          calificacion: cali
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))

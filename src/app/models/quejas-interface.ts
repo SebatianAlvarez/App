@@ -8,4 +8,5 @@ export class queja {
     idRes?: string;
     motivo?: string;
     tipo?: string;
+    rechazo?: string;
 }

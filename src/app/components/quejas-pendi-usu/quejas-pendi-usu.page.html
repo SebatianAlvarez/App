@@ -3,15 +3,15 @@
     <ion-button slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Sugerencias Atendidas</ion-title>
+    <ion-title style="text-align: center;">Sugerencias Pendientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content >
 
   <div *ngFor = "let q of quejas$ | async">
-    <div *ngIf = "usuarioLog === q.uidResta">
-      <ion-card *ngIf = "q.estado === 'verdadero'">
+    <div *ngIf = "usuarioLog === q.uidUsu">
+      <ion-card *ngIf = "q.estado === 'pendiente'">
         <ion-card-header>
         </ion-card-header>
         <ion-card-subtitle>
@@ -34,7 +34,8 @@
           </h6>
         </ion-card-subtitle>
         <ion-card-header>
-          <ion-button  color="danger" (click)="eliminarQueja(q.id)"><ion-icon name="close"></ion-icon>Eliminar</ion-button>
+          <ion-button color="secondary" (click)="aprobarQueja(q.id)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button>
+          <ion-button  color="danger" (click)="presentAlertRechazado(q.id)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
         </ion-card-header>
           
       </ion-card>
