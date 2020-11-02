@@ -25,17 +25,17 @@
           {{q.numero}}
           </h6>
           <h6>&nbsp;
-            <ion-icon name="person"></ion-icon>&nbsp;
+            <ion-icon name="alert"></ion-icon>&nbsp;
           {{q.tipo}}
           </h6>
           <h6>&nbsp;
-            <ion-icon name="person"></ion-icon>&nbsp;
+            <ion-icon name="bowtie"></ion-icon>&nbsp;
           {{q.motivo}}
           </h6>
         </ion-card-subtitle>
         <ion-card-header>
           <ion-button color="secondary" (click)="aprobarQueja(q.id)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button>
-          <ion-button  color="danger" (click)="rechazarQueja(q.id)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
+          <ion-button  color="danger" (click)="presentAlertRechazado(q.id)"><ion-icon name="close"></ion-icon>Rechazar</ion-button>
         </ion-card-header>
           
       </ion-card>

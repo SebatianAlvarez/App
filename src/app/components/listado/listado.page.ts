@@ -359,6 +359,12 @@ export class ListadoPage implements OnInit {
           this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
+        text: 'Mis Sugerencias',
+        icon: 'medkit',
+        handler: () => {
+          this.router.navigate(['tabs-quejas-usu/pendientes'])
+        }
+      },{
         text: 'Cerrar Sesion',
         icon: 'log-out',
         handler: () => {

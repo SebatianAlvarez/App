@@ -64,23 +64,44 @@ export class VisualizarQuejasPage implements OnInit {
     await alert.present();
   }
 
-  rechazarQueja(id : string){
+  rechazarQueja(id : string, motivo: string){
     this.quejasService.getAfiliado(id).subscribe(x =>{
       let que : queja = {
         estado : "falso",
+        rechazo: motivo
       }
       this.quejasService.updateAfiliado(id , que);
-      this.presentAlertRechazado()
     });
   }
 
-  async presentAlertRechazado() {
+  async presentAlertRechazado(id: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Sugerencia Rechazada',
+      inputs: [
+        {
+          name: "comentario",
+          type: "text",
+          placeholder: "Motivo del Rechazo"
+        }
+      ],
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
-      buttons: ['OK']
+      buttons : [
+        {
+          text : "Cancelar",
+          role : "cancel",
+          cssClass : "secondary",
+          handler: () =>{
+
+          }
+        },{
+          text : "Confirmar Rechazo",
+          handler : data =>{
+            this.rechazarQueja(id, data.comentario)
+          }
+        }
+      ]
     });
 
     await alert.present();

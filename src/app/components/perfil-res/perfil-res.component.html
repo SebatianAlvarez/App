@@ -217,7 +217,9 @@
           <div *ngIf="res.userUID === comen.uidResta">
             <ion-item>
               <h6>{{comen.nombreUsu}}</h6>&nbsp;&nbsp;&nbsp;
-              <h6>{{comen.comentario}}</h6>
+              {{comen.comentario}}
+              <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
+              </ion-button>
             </ion-item>
              
           </div>
@@ -232,7 +234,7 @@
     </ion-card>
     <br>
 
-    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 80%; height: 80%; margin-left:30px;"></div>
+    <div *ngIf="informacion" class="mapa" id="Mapa" style="width: 95%; height: 80%; margin-left:10px;"></div>
     <div *ngIf="informacion">
     <div *ngFor="let coor of coordenadas$ | async">
       <div *ngIf="coor.userUID === res.userUID" >
