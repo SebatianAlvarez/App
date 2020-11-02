@@ -39,6 +39,7 @@
     "cordova-android": "^8.1.0",
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.1",
+    "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-facebook4": "^6.2.0",
     "cordova-plugin-fcm-with-dependecy-updated": "^6.4.3",
     "cordova-plugin-geolocation": "^4.0.2",

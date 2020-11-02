@@ -1,9 +1,45 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>quejasAproUsu</ion-title>
+  <ion-toolbar >
+    <ion-button slot="start" fill ="none" routerLink="/listado">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-title style="text-align: center;">Sugerencias Atendidas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
+
+  <div *ngFor = "let q of quejas$ | async">
+    <div *ngIf = "usuarioLog === q.uidUsu">
+      <ion-card *ngIf = "q.estado === 'verdadero'">
+        <ion-card-header>
+          <p style="text-align: center;">Tu sugerencia ha sido <b style="color: green;">Atendida</b> </p>
+          <br>
+          <div class="imagen">
+            <img *ngIf="q.fotoResta;else foto" [src]="q.fotoResta" width="140px">
+          </div>
+          <ion-card-subtitle>
+            &nbsp;<ion-icon name="person"></ion-icon>&nbsp;
+            Restaurante: {{q.nombreResta}} 
+          </ion-card-subtitle>
+          <ion-card-subtitle>
+            &nbsp;<ion-icon name="alert"></ion-icon>&nbsp;
+            Tipo: {{q.tipo}} &nbsp;<br>
+          </ion-card-subtitle> 
+          <ion-card-subtitle>
+            &nbsp;<ion-icon name="bowtie"></ion-icon>&nbsp;
+            Motivo: {{q.motivo}} &nbsp;<br> 
+          </ion-card-subtitle>
+          <ion-card-header>
+            <ion-button color="danger" (click)="eliminarQueja(q.id)"><ion-icon name="trash"></ion-icon></ion-button>
+          </ion-card-header>
+        </ion-card-header>
+        </ion-card>
+    </div>
+  </div>
+
+  <ng-template #foto>
+    <img src = "../../../assets/foto.png" width="10px">
+  </ng-template>
 
 </ion-content>

@@ -9,4 +9,6 @@ export class queja {
     motivo?: string;
     tipo?: string;
     rechazo?: string;
+    nombreResta?: string;
+    fotoResta?: string
 }

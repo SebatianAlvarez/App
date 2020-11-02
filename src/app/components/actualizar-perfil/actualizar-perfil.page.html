@@ -13,7 +13,7 @@
       <div *ngFor="let usu of usuarios$ | async">
         <div *ngIf  ="usu.uid === usuarioLog">
           <ion-slides  options={{slideOpts}} pager ="true" class="slides">
-            <ion-slide *ngFor="let foto of fotos$ | async"  class="slide">
+            <ion-slide *ngFor="let foto of fotos$ | async"  class="slide" style="padding-bottom: 25px;">
               <div style="text-align: center;">
                 <img id="avatar" src= {{foto.foto}}  class="foto"> 
               </div>
