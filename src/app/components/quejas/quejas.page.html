@@ -21,7 +21,7 @@
                     <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
                   </div>
                   <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
-                  <form [formGroup] ="queja" (ngSubmit) = "realizarQueja(r.userUID)" style="text-align: center;">
+                  <form [formGroup] ="queja" (ngSubmit) = "realizarQueja(r.userUID, r.nombreRestaurante, r.imagenRes)" style="text-align: center;">
                     <ion-list>
                       <ion-item>
                         <ion-select formControlName ="tipo"  placeholder="Tipo  de Almuerzo" required type="text">

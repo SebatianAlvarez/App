@@ -130,7 +130,7 @@ public queja = this.formBuilder.group ({
     });
   }
 
-  realizarQueja(id : string ){
+  realizarQueja(id : string, nombreRes: string, foto:string ){
 
     let quejas = new queja();
 
@@ -150,7 +150,9 @@ public queja = this.formBuilder.group ({
           numero : data.numero,
           estado : "pendiente",
           tipo : valores.tipo,
-          motivo : valores.detalle
+          motivo : valores.detalle,
+          nombreResta: nombreRes,
+          fotoResta: foto
         }).then((res) =>{
           this.presentAlert();
           this.router.navigate(['/listado'])

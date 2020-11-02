@@ -166,6 +166,7 @@ export class PromocionPage implements OnInit {
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
       trigger: { every: {hour: 19, minute: 40} }
+
       //foreground: true
     })   
   }

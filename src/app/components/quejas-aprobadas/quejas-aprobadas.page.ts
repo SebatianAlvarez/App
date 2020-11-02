@@ -5,7 +5,7 @@ import { AuthService } from '../../servicios/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { queja } from '../../models/quejas-interface';
 import { Observable } from 'rxjs';
-import { QuejasService } from '../../servicios/quejas.service'
+import { QuejasService } from '../../servicios/quejas.service';
 
 @Component({
   selector: 'app-quejas-aprobadas',
