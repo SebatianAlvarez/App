@@ -37,6 +37,8 @@ import { MenusPrincipalesPage } from './components/menus-principales/menus-princ
 import "leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/images/marker-icon-2x.png";
 
+// Notificaciones
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
   
 @NgModule({
   declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent],
@@ -50,7 +52,7 @@ import "leaflet/dist/images/marker-icon-2x.png";
     SplashScreen,
     Facebook,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation,NativeGeocoder,AngularFireDatabase,{provide: FirestoreSettingsToken, useValue: {}},
+    Geolocation,NativeGeocoder,AngularFireDatabase, LocalNotifications, {provide: FirestoreSettingsToken, useValue: {}},
   ],
   exports:[MenusPrincipalesPage],
   bootstrap: [AppComponent]
