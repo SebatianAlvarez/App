@@ -6,7 +6,8 @@ import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Usuario } from '../models/usuario-interface';
-import { async } from '@angular/core/testing';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { auth } from 'firebase'
 
 
 
@@ -21,7 +22,7 @@ export class AuthService {
   usuariocolencion: AngularFirestoreCollection<Usuario>;
 
   constructor(private AFauth: AngularFireAuth, private db:AngularFirestore,
-    private router:Router) {
+    private router:Router, private google:GooglePlus ) {
 
       this.usuariocolencion = db.collection<Usuario>('usuarios');
 
@@ -186,7 +187,8 @@ export class AuthService {
 
   logout(){
     this.AFauth.auth.signOut().then(() =>{
-      window.location.reload(true);
+      this.google.disconnect();
+      //window.location.reload(true);
       this.router.navigate(['/home']);
     })
   }
@@ -205,6 +207,13 @@ export class AuthService {
 
   updateUser(id: string, x : Usuario): Promise<void>{
     return this.usuariocolencion.doc(id).update(x);
+  }
+
+  loginGoogle(){
+    return this.google.login({}).then(res =>{
+      const user_data_google =res;
+     return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken))
+    })
   }
 
 }

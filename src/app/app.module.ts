@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
+import { GooglePlus } from '@ionic-native/google-plus/ngx'
+
 
 //librerias mapa
 
@@ -50,6 +52,7 @@ import { EditarDesayunoComponent } from './components/editar-menu/editar-desayun
       BrowserAnimationsModule, AngularFireStorageModule, FormsModule, ReactiveFormsModule],
   providers: [
     FCM,
+    GooglePlus,
     StatusBar,
     SplashScreen,
     Facebook,

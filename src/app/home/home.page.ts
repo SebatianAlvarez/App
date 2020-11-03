@@ -113,23 +113,17 @@ export class HomePage {
           
       } else {
           console.log('platform: web')
-          this.googleWeb();
+          this.googleCordova();
           
       }
     }
 
     googleCordova(){
-      this.fb.login(['email']).then( (response) => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
-        firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
-          console.log('Info google: '+ JSON.stringify(success));
-          this.router.navigate(['/perfil']);
-        }).catch((error) => {
-          console.log('Error: '+ JSON.stringify(error));
-        });
-      }).catch((error) => {
-        console.log(error);
-      });
+     this.authService.loginGoogle().then( () =>{
+       this.router.navigate(['/listado'])
+     }).catch(err => {
+       alert("Contraseña o Correo incorrectos")
+     })
     }
 
     googleWeb(){
