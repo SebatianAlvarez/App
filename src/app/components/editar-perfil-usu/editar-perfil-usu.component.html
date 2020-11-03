@@ -44,40 +44,30 @@
               </div>
             </ng-container> 
           </div>
-          <ion-card-content>
-            <ion-button expand="block" color="danger" [disabled] ="actualizar.invalid" type = "submit" expand = "block">
-              ACTUALIZAR
-              <ion-icon slot="end" name ="refresh"></ion-icon>
-            </ion-button>
-          </ion-card-content>
-        </ion-list>
-      </form>
-
-      <form [formGroup] ="actualizar2" (ngSubmit) = "actualizarUsuarioNumero(actualizar2.value)">
-        <ion-list>
+        
           <ion-item>
             <ion-input placeholder="Teléfono" formControlName="numero" type="text" maxlength="10"></ion-input>
           </ion-item>
           <div >
             <ng-container *ngFor ="let error of errorMensajes.numero">
-              <div class="e" *ngIf ="actualizar2.get('numero').hasError(error.type) && (actualizar2.get('numero').dirty || actualizar2.get('numero').touched)">
+              <div class="e" *ngIf ="actualizar.get('numero').hasError(error.type) && (actualizar.get('numero').dirty || actualizar.get('numero').touched)">
                 {{error.message}}
               </div>
             </ng-container> 
           </div>
+  
           <ion-card-content>
-            <ion-button expand="block" color="danger" [disabled] ="actualizar2.invalid" type = "submit" expand = "block">
+            <ion-button expand="block" color="danger" [disabled] ="actualizar.invalid" type = "submit" expand = "block">
               ACTUALIZAR
               <ion-icon slot="end" name ="refresh"></ion-icon>
             </ion-button>
+  
           </ion-card-content>
-        </ion-list>
-      </form>
 
+        </ion-list>
+        
+      </form>
     </ion-card-header>  
   </ion-card>
 
 </ion-content>
-
-<hr>
-

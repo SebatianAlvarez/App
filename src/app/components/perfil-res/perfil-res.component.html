@@ -250,21 +250,8 @@
 
 
 <!-- comentarios -->
-
-      <div class="comentarios" *ngIf="comentarios">
-        <div *ngFor="let comen of comentarios$ | async">
-          <div *ngIf="res.userUID === comen.uidResta">
-            <ion-item>
-              <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
-              </ion-button>
-            </ion-item>
-            <p style=" padding-left: 10px;">{{comen.comentario}} </p>
-             
-            <p style=" text-align: end; font-size: 11px; color: #16212B;" >{{comen.fecha}}</p>
-           
-          </div>
-        </div>
-      </div> 
+   
+<img  src="../../../assets/opinion.jpg" width="95%" height="45%" margin-top="5px">
 
 <!-- Ubicacion -->
 
@@ -294,4 +281,21 @@
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">
   </ng-template>
 
+</ion-content>
+
+<ion-content>
+  <div class="comentarios" *ngIf="comentarios">
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
+        <ion-item>
+          <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
+          </ion-button>
+        </ion-item>
+        <p style=" padding-left: 10px;">{{comen.comentario}} </p>
+         
+        <p style=" text-align: end; font-size: 11px; color: #16212B;" >{{comen.fecha}}</p>
+       
+      </div>
+    </div>
+  </div>
 </ion-content>

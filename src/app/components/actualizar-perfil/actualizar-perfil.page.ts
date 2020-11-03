@@ -11,7 +11,6 @@ import { FormControl , Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Foto } from '../../models/fotos-interface';
 import { FotosService } from '../../servicios/fotos.service';
-import { isNullOrUndefined } from 'util';
 
 
 @Component({
@@ -32,12 +31,6 @@ export class ActualizarPerfilPage implements OnInit {
 
   public fotos$: Observable<Foto[]>;
   public usuarios$: Observable<Usuario[]>;
-
-  public Usuario: Usuario = {
-
-    nombre : '',
-    numero : '',
-  };
   
   public UsuarioId = null;
 
@@ -60,8 +53,12 @@ export class ActualizarPerfilPage implements OnInit {
 
     public actualizar = this.formBuilder.group ({
       id: new FormControl (''),
-      nombre: new FormControl ('', [ Validators.minLength(3), Validators.maxLength(20)]),
-      numero: new FormControl('', [ Validators.pattern("^[0-9]*$"), Validators.minLength(10)])
+      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    });
+
+    public actualizar2 = this.formBuilder.group ({
+      id: new FormControl (''),
+      numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)])
     });
 
   ngOnInit() {
@@ -75,8 +72,6 @@ export class ActualizarPerfilPage implements OnInit {
 
     this.usuarios$ = this.authservice.recuperarDatos();
 
-    this.iniciarForm2();
-
     }
 
     async actualizarUsuario(){
@@ -84,26 +79,38 @@ export class ActualizarPerfilPage implements OnInit {
         message:"Actualizando....."
       });
       await loading.present();
-       const valores = this.actualizar.value;
+
       if (this.UsuarioId){
-               
-        this.Usuario.nombre = valores.nombre
-        this.Usuario.numero = valores.numero
-        this.perfilService.updateUsuario(this.UsuarioId, this.Usuario).then(() =>{
+        const valores = this.actualizar.value;
+        let Usuario1: Usuario = {
+
+          nombre : valores.nombre,
+        };
+       
+        this.perfilService.updateUsuario(this.UsuarioId, Usuario1).then(() =>{
           loading.dismiss();
           this.router.navigate(['/perfil'])
         })
-        
       }
     }
 
-    private iniciarForm2():void{
-      this.actualizar.patchValue({
-        nombre: this.actualizar.value.nombre,
-        numero: this.actualizar.value.numero
-              
+    async actualizarUsuarioNumero(){
+      const loading = await this.loadingController.create({
+        message:"Actualizando....."
       });
-      console.log("q sera" + this.actualizar.value.nombre)
+      await loading.present();
+
+      if (this.UsuarioId){
+        const valores = this.actualizar2.value;
+        let Usuario2: Usuario = {
+          numero : valores.numero,
+        };
+       
+        this.perfilService.updateUsuario(this.UsuarioId, Usuario2).then(() =>{
+          loading.dismiss();
+          this.router.navigate(['/perfil'])
+        })
+      }
     }
 
 
@@ -145,6 +152,5 @@ cambiarAvatar(idu : string , idf : string){
     this.authservice.updateUser(idu, usu)
   })
 }
-
 
 }
