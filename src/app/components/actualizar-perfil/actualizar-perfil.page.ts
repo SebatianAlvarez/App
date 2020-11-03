@@ -59,8 +59,8 @@ export class ActualizarPerfilPage implements OnInit {
 
     public actualizar = this.formBuilder.group ({
       id: new FormControl (''),
-      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)])
+      nombre: new FormControl ('', [ Validators.minLength(3), Validators.maxLength(20)]),
+      numero: new FormControl('', [ Validators.pattern("^[0-9]*$"), Validators.minLength(10)])
     });
 
   ngOnInit() {
@@ -81,9 +81,9 @@ export class ActualizarPerfilPage implements OnInit {
         message:"Actualizando....."
       });
       await loading.present();
-
+       const valores = this.actualizar.value;
       if (this.UsuarioId){
-        const valores = this.actualizar.value;
+       
         this.Usuario.nombre = valores.nombre
         this.Usuario.numero = valores.numero
         this.perfilService.updateUsuario(this.UsuarioId, this.Usuario).then(() =>{
@@ -97,117 +97,6 @@ export class ActualizarPerfilPage implements OnInit {
   onLogout(){
     this.authservice.logout();
   }
-
-  /*
-
-  getMenu(){
-
-    let currentUser = this.AFauth.auth.currentUser;
-    this.usuarioLog = currentUser.uid;
-
-    this.authservice.getUsuario().subscribe(data =>{
-      data.forEach((usuario: Usuario) => {
-
-        if (this.usuarioLog == usuario.uid){
-          this.UsuarioRoles = [usuario]
-          for(let user of this.UsuarioRoles){
-            this.rolActual = user.roles
-            this.presentActionSheet(this.rolActual.toString())
-          }
-        }
-      })
-    })
-  }
-
-  */
- /*
-
- async presentActionSheet(rol :string) {
-    
-  if( rol == 'dueño'){
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Menu',
-      buttons: [{
-        text: 'Mi Perfil',
-        icon: 'person',
-        handler: () => {
-          this.router.navigate(['/perfil']);
-        }
-      },{
-        text: 'Visualizar Peticiones',
-        icon: 'eye',
-        handler: () => {
-          this.router.navigate(['/reserva']);
-        }
-      },{
-        text: 'Peticiones Aceptadas',
-        icon: 'checkmark-circle-outline',
-        handler: () => {
-          this.router.navigate(['/reserva-aceptada']);
-        }
-      },{
-        text: 'Actualizar Menu',
-        icon: 'refresh-circle',
-        handler: () => {
-          this.router.navigate(['/menu']);
-        }
-      },{
-        text: 'Promociones',
-        icon: 'heart',
-        handler: () => {
-          this.router.navigate(['/promocion'])
-        }
-      }, {
-        text: 'Promociones Activas',
-        icon: 'done-all',
-        handler: () => {
-          this.router.navigate(['/promo-activa']);
-        }
-      },{
-        text: 'Cerrar Sesion',
-        icon: 'log-out',
-        handler: () => {
-         this.onLogout();
-        }
-      }]
-    });
-    await actionSheet.present();
-    let result = await actionSheet.onDidDismiss();
-  }else if (rol == 'cliente'){
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Menu',
-      buttons: [{
-        text: 'Restaurantes',
-        icon: 'restaurant',
-        handler: () => {
-          this.router.navigate(['/listado']);
-        }
-      }, {
-        text: 'Mi Perfil',
-        icon: 'person',
-        handler: () => {
-          this.router.navigate(['/perfil'])
-        }
-      },{
-        text: 'Mensajes',
-        icon: 'mail',
-        handler: () => {
-          this.router.navigate(['/mensajes'])
-        }
-      },{
-        text: 'Cerrar Sesion',
-        icon: 'log-out',
-        handler: () => {
-         this.onLogout();
-        }
-      }]
-    });
-    await actionSheet.present();
-    let result = await actionSheet.onDidDismiss();
-  }
-}
-
-*/
 
 async presentarMensaje(idu : string , idf : string){
   const alert = await this.alertController.create({
@@ -243,5 +132,6 @@ cambiarAvatar(idu : string , idf : string){
     this.authservice.updateUser(idu, usu)
   })
 }
+
 
 }
