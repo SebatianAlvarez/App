@@ -5,4 +5,5 @@ export class comentarios {
     nombreUsu: string
     comentario: string
     calificacion: string
+    fecha: string
   }

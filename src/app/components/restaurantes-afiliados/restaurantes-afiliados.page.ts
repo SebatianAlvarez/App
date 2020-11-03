@@ -28,6 +28,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   restaurante$: Observable<resta[]>;
   afiliados$: Observable<afiliado[]>;
+  CurrentDate = new Date()
 
 
 
@@ -404,7 +405,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
           uid : comentario.uid,
           nombreUsu : data.nombre,
           comentario: comen,
-          calificacion: cali
+          calificacion: cali,
+          fecha: this.CurrentDate
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))
