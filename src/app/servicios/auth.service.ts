@@ -210,9 +210,9 @@ export class AuthService {
   }
 
   loginGoogle(){
-    return this.google.login({}).then(res =>{
-      const user_data_google =res;
-     return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken))
+    return this.google.login({}).then( (res) =>{
+      const user_data_google = res;
+     return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
     })
   }
 

@@ -106,34 +106,12 @@ export class HomePage {
       });
     }
 
-    googleLogin(){
-      if(this.platform.is('cordova')){
-          console.log('platform: cordova')
-          this.googleWeb();
-          
-      } else {
-          console.log('platform: web')
-          this.googleCordova();
-          
-      }
-    }
-
-    googleCordova(){
+    ingresoGoogle(){
      this.authService.loginGoogle().then( () =>{
        this.router.navigate(['/listado'])
      }).catch(err => {
        alert("Contraseña o Correo incorrectos")
      })
-    }
-
-    googleWeb(){
-      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((success) => {
-        console.log('Info Google '+ JSON.stringify(success));
-        this.authService.actualizarUsuario(success.user);
-        this.router.navigate(['/perfil']);
-      }).catch((error) => {
-        console.log('Error: '+ JSON.stringify(error))
-      })
     }
 
   OnSubmitLogin(){
