@@ -255,13 +255,13 @@
         <div *ngFor="let comen of comentarios$ | async">
           <div *ngIf="res.userUID === comen.uidResta">
             <ion-item>
-              <h6>Usuario: </h6> {{comen.nombreUsu}}&nbsp;&nbsp;&nbsp;
-              <br>
-              <h6>Comentario: </h6>{{comen.comentario}}
-              <h6>Comentado el: </h6> {{comen.fecha}}
-              <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
+              <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
               </ion-button>
             </ion-item>
+            <p style=" padding-left: 10px;">{{comen.comentario}} </p>
+             
+            <p style=" text-align: end; font-size: 11px; color: #16212B;" >{{comen.fecha}}</p>
+           
           </div>
         </div>
       </div> 

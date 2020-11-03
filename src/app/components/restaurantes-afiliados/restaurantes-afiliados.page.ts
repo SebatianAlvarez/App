@@ -406,7 +406,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           nombreUsu : data.nombre,
           comentario: comen,
           calificacion: cali,
-          fecha: this.CurrentDate
+          fecha: this.CurrentDate.toString().substr(0, 15)
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))
