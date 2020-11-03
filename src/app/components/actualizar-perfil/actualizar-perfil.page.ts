@@ -11,6 +11,7 @@ import { FormControl , Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Foto } from '../../models/fotos-interface';
 import { FotosService } from '../../servicios/fotos.service';
+import { isNullOrUndefined } from 'util';
 
 
 @Component({
@@ -74,6 +75,8 @@ export class ActualizarPerfilPage implements OnInit {
 
     this.usuarios$ = this.authservice.recuperarDatos();
 
+    this.iniciarForm2();
+
     }
 
     async actualizarUsuario(){
@@ -83,14 +86,24 @@ export class ActualizarPerfilPage implements OnInit {
       await loading.present();
        const valores = this.actualizar.value;
       if (this.UsuarioId){
-       
+               
         this.Usuario.nombre = valores.nombre
         this.Usuario.numero = valores.numero
         this.perfilService.updateUsuario(this.UsuarioId, this.Usuario).then(() =>{
           loading.dismiss();
           this.router.navigate(['/perfil'])
         })
+        
       }
+    }
+
+    private iniciarForm2():void{
+      this.actualizar.patchValue({
+        nombre: this.actualizar.value.nombre,
+        numero: this.actualizar.value.numero
+              
+      });
+      console.log("q sera" + this.actualizar.value.nombre)
     }
 
 
