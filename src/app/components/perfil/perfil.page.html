@@ -91,7 +91,7 @@
 
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">
-          <div *ngIf = "usuarioLog === u.uid">
+          <div *ngIf = "usuarioLog === u.uid" (click)="Notificiacion7()">
             <br>
             <ion-list>
               <ion-item>

@@ -12,7 +12,7 @@ import { RestaurantesService } from '../../servicios/restaurantes.service';
 import { resta } from '../../models/restaurante-interface';
 
 import { Usuario } from '../../models/usuario-interface';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-perfil',
@@ -79,10 +79,34 @@ export class PerfilPage implements OnInit {
       title: 'Notificacion de prueba 12:00',
       text: 'Ejemplo de notificacion',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 12, minute: 0} },
+      trigger: {every: {hour: 21, minute: 59} },
       foreground: true
     })
     
+  }
+
+  Notificiacion7(){
+    console.log("nota enviada");
+    
+    this.localNotification.schedule({
+      id:7,
+      title: 'notifiacion cada minuto, desde perfil',
+      text: 'Notificacion cada minuto',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
+      //foreground: true
+    })   
+  }
+
+  Notificiacion8(){
+    this.localNotification.schedule({
+      id:8,
+      title: 'notifiacion cada minuto, desde perfil sin darle clic al boton',
+      text: 'Notificacion cada minuto',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
+      //foreground: true
+    })   
   }
 
   Notificiacion3(){

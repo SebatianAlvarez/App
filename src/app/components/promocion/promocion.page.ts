@@ -77,6 +77,12 @@ export class PromocionPage implements OnInit {
     });
 
   ngOnInit() {
+
+    this.Notificiacion2();
+    this.Notificiacion4();
+    this.Notificiacion5();
+    this.Notificiacion11();
+
     this.estaSeleccionado = false;
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
@@ -103,9 +109,7 @@ export class PromocionPage implements OnInit {
     })
 
     // NOTIFICCION QUE REDIRIGI A UNA PAGINA
-    this.Notificiacion2();
-    this.Notificiacion4();
-    this.Notificiacion5();
+
 
   }
 
@@ -124,10 +128,10 @@ export class PromocionPage implements OnInit {
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Notificacion de prueba 12:00',
+      title: 'Notificacion de prueba 22:10',
       text: 'Ejemplo de notificacion',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 12, minute: 0} },
+      trigger: {every: {hour: 22, minute: 10} },
       foreground: true
     })
     
@@ -162,22 +166,54 @@ export class PromocionPage implements OnInit {
   Notificiacion5(){
     this.localNotification.schedule({
       id:5,
-      title: 'Revisa el menu del dia ',
+      title: 'Revisa el menu del dia, 22:10',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 19, minute: 40} }
-
-      //foreground: true
+      trigger: { every: {hour: 22, minute: 10} },
+      foreground: true
     })   
   }
 
   Notificiacion6(){
     this.localNotification.schedule({
       id:6,
-      title: 'Revisa el menú del día ',
+      title: 'Revisa el menú del día, a las 23:00 ',
       text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 7, minute: 0} }
+      trigger: { every: {hour: 23, minute: 0} }
+      //foreground: true
+    })   
+  }
+
+  Notificiacion9(){
+    this.localNotification.schedule({
+      id:9,
+      title: 'Revisa el menú del día, promocion agregada ',
+      text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.SECOND}
+      //foreground: true
+    })   
+  }
+
+  Notificiacion10(){
+    this.localNotification.schedule({
+      id:10,
+      title: 'Revisa el menú del día, cada hora!!! ',
+      text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.HOUR}
+      //foreground: true
+    })   
+  }
+
+  Notificiacion11(){
+    this.localNotification.schedule({
+      id:10,
+      title: 'Revisa el menú del día, cada hora!!! sin darle al boton ',
+      text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.HOUR}
       //foreground: true
     })   
   }
@@ -192,6 +228,8 @@ export class PromocionPage implements OnInit {
       //foreground: true
     })   
   }
+
+  
 
   showAlert(header, sub, msg){
     this.alertController.create({
