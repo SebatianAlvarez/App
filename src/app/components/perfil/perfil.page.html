@@ -91,7 +91,7 @@
 
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">
-          <div *ngIf = "usuarioLog === u.uid" (click)="Notificiacion7()">
+          <div *ngIf = "usuarioLog === u.uid" >
             <br>
             <ion-list>
               <ion-item>
@@ -104,7 +104,7 @@
                 <h6 class="datos">{{u.numero}}</h6>
               </ion-item>
               <ion-item>
-                <ion-icon name="mail" slot="start" (click)="Notificiacion3()"></ion-icon>
+                <ion-icon name="mail" slot="start"></ion-icon>
                 <h6 class="datos">{{u.email}}</h6>
               </ion-item>
             </ion-list>
