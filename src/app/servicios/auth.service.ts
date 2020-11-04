@@ -72,8 +72,8 @@ export class AuthService {
           roles: 'cliente',
           numero : numero,
           nombre: nombre,
-          apellido: apellido
-          
+          apellido: apellido,
+          foto: ""
         }
         return userRef.set(datos);
       })
