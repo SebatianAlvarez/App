@@ -35,6 +35,9 @@ export class HomePage {
 
   public email:string;
   public password:string;
+  passwordType : string ="password";
+  showPassword = false
+  passwordToggleIcon ='eye'
 
   constructor(private authService: AuthService, private router: Router, private afBD: AngularFireDatabase,
     public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform,
@@ -62,7 +65,15 @@ export class HomePage {
     });
 
 
+    mostrarContra(): void{
+      this.showPassword = !this.showPassword;
 
+      if(this.passwordToggleIcon === 'eye'){
+        this.passwordToggleIcon ='eye-off';
+      } else {
+        this.passwordToggleIcon = 'eye'
+      }
+    }
 
 
     facebookLogin(){

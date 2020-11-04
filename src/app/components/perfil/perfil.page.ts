@@ -222,20 +222,20 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mi Restaurante',
+        text: 'Restaurante',
         icon: 'pizza',
         handler: () => {
           this.router.navigate(['/perfil-restaurante']);
         }
       },{
-        text: 'Visualizar Peticiones',
+        text: 'Reservas',
         icon: 'eye',
         handler: () => {
           this.router.navigate(['/tabs/reserva']);
         }
       },
       {
-        text: 'Mi Menú',
+        text: 'Menú',
         icon: 'refresh-circle',
         handler: () => {
           this.router.navigate(['/tabs-menu/desayuno']);
@@ -261,7 +261,7 @@ export class PerfilPage implements OnInit {
         }
       }
       ,{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();
@@ -274,7 +274,7 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();
@@ -294,7 +294,7 @@ export class PerfilPage implements OnInit {
           this.router.navigate(['/error']);
         }
       },{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();

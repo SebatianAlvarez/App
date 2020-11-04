@@ -16,7 +16,7 @@
         <ion-card>
           <ion-card-header>
             <div class="imagen">
-              <img src="../../../assets/logoU.png" width="140px">
+              <img style="margin-left: 50px;" *ngIf="reser.foto;else foto" src="{{reser.foto}}" width="140px">
             </div>
           </ion-card-header>
           <ion-card-subtitle>
@@ -38,20 +38,22 @@
             {{reser.tiempo}}&nbsp; minutos
             </h6>
             <h6>&nbsp;
-              <ion-icon name="person"></ion-icon>&nbsp;
+              <ion-icon name="bowtie"></ion-icon>&nbsp;
             {{reser.motivo}}&nbsp; 
             </h6>
           </ion-card-subtitle>
           <ion-card-header>
-            <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button>
+            <!-- <ion-button color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon></ion-button> -->
             <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
             <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
           </ion-card-header>
-            
         </ion-card>
       </div>
      
     </div>
+    <ng-template #foto>
+      <img style="margin-left: 50px;" src = "../../../assets/foto.png" width="10px">
+    </ng-template>
   </ng-template>
 
   

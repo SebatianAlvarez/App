@@ -20,6 +20,9 @@
     </ng-container>
     <ion-item-sliding *ngFor="let espe of especialUser" (click)="openEsp(espe)">
       <ion-card button>
+        <div class="imagen">
+          <img style="margin-left: 45px; margin-top: 17px;" src="../../../../assets/espe.jpg" alt="des" width="120px" >
+        </div> 
             <ion-item>
               <p class="almuerzoActivo" *ngIf="espe.estado === 'Activo'">
                 <ion-icon name="information-circle"></ion-icon>&nbsp;

@@ -21,6 +21,10 @@
     <ion-item-sliding *ngFor="let alm of almuerzoUser">
       <ion-card button [routerLink]="['/lista-menus', alm.id]">
 
+        <div class="imagen">
+          <img style="margin-left: 35px;" src="../../../assets/almu.png" alt="des" width="140px" >
+        </div> 
+
             <ion-item>
               <p class="almuerzoActivo" *ngIf="alm.estado === 'Activo'">
                 <ion-icon name="information-circle"></ion-icon>&nbsp;

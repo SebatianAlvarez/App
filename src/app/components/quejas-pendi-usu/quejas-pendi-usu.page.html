@@ -9,9 +9,13 @@
 
 <ion-content >
 
-  <div *ngFor = "let q of quejas$ | async">
-    <div *ngIf = "usuarioLog === q.uidUsu">
-      <ion-card *ngIf = "q.estado === 'pendiente'">
+  <ng-template #foto [ngIf]="validarDatos(existeDatos) === true">
+    <div *ngFor="let res of restaurante$ | async">
+      <div *ngFor = "let q of quejas$ | async">
+        <div *ngIf = "usuarioLog === q.uidUsu">
+
+      <ng-template [ngIf]=" res.userUID === q.uidResta && q.estado === 'pendiente'">
+      <ion-card >
         <ion-card-header>
           <p style="text-align: center;">Tu sugerencia se encuentra <b style="color: #c2c7e8;">Pendiente</b> </p>
           <br>
@@ -35,11 +39,31 @@
           </ion-card-header>
         </ion-card-header>
         </ion-card>
+      </ng-template>
     </div>
   </div>
+</div>
 
-  <ng-template #foto>
-    <img src = "../../../assets/foto.png" width="10px">
+  
+    <ng-template #foto>
+      <img src = "../../../assets/foto.png" width="10px">
+    </ng-template>
+  </ng-template>
+
+  <ng-template [ngIf]="validarDatos(existeDatos) === false">
+    <ion-card class="sinDatos">
+      <ion-item>
+        <ion-label></ion-label> 
+      </ion-item>
+    
+      <ion-card-content style="text-align: center;">
+        No cuentas con sugerencias pendientes, puedes realizar tus sugerencias en
+        Restaurantes Afiliados 
+      </ion-card-content>
+      <ion-item>
+        <ion-label></ion-label>
+      </ion-item>
+    </ion-card>
   </ng-template>
 
 </ion-content>

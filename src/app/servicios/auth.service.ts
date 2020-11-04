@@ -53,7 +53,7 @@ export class AuthService {
     )
   }
 
-  async register(email:string, password:string, nombre:string, numero:string, usuario?:any){
+  async register(email:string, password:string, nombre:string, numero:string, apellido:string){
     
     return await this.AFauth.auth.createUserWithEmailAndPassword(email,password).then(res =>{
       const uid = res.user.uid;
@@ -71,7 +71,9 @@ export class AuthService {
           email: email,
           roles: 'cliente',
           numero : numero,
-          nombre: nombre
+          nombre: nombre,
+          apellido: apellido
+          
         }
         return userRef.set(datos);
       })
@@ -111,6 +113,7 @@ export class AuthService {
           roles: data.roles,
           numero : data.numero,
           nombre: data.nombre,
+          apellido: data.apellido,
           foto: data.foto
         }
         return userRef.set(datos);
@@ -122,6 +125,7 @@ export class AuthService {
           email: usuario.email,
           roles: 'cliente',
           foto: "",
+          //apellido: data.apellido,
           //numero : '555555',
           // nombre: 'k'
         }

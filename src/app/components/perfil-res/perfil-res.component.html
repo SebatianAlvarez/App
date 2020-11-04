@@ -103,9 +103,9 @@
         <ion-slide *ngFor="let desa of desayunosRespectivos">   
           <ion-card class="infomacionCard">
             <ion-card-header >
-              <!-- <div class="imagen">
-                <img  src="../../../assets/menu.png" alt="des" width="100px" height="200px">
-              </div> -->
+              <div class="imagen">
+                <img style="margin-left: 25px; margin-top: 25px;" src="../../../assets/desa.jpg" alt="des"  width="140px" >
+              </div> 
             </ion-card-header>
             <ion-item>
               <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -148,9 +148,9 @@
       <ion-slide *ngFor="let almu of almuerzosRespectivos">  
         <ion-card class="infomacionCard">
           <ion-card-header >
-            <!-- <div class="imagen">
-              <img src="../../../assets/almuerz.png" alt="des" width="100px" height="200px">
-            </div> -->
+             <div class="imagen">
+              <img style="margin-left: 25px; margin-top: 25px;" src="../../../assets/almu.png" alt="des" width="140px" >
+            </div> 
           </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -188,9 +188,9 @@
       <ion-slide *ngFor="let espe of especialesRespectivos">  
         <ion-card class="infomacionCard2">
           <ion-card-header >
-            <!-- <div class="imagen">
-              <img src="../../../assets/menu.png" alt="des" width="100px" height="200px">
-            </div> -->
+             <div class="imagen">
+              <img style="margin-left: 35px; margin-top: 17px;" src="../../../assets/espe.jpg" alt="des" width="120px">
+            </div> 
           </ion-card-header>
           <ion-item>
             <ion-icon name="restaurant" slot="start"></ion-icon>
@@ -251,7 +251,21 @@
 
 <!-- comentarios -->
    
-<img  src="../../../assets/opinion.jpg" width="95%" height="45%" margin-top="5px">
+  <div class="comentarios" *ngIf="comentarios">
+    <div *ngFor="let comen of comentarios$ | async">
+      <div *ngIf="res.userUID === comen.uidResta">
+        <img  src="../../../assets/opinion.jpg" width="95%" height="45%" margin-top="5px">
+        <ion-item>
+          <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
+          </ion-button>
+        </ion-item>
+        <p style=" padding-left: 10px;">{{comen.comentario}} </p>
+         
+        <p style=" text-align: end; font-size: 11px; color: #16212B;" >{{comen.fecha}}</p>
+       
+      </div>
+    </div>
+  </div>
 
 <!-- Ubicacion -->
 
@@ -259,16 +273,16 @@
     <ion-card *ngIf="informacion">
 
       <ion-card-header style="text-align: center;">Ubicación
-      <button style="position: absolute; right: 20px;" ion-button (click)="cargarMapa()">
-        <ion-icon name="refresh"></ion-icon>
-      </button>
       </ion-card-header>
     </ion-card>
   
     <div *ngIf="informacion">
     <div *ngFor="let coor of coordenadas$ | async">
       <div *ngIf="coor.userUID === res.userUID" >
-        <ion-button style="margin-left: 25%" color="medium" (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+        <div style="text-align: center;">
+          <ion-button  color="medium" (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+          <ion-button  color="medium" (click)="cargarMapa()">Mostrar Mapa</ion-button>
+        </div>
       </div>
     </div>
     </div>
@@ -281,21 +295,4 @@
     <img src="../../../assets/foto.png" width="100%" height="17%" margin-top="5px">
   </ng-template>
 
-</ion-content>
-
-<ion-content>
-  <div class="comentarios" *ngIf="comentarios">
-    <div *ngFor="let comen of comentarios$ | async">
-      <div *ngIf="res.userUID === comen.uidResta">
-        <ion-item>
-          <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
-          </ion-button>
-        </ion-item>
-        <p style=" padding-left: 10px;">{{comen.comentario}} </p>
-         
-        <p style=" text-align: end; font-size: 11px; color: #16212B;" >{{comen.fecha}}</p>
-       
-      </div>
-    </div>
-  </div>
 </ion-content>

@@ -365,7 +365,7 @@ export class ListadoPage implements OnInit {
           this.router.navigate(['tabs-quejas-usu/pendientes'])
         }
       },{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();

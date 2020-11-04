@@ -44,6 +44,10 @@ export class ActualizarPerfilPage implements OnInit {
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 3 caracteres'}
       ],
+      apellido : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'}
+      ],
       numero : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 10 caracteres'},
@@ -54,6 +58,10 @@ export class ActualizarPerfilPage implements OnInit {
     public actualizar = this.formBuilder.group ({
       id: new FormControl (''),
       nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    });
+    public actualizar3 = this.formBuilder.group ({
+      id: new FormControl (''),
+      apellido: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
     });
 
     public actualizar2 = this.formBuilder.group ({
@@ -107,6 +115,25 @@ export class ActualizarPerfilPage implements OnInit {
         };
        
         this.perfilService.updateUsuario(this.UsuarioId, Usuario2).then(() =>{
+          loading.dismiss();
+          this.router.navigate(['/perfil'])
+        })
+      }
+    }
+
+    async actualizarUsuarioApellido(){
+      const loading = await this.loadingController.create({
+        message:"Actualizando....."
+      });
+      await loading.present();
+
+      if (this.UsuarioId){
+        const valores = this.actualizar3.value;
+        let Usuario3: Usuario = {
+          apellido : valores.apellido,
+        };
+       
+        this.perfilService.updateUsuario(this.UsuarioId, Usuario3).then(() =>{
           loading.dismiss();
           this.router.navigate(['/perfil'])
         })

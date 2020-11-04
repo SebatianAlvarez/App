@@ -59,7 +59,9 @@
           </ng-container> 
         </div> 
         <ion-item>
-          <ion-input class="texto" placeholder="Contraseña" formControlName="password" type="password" maxlength ="25"></ion-input>
+          <ion-input class="texto" placeholder="Contraseña" formControlName="password" [type] ="showPassword ? 'text' : 'password'" maxlength ="25"></ion-input>
+          <ion-icon slot="end" [name]= "passwordToggleIcon" (click)="mostrarContra()" ></ion-icon>
+          
         </ion-item>
         <div >
           <ng-container *ngFor ="let error of errorMensajes.password">

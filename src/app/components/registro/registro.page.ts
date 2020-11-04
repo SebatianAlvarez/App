@@ -31,6 +31,10 @@ export class RegistroPage implements OnInit {
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 3 caracteres'}
       ],
+      apellido : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'}
+      ],
       email : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'email', message: 'Asegúrate de tener acceso a este mail'}
@@ -54,6 +58,7 @@ export class RegistroPage implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
       nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      apellido: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
     });
 
   ngOnInit() {
@@ -61,7 +66,7 @@ export class RegistroPage implements OnInit {
   }
 
   OnSubmitRegister(user: Usuario){
-    this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
+    this.authSercive.register(user.email, user.password, user.nombre,user.numero, user.apellido).then(auth =>{
       console.log(auth);
 
       this.OnSubmitLogin(user);

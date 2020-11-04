@@ -20,9 +20,9 @@
     </ng-container>
     <ion-item-sliding *ngFor="let des of desayunoUser" (click)="openDes(des)">
       <ion-card button>
-          <!-- <div class="imagen">
-            <img src="../../../assets/menu.png" width="140px">
-          </div> -->
+        <div class="imagen">
+          <img style="margin-left: 35px; margin-top: 25px;" src="../../../../assets/desa.jpg" alt="des" width="140px" >
+        </div> 
             <ion-item>
               <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
                 <ion-icon name="information-circle"></ion-icon>&nbsp;

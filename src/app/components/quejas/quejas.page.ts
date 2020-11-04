@@ -167,7 +167,7 @@ public queja = this.formBuilder.group ({
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Gracias por tu Opinion',
+      header: 'Gracias por tu Sugerencia',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']

@@ -186,7 +186,9 @@ export class RestaurantesAfiliadosPage implements OnInit {
         {
           name: "mesas",
           type: "number",
-          placeholder: "Mesas a Reservar"
+          placeholder: "Mesas a Reservar",
+          
+
         },{
           name: "tiempo",
           type: "number",
@@ -206,9 +208,13 @@ export class RestaurantesAfiliadosPage implements OnInit {
           handler : data =>{
             let tiempo;
             tiempo = parseInt(data.tiempo)
-            if(tiempo < 30){
+            let mesa;
+            mesa = parseInt(data.mesas)
+            if(tiempo < 30 || tiempo > 60){
               this.reservaError();
-            }else{
+            }else if (mesa > 10) {
+              this.reservaError1();
+            }else {
               this.Reservar(data.mesas, data.tiempo ,id);
               this.presentReserva();
             }
@@ -226,7 +232,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Gracias por tu opinón',
+      header: 'Gracias por tu Comentario',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']
@@ -264,7 +270,19 @@ export class RestaurantesAfiliadosPage implements OnInit {
       cssClass: 'my-custom-class',
       header: '',
       // subHeader: 'Subtitle',
-      message: 'Se debe realizar la reserva con 30 minutos de anticipación',
+      message: 'Se debe realizar la reserva con 30 minutos minimo y 60 minutos maximo de anticipación',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async reservaError1() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '',
+      // subHeader: 'Subtitle',
+      message: 'No se puede Reservar mas de 10 mesas',
       buttons: ['OK']
     });
 
@@ -354,7 +372,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
           tiempo : tiempo,
           nombre : data.nombre,
           numero : data.numero,
-          estado : "En Revision"
+          estado : "En Revision",
+          foto: data.foto,
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))
