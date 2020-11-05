@@ -152,7 +152,8 @@ public queja = this.formBuilder.group ({
           tipo : valores.tipo,
           motivo : valores.detalle,
           nombreResta: nombreRes,
-          fotoResta: foto
+          fotoResta: foto,
+          fotoUsu: data.foto
         }).then((res) =>{
           this.presentAlert();
           this.router.navigate(['/listado'])
@@ -167,7 +168,7 @@ public queja = this.formBuilder.group ({
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Gracias por tu Sugerencia',
+      header: 'Gracias por tu sugerencia',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']

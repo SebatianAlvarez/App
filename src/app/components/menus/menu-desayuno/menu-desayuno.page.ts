@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { desayuno } from '../../../models/desayuno-interface';
 import { EditarDesayunoComponent } from '../../editar-menu/editar-desayuno/editar-desayuno.component';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { resta } from '../../../models/restaurante-interface';
+import { RestaurantesService } from '../../../servicios/restaurantes.service';
 
 @Component({
   selector: 'app-menu-desayuno',
@@ -15,7 +18,7 @@ export class MenuDesayunoPage implements OnInit {
 
   desayunos: desayuno[];
   desayunoUser: desayuno[] = []; 
-
+  public restaurante$: Observable<resta[]>;
 
 
 
@@ -23,12 +26,13 @@ export class MenuDesayunoPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   constructor(private desayunoService: DesayunoService, private AFauth : AngularFireAuth, 
-    private router:Router,
+    private router:Router, private restauranteService : RestaurantesService ,
     private modal: ModalController) { }
 
   ngOnInit() {
 
       // para listar en el modal
+      this.restaurante$ = this.restauranteService.recuperarDatos();
       this.desayunoService.listar().subscribe(des => {
         this.desayunos = des;
     })

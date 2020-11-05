@@ -21,3 +21,8 @@ ion-toolbar{
 .datos{
   font-size: 10wh;
 }
+
+.aver2{
+  display: flex;
+  padding: 0% 10% 0% 10%;
+}

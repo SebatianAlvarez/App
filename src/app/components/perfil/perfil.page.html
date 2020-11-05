@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <ion-title style="text-align: center;">Mi Perfil </ion-title>
+    <ion-title style="text-align: center;">Mi perfil </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -82,7 +82,7 @@
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">
           <div *ngIf = "usuarioLog === u.uid">
-            <img class="fotoPerfil" src = {{u.foto}}>
+            <img  style="margin-left: 23px;" *ngIf="u.foto;else foto" class="fotoPerfil" src = {{u.foto}}>
           </div>
         </div>
       </div>
@@ -118,6 +118,10 @@
       Editar Perfil</ion-button>
     </ion-card-content>
   </ion-card>
+
+  <ng-template #foto>
+    <img style="margin-left: 23px;" src = "../../../assets/foto.png" width="140px">
+  </ng-template>
 
 
 <!-- <div *ngFor ="let resta of restaurantes">

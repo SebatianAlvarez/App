@@ -29,11 +29,13 @@ export class RegistroPage implements OnInit {
     public errorMensajes ={
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 3 caracteres'}
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
       ],
       apellido : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 3 caracteres'}
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
       ],
       email : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -57,8 +59,8 @@ export class RegistroPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email,]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
-      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      apellido: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      nombre: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)]),
+      apellido: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)]),
     });
 
   ngOnInit() {

@@ -4,18 +4,19 @@
         <ion-icon name = "arrow-back" ></ion-icon>
       </ion-button>
       
-    <ion-title style="text-align: center;"> Mi Restaurante</ion-title>
+    <ion-title style="text-align: center;"> Mi restaurante</ion-title>
 
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content class="ion-padding">
-
+  <div *ngFor ="let resta of restaurante$ | async">
+    <div *ngIf ="resta.userUID === usuarioLog">
+      <ng-template [ngIf]=" resta.resVerificado === 'Aprobado'">
   <ion-card>
     <ion-card-header>
-      <div *ngFor ="let resta of restaurante$ | async">
-        <div *ngIf ="resta.userUID === usuarioLog">
+      
           <img *ngIf="resta.imagenRes ; else foto" src ="{{resta.imagenRes}}" width="100%" height="17%" margin-top="5px">
           
           <ng-template [ngIf]='resta.promedio >= 1 && resta.promedio <=  1.9'>
@@ -58,9 +59,6 @@
           <ng-template #foto>
             <img src = "../../../assets/foto.png"  width="100%" height="17%" margin-top="5px">
           </ng-template>
-      
-        </div>
-      </div>
         <!--
       <ion-card-content>
       
@@ -71,6 +69,26 @@
         -->
     </ion-card-header>
   </ion-card>
+</ng-template>
+<ng-template [ngIf]=" resta.resVerificado === 'En revision'">
+  <ion-card class="sinDatos">
+    <ion-item>
+      <ion-label></ion-label> 
+    </ion-item>
+  
+    <ion-card-content style="text-align: center;">
+      Tu restaurante esta siendo revisado por un administrador espera un momento
+      por favor
+    </ion-card-content>
+    <ion-item>
+      <ion-label></ion-label>
+    </ion-item>
+  </ion-card>
+</ng-template>
+</div>
+</div>
+
+
   
 
 </ion-content>

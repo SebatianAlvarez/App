@@ -104,7 +104,7 @@
           <ion-card class="infomacionCard">
             <ion-card-header >
               <div class="imagen">
-                <img style="margin-left: 25px; margin-top: 25px;" src="../../../assets/desa.jpg" alt="des"  width="140px" >
+                <img style="margin-left: 20px; margin-top: 25px;" src="../../../assets/desa.jpg" alt="des"  width="140px" >
               </div> 
             </ion-card-header>
             <ion-item>
@@ -250,11 +250,14 @@
 
 
 <!-- comentarios -->
+
+
    
   <div class="comentarios" *ngIf="comentarios">
+    <img  src="../../../assets/opinion.jpg" width="95%" height="45%" margin-top="5px">
     <div *ngFor="let comen of comentarios$ | async">
       <div *ngIf="res.userUID === comen.uidResta">
-        <img  src="../../../assets/opinion.jpg" width="95%" height="45%" margin-top="5px">
+        
         <ion-item>
           <h6> <ion-icon name ="person"></ion-icon> {{comen.nombreUsu}} </h6>&nbsp;&nbsp;&nbsp;   <ion-button fill="outline" slot="end"><ion-icon name="star" slot="start"></ion-icon>{{comen.calificacion}}
           </ion-button>
