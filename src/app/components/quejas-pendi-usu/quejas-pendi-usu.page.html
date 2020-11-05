@@ -3,13 +3,13 @@
     <ion-button slot="start" fill ="none" routerLink="/listado">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Sugerencias Pendientes</ion-title>
+    <ion-title style="text-align: center;">Sugerencias pendientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content >
 
-  <ng-template #foto [ngIf]="validarDatos(existeDatos) === true">
+  <ng-template [ngIf]="validarDatos(existeDatos) === true">
     <div *ngFor="let res of restaurante$ | async">
       <div *ngFor = "let q of quejas$ | async">
         <div *ngIf = "usuarioLog === q.uidUsu">
@@ -46,7 +46,7 @@
 
   
     <ng-template #foto>
-      <img src = "../../../assets/foto.png" width="10px">
+      <img src = "../../../assets/foto.png" width="140px">
     </ng-template>
   </ng-template>
 

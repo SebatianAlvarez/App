@@ -11,4 +11,5 @@ export class queja {
     rechazo?: string;
     nombreResta?: string;
     fotoResta?: string
+    fotoUsu?: string
 }

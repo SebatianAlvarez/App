@@ -772,10 +772,10 @@ mostrar(id : string, lat: number, lng: number){
         }).addTo(this.map);
       //this.marker.addTo(this.map).bindPopup('Estoy aqui');
       this.map.setView(latLong);
-
       });
 
   })
+  
 
 }
 

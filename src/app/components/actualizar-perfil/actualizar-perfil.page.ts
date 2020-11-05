@@ -42,11 +42,13 @@ export class ActualizarPerfilPage implements OnInit {
      public errorMensajes ={
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 3 caracteres'}
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
       ],
       apellido : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 3 caracteres'}
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
       ],
       numero : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -57,11 +59,11 @@ export class ActualizarPerfilPage implements OnInit {
 
     public actualizar = this.formBuilder.group ({
       id: new FormControl (''),
-      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      nombre: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)]),
     });
     public actualizar3 = this.formBuilder.group ({
       id: new FormControl (''),
-      apellido: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      apellido: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)], ),
     });
 
     public actualizar2 = this.formBuilder.group ({

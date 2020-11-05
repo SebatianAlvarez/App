@@ -1,18 +1,25 @@
 <ion-header>
-  <ion-toolbar color ="dark">
+  <ion-toolbar>
     <ion-button slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Sugerencias Atendidas</ion-title>
+    <ion-title style="text-align: center;">Sugerencias atendidas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content >
 
+  <ng-template [ngIf]="validarDatos(existeDatos) === true">
+    <div *ngFor="let res of restaurante$ | async">
+
   <div *ngFor = "let q of quejas$ | async">
     <div *ngIf = "usuarioLog === q.uidResta">
-      <ion-card *ngIf = "q.estado === 'verdadero'">
+      <ng-template [ngIf]=" res.userUID === q.uidResta && q.estado === 'verdadero'">
+      <ion-card >
         <ion-card-header>
+          <div class="imagen">
+            <img style="margin-left: 50px; margin-bottom: 20px;" *ngIf="q.fotoUsu;else foto" src="{{q.fotoUsu}}" width="140px">
+          </div>
         </ion-card-header>
         <ion-card-subtitle>
           &nbsp;
@@ -35,7 +42,29 @@
         </ion-card-header>
           
       </ion-card>
+    </ng-template>
     </div>
   </div>
+</div>
+
+  <ng-template #foto>
+    <img style="margin-left: 50px; margin-bottom: 50px;" src = "../../../assets/foto.png" width="140px">
+  </ng-template>
+</ng-template>
+
+<ng-template [ngIf]="validarDatos(existeDatos) === false">
+  <ion-card class="sinDatos">
+    <ion-item>
+      <ion-label></ion-label> 
+    </ion-item>
+  
+    <ion-card-content style="text-align: center;">
+      No cuentas con sugerencias atendidas por el momento
+    </ion-card-content>
+    <ion-item>
+      <ion-label></ion-label>
+    </ion-item>
+  </ion-card>
+</ng-template>
 
 </ion-content>

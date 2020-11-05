@@ -148,7 +148,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   async presentModalComentario(id : string){
     const alert = await this.alertController.create({
-      header: 'Deja tu Comentario',
+      header: 'Deja tu comentario',
       inputs: [
         {
           name: "comentario",
@@ -165,7 +165,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
           }
         },{
-          text : "Realizar Comentario",
+          text : "Realizar comentario",
           handler : data =>{
             
             this.presentComentario()
@@ -181,12 +181,12 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   async presentModal(id : string){
     const alert = await this.alertController.create({
-      header: 'Realizar Reserva',
+      header: 'Realizar reserva',
       inputs: [
         {
           name: "mesas",
           type: "number",
-          placeholder: "Mesas a Reservar",
+          placeholder: "Mesas a reservar",
           
 
         },{
@@ -204,7 +204,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
           }
         },{
-          text : "Confirmar Reserva",
+          text : "Confirmar reserva",
           handler : data =>{
             let tiempo;
             tiempo = parseInt(data.tiempo)
@@ -232,7 +232,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Gracias por tu Comentario',
+      header: 'Gracias por tu comentario',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']
@@ -247,7 +247,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Tu reserva sera verificada en minutos',
       // subHeader: 'Subtitle',
-      message: 'Puedes ir al menu Mensajes.',
+      message: 'Puedes ir al menu mensajes.',
       buttons: ['OK']
     });
 
@@ -282,7 +282,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
       cssClass: 'my-custom-class',
       header: '',
       // subHeader: 'Subtitle',
-      message: 'No se puede Reservar mas de 10 mesas',
+      message: 'No se puede reservar mas de 10 mesas',
       buttons: ['OK']
     });
 
@@ -391,7 +391,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();

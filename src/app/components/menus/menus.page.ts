@@ -4,6 +4,9 @@ import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
+import { Observable } from 'rxjs';
+import { resta } from '../../models/restaurante-interface';
+import { RestaurantesService } from '../../servicios/restaurantes.service';
 
 @Component({
   selector: 'app-menus',
@@ -14,14 +17,17 @@ export class MenusPage implements OnInit {
 
   almuerzos: almuerzo[];
   almuerzoUser: almuerzo[] = []; 
-
+  public restaurante$: Observable<resta[]>;
 
   public usuarioLog:string;
   public currentUser = this.AFauth.auth.currentUser;
 
-  constructor(private almuerzoService: AlmuerzoService, private AFauth : AngularFireAuth, private router:Router) { }
+  constructor(private almuerzoService: AlmuerzoService, private AFauth : AngularFireAuth, private router:Router,
+    private restauranteService : RestaurantesService) { }
 
   ngOnInit() {
+
+    this.restaurante$ = this.restauranteService.recuperarDatos();
 
 
 

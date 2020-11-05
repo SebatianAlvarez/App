@@ -192,8 +192,8 @@ export class AuthService {
   logout(){
     this.AFauth.auth.signOut().then(() =>{
       this.google.disconnect();
-      //window.location.reload(true);
       this.router.navigate(['/home']);
+      window.location.reload(true);
     })
   }
 

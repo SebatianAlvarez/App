@@ -61,9 +61,22 @@
       </ion-item-options> -->
     </ion-item-sliding>
   </ion-list>
- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/lista-desayunos" routerDirection="forward">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <div *ngFor="let res of restaurante$ | async">
+    <div *ngFor="let des of desayunoUser">
+      <div *ngIf = "res.userUID === des.userUID && des.userUID === usuarioLog">
+        <ng-template [ngIf]="res.resVerificado === 'Aprobado'">
+          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button routerLink="/lista-desayunos" routerDirection="forward">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ng-template>
+        <ng-template [ngIf]="res.resVerificado === 'En revision'">
+      
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  
+ 
  </ion-content>

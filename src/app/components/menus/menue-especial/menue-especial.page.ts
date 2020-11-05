@@ -6,6 +6,9 @@ import { especial } from '../../../models/especial-interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { EditarEspeciaComponent } from '../../editar-menu/editar-especia/editar-especia.component';
+import { Observable } from 'rxjs';
+import { resta } from '../../../models/restaurante-interface';
+import { RestaurantesService } from '../../../servicios/restaurantes.service';
 
 @Component({
   selector: 'app-menue-especial',
@@ -17,6 +20,7 @@ export class MenueEspecialPage implements OnInit {
   especialUser: especial[] = []; 
 
    public especiales: especial[];
+   public restaurante$: Observable<resta[]>;
 
 
   // miform: FormGroup;
@@ -26,10 +30,11 @@ export class MenueEspecialPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   constructor(private especialSvc: MeriendaService, private AFauth : AngularFireAuth, private router:Router, 
-    private modal: ModalController) { }
+    private modal: ModalController, private restauranteService : RestaurantesService) { }
 
   ngOnInit() {
     
+    this.restaurante$ = this.restauranteService.recuperarDatos();
       // para listar en el modal
     this.especialSvc.listar().subscribe(espe => {
         this.especiales = espe;
