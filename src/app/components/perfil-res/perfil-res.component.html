@@ -15,7 +15,7 @@
 
 <ion-card class="fotoResta">
   <ion-header>
-    <img *ngIf="res.imagenRes ; else foto" src="{{res.imagenRes}}" width="100%" height="7%" margin-top="5px">
+    <img *ngIf="res.imagenRes ; else foto" style="margin-right: 10px;" src="{{res.imagenRes}}" width="100%" height="7%" margin-top="5px">
   </ion-header>
 </ion-card>
 
@@ -41,10 +41,20 @@
     </ion-item>
 
     <ion-card-content>
-      Este restaurante tiene una capacidad para {{res.capacidadRestaurante}} personas, 
-      se encuentra ubicado en: {{res.direccionRestaurante}}, ven a visitarlo!
-      El restaurante abre sus puertas a las {{res.horaApertura}} a.m y cierra a las {{res.horaCierre}} p.m.
 
+      <ng-template [ngIf]="res.tipoRestaurante === 'Restaurante'">
+        Este restaurante tiene una capacidad para {{res.capacidadRestaurante}} personas, 
+        se encuentra ubicado en: {{res.direccionRestaurante}}, ven a visitarlo!
+        El restaurante abre sus puertas a las {{res.horaApertura}} a.m y cierra a las {{res.horaCierre}} p.m.
+  
+      </ng-template>
+      <ng-template [ngIf]="res.tipoRestaurante === 'Kioscos de comida'">
+        Este kiosko se encuentra ubicado en: {{res.direccionRestaurante}}, ven a visitarlo!
+        El kiosko abre sus puertas a las {{res.horaApertura}} a.m y cierra a las {{res.horaCierre}} p.m.
+  
+      </ng-template>
+
+     
     </ion-card-content>
     <ion-card-content>
       <a (click)="mostrarBotonAfiliar()">¿Afiliarte a este restaurante?</a>
@@ -205,7 +215,7 @@
             <div *ngFor="let i of espe.ingredientes">
               
                 <ion-icon name="remove" slot="start"></ion-icon>
-                {{ - i['ingrediente']}} <br>
+                {{i['ingrediente']}} <br>
             </div>
           </ion-card-content>
           <br><br>
@@ -283,7 +293,7 @@
     <div *ngFor="let coor of coordenadas$ | async">
       <div *ngIf="coor.userUID === res.userUID" >
         <div style="text-align: center;">
-          <ion-button  color="medium" (click)="mostrar(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
+          <ion-button  color="medium" (click)="presentarAlertaMapa(res.id, coor.lat, coor.lng )">¿Cómo Llegar?</ion-button>
           <ion-button  color="medium" (click)="cargarMapa()">Mostrar Mapa</ion-button>
         </div>
       </div>

@@ -16,17 +16,14 @@ import { AuthService } from '../../servicios/auth.service';
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { comentarios } from '../../models/comentarios-interface';
 import { first } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular';
-import { CalificarRestauranteComponent } from '../calificar-restaurante/calificar-restaurante.component'
-
-
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
-  selector: 'app-restaurantes-afiliados',
-  templateUrl: './restaurantes-afiliados.page.html',
-  styleUrls: ['./restaurantes-afiliados.page.scss'],
+  selector: 'app-calificar-restaurante',
+  templateUrl: './calificar-restaurante.component.html',
+  styleUrls: ['./calificar-restaurante.component.scss'],
 })
-export class RestaurantesAfiliadosPage implements OnInit {
+export class CalificarRestauranteComponent implements OnInit {
 
   restaurante$: Observable<resta[]>;
   afiliados$: Observable<afiliado[]>;
@@ -41,11 +38,11 @@ export class RestaurantesAfiliadosPage implements OnInit {
   auxi : number = 0
 
   // variable para validar si hay datos
-  existeDatos: boolean;
   listAfiliados: afiliado[] = []
   listRestaurantes: resta[] = []
 
   resHabilitados: resta[] = [];
+  public r : resta
 
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
@@ -53,7 +50,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
               private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
               private router : Router, private perfilService : PerfilesService,
               private comentarioService : ComentariosService, private modal: ModalController,
-              public ActionSheetController: ActionSheetController, private authservice:AuthService,) {
+              public ActionSheetController: ActionSheetController, private authservice:AuthService,
+              private navparams: NavParams) {
 
               }
 
@@ -78,51 +76,22 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   async ngOnInit() {
 
-    this.existeDatos = false;
-
-    this.resList = await this.initializeItems();
-
-    this.restaurante$ = this.restauranteService.recuperarDatos();
     this.afiliados$ = this.afiliadosSvc.recuperarDatos();
-
-
-
     let currentUser = this.AFauth.auth.currentUser;
     this.usuarioLog = currentUser.uid;
-
-    this.afiliadosSvc.listar().subscribe(a=>{
-      this.listAfiliados = []
-      this.listRestaurantes = [];
-
-      a.forEach(elementA => {
-        this.restauranteService.listar().subscribe(r =>{
-          // this.listRestaurantes = [];
-          r.forEach(elementR => {
-            // this.listRestaurantes = [];
-            if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta && elementA.estado === 'verdadero'){
-              this.listAfiliados.push(elementA);
-              this.listRestaurantes.push(elementR);
-              console.log(this.listAfiliados);
-              console.log(this.listRestaurantes);
-              this.existeDatos = true;
-              this.validarDatos(this.existeDatos)              
-            }
-          });
-        })
-      });
-    })
-
-    console.log("a ver", this.listAfiliados)
+    this.r = this.navparams.get('r')
+    console.log("aver" + this.r.nombreRestaurante)
 
   }
 
-  validarDatos(valor: boolean){
-    if(valor == true){
-      return true
-    }else if(valor == false){
-      return false
-    }
+  goRegreso(){
+    this.modal.dismiss();
   }
+
+  goListado(){
+    this.modal.dismiss(this.router.navigate(['/listado']))
+  }
+
 
   async initializeItems(): Promise<any> {
     const restaList = await this.db.collection('perfiles')
@@ -146,11 +115,6 @@ export class RestaurantesAfiliadosPage implements OnInit {
     });
   }
 
-  goMapa(){
-    this.router.navigate(['/listado']);
-  }
-
-  /*
 
   async presentModalComentario(id : string){
     const alert = await this.alertController.create({
@@ -175,7 +139,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           handler : data =>{
             
             this.presentComentario()
-            this.router.navigate(['/listado'])
+            this.goListado()
           }
         }
       ]
@@ -348,7 +312,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
               this.restauranteService.updateRestaurante(id1, califica)
               this.presentAlert();
-              this.router.navigate(['/listado']);
+              this.goListado()
 
 
             })
@@ -385,27 +349,6 @@ export class RestaurantesAfiliadosPage implements OnInit {
         }).catch(err => reject(err))
       })
     })
-  }
-
-  async presentActionSheet() {
-    const actionSheet = await this.ActionSheetController.create({
-      header: 'Menu',
-      buttons: [{
-        text: 'Reservas',
-        icon: 'mail',
-        handler: () => {
-          this.router.navigate(['tabs-reservas/reserva'])
-        }
-      },{
-        text: 'Cerrar sesión',
-        icon: 'log-out',
-        handler: () => {
-         this.onLogout();
-        }
-      }]
-    });
-    await actionSheet.present();
-    let result = await actionSheet.onDidDismiss();
   }
 
   onLogout(){
@@ -468,17 +411,6 @@ export class RestaurantesAfiliadosPage implements OnInit {
       this.restauranteService.updateRestaurante(id, califica)
     })
 
-  }
-
-  */
-
-  openRes(r){
-    this.modal.create({
-      component: CalificarRestauranteComponent,
-      componentProps : {
-        r: r,
-      }
-    }).then((modal) => modal.present())
   }
 
 }

@@ -1,25 +1,20 @@
 
-<ion-header>
-  <ion-toolbar>
-    <div *ngFor ="let usu of usuarios$ |  async">
-      <div  *ngIf="usuarioLog === usu.uid">
-        <div *ngIf ="usu.roles  === 'cliente'">
-          <ion-button slot="start" fill="none" routerLink="/listado">
+<ion-header *ngFor ="let usu of usuarios$ |  async">
+  <ion-toolbar *ngIf="usuarioLog === usu.uid">
+   
+       
+          <ng-template [ngIf]="usu.roles  === 'cliente'">
+            <ion-button slot="start" fill="none" routerLink="/listado">
             <ion-icon name="arrow-back"></ion-icon>
           </ion-button>
-        </div>
-      </div>
-    </div>
-
-    <div *ngFor ="let usu of usuarios$ |  async">
-      <div  *ngIf="usuarioLog === usu.uid">
-        <div *ngIf ="usu.roles  === 'dueño'">
-          <ion-button slot="start" fill ="none" (click)="getMenu()">
-            <ion-icon name = "menu" ></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </div>
+          </ng-template>
+          <ng-template [ngIf]="usu.roles  === 'dueño'">
+            <ion-button slot="start" fill ="none" (click)="getMenu()">
+              <ion-icon name = "menu" ></ion-icon>
+            </ion-button>
+          </ng-template>
+       
+   
     <ion-title style="text-align: center;">Mi perfil </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -82,7 +77,7 @@
       <div *ngIf="usuarios$ | async as usu">
         <div *ngFor ="let u of usu">
           <div *ngIf = "usuarioLog === u.uid">
-            <img  style="margin-left: 23px;" *ngIf="u.foto;else foto" class="fotoPerfil" src = {{u.foto}}>
+            <img   *ngIf="u.foto;else foto" class="fotoPerfil" src = {{u.foto}}>
           </div>
         </div>
       </div>

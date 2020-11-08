@@ -43,17 +43,17 @@ export class ActualizarPerfilPage implements OnInit {
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 3 caracteres'},
-        { type: 'pattern', message: 'El campo  solo contiene letras'}
+        { type: 'pattern', message: 'El campo debe contener solo caracteres'}
       ],
       apellido : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 3 caracteres'},
-        { type: 'pattern', message: 'El campo  solo contiene letras'}
+        { type: 'pattern', message: 'El campo debe contener solo caracteres'}
       ],
       numero : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 10 caracteres'},
-        { type: 'pattern', message: 'El campo  solo contiene números'}
+        { type: 'minlength', message: 'Minimo 10 números'},
+        { type: 'pattern', message: 'El campo  debe contener solo números'}
       ]
     };
 

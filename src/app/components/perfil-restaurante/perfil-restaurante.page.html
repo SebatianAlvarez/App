@@ -51,9 +51,13 @@
             <ion-item>
               <h6><b>Dirección: </b>{{resta.direccionRestaurante}}</h6>
             </ion-item>
-            <ion-item>
-              <h6><b>Capacidad: </b>{{resta.capacidadRestaurante}} &nbsp; personas</h6>
-            </ion-item>
+            <ng-template [ngIf]="resta.tipoRestaurante === 'Restaurante'">
+              <ion-item>
+                <h6><b>Capacidad: </b>{{resta.capacidadRestaurante}} &nbsp; personas</h6>
+              </ion-item>
+            </ng-template>
+            <ng-template >
+            </ng-template>
           </ion-list>
       
           <ng-template #foto>
@@ -79,6 +83,21 @@
     <ion-card-content style="text-align: center;">
       Tu restaurante esta siendo revisado por un administrador espera un momento
       por favor
+    </ion-card-content>
+    <ion-item>
+      <ion-label></ion-label>
+    </ion-item>
+  </ion-card>
+</ng-template>
+<ng-template [ngIf]=" !resta.id">
+  <ion-card class="sinDatos">
+    <ion-item>
+      <ion-label></ion-label> 
+    </ion-item>
+  
+    <ion-card-content style="text-align: center;">
+      Tu restaurante no cuenta con informacion en este momento revisa
+      nuestro sistema web
     </ion-card-content>
     <ion-item>
       <ion-label></ion-label>

@@ -26,7 +26,7 @@ export class NologinGuard implements CanActivate {
           return true
         }else{
           this.router.navigate(['/perfil'])
-          //window.location.reload(true)
+          //window.location.reload()
           return false
         }
       }))

@@ -56,7 +56,6 @@ import { MeriendaService } from '../../servicios/merienda.service';
   styleUrls: ['./perfil-res.component.scss'],
 })
 export class PerfilResComponent implements OnInit {
-  @ViewChild( IonInfiniteScroll, { static: true}) infititeScroll: IonInfiniteScroll
 
   form: FormGroup;
 
@@ -85,6 +84,8 @@ export class PerfilResComponent implements OnInit {
 
   private map;
   marker: any;
+  marker1: any;
+  marker2: any;
   latLong = [];
   address: string[];
   L : any
@@ -744,6 +745,31 @@ aver(){
   })
 }
 
+async presentarAlertaMapa(id : string, lat: number, lng: number){
+  const alert = await this.alertController.create({
+    header:'Activa tu ubicacion para saber como llegar al restaurante',
+    buttons : [
+      {
+        text : "Ubicacion no activada",
+        role : "cancel",
+        cssClass : "secondary",
+        handler: () =>{
+          window.location.reload()
+        }
+      },{
+        text : "Ubicacion activada",
+        handler :() =>{
+          //this.cargarMapa()
+          this.mostrar(id, lat, lng)
+
+        }
+      }
+    ]
+  })
+  await alert.present()
+  let result = await alert.onDidDismiss();
+}
+
 
 mostrar(id : string, lat: number, lng: number){
   this.restauranteService.getRestaurante(id).subscribe(data =>{
@@ -762,15 +788,16 @@ mostrar(id : string, lat: number, lng: number){
 
         L.Routing.control({
           show: false,
-          waypoints: [
-              L.latLng(lat,lng),
-              L.latLng(latLong[0],latLong[1])
-          ],
+          waypoints : [
+              L.latLng(lat,lng , {draggable:false}),
+              L.latLng(latLong[0],latLong[1] , {draggable:false})
+          ] ,
+          draggable: false,
+          draggableWaypoints: false,
           addWaypoints: false,
           routeWhileDragging: false,
           showAlternatives: false,
-        }).addTo(this.map);
-      //this.marker.addTo(this.map).bindPopup('Estoy aqui');
+        } , {draggable:false} ).addTo(this.map);
       this.map.setView(latLong);
       });
 

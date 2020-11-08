@@ -28,6 +28,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireDatabase} from '@angular/fire/database/';
 import { PerfilResComponent } from './components/perfil-res/perfil-res.component';
+import { CalificarRestauranteComponent } from './components/calificar-restaurante/calificar-restaurante.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -45,8 +46,8 @@ import { EditarEspeciaComponent } from './components/editar-menu/editar-especia/
 import { EditarDesayunoComponent } from './components/editar-menu/editar-desayuno/editar-desayuno.component';
   
 @NgModule({
-  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent, EditarEspeciaComponent, EditarDesayunoComponent],
-  entryComponents: [PerfilResComponent],
+  declarations: [AppComponent, PerfilResComponent, CalificarRestauranteComponent, MenusPrincipalesPage, ListadoPromoComponent, EditarEspeciaComponent, EditarDesayunoComponent],
+  entryComponents: [PerfilResComponent, CalificarRestauranteComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,
       BrowserAnimationsModule, AngularFireStorageModule, FormsModule, ReactiveFormsModule],
