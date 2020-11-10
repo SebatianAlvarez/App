@@ -16,7 +16,7 @@
               <div class="titulo">
                 <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
               </div>
-              <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
+              <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes; else foto">
               
                 <form [formGroup] ="calificar" (ngSubmit) = "presentAlertConfirm(r.id, r.userUID)" style="text-align: center;">
                   <p class="clasificacion">
@@ -46,5 +46,9 @@
         </div>
      
     </div>
+
+    <ng-template #foto>
+      <img class="fotoPerfil" src = "../../../assets/resta.jpg">
+    </ng-template>
 
 </ion-content>

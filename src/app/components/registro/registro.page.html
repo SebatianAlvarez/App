@@ -60,7 +60,8 @@
       </div><br>
     
       <ion-item>
-        <ion-input placeholder="Contraseña" formControlName="password" type="password" maxlength ="25"></ion-input>
+        <ion-input placeholder="Contraseña" formControlName="password" [type] ="showPassword ? 'text' : 'password'" maxlength ="25"></ion-input>
+        <ion-icon slot="end" [name]= "passwordToggleIcon" (click)="mostrarContra()" ></ion-icon>
       </ion-item>
       <div >
         <ng-container *ngFor ="let error of errorMensajes.password">
@@ -76,14 +77,16 @@
       </div>
       <br>
 
-      <ion-button [disabled] ="registro.invalid" type = "submit" expand = "block">
-        REGISTRARSE
+      <ion-button class="minus" [disabled] ="registro.invalid" type = "submit" expand = "block">
+        Registarse
         <ion-icon slot="end" name ="create"></ion-icon>
       </ion-button><br>
-      <ion-button color ="danger" expand = "block" routerLink="/home">
-    Ya tengo Cuenta
+      <ion-button  class="minus" color ="danger" expand = "block" routerLink="/home">
+    Ya tengo cuenta
   </ion-button>
     </ion-list>
+
+    
     
   </form>
 

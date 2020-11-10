@@ -25,6 +25,11 @@ export class VerificarEmailPage implements OnInit {
     this.authservice.logout();
   }
 
+  goRegreso(){
+    this.onLogout();
+    this.router.navigate(['/home'])
+  }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

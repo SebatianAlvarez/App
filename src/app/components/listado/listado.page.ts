@@ -100,8 +100,9 @@ export class ListadoPage implements OnInit {
 
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
-        //window.location.replace("http://localhost:8100/perfil")
-        this.router.navigate(['/perfil'])
+        window.location.replace('/perfil')
+        //this.router.navigate(['/perfil'])
+        //window.location.reload()
       }else if(data.roles ==="admin"){
         this.presentarMensaje();
       }

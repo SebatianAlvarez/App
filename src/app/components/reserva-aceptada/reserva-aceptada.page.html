@@ -13,7 +13,7 @@
 
   <ng-template [ngIf]="validarDatos(existeDatos) === true">
     <div *ngFor="let reser of reservas$ | async"> 
-      <div *ngIf="usuarioLog === reser.uidResta"> 
+      <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'Aprobado'"> 
           <ion-card>
             <ion-card-header>
               <ion-card-title style="text-align: center;">Reserva aprobada</ion-card-title>

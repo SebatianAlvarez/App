@@ -13,7 +13,7 @@
 
     <ion-card *ngFor="let promo of promoHabilitados" >
        <ion-card-header>
-        <img src= "{{promo.fotosPromocion}}">
+        <img width="130px" height="150px" src= "{{promo.fotosPromocion}}">
       </ion-card-header>
       <ion-card-subtitle style="text-align: center;">
         <ion-button (click)="AlertConfirmDeshabilitar(promo.id)" color="danger"><ion-icon name="eye-off">Eliminar</ion-icon></ion-button>

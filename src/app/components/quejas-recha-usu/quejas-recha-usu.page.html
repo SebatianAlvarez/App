@@ -34,6 +34,10 @@
             &nbsp;<ion-icon name="bowtie"></ion-icon>&nbsp;
             Motivo: {{q.motivo}} &nbsp;<br> 
           </ion-card-subtitle>
+          <ion-card-subtitle>
+            &nbsp;<ion-icon name="sad"></ion-icon>&nbsp;
+            Rechazo: {{q.rechazo}} &nbsp;<br> 
+          </ion-card-subtitle>
           <ion-card-header>
             <ion-button color = "danger"><ion-icon name="close-circle"></ion-icon></ion-button>
           </ion-card-header>
@@ -45,7 +49,7 @@
 </div>
 
   <ng-template #foto>
-    <img src = "../../../assets/foto.png" width="10px">
+    <img style="margin-left: 40%;" src = "../../../assets/resta.jpg" width="10px">
   </ng-template>
 
 </ng-template>
@@ -58,7 +62,7 @@
   
     <ion-card-content style="text-align: center;">
       No cuentas con sugerencias rechazadas, puedes realizar tus sugerencias en
-      Restaurantes Afiliados 
+      el menú -> Restaurantes afiliados.
     </ion-card-content>
     <ion-item>
       <ion-label></ion-label>

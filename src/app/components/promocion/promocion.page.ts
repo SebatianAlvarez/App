@@ -77,10 +77,10 @@ export class PromocionPage implements OnInit {
 
   ngOnInit() {
 
-    this.Notificiacion2();
-    // this.Notificiacion4();
+    //this.Notificiacion2();
+    this.Notificiacion4();
     // this.Notificiacion5();
-    this.Notificiacion11();
+    //this.Notificiacion11();
 
     this.estaSeleccionado = false;
 
@@ -157,7 +157,7 @@ export class PromocionPage implements OnInit {
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
       trigger: { every: {hour: 12, minute: 15} },
-      //foreground: true
+      foreground: true
     })
     
   }

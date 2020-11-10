@@ -9,67 +9,105 @@
   </ion-toolbar>
 </ion-header>
  <ion-content>
-  <ion-list>
-    <ng-container *ngIf="!especialUser || especialUser.length == 0">
-      <div *ngFor="let n of [0]" padding>
-        <ion-skeleton-text></ion-skeleton-text>
-        <p>No puedes ingresar ningun menú por el momento tu restaurante
-          esta siendo revisado por un administrador
-          <ion-skeleton-text class="text-skeleton"></ion-skeleton-text>
-        </p>
-      </div>
-    </ng-container>
-    <ion-item-sliding *ngFor="let espe of especialUser" (click)="openEsp(espe)">
-      <ion-card button>
-        <div class="imagen">
-          <img style="margin-left: 45px; margin-top: 17px;" src="../../../../assets/espe.jpg" alt="des" width="120px" >
-        </div> 
-            <ion-item>
-              <p class="almuerzoActivo" *ngIf="espe.estado === 'Activo'">
-                <ion-icon name="information-circle"></ion-icon>&nbsp;
-                {{espe.estado}}</p>
-              <p class="almuerzoOculto" *ngIf="espe.estado === 'Deshabilitado'">
-                <ion-icon name="information-circle"></ion-icon>&nbsp;
-                {{espe.estado}}</p>
-              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
-              </ion-button>
-            </ion-item>
-        <ion-card-subtitle>
-          <h6>&nbsp;&nbsp;
-            <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;
-            Nombre: 
-            {{espe.platoEspecial}}
-          </h6>
-          <h6>&nbsp;&nbsp;
-            <ion-icon name="restaurant"></ion-icon>&nbsp;
-            Ingredientes</h6>
-          <div *ngFor="let i of espe.ingredientes">
-            <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
-          </div>
-        </ion-card-subtitle>
-      </ion-card>
 
-      <ion-item-options side="end">
-        <ion-item-option (click)="onRemove(espe)" color="secondary">
-          <ion-icon name="checkmark" slot="end"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-  <div *ngFor="let res of restaurante$ | async">
-    <div *ngFor="let espe of especialUser">
-      <div *ngIf = "res.userUID === espe.userUID && espe.userUID === usuarioLog">
-        <ng-template [ngIf]="res.resVerificado === 'Aprobado'">
-          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button routerLink="/lista-especial" routerDirection="forward">
-              <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
-        </ng-template>
-        <ng-template [ngIf]="res.resVerificado === 'En revision'">
+  <div *ngFor="let r of restaUser">
+
+    <ng-template [ngIf]="r.resVerificado === 'En revision'">
+      <ion-card class="sinDatos">
+        <ion-item>
+          <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+          <ion-icon name="restaurant" slot="end"></ion-icon> -->
+          <ion-label></ion-label>
+          
+        </ion-item>
       
-        </ng-template>
-      </div>
+        <ion-card-content style="text-align: center;">
+         Tu restaurante esta siendo revisado por un adminstrador 
+        </ion-card-content>
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+
+    <ng-template [ngIf]="r.resVerificado === 'Aprobado' && r.estadoDocumento === 'documento Aprobado' && r.estado === 'verdadero' ">
+      <ion-list>
+        <ng-container *ngIf="!especialUser || especialUser.length == 0">
+          <div *ngFor="let n of [0]" padding>
+            <ion-skeleton-text></ion-skeleton-text>
+            <p>Sin datos...
+              <ion-skeleton-text class="text-skeleton"></ion-skeleton-text>
+            </p>
+          </div>
+        </ng-container>
+        <ion-item-sliding *ngFor="let espe of especialUser" (click)="openEsp(espe)">
+          <ion-card button>
+            <div class="imagen">
+              <img style="margin-left: 45px; margin-top: 17px;" src="../../../../assets/espe.jpg" alt="des" width="120px" >
+            </div> 
+                <ion-item>
+                  <p class="almuerzoActivo" *ngIf="espe.estado === 'Activo'">
+                    <ion-icon name="information-circle"></ion-icon>&nbsp;
+                    {{espe.estado}}</p>
+                  <p class="almuerzoOculto" *ngIf="espe.estado === 'Deshabilitado'">
+                    <ion-icon name="information-circle"></ion-icon>&nbsp;
+                    {{espe.estado}}</p>
+                  <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{espe.precioEspecial}}
+                  </ion-button>
+                </ion-item>
+            <ion-card-subtitle>
+              <h6>&nbsp;&nbsp;
+                <ion-icon src="../../../assets/fast-food.svg"></ion-icon>&nbsp;
+                Nombre: 
+                {{espe.platoEspecial}}
+              </h6>
+              <h6>&nbsp;&nbsp;
+                <ion-icon name="restaurant"></ion-icon>&nbsp;
+                Ingredientes</h6>
+              <div *ngFor="let i of espe.ingredientes">
+                <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
+              </div>
+            </ion-card-subtitle>
+          </ion-card>
+    
+          <ion-item-options side="end">
+            <ion-item-option (click)="onRemove(espe)" color="secondary">
+              <ion-icon name="checkmark" slot="end"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ng-template>
+
+    <ng-template [ngIf]="r.estado === 'falso'">
+      <ion-card class="sinDatos">
+        <ion-item>
+          <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+          <ion-icon name="restaurant" slot="end"></ion-icon> -->
+          <ion-label></ion-label>
+          
+        </ion-item>
+      
+        <ion-card-content style="text-align: center;">
+         Tu restaurante se encuentra deshabilitado por el momento, para activar
+         tu restaurante acude a nuestra página web.
+        </ion-card-content>
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+
+    
+  </div>
+  
+  <div *ngFor="let r of restaUser">
+    <div *ngIf="r.resVerificado === 'Aprobado' && r.estadoDocumento === 'documento Aprobado' && r.estado === 'verdadero' ">
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button routerLink="/lista-desayunos" routerDirection="forward">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </div>
   </div>
  

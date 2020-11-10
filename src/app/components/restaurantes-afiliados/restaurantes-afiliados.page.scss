@@ -1,7 +1,7 @@
 .titulo{
-    border: 0px solid #1dbfd4;
+    border: 0px solid #D85C00;
     border-radius: 3%;
-    background-color: #1dbfd4;
+    background-color: #D85C00;
     color: white;
   }
 
@@ -34,9 +34,13 @@
   }
 
   ion-card{
-    width: 60%;
+    width: 175px;
+    height: 250px;
     display: grid;
-    margin-left: 80px;
+    margin-left: auto;
+  margin-right: auto;
+  padding-left: auto;
+  padding-right: auto;
   }
 
   ion-content{
@@ -53,4 +57,12 @@
  .sinDatos{
    margin-top: 15%;
   padding: 10% 0% 10% 0%;
+  width: 60%;
+    display: grid;
+    margin-left: 80px;
 }
+
+ .imgRes{
+   width: 175px;
+   height: 175px;
+ }

@@ -558,9 +558,9 @@ existeAfiliado(){
 
   async presentarMensaje(){
     const alert = await this.alertController.create({
-      header:'Deseas afiliarte a este restaurante',
-      subHeader:'Que beneficios obtienes',
-      message: 'Podras realizar reservas si estas afiliado al restaurante',
+      header:'¿Deseas afiliarte a este restaurante?',
+      subHeader:'Que beneficios obtienes:',
+      message: 'Podras realizar reservas si estas afiliado al restaurante.',
       buttons : [
         {
           text : "Cancelar",
@@ -747,17 +747,17 @@ aver(){
 
 async presentarAlertaMapa(id : string, lat: number, lng: number){
   const alert = await this.alertController.create({
-    header:'Activa tu ubicacion para saber como llegar al restaurante',
+    header:'Activa tu ubicación para obtener una ruta al restaurante',
     buttons : [
       {
-        text : "Ubicacion no activada",
+        text : "Ubicación no activada",
         role : "cancel",
         cssClass : "secondary",
         handler: () =>{
           window.location.reload()
         }
       },{
-        text : "Ubicacion activada",
+        text : "Ubicación activada",
         handler :() =>{
           //this.cargarMapa()
           this.mostrar(id, lat, lng)

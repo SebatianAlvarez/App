@@ -184,9 +184,11 @@ export class CalificarRestauranteComponent implements OnInit {
               this.reservaError();
             }else if (mesa > 10) {
               this.reservaError1();
+             
             }else {
               this.Reservar(data.mesas, data.tiempo ,id);
               this.presentReserva();
+              this.goListado()
             }
 
           }
@@ -215,10 +217,11 @@ export class CalificarRestauranteComponent implements OnInit {
   async presentReserva() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Tu reserva sera verificada en minutos',
+      header: 'Tu reserva será verificada en minutos',
       // subHeader: 'Subtitle',
-      message: 'Puedes ir al menu mensajes.',
+      message: 'Puedes ir al menú -> Reservas.',
       buttons: ['OK']
+
     });
 
     await alert.present();
@@ -255,7 +258,7 @@ export class CalificarRestauranteComponent implements OnInit {
       message: 'No se puede reservar mas de 10 mesas',
       buttons: ['OK']
     });
-
+    
     await alert.present();
   }
 
@@ -313,8 +316,6 @@ export class CalificarRestauranteComponent implements OnInit {
               this.restauranteService.updateRestaurante(id1, califica)
               this.presentAlert();
               this.goListado()
-
-
             })
           }
         }

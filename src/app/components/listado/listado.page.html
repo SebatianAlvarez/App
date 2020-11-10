@@ -28,7 +28,7 @@
           <ion-card-subtitle style="text-align: center;">{{res.tipoRestaurante}}</ion-card-subtitle>
           <ion-card-title style="text-align: center;">{{res.nombreRestaurante}}</ion-card-title>
         </ion-card-header>
-        <img *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
+        <img class="fotoPerfil" *ngIf="res.imagenRes ; else foto" src = "{{res.imagenRes}}">
         <ion-card-content>
           <ng-template [ngIf]='res.promedio >= 1 && res.promedio <= 1.9'>
             <!-- <ion-card-title>{{res.promedio}}
@@ -94,7 +94,7 @@
   </ion-content>
 
   <ng-template #foto>
-    <img src = "../../../assets/foto.png">
+    <img class="fotoPerfil" src = "../../../assets/resta.jpg">
   </ng-template>
   
 

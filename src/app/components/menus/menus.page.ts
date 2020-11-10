@@ -17,6 +17,8 @@ export class MenusPage implements OnInit {
 
   almuerzos: almuerzo[];
   almuerzoUser: almuerzo[] = []; 
+  restaUser: resta[] = []
+  restaurantes: resta[]
   public restaurante$: Observable<resta[]>;
 
   public usuarioLog:string;
@@ -28,8 +30,20 @@ export class MenusPage implements OnInit {
   ngOnInit() {
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
+    this.restauranteService.listar().subscribe(res =>{
+      this.restaurantes = res;
+    })
 
-
+    this.restauranteService.listar().subscribe((res) =>{
+      console.log('Todoss', res);
+      this.restaUser = [];
+      res.forEach(element => {
+        if(element['userUID'] === this.usuarioLog){
+          this.restaUser.push(element)
+          console.log("aver " +  this.restaUser)
+        }
+      });
+    })
 
       if(this.currentUser != null){
         this.usuarioLog = this.currentUser.uid;

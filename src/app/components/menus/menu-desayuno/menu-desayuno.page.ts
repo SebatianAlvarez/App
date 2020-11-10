@@ -17,7 +17,9 @@ import { RestaurantesService } from '../../../servicios/restaurantes.service';
 export class MenuDesayunoPage implements OnInit {
 
   desayunos: desayuno[];
-  desayunoUser: desayuno[] = []; 
+  desayunoUser: desayuno[] = [];
+  restaUser: resta[] = []
+  restaurantes: resta[]
   public restaurante$: Observable<resta[]>;
 
 
@@ -37,6 +39,9 @@ export class MenuDesayunoPage implements OnInit {
         this.desayunos = des;
     })
 
+    this.restauranteService.listar().subscribe(res =>{
+      this.restaurantes = res;
+    })
 
   
     if(this.currentUser != null){
@@ -52,6 +57,17 @@ export class MenuDesayunoPage implements OnInit {
       alm.forEach(element => {
         if(element['userUID'] === this.usuarioLog){
           this.desayunoUser.push(element)
+        }
+      });
+    })
+
+    this.restauranteService.listar().subscribe((res) =>{
+      console.log('Todoss', res);
+      this.restaUser = [];
+      res.forEach(element => {
+        if(element['userUID'] === this.usuarioLog){
+          this.restaUser.push(element)
+          console.log("aver " +  this.restaUser)
         }
       });
     })

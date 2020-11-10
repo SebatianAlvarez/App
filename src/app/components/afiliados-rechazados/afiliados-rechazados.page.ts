@@ -42,7 +42,7 @@ export class AfiliadosRechazadosPage implements OnInit {
     this.afiliadosService.listar().subscribe(data =>{
       this.listAfiliados = [];
       data.forEach(element => {
-        if(this.usuarioLog === element.uidResta && element.estado === 'falso'){
+        if(this.usuarioLog === element.uidUsu && element.estado === 'falso'){
           this.listAfiliados.push(element);
           console.log(this.listAfiliados);
           this.existeDatos = true;
@@ -62,7 +62,7 @@ export class AfiliadosRechazadosPage implements OnInit {
 
 
   goRegreso(){
-    this.router.navigate(['/perfil'])
+    this.router.navigate(['/listado'])
   }
 
   async presentActionSheet() {
@@ -92,7 +92,7 @@ export class AfiliadosRechazadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Afiliado eliminado',
+      header: 'Afiliación eliminada',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']

@@ -20,6 +20,10 @@ export class RegistroPage implements OnInit {
   public password:string;
   public rol: "cliente";
 
+  passwordType : string ="password";
+  showPassword = false
+  passwordToggleIcon ='eye'
+
   constructor(private authSercive: AuthService, public router: Router,
     private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
@@ -65,6 +69,16 @@ export class RegistroPage implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  mostrarContra(): void{
+    this.showPassword = !this.showPassword;
+
+    if(this.passwordToggleIcon === 'eye'){
+      this.passwordToggleIcon ='eye-off';
+    } else {
+      this.passwordToggleIcon = 'eye'
+    }
   }
 
   OnSubmitRegister(user: Usuario){

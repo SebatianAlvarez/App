@@ -4,7 +4,7 @@
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
 
-    <ion-title>Restaurantes afiliados</ion-title>
+    <ion-title style="text-align: center;">Restaurantes afiliados</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -21,7 +21,7 @@
                   <div class="titulo">
                     <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
                   </div>
-                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes"> 
+                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes; else foto"> 
         
                 </ion-card>
               </div>
@@ -32,6 +32,10 @@
           </div>
         </div>
       </div>  
+  </ng-template>
+
+  <ng-template #foto>
+    <img class="fotoPerfil" src = "../../../assets/resta.jpg">
   </ng-template>
 
   <ng-template [ngIf]="validarDatos(existeDatos) === false" >
@@ -45,7 +49,7 @@
       </ion-item>
     
       <ion-card-content style="text-align: center;">
-        No cuentas con restaurantes pendientes 
+        No cuentas con afiliaciones pendientes.
       </ion-card-content>
       <ion-item>
         <ion-label></ion-label>

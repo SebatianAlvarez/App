@@ -18,6 +18,8 @@ import { RestaurantesService } from '../../../servicios/restaurantes.service';
 export class MenueEspecialPage implements OnInit {
   // almuerzos: almuerzo[];
   especialUser: especial[] = []; 
+  restaUser: resta[] = []
+  restaurantes: resta[]
 
    public especiales: especial[];
    public restaurante$: Observable<resta[]>;
@@ -40,6 +42,10 @@ export class MenueEspecialPage implements OnInit {
         this.especiales = espe;
     })
 
+    this.restauranteService.listar().subscribe(res =>{
+      this.restaurantes = res;
+    })
+
     if(this.currentUser != null){
       this.usuarioLog = this.currentUser.uid;
     }else{
@@ -54,6 +60,17 @@ export class MenueEspecialPage implements OnInit {
     espe.forEach(element => {
       if(element['userUID'] === this.usuarioLog){
         this.especialUser.push(element)
+      }
+    });
+  })
+
+  this.restauranteService.listar().subscribe((res) =>{
+    console.log('Todoss', res);
+    this.restaUser = [];
+    res.forEach(element => {
+      if(element['userUID'] === this.usuarioLog){
+        this.restaUser.push(element)
+        console.log("aver " +  this.restaUser)
       }
     });
   })
