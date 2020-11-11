@@ -13,6 +13,7 @@ import { Foto } from '../../models/fotos-interface';
 import { FotosService } from '../../servicios/fotos.service';
 
 
+
 @Component({
   selector: 'app-actualizar-perfil',
   templateUrl: './actualizar-perfil.page.html',
@@ -54,6 +55,10 @@ export class ActualizarPerfilPage implements OnInit {
         { type: 'required', message: 'Este campo no puede estar vacio' },
         { type: 'minlength', message: 'Minimo 10 números'},
         { type: 'pattern', message: 'El campo  debe contener solo números'}
+      ],
+      email : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'email', message: 'Ingrese un correo válido'}
       ]
     };
 
@@ -69,6 +74,11 @@ export class ActualizarPerfilPage implements OnInit {
     public actualizar2 = this.formBuilder.group ({
       id: new FormControl (''),
       numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)])
+    });
+
+    public actualizar4 = this.formBuilder.group ({
+      id: new FormControl (''),
+      email: new FormControl('', [Validators.required, Validators.email])
     });
 
   ngOnInit() {
@@ -102,6 +112,13 @@ export class ActualizarPerfilPage implements OnInit {
           this.router.navigate(['/perfil'])
         })
       }
+    }
+
+    actualizarUsuarioContra(){
+      const valores = this.actualizar4.value
+      let correo = valores.email
+      this.authservice.restablecerContra(correo);
+      this.presentAlertContra();
     }
 
     async actualizarUsuarioNumero(){
@@ -180,6 +197,25 @@ cambiarAvatar(idu : string , idf : string){
     }
     this.authservice.updateUser(idu, usu)
   })
+}
+
+async presentAlertContra() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Revisa tu correo para realizar el cambio de contraseña',
+    // subHeader: 'Subtitle',
+    // message: 'This is an alert message.',
+    buttons : [
+      {
+        text : "OK",
+        handler :() =>{
+          this.router.navigate(['/perfil'])
+        }
+      }
+    ]
+  });
+
+  await alert.present();
 }
 
 }

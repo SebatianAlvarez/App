@@ -94,6 +94,30 @@
         </ion-list>
       </form>
 
+      <p>Para cambiar tu contraseña es necesario que ingreses tu correo</p>
+
+      <form [formGroup] ="actualizar4" (ngSubmit) = "actualizarUsuarioContra(actualizar4.value)">
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="Email" formControlName="email" type="text" maxlength="40"></ion-input>
+            <ion-button color="success" [disabled] ="actualizar4.invalid" type = "submit">
+              
+              <ion-icon slot="end" name ="send"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <div >
+            <ng-container *ngFor ="let error of errorMensajes.email">
+              <div class="e" *ngIf ="actualizar4.get('email').hasError(error.type) && (actualizar4.get('email').dirty || actualizar4.get('email').touched)">
+                {{error.message}}
+              </div>
+            </ng-container> 
+          </div>
+          <ion-card-content>
+            
+          </ion-card-content>
+        </ion-list>
+      </form>
+
     </ion-card-header>  
   </ion-card>
 

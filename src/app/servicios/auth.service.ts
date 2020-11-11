@@ -94,7 +94,8 @@ export class AuthService {
   }
 
   enviarEmailVerificacion(){
-    return this.AFauth.auth.currentUser.sendEmailVerification()
+      
+    return this.AFauth.auth.currentUser.sendEmailVerification();
   }
 
   actualizarUsuario(usuario:any){
@@ -199,6 +200,7 @@ export class AuthService {
 
   restablecerContra(email:string){
     this.AFauth.auth.sendPasswordResetEmail(email);
+    
   }
 
   getUserLog(){
