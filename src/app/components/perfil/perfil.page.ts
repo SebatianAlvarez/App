@@ -48,11 +48,13 @@ export class PerfilPage implements OnInit {
     private localNotification: LocalNotifications ) { }
 
   ngOnInit() {
-    this.usuarios$ = this.authservice.recuperarDatos();
 
-    // this.restauranteService.getRestaurantes().subscribe(data => {
-    //   this.restaurantes = data
-    // })
+    this.Notificiacion2();
+    // this.Notificiacion3();
+    this.Notificiacion4();
+    this.Notificiacion5();
+
+    this.usuarios$ = this.authservice.recuperarDatos();
     
     try {
       let currentUser = this.AFauth.auth.currentUser;

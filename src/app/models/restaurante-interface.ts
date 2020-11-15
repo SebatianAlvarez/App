@@ -18,5 +18,7 @@ export class resta {
     calificacion?: number
     aux?: number
     promedio?: number
+    estadoDocumento?: string
+    estado?:string
 
   }
