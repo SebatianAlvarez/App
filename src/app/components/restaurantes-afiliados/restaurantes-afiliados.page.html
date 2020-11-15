@@ -4,50 +4,54 @@
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
 
-    <ion-title>Restaurantes Afiliados</ion-title>
+    <ion-title style="text-align: center;">Restaurantes afiliados</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
   <ng-template [ngIf]="validarDatos(existeDatos) === true">
-  
-    <div *ngFor="let a of afiliados$ | async">
-      <div *ngFor="let r of restaurante$ | async">
-        <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta && a.estado === 'verdadero'">
-          <div style="display: inline; grid-template-columns: 1fr 1fr;">
-            <ion-card>
-              <div class="titulo">
-                <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
-              </div>
-              <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
-              <div *ngIf="a.estado ==='verdadero'"> 
-                <form [formGroup] ="calificar" (ngSubmit) = "presentAlertConfirm(r.id, r.userUID)" style="text-align: center;">
-                  <p class="clasificacion">
-                    <input id="radio1" type="radio" formControlName="estrellas" value="5">
-                    <label for="radio1">★</label>
-                    <input id="radio2" type="radio" formControlName="estrellas" value="4">
-                    <label for="radio2">★</label>
-                    <input id="radio3" type="radio" formControlName="estrellas" value="3">
-                    <label for="radio3">★</label>
-                    <input id="radio4" type="radio" formControlName="estrellas" value="2">
-                    <label for="radio4">★</label>
-                    <input id="radio5" type="radio" formControlName="estrellas" value="1">
-                    <label for="radio5">★</label>
-                  </p>
-                  <ion-button [disabled] ="calificar.invalid" type = "submit" expand = "block" id="este">
-                    <p>Calificar</p> 
-                  </ion-button>
-                </form>
-              </div>
+
+    <div class="aver" style="margin-right: 25px;" style="display: grid; grid-template-columns: 1fr 1fr;">
+      <div *ngFor="let a of afiliados$ | async">
+        <div  *ngFor="let r of restaurante$ | async">
+          <div style="margin-right: 25px;" *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta && a.estado === 'verdadero'">
            
-              <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>
-    
-            </ion-card> 
-            <br>
+              <ion-card (click)="openRes(r)" >
+                <div class="titulo">
+                  <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
+                </div>
+                <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes; else foto">
+                <!--
+                <div *ngIf="a.estado ==='verdadero'"> 
+                  <form [formGroup] ="calificar" (ngSubmit) = "presentAlertConfirm(r.id, r.userUID)" style="text-align: center;">
+                    <p class="clasificacion">
+                      <input id="radio1" type="radio" formControlName="estrellas" value="5">
+                      <label for="radio1">★</label>
+                      <input id="radio2" type="radio" formControlName="estrellas" value="4">
+                      <label for="radio2">★</label>
+                      <input id="radio3" type="radio" formControlName="estrellas" value="3">
+                      <label for="radio3">★</label>
+                      <input id="radio4" type="radio" formControlName="estrellas" value="2">
+                      <label for="radio4">★</label>
+                      <input id="radio5" type="radio" formControlName="estrellas" value="1">
+                      <label for="radio5">★</label>
+                    </p>
+                    <ion-button [disabled] ="calificar.invalid" type = "submit" expand = "block" id="este">
+                      <p>Calificar</p> 
+                    </ion-button>
+                  </form>
+                </div>
+             
+                <ion-button *ngIf="a.estado ==='verdadero'" color="danger" (click) ="presentModal(r.userUID)">Realizar Reserva</ion-button>
+                -->
+              </ion-card> 
+                     
+             
           </div>
-           
         </div>
       </div>
     </div>
+  
+    
     
 
     <!-- Validar Funcionamiento -->
@@ -65,6 +69,10 @@
 
   </ng-template>
 
+  <ng-template #foto>
+    <img class="fotoPerfil" src = "../../../assets/resta.jpg">
+  </ng-template>
+
   <ng-template [ngIf]="validarDatos(existeDatos) === false" >
 
     <ion-card class="sinDatos">
@@ -76,7 +84,7 @@
       </ion-item>
     
       <ion-card-content style="text-align: center;">
-        No cuentas con restaurantes afiliados 
+        No cuentas con restaurantes afiliados.
       </ion-card-content>
       <ion-item>
         <ion-label></ion-label>

@@ -5,6 +5,8 @@ import { NavController, LoadingController } from '@ionic/angular';
 import { AlmuerzoService } from '../../servicios/almuerzo.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, FormControl , Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -26,11 +28,50 @@ export class ListaMenusPage implements OnInit {
   };
 
   almuerzoID= null;
+  miform: FormGroup;
 
   constructor(private route: ActivatedRoute, private nav: NavController, private almuerzoSVC: AlmuerzoService, private loadingController: LoadingController
-    ,private AFauth : AngularFireAuth, private router: Router) { }
+    ,private AFauth : AngularFireAuth, private router: Router,
+    private fb: FormBuilder) { }
+
+    public errorMensajes ={
+      entradaAlmuerzo : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+
+      ],
+      jugoAlmuerzo : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+       
+      ],
+      segundoAlmuerzo : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+       
+      ],
+      precioAlmuerzo : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'pattern', message: 'El campo debe contener solo números'},
+        { type: 'minlength', message: 'Formato minimo $,$'},
+      ],
+    };
+
+    
 
   ngOnInit() {
+
+    this.miform = this.fb.group({
+      id:new FormControl (''),
+      entradaAlmuerzo: new FormControl ('', [Validators.required, Validators.minLength(3)]),
+      estado: new FormControl ('', ),
+      jugoAlmuerzo: new FormControl ('',  [Validators.required, Validators.minLength(3)]),
+      precioAlmuerzo: new FormControl ('', [Validators.required, Validators.pattern("^[0-9,.]*$") , Validators.minLength(3)]),
+      segundoAlmuerzo: new FormControl ('', [Validators.required, Validators.minLength(3)]),
+      tipoAlmuerzo: new FormControl (''),
+    });
+
+
     this.almuerzoID = this.route.snapshot.params['id'];
     if (this.almuerzoID){
       this.loadAlmuerzo();
@@ -72,6 +113,7 @@ export class ListaMenusPage implements OnInit {
       });
     }
   }
+
   async onRemoveAlmuerzo(idAlm:string) {
     const loading = await this.loadingController.create({
       message: 'eliminando....'
@@ -81,6 +123,30 @@ export class ListaMenusPage implements OnInit {
     loading.dismiss();
     this.router.navigate(['tabs-menu/almuerzo'])
     // this.nav.navigateForward('tabs-menu/menus');
+  }
+
+  async onSubmit(formValue: any){
+
+    const loading = await this.loadingController.create({
+      message: 'Saving....'
+    });
+    await loading.present();
+
+    console.log("no va haber..", this.almuerzoID);
+    const valores = new almuerzo();
+    valores.entradaAlmuerzo = formValue.entradaAlmuerzo,
+    valores.estado = formValue.estado,
+    valores.jugoAlmuerzo = formValue.jugoAlmuerzo,
+    valores.precioAlmuerzo = formValue.precioAlmuerzo;
+    valores.segundoAlmuerzo =formValue.segundoAlmuerzo
+    valores.tipoAlmuerzo = formValue.tipoAlmuerzo
+    this.almuerzoSVC.subirMenu(valores, this.almuerzoID);
+
+    loading.dismiss();
+
+    this.router.navigate(['tabs-menu/almuerzo'])
+
+
   }
 
 }

@@ -4,7 +4,7 @@ import { NavController, LoadingController, ModalController } from '@ionic/angula
 import { MeriendaService } from '../../../servicios/merienda.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { especial } from '../../../models/especial-interface';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { async } from '@angular/core/testing';
 import { EditarEspeciaComponent } from '../../editar-menu/editar-especia/editar-especia.component';
 
@@ -34,6 +34,20 @@ export class ListaEspecialPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private nav: NavController, private especialSvc: MeriendaService, private loadingController: LoadingController
     ,private AFauth : AngularFireAuth, private router: Router, private fb: FormBuilder, private modal: ModalController) {}
+
+    public errorMensajes ={
+      platoEspecial : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+
+      ],
+      precioEspecial : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'pattern', message: 'El campo debe contener solo números'},
+        { type: 'minlength', message: 'Formato minimo $,$'},
+      ],
+    };
+
   ngOnInit() {
 
       // para listar en el modal
@@ -59,11 +73,11 @@ export class ListaEspecialPage implements OnInit {
 
     this.miform = this.fb.group({
       id:[''],
-      platoEspecial: [''],
-      precioEspecial: [''],
+      platoEspecial: new FormControl ('', [Validators.required , Validators.minLength(3)]),
+      precioEspecial: new FormControl ('',  [Validators.required, Validators.pattern("^[0-9,.]*$") , Validators.minLength(3)]),
       estado: [''],
       ingredientes: this.fb.array(this.especial.ingredientes.map(i => this.fb.group({
-        ingrediente: this.fb.control(i)
+        ingrediente: this.fb.control(i, [Validators.required, Validators.minLength(3)])
       })))
     });
 

@@ -3,7 +3,7 @@
     <ion-button slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Promociones Deshabilitadas</ion-title>
+    <ion-title style="text-align: center;">Promociones deshabilitadas</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
   
   <ion-card *ngFor="let promo of promoDesHabilitados" >
      <ion-card-header>
-      <img src= "{{promo.fotosPromocion}}">
+      <img width="130px" height="150px" src= "{{promo.fotosPromocion}}">
     </ion-card-header>
     <ion-card-subtitle style="text-align: center;">
       <ion-button (click)="AlertHabilitar(promo.id)"><ion-icon name="checkbox"></ion-icon></ion-button>

@@ -3,7 +3,7 @@
     <ion-button slot="start" fill ="none" (click)= "goRegreso()">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title style="text-align: center;">Afiliados Rechazados</ion-title>
+    <ion-title style="text-align: center;">Afiliados rechazados</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
 <ng-template [ngIf]="validarDatos(existeDatos) === true" >
       
   <div *ngFor = "let afi of afiliados$ | async"> 
-    <div *ngIf = "usuarioLog === afi.uidResta">
+    <div *ngIf = "usuarioLog === afi.uidUsu">
       <ion-card *ngIf = "afi.estado === 'falso'">
         <ion-card-header>
           <div class="imagen">
@@ -32,9 +32,15 @@
             <ion-icon name="flag"></ion-icon>&nbsp;
           {{afi.motivo}}
           </h6>
+          
         </ion-card-subtitle>
         <ion-card-header>
           <ion-button color="danger" (click)="eliminarAfiliacion(afi.id)"><ion-icon name="trash"></ion-icon></ion-button>
+
+          <h6>&nbsp;
+            <ion-icon name="alert"></ion-icon>&nbsp;
+           Elimina la afiliación rechazada para tratar de afiliarte nuevamente.
+          </h6>
           <!-- <ion-button color="secondary" (click)="aceptarReserva(reser.uid)" ><ion-icon name="checkmark-circle"></ion-icon>Aceptar&nbsp;</ion-button> -->
           <!-- <ion-button  color="danger" (click)="rechazarReserva(reser.uid)"><ion-icon name="close"></ion-icon>Rechazar</ion-button> -->
         </ion-card-header>
@@ -48,21 +54,21 @@
 
       <ng-template [ngIf]="validarDatos(existeDatos) === false" >
 
-    <ion-card class="sinDatos">
-      <ion-item>
-        <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
-        <ion-icon name="restaurant" slot="end"></ion-icon> -->
-        <ion-label></ion-label>
+        <ion-card class="sinDatos">
+          <ion-item>
+            <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+            <ion-icon name="restaurant" slot="end"></ion-icon> -->
+            <ion-label></ion-label>
+            
+          </ion-item>
         
-      </ion-item>
-    
-      <ion-card-content style="text-align: center;">
-        No cuentas con restaurantes afiliados 
-      </ion-card-content>
-      <ion-item>
-        <ion-label></ion-label>
-      </ion-item>
-    </ion-card>
+          <ion-card-content style="text-align: center;">
+            No cuentas con afiliaciones rechazadas.
+          </ion-card-content>
+          <ion-item>
+            <ion-label></ion-label>
+          </ion-item>
+        </ion-card>
   </ng-template>
 
 </ion-content>

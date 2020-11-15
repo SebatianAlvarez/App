@@ -58,14 +58,13 @@ export class PromocionPage implements OnInit {
         this.localNotification.on('click').subscribe(res =>{
           console.log('click: ', res);
           let msg = res.data ? res.data.mydata: '';
-          this.showAlert(res.title, res.text, msg);          
+          // this.showAlert(res.title, res.text, msg);          
         });
 
         this.localNotification.on('trigger').subscribe(res =>{
           console.log('trigger: ', res);
           let msg = res.data ? res.data.mydata: '';
-          this.showAlert(res.title, res.text, msg); 
-
+          //this.showAlert(res.title, res.text, msg); 
         });
       })
      }
@@ -78,10 +77,10 @@ export class PromocionPage implements OnInit {
 
   ngOnInit() {
 
-    this.Notificiacion2();
+    //this.Notificiacion2();
     this.Notificiacion4();
-    this.Notificiacion5();
-    this.Notificiacion11();
+    // this.Notificiacion5();
+    //this.Notificiacion11();
 
     this.estaSeleccionado = false;
 
@@ -119,46 +118,46 @@ export class PromocionPage implements OnInit {
       id:1,
       title: 'Existe nuevas promociones',
       text: 'Un restaurante de la zona acaba de subir una promocion, ve a revisarla',
-      data: {mydata: 'Prueba'},
-      trigger: {in: 5, unit: ELocalNotificationTriggerUnit.SECOND},
-      //foreground: true
+      data: {mydata: 'Revisa las nuevas promciones'},
+      trigger: {in: 10, unit: ELocalNotificationTriggerUnit.SECOND},
+      foreground: true
     })
   }
 
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Notificacion de prueba 22:10',
+      title: 'Notificacion de prueba 7:15',
       text: 'Ejemplo de notificacion',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 22, minute: 10} },
+      trigger: {every: {hour: 7, minute: 15} },
       foreground: true
     })
     
   }
 
-  Notificiacion3(){
-    console.log("notificacion enviada");
+  // Notificiacion3(){
+  //   console.log("notificacion enviada");
     
-    this.localNotification.schedule({
-      id:3,
-      title: 'Notificacion de 10 segundos, con otro formato de fecha',
-      text: 'Ejemplo de notificacion',
-      data: {mydata: 'Mensaje oculto'},
-      trigger: {at: new Date(new Date().getTime() + 10 * 1000)}
-      //foreground: true
-    })
+  //   this.localNotification.schedule({
+  //     id:3,
+  //     title: 'Notificacion de 10 segundos, con otro formato de fecha',
+  //     text: 'Ejemplo de notificacion',
+  //     data: {mydata: 'Mensaje oculto'},
+  //     trigger: {at: new Date(new Date().getTime() + 10 * 1000)}
+  //     //foreground: true
+  //   })
     
-  }
+  // }
 
   Notificiacion4(){
     this.localNotification.schedule({
       id:4,
-      title: 'Revisa el menu del dia ',
+      title: 'Revisa el menu del dia, notificación díarias 12:15 sin foreground',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 12, minute: 10} }
-      //foreground: true
+      trigger: { every: {hour: 12, minute: 15} },
+      foreground: true
     })
     
   }
@@ -166,10 +165,10 @@ export class PromocionPage implements OnInit {
   Notificiacion5(){
     this.localNotification.schedule({
       id:5,
-      title: 'Revisa el menu del dia, 22:10',
+      title: 'Revisa el menu del dia, 14:15 con foreground',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 22, minute: 10} },
+      trigger: { every: {hour: 14, minute: 15} },
       foreground: true
     })   
   }
@@ -177,10 +176,10 @@ export class PromocionPage implements OnInit {
   Notificiacion6(){
     this.localNotification.schedule({
       id:6,
-      title: 'Revisa el menú del día, a las 23:00 ',
+      title: 'Revisa el menú del día, a las 15:15, sin foreguard??? ',
       text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 23, minute: 0} }
+      trigger: { every: {hour: 15, minute: 15} }
       //foreground: true
     })   
   }
@@ -191,8 +190,8 @@ export class PromocionPage implements OnInit {
       title: 'Revisa el menú del día, promocion agregada ',
       text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.SECOND}
-      //foreground: true
+      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.SECOND},
+      foreground: true
     })   
   }
 
@@ -202,34 +201,34 @@ export class PromocionPage implements OnInit {
       title: 'Revisa el menú del día, cada hora!!! ',
       text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.HOUR}
-      //foreground: true
+      trigger: { every:  ELocalNotificationTriggerUnit.HOUR },
+      //trigger: {in: 30, unit: ELocalNotificationTriggerUnit.HOUR},
+      foreground: true
     })   
   }
 
   Notificiacion11(){
     this.localNotification.schedule({
-      id:10,
+      id:11,
       title: 'Revisa el menú del día, cada hora!!! sin darle al boton ',
       text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: {in: 30, unit: ELocalNotificationTriggerUnit.HOUR}
-      //foreground: true
+      trigger: { every:  ELocalNotificationTriggerUnit.HOUR },
+      foreground: true
     })   
   }
 
-  Notificiacion7(){
+  Notificiacion12(){
     this.localNotification.schedule({
-      id:7,
-      title: 'Revisa el menu del dia ',
-      text: 'Notificacion cada minuto',
+      id:12,
+      title: 'Revisa el menú del día, cada hora!!! con boton ',
+      text: 'Puedes ver el menú que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
-      //foreground: true
+      trigger: { every:  ELocalNotificationTriggerUnit.HOUR },
+      foreground: true
     })   
   }
 
-  
 
   showAlert(header, sub, msg){
     this.alertController.create({

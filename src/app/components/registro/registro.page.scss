@@ -14,3 +14,18 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
 }
+
+ion-toolbar{
+    --background: #eeeeee ;
+  }
+
+  ion-card{
+    width: 60%;
+    display: grid;
+    margin-left: 80px;
+  }
+
+  .minus{
+      text-transform: initial;
+      font-size: 16px;
+  }

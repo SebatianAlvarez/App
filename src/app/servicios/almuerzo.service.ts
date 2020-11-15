@@ -134,4 +134,46 @@ export class AlmuerzoService {
         }))
       );
   }
+
+  subirMenu(almu: almuerzo, id?: string): void{    
+    this.guardarEspecial(almu);
+  }
+
+  guardarEspecial(platoAlm: almuerzo) {
+
+    //this.idRes =perfil.id;
+    let idExiste = platoAlm.id;
+    platoAlm.id = idExiste;
+    console.log("idExiste??", idExiste);
+    console.log("idExiste222??", platoAlm.id);
+    
+    if(idExiste){
+      const menuAlmObj = {
+        id: idExiste,
+        userUID: this.usuarioLog,
+        estado: platoAlm.estado,
+        entradaAlmuerzo: platoAlm.entradaAlmuerzo,
+        jugoAlmuerzo: platoAlm.jugoAlmuerzo, 
+        precioAlmuerzo: platoAlm.precioAlmuerzo,
+        segundoAlmuerzo: platoAlm.segundoAlmuerzo,
+        tipoAlmuerzo: platoAlm.tipoAlmuerzo
+      };
+      return this.almuerzoCollection.doc(platoAlm.id).update(menuAlmObj);      
+    }else{      
+      let idPlato = this.db.createId();
+      platoAlm.id = idPlato;
+      this.db.collection('platoAlmuerzo').doc(idPlato).set({
+        id: platoAlm.id,
+        userUID: this.usuarioLog,
+        estado: 'Activo',
+        entradaAlmuerzo: platoAlm.entradaAlmuerzo,
+        jugoAlmuerzo: platoAlm.jugoAlmuerzo, 
+        precioAlmuerzo: platoAlm.precioAlmuerzo,
+        segundoAlmuerzo: platoAlm.segundoAlmuerzo,
+        tipoAlmuerzo: platoAlm.tipoAlmuerzo
+      });
+    }
+  }
+
+
 }

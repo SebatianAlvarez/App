@@ -66,39 +66,36 @@ export class PerfilPage implements OnInit {
       console.log(error)
     }
 
-    this.Notificiacion2();
-    // this.Notificiacion3();
-    this.Notificiacion4();
-    this.Notificiacion5();
-
-  
-  
+    // this.Notificiacion2();
+    // // this.Notificiacion3();
+    // this.Notificiacion4();
+    // this.Notificiacion5();
   }
 
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Notificacion de prueba 12:00',
+      title: 'Notificacion de prueba 07:05',
       text: 'Ejemplo de notificacion',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 21, minute: 59} },
+      trigger: {every: {hour: 7, minute: 5} },
       foreground: true
     })
     
   }
 
-  Notificiacion7(){
-    console.log("nota enviada");
+  // Notificiacion7(){
+  //   console.log("nota enviada");
     
-    this.localNotification.schedule({
-      id:7,
-      title: 'notifiacion cada minuto, desde perfil',
-      text: 'Notificacion cada minuto',
-      data: {mydata: 'Mensaje oculto'},
-      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
-      //foreground: true
-    })   
-  }
+  //   this.localNotification.schedule({
+  //     id:7,
+  //     title: 'notifiacion cada minuto, desde perfil',
+  //     text: 'Notificacion cada minuto',
+  //     data: {mydata: 'Mensaje oculto'},
+  //     trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
+  //     //foreground: true
+  //   })   
+  // }
 
   Notificiacion8(){
     this.localNotification.schedule({
@@ -106,42 +103,42 @@ export class PerfilPage implements OnInit {
       title: 'notifiacion cada minuto, desde perfil sin darle clic al boton',
       text: 'Notificacion cada minuto',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: ELocalNotificationTriggerUnit.MINUTE }
-      //foreground: true
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE },
+      foreground: true
     })   
   }
 
-  Notificiacion3(){
-    console.log("notificacion enviada");
+  // Notificiacion3(){
+  //   console.log("notificacion enviada");
 
-    this.authservice.listar().subscribe(data =>{
-      console.log(data);
-      data.forEach(element => {
-        if(this.usuarioLog != element.uid && element.roles != 'dueño'){
-          console.log("este usuario", element);
-          console.log("este rol", element.roles);
-          this.localNotification.schedule({
-            id:3,
-            title: 'Notificacion de 10 segundos, con otro formato de fecha',
-            text: 'Ejemplo de notificacion',
-            data: {mydata: 'Mensaje oculto'},
-            trigger: {at: new Date(new Date().getTime() + 10 * 1000)}
-            //foreground: true
-          })
-        }
-      });
-    })
+  //   this.authservice.listar().subscribe(data =>{
+  //     console.log(data);
+  //     data.forEach(element => {
+  //       if(this.usuarioLog != element.uid && element.roles != 'dueño'){
+  //         console.log("este usuario", element);
+  //         console.log("este rol", element.roles);
+  //         this.localNotification.schedule({
+  //           id:3,
+  //           title: 'Notificacion de 10 segundos, con otro formato de fecha',
+  //           text: 'Ejemplo de notificacion',
+  //           data: {mydata: 'Mensaje oculto'},
+  //           trigger: {at: new Date(new Date().getTime() + 10 * 1000)}
+  //           //foreground: true
+  //         })
+  //       }
+  //     });
+  //   })
        
-  }
+  // }
 
   Notificiacion4(){
     this.localNotification.schedule({
       id:4,
-      title: 'Revisa el menu del dia ',
+      title: 'Prueba de notificacion desde Perfil, 11:40',
       text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 12, minute: 10} }
-      //foreground: true
+      trigger: { every: {hour: 11, minute: 40} },
+      foreground: true
     })
     
   }
@@ -227,20 +224,20 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Mi Restaurante',
+        text: 'Restaurante',
         icon: 'pizza',
         handler: () => {
           this.router.navigate(['/perfil-restaurante']);
         }
       },{
-        text: 'Visualizar Peticiones',
+        text: 'Reservas',
         icon: 'eye',
         handler: () => {
           this.router.navigate(['/tabs/reserva']);
         }
       },
       {
-        text: 'Mi Menú',
+        text: 'Menú',
         icon: 'refresh-circle',
         handler: () => {
           this.router.navigate(['/tabs-menu/desayuno']);
@@ -266,7 +263,7 @@ export class PerfilPage implements OnInit {
         }
       }
       ,{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();
@@ -279,7 +276,7 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Menu',
       buttons: [{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();
@@ -299,7 +296,7 @@ export class PerfilPage implements OnInit {
           this.router.navigate(['/error']);
         }
       },{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar Sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();

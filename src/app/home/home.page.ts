@@ -35,6 +35,12 @@ export class HomePage {
 
   public email:string;
   public password:string;
+  passwordType : string ="password";
+  showPassword = false
+  passwordToggleIcon ='eye'
+
+  nombreGoogle: string
+  correoGoogle: string
 
   constructor(private authService: AuthService, private router: Router, private afBD: AngularFireDatabase,
     public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform,
@@ -62,7 +68,15 @@ export class HomePage {
     });
 
 
+    mostrarContra(): void{
+      this.showPassword = !this.showPassword;
 
+      if(this.passwordToggleIcon === 'eye'){
+        this.passwordToggleIcon ='eye-off';
+      } else {
+        this.passwordToggleIcon = 'eye'
+      }
+    }
 
 
     facebookLogin(){
@@ -106,41 +120,15 @@ export class HomePage {
       });
     }
 
-    googleLogin(){
-      if(this.platform.is('cordova')){
-          console.log('platform: cordova')
-          this.googleWeb();
-          
-      } else {
-          console.log('platform: web')
-          this.googleWeb();
-          
-      }
+    ingresoGoogle(){
+    
+     this.authService.loginGoogle().then( () =>{
+       this.router.navigate(['/listado'])
+     }).catch(err => {
+       alert("Contraseña o Correo incorrectos")
+     })
     }
 
-    googleCordova(){
-      this.fb.login(['email']).then( (response) => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
-        firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
-          console.log('Info google: '+ JSON.stringify(success));
-          this.router.navigate(['/perfil']);
-        }).catch((error) => {
-          console.log('Error: '+ JSON.stringify(error));
-        });
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-
-    googleWeb(){
-      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((success) => {
-        console.log('Info Google '+ JSON.stringify(success));
-        this.authService.actualizarUsuario(success.user);
-        this.router.navigate(['/perfil']);
-      }).catch((error) => {
-        console.log('Error: '+ JSON.stringify(error))
-      })
-    }
 
   OnSubmitLogin(){
     const valores = this.login.value

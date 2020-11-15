@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
+import { GooglePlus } from '@ionic-native/google-plus/ngx'
+
 
 //librerias mapa
 
@@ -26,6 +28,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireDatabase} from '@angular/fire/database/';
 import { PerfilResComponent } from './components/perfil-res/perfil-res.component';
+import { CalificarRestauranteComponent } from './components/calificar-restaurante/calificar-restaurante.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -41,15 +44,17 @@ import "leaflet/dist/images/marker-icon-2x.png";
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { EditarEspeciaComponent } from './components/editar-menu/editar-especia/editar-especia.component';
 import { EditarDesayunoComponent } from './components/editar-menu/editar-desayuno/editar-desayuno.component';
+import { EditarAlmuerzoComponent } from './components/editar-menu/editar-almuerzo/editar-almuerzo.component';
   
 @NgModule({
-  declarations: [AppComponent, PerfilResComponent, MenusPrincipalesPage, ListadoPromoComponent, EditarEspeciaComponent, EditarDesayunoComponent],
-  entryComponents: [PerfilResComponent],
+  declarations: [AppComponent, PerfilResComponent, CalificarRestauranteComponent, MenusPrincipalesPage, ListadoPromoComponent, EditarEspeciaComponent, EditarDesayunoComponent, EditarAlmuerzoComponent],
+  entryComponents: [PerfilResComponent, CalificarRestauranteComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
       AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,
       BrowserAnimationsModule, AngularFireStorageModule, FormsModule, ReactiveFormsModule],
   providers: [
     FCM,
+    GooglePlus,
     StatusBar,
     SplashScreen,
     Facebook,

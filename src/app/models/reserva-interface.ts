@@ -8,4 +8,5 @@ export class Reserva {
     uidResta?:string
     uidUsu?: string
     estado?: string
+    foto?: string
   }

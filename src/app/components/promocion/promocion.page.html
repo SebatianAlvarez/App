@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start" fill ="none" routerLink="/perfil">
+    <ion-button (click) ="Notificiacion2()" slot="start" fill ="none" routerLink="/perfil">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
       <ion-title style="text-align: center;">Promociones</ion-title>
@@ -40,7 +40,7 @@
 
   <div *ngFor ="let resta of restaurante$ | async">
     <div *ngIf ="resta.userUID === usuarioLog">
-      <ng-template [ngIf] = "resta.resVerificado === 'Aprobado'">
+      <ng-template [ngIf] = "resta.resVerificado === 'Aprobado' && resta.estadoDocumento === 'documento Aprobado' && resta.estado === 'verdadero' ">
         <ion-card>
           <ion-card-header>
             <div class="titulo">
@@ -69,28 +69,54 @@
           </ion-card-content>
         
         </ion-card>
-
-        <hr>
-        <!-- Prueba notificaciones
-
-        <ion-button expand="block" (click)="Notificiacion1()">Notificacion simple</ion-button>
-        <ion-button expand="block" (click)="Notificiacion2()">foreground??</ion-button>
-        <ion-button expand="block" (click)="Notificiacion3()">Notificacion simple con otro formato</ion-button>
+        
+      <!--  <ion-button expand="block" (click)="Notificiacion3()">Notificacion simple con otro formato</ion-button>
         <ion-button expand="block" (click)="Notificiacion4()">Notificacion cada dia</ion-button>-->
-        <ion-button expand="block" (click)="Notificiacion5()">Notificacion cada dia</ion-button>
-        <ion-button expand="block" (click)="Notificiacion6()">Notificacion cada dia</ion-button>
+        <!-- <ion-button expand="block" (click)="Notificiacion5()">Notificacion cada dia</ion-button>
+        <ion-button expand="block" (click)="Notificiacion6()">Notificacion cada dia</ion-button> -->
         <!-- <ion-button expand="block" (click)="Notificiacion7()">Notificacion cada minuto</ion-button>  -->
         <ion-button expand="block" (click)="Notificiacion10()">Notificacion cada hora</ion-button> 
 
+
       </ng-template>
       <ng-template [ngIf] = "resta.resVerificado === 'En Revision'">
-        <p style="text-align: center;">Tu Restaurante esta siendo Verificado</p>
+        <ion-card class="sinDatos">
+        <ion-item>
+          <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+          <ion-icon name="restaurant" slot="end"></ion-icon> -->
+          <ion-label></ion-label>
+          
+        </ion-item>
+      
+        <ion-card-content style="text-align: center;">
+         Tu restaurante esta siendo verificado por un adminstrador 
+        </ion-card-content>
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-card>
+        
       </ng-template>
       <ng-template [ngIf] = "resta.resVerificado === 'Rechazado'">
-        <p style="text-align: center;">Tu Restaurante fue rechazado vuelve a realizar
-        la solicitud en nuestra pagina web</p>
-        <br>
-        <p style="text-align: center;">Alli te explicaremos el motivo del rechazo</p>
+        <ion-card class="sinDatos">
+          <ion-item>
+            <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+            <ion-icon name="restaurant" slot="end"></ion-icon> -->
+            <ion-label></ion-label>
+            
+          </ion-item>
+        
+          <ion-card-content style="text-align: center;">
+            <p style="text-align: center;">Tu restaurante fue rechazado vuelve a realizar
+              la solicitud en nuestra pagina web</p>
+              <br>
+              <p style="text-align: center;">Alli te explicaremos el motivo del rechazo</p>
+          </ion-card-content>
+          <ion-item>
+            <ion-label></ion-label>
+          </ion-item>
+        </ion-card>
+        
       </ng-template>
     </div>
   </div>

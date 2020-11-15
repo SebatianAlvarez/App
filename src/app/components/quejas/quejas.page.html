@@ -3,7 +3,7 @@
     <ion-button slot="start" fill ="none" routerLink="/listado">
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
-    <ion-title>Restaurantes Afiliados</ion-title>
+    <ion-title style="text-align: center;">Restaurantes afiliados</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,11 +20,11 @@
                   <div class="titulo">
                     <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
                   </div>
-                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes">
+                  <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes; else foto">
                   <form [formGroup] ="queja" (ngSubmit) = "realizarQueja(r.userUID, r.nombreRestaurante, r.imagenRes)" style="text-align: center;">
                     <ion-list>
                       <ion-item>
-                        <ion-select formControlName ="tipo"  placeholder="Tipo  de Almuerzo" required type="text">
+                        <ion-select expand = "block" formControlName ="tipo"  placeholder="Seleciona" required type="text">
                           <ion-select-option>Queja</ion-select-option>
                           <ion-select-option>Sugerencia</ion-select-option> 
                         </ion-select>
@@ -65,6 +65,10 @@
           </div>
         </div>
       </div>  
+  </ng-template>
+
+  <ng-template #foto>
+    <img class="fotoPerfil" src = "../../../assets/resta.jpg">
   </ng-template>
 
   <ng-template [ngIf]="validarDatos(existeDatos) === false" >

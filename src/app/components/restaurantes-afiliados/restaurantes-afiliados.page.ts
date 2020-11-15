@@ -16,6 +16,8 @@ import { AuthService } from '../../servicios/auth.service';
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { comentarios } from '../../models/comentarios-interface';
 import { first } from 'rxjs/operators';
+import { ModalController } from '@ionic/angular';
+import { CalificarRestauranteComponent } from '../calificar-restaurante/calificar-restaurante.component'
 
 
 
@@ -43,12 +45,14 @@ export class RestaurantesAfiliadosPage implements OnInit {
   listAfiliados: afiliado[] = []
   listRestaurantes: resta[] = []
 
+  resHabilitados: resta[] = [];
+
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
               private restauranteService: RestaurantesService, private alertController : AlertController,
               private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
               private router : Router, private perfilService : PerfilesService,
-              private comentarioService : ComentariosService,
+              private comentarioService : ComentariosService, private modal: ModalController,
               public ActionSheetController: ActionSheetController, private authservice:AuthService,) {
 
               }
@@ -146,9 +150,11 @@ export class RestaurantesAfiliadosPage implements OnInit {
     this.router.navigate(['/listado']);
   }
 
+  /*
+
   async presentModalComentario(id : string){
     const alert = await this.alertController.create({
-      header: 'Deja tu Comentario',
+      header: 'Deja tu comentario',
       inputs: [
         {
           name: "comentario",
@@ -165,7 +171,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
           }
         },{
-          text : "Realizar Comentario",
+          text : "Realizar comentario",
           handler : data =>{
             
             this.presentComentario()
@@ -181,12 +187,14 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
   async presentModal(id : string){
     const alert = await this.alertController.create({
-      header: 'Realizar Reserva',
+      header: 'Realizar reserva',
       inputs: [
         {
           name: "mesas",
           type: "number",
-          placeholder: "Mesas a Reservar"
+          placeholder: "Mesas a reservar",
+          
+
         },{
           name: "tiempo",
           type: "number",
@@ -202,13 +210,17 @@ export class RestaurantesAfiliadosPage implements OnInit {
 
           }
         },{
-          text : "Confirmar Reserva",
+          text : "Confirmar reserva",
           handler : data =>{
             let tiempo;
             tiempo = parseInt(data.tiempo)
-            if(tiempo < 30){
+            let mesa;
+            mesa = parseInt(data.mesas)
+            if(tiempo < 30 || tiempo > 60){
               this.reservaError();
-            }else{
+            }else if (mesa > 10) {
+              this.reservaError1();
+            }else {
               this.Reservar(data.mesas, data.tiempo ,id);
               this.presentReserva();
             }
@@ -226,7 +238,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Gracias por tu opinón',
+      header: 'Gracias por tu comentario',
       // subHeader: 'Subtitle',
       // message: 'This is an alert message.',
       buttons: ['OK']
@@ -241,7 +253,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Tu reserva sera verificada en minutos',
       // subHeader: 'Subtitle',
-      message: 'Puedes ir al menu Mensajes.',
+      message: 'Puedes ir al menu mensajes.',
       buttons: ['OK']
     });
 
@@ -264,7 +276,19 @@ export class RestaurantesAfiliadosPage implements OnInit {
       cssClass: 'my-custom-class',
       header: '',
       // subHeader: 'Subtitle',
-      message: 'Se debe realizar la reserva con 30 minutos de anticipación',
+      message: 'Se debe realizar la reserva con 30 minutos minimo y 60 minutos maximo de anticipación',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async reservaError1() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '',
+      // subHeader: 'Subtitle',
+      message: 'No se puede reservar mas de 10 mesas',
       buttons: ['OK']
     });
 
@@ -354,7 +378,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
           tiempo : tiempo,
           nombre : data.nombre,
           numero : data.numero,
-          estado : "En Revision"
+          estado : "En Revision",
+          foto: data.foto,
         }).then((res) =>{
           resolve(res)
         }).catch(err => reject(err))
@@ -372,7 +397,7 @@ export class RestaurantesAfiliadosPage implements OnInit {
           this.router.navigate(['tabs-reservas/reserva'])
         }
       },{
-        text: 'Cerrar Sesion',
+        text: 'Cerrar sesión',
         icon: 'log-out',
         handler: () => {
          this.onLogout();
@@ -443,6 +468,17 @@ export class RestaurantesAfiliadosPage implements OnInit {
       this.restauranteService.updateRestaurante(id, califica)
     })
 
+  }
+
+  */
+
+  openRes(r){
+    this.modal.create({
+      component: CalificarRestauranteComponent,
+      componentProps : {
+        r: r,
+      }
+    }).then((modal) => modal.present())
   }
 
 }

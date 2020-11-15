@@ -4,66 +4,119 @@
       <ion-icon name = "arrow-back" ></ion-icon>
     </ion-button>
     <ion-title style="text-align: center;">
-      Menú del día
+      Menú del día 
     </ion-title>
   </ion-toolbar>
 </ion-header>
  <ion-content>
-  <ion-list>
-    <ng-container *ngIf="!desayunoUser || desayunoUser.length == 0">
-      <div *ngFor="let n of [0]" padding>
-        <ion-skeleton-text></ion-skeleton-text>
-        <p>Sin Datos
-          <ion-skeleton-text class="text-skeleton"></ion-skeleton-text>
-        </p>
-      </div>
-    </ng-container>
-    <ion-item-sliding *ngFor="let des of desayunoUser" (click)="openDes(des)">
-      <ion-card button>
-          <!-- <div class="imagen">
-            <img src="../../../assets/menu.png" width="140px">
-          </div> -->
-            <ion-item>
-              <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
-                <ion-icon name="information-circle"></ion-icon>&nbsp;
-                {{des.estado}}</p>
-              <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
-                <ion-icon name="information-circle"></ion-icon>&nbsp;
-                {{des.estado}}</p>
-              <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{des.precioDesayuno}}
-              </ion-button>
-            </ion-item>
-        <ion-card-subtitle>
-          <h6>&nbsp;
-            <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
-            Plato:
-            {{des.platoDesayuno}}
-          </h6>
-          <h6>&nbsp;
-            <ion-icon name="restaurant"></ion-icon>
-            Detalle:
-           {{des.detalleDesayuno}} &nbsp;
-          </h6>
-          <h6>&nbsp;&nbsp;
-            <ion-icon name="restaurant"></ion-icon>&nbsp;
-            Ingredientes</h6>
-          <div *ngFor="let i of des.ingredientes">
-            <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
-          </div>
-        </ion-card-subtitle>
-      </ion-card>
- 
-      <!-- <ion-item-options side="end">
-        <ion-item-option (click)="onRemove(des)" color="secondary">
+
+  <div *ngFor="let r of restaUser">
+
+    <ng-template [ngIf]="r.resVerificado === 'En revision'">
+      <ion-card class="sinDatos">
+        <ion-item>
+          <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+          <ion-icon name="restaurant" slot="end"></ion-icon> -->
+          <ion-label></ion-label>
           
-          <ion-icon name="checkmark" slot="end"></ion-icon>
-        </ion-item-option>
-      </ion-item-options> -->
-    </ion-item-sliding>
-  </ion-list>
- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/lista-desayunos" routerDirection="forward">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+        </ion-item>
+      
+        <ion-card-content style="text-align: center;">
+         Tu restaurante esta siendo revisado por un adminstrador 
+        </ion-card-content>
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+  
+    <ng-template [ngIf]="r.resVerificado === 'Aprobado' && r.estadoDocumento === 'documento Aprobado' && r.estado === 'verdadero' ">
+      <ion-list>
+        <ng-container *ngIf="!desayunoUser || desayunoUser.length == 0">
+          <div *ngFor="let n of [0]" padding>
+            <ion-skeleton-text></ion-skeleton-text>
+            <p>Sin datos...
+              <ion-skeleton-text class="text-skeleton"></ion-skeleton-text>
+            </p>
+          </div>
+        </ng-container>
+        <ion-item-sliding *ngFor="let des of desayunoUser" (click)="openDes(des)">
+          <ion-card button>
+            <div class="imagen">
+              <img style="margin-left: 35px; margin-top: 25px;" src="../../../../assets/desa.jpg" alt="des" width="140px" >
+            </div> 
+                <ion-item>
+                  <p class="almuerzoActivo" *ngIf="des.estado === 'Activo'">
+                    <ion-icon name="information-circle"></ion-icon>&nbsp;
+                    {{des.estado}}</p>
+                  <p class="almuerzoOculto" *ngIf="des.estado === 'Deshabilitado'">
+                    <ion-icon name="information-circle"></ion-icon>&nbsp;
+                    {{des.estado}}</p>
+                  <ion-button fill="outline" slot="end"><ion-icon name="pricetag" slot="start"></ion-icon>{{des.precioDesayuno}}
+                  </ion-button>
+                </ion-item>
+            <ion-card-subtitle>
+              <h6>&nbsp;
+                <ion-icon src="../../../assets/fast-food.svg"></ion-icon>
+                Plato:
+                {{des.platoDesayuno}}
+              </h6>
+              <h6>&nbsp;
+                <ion-icon name="restaurant"></ion-icon>
+                Detalle:
+               {{des.detalleDesayuno}} &nbsp;
+              </h6>
+              <h6>&nbsp;&nbsp;
+                <ion-icon name="restaurant"></ion-icon>&nbsp;
+                Ingredientes</h6>
+              <div *ngFor="let i of des.ingredientes">
+                <p style="color: black; margin-left: 10%;">- {{i['ingrediente']}}</p>
+              </div>
+            </ion-card-subtitle>
+          </ion-card>
+     
+          <!-- <ion-item-options side="end">
+            <ion-item-option (click)="onRemove(des)" color="secondary">
+              
+              <ion-icon name="checkmark" slot="end"></ion-icon>
+            </ion-item-option>
+          </ion-item-options> -->
+        </ion-item-sliding>
+      </ion-list>
+    </ng-template>
+  
+    <ng-template [ngIf]="r.estado === 'falso'">
+      <ion-card class="sinDatos">
+        <ion-item>
+          <!-- <ion-icon name="restaurant" slot="start"></ion-icon>
+          <ion-icon name="restaurant" slot="end"></ion-icon> -->
+          <ion-label></ion-label>
+          
+        </ion-item>
+      
+        <ion-card-content style="text-align: center;">
+         Tu restaurante se encuentra deshabilitado por el momento, para activar
+         tu restaurante acude a nuestra página web.
+        </ion-card-content>
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+
+  </div>
+  
+
+  <div *ngFor="let r of restaUser">
+    <div *ngIf="r.resVerificado === 'Aprobado' && r.estadoDocumento === 'documento Aprobado' && r.estado === 'verdadero' ">
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button routerLink="/lista-desayunos" routerDirection="forward">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+  </div>
+
+  
+ 
  </ion-content>

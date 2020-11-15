@@ -4,7 +4,7 @@ import { NavController, LoadingController } from '@ionic/angular';
 import { DesayunoService } from '../../../servicios/desayuno.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { desayuno } from '../../../models/desayuno-interface';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl , Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-desayunos',
@@ -35,23 +35,44 @@ export class ListaDesayunosPage implements OnInit {
               private router: Router,
               private fb: FormBuilder) { }
 
+              public errorMensajes ={
+                platoDesayuno : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' },
+                  { type: 'minlength', message: 'Minimo 3 caracteres'},
+        
+                ],
+                detalleDesayuno : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' },
+                  { type: 'minlength', message: 'Minimo 3 caracteres'},
+                 
+                ],
+                precioDesayuno : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' },
+                  { type: 'pattern', message: 'El campo debe contener solo números'},
+                  { type: 'minlength', message: 'Formato minimo $,$'},
+                ],
+              };
+
   ngOnInit() {
+
+    this.miform = this.fb.group({
+      id:new FormControl (''),
+      platoDesayuno: new FormControl ('', [Validators.required , Validators.minLength(3)]),
+      detalleDesayuno: new FormControl ('',  [Validators.required, Validators.minLength(3)]),
+      precioDesayuno: new FormControl ('',  [Validators.required, Validators.pattern("^[0-9,.]*$") , Validators.minLength(3)]),
+      estado: new FormControl (''),
+      ingredientes: this.fb.array(this.desayuno.ingredientes.map(i => this.fb.group({
+        ingrediente: this.fb.control(i, [Validators.required, Validators.minLength(3)])
+      })))
+    });
 
     this.desayunoID = this.route.snapshot.params['id'];
     if (this.desayunoID){
       this.loadDesayuno();
     }
 
-    this.miform = this.fb.group({
-      id:[''],
-      platoDesayuno: [''],
-      detalleDesayuno: [''],
-      precioDesayuno: [''],
-      estado: [''],
-      ingredientes: this.fb.array(this.desayuno.ingredientes.map(i => this.fb.group({
-        ingrediente: this.fb.control(i)
-      })))
-    });
+    
+
   }
 
   async loadDesayuno(){

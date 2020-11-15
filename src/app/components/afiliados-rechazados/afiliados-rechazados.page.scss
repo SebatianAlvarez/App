@@ -1,11 +1,21 @@
 ion-card .imagen{
-    position: absolute;
-    left: 50%;
-    top: 60px;
-    width: 150px;
-    border-radius: 50%;
-  }
+  position: absolute;
+  left: 60%;
+  top: 10px;
+  width: 130px;
+  height: 115px;
+  border-radius: 50%;
+
+}
 
 ion-toolbar{
   --background: #eeeeee ;
+}
+
+.sinDatos{
+   margin-top: 15%;
+  padding: 10% 0% 10% 0%;
+  width: 60%;
+  display: grid;
+  margin-left: 80px;
 }

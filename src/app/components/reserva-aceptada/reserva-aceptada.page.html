@@ -13,13 +13,12 @@
 
   <ng-template [ngIf]="validarDatos(existeDatos) === true">
     <div *ngFor="let reser of reservas$ | async"> 
-      <div *ngIf="usuarioLog === reser.uidResta"> 
-        <ng-template [ngIf]="reser.estado.toString() === 'Aprobado'">
+      <div *ngIf="usuarioLog === reser.uidResta && reser.estado.toString() === 'Aprobado'"> 
           <ion-card>
             <ion-card-header>
-              <ion-card-title style="text-align: center;">Reserva Aprobada</ion-card-title>
+              <ion-card-title style="text-align: center;">Reserva aprobada</ion-card-title>
               <div class="imagen">
-                <img src="../../../assets/logoU.png" width="140px">
+                <img style="margin-left: 50px;" *ngIf="reser.foto;else foto" src="{{reser.foto}}" width="140px">
               </div>
             </ion-card-header>
             <ion-card-subtitle>
@@ -42,16 +41,15 @@
               </h6>
             </ion-card-subtitle>
             <ion-card-header>
-              <ion-button color="secondary" (click)="alertEditar(reser.uid)" ><ion-icon name="close"></ion-icon>Cancelar&nbsp;</ion-button>
-              <ion-button  color="danger" (click)="alertEliminar(reser.uid)"><ion-icon name="trash"></ion-icon>Eliminar</ion-button>
-            </ion-card-header>
-              
-          </ion-card>
-        </ng-template>
+            </ion-card-header>        
+          </ion-card>  
         
       </div>
      
     </div>
+    <ng-template #foto>
+      <img style="margin-left: 50px;" src = "../../../assets/foto.png" width="10px">
+    </ng-template>
   </ng-template>
 
   <ng-template [ngIf]="validarDatos(existeDatos) === false">

@@ -23,11 +23,7 @@ const routes: Routes = [
         loadChildren: '../afiliados-aceptados/afiliados-aceptados.module#AfiliadosAceptadosPageModule'
         //loadChildren: '../reserva-aceptada/reserva-aceptada.module#ReservaAceptadaPageModule'
       },
-      {
-        path: 'Rechazados',
-        loadChildren: '../afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule'
-        //loadChildren: '../reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule'
-      }
+      
 
     ]
   }

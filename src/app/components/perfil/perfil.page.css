@@ -8,11 +8,7 @@
   color: white;
 }
 
-ion-card .fotoPerfil{
-  padding-left: 25%;
-  top: 40px;
-  width: 250px;
-}
+
 
 ion-toolbar{
   --background: #eeeeee ;
@@ -20,4 +16,16 @@ ion-toolbar{
 
 .datos{
   font-size: 10wh;
+}
+
+.aver2{
+  display: flex;
+  padding: 0% 10% 0% 10%;
+}
+
+.fotoPerfil{
+  width: 165px;
+  height: 165px;
+  margin-left: auto;
+  margin-right: auto;
 }

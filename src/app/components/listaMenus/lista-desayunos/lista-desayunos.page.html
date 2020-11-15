@@ -34,17 +34,38 @@
         </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Plato:</ion-label>
-      <ion-input type="text" formControlName="platoDesayuno"></ion-input>
+      <ion-label>Tipo desayuno:</ion-label>
+      <ion-input type="text" formControlName="platoDesayuno" maxlength="30"></ion-input>
     </ion-item>
+    <div >
+      <ng-container *ngFor ="let error of errorMensajes.platoDesayuno">
+        <div class="e" *ngIf ="miform.get('platoDesayuno').hasError(error.type) && (miform.get('platoDesayuno').dirty || miform.get('platoDesayuno').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+    </div>
       <ion-item>
-        <ion-label>Detalle:</ion-label>
-        <ion-input type="text" formControlName="detalleDesayuno"></ion-input>
+        <ion-label>Desayuno:</ion-label>
+        <ion-input type="text" formControlName="detalleDesayuno" maxlength="30"></ion-input>
       </ion-item>
+      <div >
+        <ng-container *ngFor ="let error of errorMensajes.detalleDesayuno">
+          <div class="e" *ngIf ="miform.get('detalleDesayuno').hasError(error.type) && (miform.get('detalleDesayuno').dirty || miform.get('detalleDesayuno').touched)">
+            {{error.message}}
+          </div>
+        </ng-container> 
+      </div>
       <ion-item>
         <ion-label>Precio: </ion-label>
-        <ion-textarea formControlName="precioDesayuno"></ion-textarea>
+        <ion-input type='text' placeholder="$$,$$" formControlName="precioDesayuno" maxlength="5"></ion-input>
       </ion-item>
+      <div >
+        <ng-container *ngFor ="let error of errorMensajes.precioDesayuno">
+          <div class="e" *ngIf ="miform.get('precioDesayuno').hasError(error.type) && (miform.get('precioDesayuno').dirty || miform.get('precioDesayuno').touched)">
+            {{error.message}}
+          </div>
+        </ng-container> 
+      </div>
       <ion-item>
         <ion-label>Ingredientes:</ion-label>
       </ion-item>
@@ -52,11 +73,12 @@
       <div formArrayName="ingredientes" style="margin-left: 5%;">
         <div *ngFor="let person of ingre.controls; let i=index;">
           <ion-item  [formGroupName]="i">
-            <ion-input type="text" formControlName="ingrediente"></ion-input>
+            <ion-input maxlength="15" type="text" formControlName="ingrediente"></ion-input>
             <ion-button color="danger" (click)="removeIngrediente(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item>
+          
         </div>
         <ion-item>
           <ion-button (click)="addIngredientes()">
@@ -69,10 +91,4 @@
       <!-- <button ion-button type="submit" [disabled]="!miform.valid">Submit</button> -->
     </form>
   </ion-card>
-  
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-      <ion-fab-button color="danger"  (click)="onRemoveDesayuno(desayunoID)">
-          <ion-icon name="trash"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
 </ion-content>

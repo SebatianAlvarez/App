@@ -27,6 +27,19 @@ export class EditarEspeciaComponent implements OnInit {
               private modal:ModalController,
               private router: Router) { }
 
+              public errorMensajes ={
+                platoEspecial : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' },
+                  { type: 'minlength', message: 'Minimo 3 caracteres'},
+          
+                ],
+                precioEspecial : [
+                  { type: 'required', message: 'Este campo no puede estar vacio' },
+                  { type: 'pattern', message: 'El campo debe contener solo números'},
+                  { type: 'minlength', message: 'Formato minimo $,$'},
+                ],
+              };
+
   ngOnInit() {
 
     this.espe = this.navparams.get('res')
@@ -35,10 +48,10 @@ export class EditarEspeciaComponent implements OnInit {
     this.miform = this.fb.group({
       id: [''],
       estado: [''],
-      platoEspecial: [''],
-      precioEspecial: [''],
+      platoEspecial: new FormControl ('', [Validators.required , Validators.minLength(3)]),
+      precioEspecial: new FormControl ('',  [Validators.required, Validators.pattern("^[0-9,.]*$") , Validators.minLength(3)]),
       ingredientes: this.fb.array(this.espe.ingredientes.map(i => this.fb.group({
-        ingrediente: this.fb.control(i)
+        ingrediente: this.fb.control(i, [Validators.required, Validators.minLength(3)])
       })))
     })
 

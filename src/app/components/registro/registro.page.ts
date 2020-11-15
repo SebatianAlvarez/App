@@ -20,6 +20,10 @@ export class RegistroPage implements OnInit {
   public password:string;
   public rol: "cliente";
 
+  passwordType : string ="password";
+  showPassword = false
+  passwordToggleIcon ='eye'
+
   constructor(private authSercive: AuthService, public router: Router,
     private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
@@ -29,7 +33,13 @@ export class RegistroPage implements OnInit {
     public errorMensajes ={
       nombre : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
-        { type: 'minlength', message: 'Minimo 3 caracteres'}
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
+      ],
+      apellido : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+        { type: 'pattern', message: 'El campo  solo contiene letras'}
       ],
       email : [
         { type: 'required', message: 'Este campo no puede estar vacio' },
@@ -53,15 +63,26 @@ export class RegistroPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email,]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       numero: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
-      nombre: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      nombre: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)]),
+      apellido: new FormControl ('', [Validators.required, Validators.pattern("^[a-zA-Z]*$") , Validators.minLength(3), Validators.maxLength(20)]),
     });
 
   ngOnInit() {
 
   }
 
+  mostrarContra(): void{
+    this.showPassword = !this.showPassword;
+
+    if(this.passwordToggleIcon === 'eye'){
+      this.passwordToggleIcon ='eye-off';
+    } else {
+      this.passwordToggleIcon = 'eye'
+    }
+  }
+
   OnSubmitRegister(user: Usuario){
-    this.authSercive.register(user.email, user.password, user.nombre,user.numero).then(auth =>{
+    this.authSercive.register(user.email, user.password, user.nombre,user.numero, user.apellido).then(auth =>{
       console.log(auth);
 
       this.OnSubmitLogin(user);

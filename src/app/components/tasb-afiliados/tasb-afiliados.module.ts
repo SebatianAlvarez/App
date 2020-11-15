@@ -27,6 +27,11 @@ const routes: Routes = [
         path: 'Sugerencias',
         loadChildren: '../quejas/quejas.module#QuejasPageModule'
         //loadChildren: '../reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule'
+      },
+      {
+        path: 'Rechazados',
+        loadChildren: '../afiliados-rechazados/afiliados-rechazados.module#AfiliadosRechazadosPageModule'
+        //loadChildren: '../reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule'
       }
 
     ]
