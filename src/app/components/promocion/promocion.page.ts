@@ -77,7 +77,7 @@ export class PromocionPage implements OnInit {
 
   ngOnInit() {
 
-    //this.Notificiacion2();
+    this.Notificiacion2();
     this.Notificiacion4();
     // this.Notificiacion5();
     //this.Notificiacion11();
@@ -127,10 +127,13 @@ export class PromocionPage implements OnInit {
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Notificacion de prueba 7:15',
-      text: 'Ejemplo de notificacion',
+      title: 'Revisa los munús del día de hoy',
+      text: 'Los restaurantes aledaños a la EPN tienen nueva información.',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 7, minute: 15} },
+      trigger: {
+        count: 2,
+        every: {hour: 12, minute: 0} 
+      },
       foreground: true
     })
     
@@ -153,10 +156,14 @@ export class PromocionPage implements OnInit {
   Notificiacion4(){
     this.localNotification.schedule({
       id:4,
-      title: 'Revisa el menu del dia, notificación díarias 12:15 sin foreground',
-      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+      title: 'Revisa las promociones del día de hoy',
+      text: 'Consulta si tus restaurantes favoritos cuentan con promociones que te gusten.',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 12, minute: 15} },
+      vibrate: true,
+      trigger: { 
+        count: 1,
+        every: {hour: 12, minute: 50} 
+      },
       foreground: true
     })
     
