@@ -228,28 +228,88 @@ export class AuthService {
   }
 
   loginGoogle(){
+
     if(this.platform.is('cordova')){
       return this.google.login({}).then( (res) =>{
+        this.actualizarUsuarioDataSocial(res.user)
         const user_data_google = res;
+        console.log("user??", res)
        return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
       })
     }else{
-      return this.AFauth.auth.signInWithPopup(new auth.GoogleAuthProvider)
+      const provider = new auth.GoogleAuthProvider();
+      this.oAuthLogin(provider);
     }
     
   }
 
-  registroGoogle(nombreU: string, correoU:string){
-    let user = new Usuario()
+  // Login con google
+  // loginGoogle() {
+  //   const provider = new auth.GoogleAuthProvider();
+  //   console.log("Provider", provider);
+  //   return this.oAuthLogin(provider);
+  // }
 
+  //Mecanismo que trabaja firebase ppara autentificar con redes sociales 
+  private oAuthLogin(provider: any) {
+    return this.AFauth.auth.signInWithPopup(provider).then((credencial) => {
+      console.log("Credencial", credencial.user);
+      console.log("Credencial ??", credencial.user);
+      this.actualizarUsuarioDataSocial(credencial.user);
+    });
+  }
+
+    // Metodo que se usar cuando un usuario ingresa con una red Social
+    public actualizarUsuarioDataSocial(usuario: any) {
+      const userRef: AngularFirestoreDocument<Usuario> = this.db.doc(`usuarios/${usuario.uid}`);
+ 
+      // Utilizaos una variable para liberar recurson ya que estemetedo esta realizando un proceso despues de subcribirse
+      let observable = userRef.valueChanges().subscribe(data => {
+        // Condicion que sirve para validar si un usuario ya existente retorne el rol correspondiente
+        //const uid = data.user.uid;
+        console.log("hay??", data)
+        if (data) {
+          console.log("Existe usuario")
+          const datos: Usuario = {
+            uid: usuario.uid,
+            nombre: data.nombre,
+            apellido: data.apellido,
+            numero: data.numero,
+            email: usuario.email,
+            roles: data.roles,
+            foto: data.foto
+          }
+            this.router.navigate(['/listado']);
+
+          return userRef.set(datos); // Esta insertando datos, por ellos se crear la variable para liberar recursos al final
+        } else {
+          console.log("Nuevo usuario")
+          const datos: Usuario = {
+            uid: usuario.uid,
+            nombre: usuario.displayName,
+            apellido: '',
+            numero: '',
+            email: usuario.email,
+            roles: 'cliente',
+            foto: ''
+          }
+          this.router.navigate(['/listado']);
+           return userRef.set(datos);
+        }
+      });
+      observable.unsubscribe; // libero recursos despues del bloque de insersion 
+    }
+
+  registroGoogle(usuario: any){
+    let user = new Usuario()
       return new Promise<any>((resolve, reject) => {
         let userID = this.db.createId();
         user.uid =userID
           this.db.collection('usuarios').doc(userID).set({
             apellido : "",
-            email : correoU,
+            email : usuario.email,
             foto : "",
-            nombre: nombreU,
+            nombre: usuario.displayName,
             numero: "",
             roles: 'cliente',
             uid: userID

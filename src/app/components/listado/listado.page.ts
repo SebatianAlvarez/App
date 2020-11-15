@@ -88,7 +88,6 @@ export class ListadoPage implements OnInit {
 
   async ngOnInit() {
 
-    this.resList = await this.initializeItems();
     
     try {
       let currentUser = this.AFauth.auth.currentUser;
@@ -108,9 +107,7 @@ export class ListadoPage implements OnInit {
       }
     })
 
-    // this.restaurante$ = this.restaurantesService.recuperarDatos();
-    // this.promociones$ = this.promocionesService.recuperarDatos();
-
+    this.resList = await this.initializeItems();  
 
     // De esta manera evito poner los NgIf en el HTML
     this.restaurantesService.listar().subscribe(x =>{
@@ -137,27 +134,6 @@ export class ListadoPage implements OnInit {
     })
 
     this.resHabilitados = await this.initializeItems();
-
-    // this.promocionesService.listar().subscribe(data =>{
-    //   console.log(data);
-    //   const contador = 0;
-    //   for(let pro of data){
-    //     console.log(pro);
-    //   }
-      
-    // })
-
-    // this.getPromos();
-    
-    
-    // this.restaurantesService.getResta().subscribe( resta => {
-    //   this.Restaurantes = resta;
-    //   console.log("resta:", resta); 
-    // })
-
-    // this.restaurantesService.getPromos().subscribe(promo => {
-    //   this.Promos = promo;
-    // })
 
     this.desayunoService.listar().subscribe(desa => {
       this.desayunos = desa;
@@ -255,7 +231,7 @@ export class ListadoPage implements OnInit {
       return;
     }
   
-    this.resHabilitados = this.resList.filter(currentFood => {
+    this.resHabilitados = this.resHabilitados.filter(currentFood => {
       if (currentFood.nombreRestaurante && searchTerm) {
         return (currentFood.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || currentFood.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
