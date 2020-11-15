@@ -39,6 +39,9 @@ export class HomePage {
   showPassword = false
   passwordToggleIcon ='eye'
 
+  nombreGoogle: string
+  correoGoogle: string
+
   constructor(private authService: AuthService, private router: Router, private afBD: AngularFireDatabase,
     public afAuth : AngularFireAuth, private fb: Facebook, public platform: Platform,
     private menuService: MenuService, private formBuilder: FormBuilder) {
@@ -118,12 +121,14 @@ export class HomePage {
     }
 
     ingresoGoogle(){
+    
      this.authService.loginGoogle().then( () =>{
        this.router.navigate(['/listado'])
      }).catch(err => {
        alert("Contraseña o Correo incorrectos")
      })
     }
+
 
   OnSubmitLogin(){
     const valores = this.login.value

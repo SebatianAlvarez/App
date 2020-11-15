@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Platform } from '@ionic/angular';
+
 
 import { Usuario } from '../models/usuario-interface';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -22,7 +24,7 @@ export class AuthService {
   usuariocolencion: AngularFirestoreCollection<Usuario>;
 
   constructor(private AFauth: AngularFireAuth, private db:AngularFirestore,
-    private router:Router, private google:GooglePlus ) {
+    private router:Router, private google:GooglePlus, private platform : Platform ) {
 
       this.usuariocolencion = db.collection<Usuario>('usuarios');
 
@@ -36,7 +38,8 @@ export class AuthService {
       
       if(res.user.emailVerified){
         // this.actualizarUsuario(res.user);
-        this.router.navigate(['listado'])
+        //this.router.navigate(['listado'])
+        window.location.replace('/listado')
       } else{
         this.router.navigate(['verificar-email'])
       }
@@ -120,17 +123,26 @@ export class AuthService {
         return userRef.set(datos);
       }else{
         console.log("no existe", data);
-        
-        const datos : Usuario = {
-          uid: usuario.uid,
-          email: usuario.email,
-          roles: 'cliente',
-          foto: "",
-          //apellido: data.apellido,
-          //numero : '555555',
-          // nombre: 'k'
-        }
-        return userRef.set(datos);
+
+        this.getUserAuth().subscribe(x =>{
+          let user = new Usuario()
+
+      return new Promise<any>((resolve, reject) => {
+        let userID = this.db.createId();
+        user.uid =userID
+          this.db.collection('usuarios').doc(userID).set({
+            apellido : "",
+            email : x.email,
+            foto : "",
+            nombre: x.displayName,
+            numero: "",
+            roles: 'cliente',
+            uid: userID
+          }).then((res)=>{
+            resolve(res)
+          }).catch(err => reject(err))
+      })
+        })
       }
     });
   }
@@ -216,10 +228,39 @@ export class AuthService {
   }
 
   loginGoogle(){
-    return this.google.login({}).then( (res) =>{
-      const user_data_google = res;
-     return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
-    })
+    if(this.platform.is('cordova')){
+      return this.google.login({}).then( (res) =>{
+        const user_data_google = res;
+       return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
+      })
+    }else{
+      return this.AFauth.auth.signInWithPopup(new auth.GoogleAuthProvider)
+    }
+    
+  }
+
+  registroGoogle(nombreU: string, correoU:string){
+    let user = new Usuario()
+
+      return new Promise<any>((resolve, reject) => {
+        let userID = this.db.createId();
+        user.uid =userID
+          this.db.collection('usuarios').doc(userID).set({
+            apellido : "",
+            email : correoU,
+            foto : "",
+            nombre: nombreU,
+            numero: "",
+            roles: 'cliente',
+            uid: userID
+          }).then((res)=>{
+            resolve(res)
+          }).catch(err => reject(err))
+      })
+  }
+
+  getUserAuth(){
+    return this.AFauth.authState
   }
 
 }

@@ -17,17 +17,38 @@
         </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Plato:</ion-label>
-      <ion-input type="text" formControlName="platoDesayuno"></ion-input>
+      <ion-label>Tipo Desayuno:</ion-label>
+      <ion-input type="text" formControlName="platoDesayuno" maxlength="30"></ion-input>
     </ion-item>
+    <div >
+      <ng-container *ngFor ="let error of errorMensajes.platoDesayuno">
+        <div class="e" *ngIf ="miform.get('platoDesayuno').hasError(error.type) && (miform.get('platoDesayuno').dirty || miform.get('platoDesayuno').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+    </div>
       <ion-item>
-        <ion-label>Detalle:</ion-label>
-        <ion-input type="text" formControlName="detalleDesayuno"></ion-input>
+        <ion-label>Desayuno:</ion-label>
+        <ion-input type="text"  formControlName="detalleDesayuno" maxlength="30"></ion-input>
       </ion-item>
+      <div >
+        <ng-container *ngFor ="let error of errorMensajes.detalleDesayuno">
+          <div class="e" *ngIf ="miform.get('detalleDesayuno').hasError(error.type) && (miform.get('detalleDesayuno').dirty || miform.get('detalleDesayuno').touched)">
+            {{error.message}}
+          </div>
+        </ng-container> 
+      </div>
       <ion-item>
         <ion-label>Precio: </ion-label>
-        <ion-textarea formControlName="precioDesayuno"></ion-textarea>
-      </ion-item> <br>
+        <ion-input formControlName="precioDesayuno" placeholder="$$,$$" maxlength="5"></ion-input>
+      </ion-item>
+      <div >
+        <ng-container *ngFor ="let error of errorMensajes.precioDesayuno">
+          <div class="e" *ngIf ="miform.get('precioDesayuno').hasError(error.type) && (miform.get('precioDesayuno').dirty || miform.get('precioDesayuno').touched)">
+            {{error.message}}
+          </div>
+        </ng-container> 
+      </div>
       <!-- <ion-item>
         <ion-label>ingredientes</ion-label>
         <ion-textarea formControlName="ingredientes"></ion-textarea>
@@ -38,7 +59,7 @@
       <div formArrayName="ingredientes" style="margin-left: 5%;">
         <div *ngFor="let person of IngredienteArray.controls; let i=index;">
           <ion-item [formGroupName]="i">
-            <ion-input type="text" formControlName="ingrediente"></ion-input>
+            <ion-input type="text" formControlName="ingrediente" maxlength="15"></ion-input>
             <!-- <span style="display: inline-block;">El</span> -->
             <ion-button color="danger" (click)="removeIngrediente(i)">
               <ion-icon name="trash"></ion-icon>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { desayuno } from '../../../models/desayuno-interface';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl , Validators } from '@angular/forms';
 import { NavParams, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { DesayunoService } from '../../../servicios/desayuno.service';
@@ -20,6 +20,24 @@ export class EditarDesayunoComponent implements OnInit {
     private router: Router,
     private desayunoSvc: DesayunoService) { }
 
+    public errorMensajes ={
+      platoDesayuno : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+
+      ],
+      detalleDesayuno : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'minlength', message: 'Minimo 3 caracteres'},
+       
+      ],
+      precioDesayuno : [
+        { type: 'required', message: 'Este campo no puede estar vacio' },
+        { type: 'pattern', message: 'El campo debe contener solo números'},
+        { type: 'minlength', message: 'Formato minimo $,$'},
+      ],
+    };
+
   ngOnInit() {
 
     this.desa = this.navparams.get('des')
@@ -27,15 +45,15 @@ export class EditarDesayunoComponent implements OnInit {
     
 
     this.miform = this.fb.group({
-      id: [''],
-      estado: [''],
-      platoDesayuno: [''],
-      detalleDesayuno: [''],
-      precioDesayuno: [''],
+      id:new FormControl (''),
+      platoDesayuno: new FormControl ('', [Validators.required , Validators.minLength(3)]),
+      detalleDesayuno: new FormControl ('',  [Validators.required, Validators.minLength(3)]),
+      precioDesayuno: new FormControl ('',  [Validators.required, Validators.pattern("^[0-9,.]*$") , Validators.minLength(3)]),
+      estado: new FormControl (''),
       ingredientes: this.fb.array(this.desa.ingredientes.map(i => this.fb.group({
-        ingrediente: this.fb.control(i)
+        ingrediente: this.fb.control(i, [Validators.required, Validators.minLength(3)])
       })))
-    })
+    });
 
     this.iniciarForm2();
   }

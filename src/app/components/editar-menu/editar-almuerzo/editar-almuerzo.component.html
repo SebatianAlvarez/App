@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill ="none" (click)="dismiss()">
+      <ion-icon name = "arrow-back" ></ion-icon>
+    </ion-button>
+    <ion-title>Menú del día</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <form [formGroup]="miform" (ngSubmit)="onSubmit(miform.value)"> 
+      <ion-item >
+        <ion-label>Estado: </ion-label>
+        <ion-select placeholder="Estado"  type="text" formControlName="estado">
+          <ion-select-option>Activo</ion-select-option>
+          <ion-select-option>Deshabilitado</ion-select-option> 
+        </ion-select>
+      </ion-item>
+      <ion-item >
+        <ion-label>Tipo: </ion-label>
+        <ion-select placeholder="Tipo de Almuerzo" required type="text" formControlName="tipoAlmuerzo">
+          <ion-select-option>Normal</ion-select-option>
+          <ion-select-option>Especial</ion-select-option> 
+        </ion-select>
+      </ion-item>
+      <ion-item >
+        <ion-label>Entrada: </ion-label>
+        <ion-input  maxlength="30" required type="text" placeholder="Entrada" formControlName="entradaAlmuerzo"></ion-input>
+      </ion-item>
+      <ng-container *ngFor ="let error of errorMensajes.entradaAlmuerzo">
+        <div class="e" *ngIf ="miform.get('entradaAlmuerzo').hasError(error.type) && (miform.get('entradaAlmuerzo').dirty || miform.get('entradaAlmuerzo').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+      <ion-item >
+        <ion-label>Segundo: </ion-label>
+        <ion-input maxlength="30" required type="text" placeholder="Segundo" formControlName="segundoAlmuerzo"></ion-input>
+      </ion-item>
+      <ng-container *ngFor ="let error of errorMensajes.segundoAlmuerzo">
+        <div class="e" *ngIf ="miform.get('segundoAlmuerzo').hasError(error.type) && (miform.get('segundoAlmuerzo').dirty || miform.get('segundoAlmuerzo').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+      <ion-item >
+        <ion-label>Bebida: </ion-label>
+        <ion-input maxlength="30" required type="text" placeholder="Bebida" formControlName="jugoAlmuerzo"></ion-input>
+      </ion-item>
+      <ng-container *ngFor ="let error of errorMensajes.jugoAlmuerzo">
+        <div class="e" *ngIf ="miform.get('jugoAlmuerzo').hasError(error.type) && (miform.get('jugoAlmuerzo').dirty || miform.get('jugoAlmuerzo').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+      <ion-item >
+        <ion-label>Precio: </ion-label>
+        <ion-input placeholder="$$,$$" formControlName="precioAlmuerzo" maxlength="5"></ion-input>
+      </ion-item>
+      <ng-container *ngFor ="let error of errorMensajes.precioAlmuerzo">
+        <div class="e" *ngIf ="miform.get('precioAlmuerzo').hasError(error.type) && (miform.get('precioAlmuerzo').dirty || miform.get('precioAlmuerzo').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+  
+      <ion-button expand="full" (click)="dismiss()"  type = "submit" [disabled]="!miform.valid" >Guardar</ion-button>
+  
+    </form>
+</ion-card>
+</ion-content>
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+    <ion-fab-button color="danger"  (click)="onRemoveAlmuerzo(almu.id)">
+        <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>

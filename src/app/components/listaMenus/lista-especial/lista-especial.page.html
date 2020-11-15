@@ -18,13 +18,27 @@
       </ion-select>
   </ion-item>
     <ion-item>
-      <ion-label>Plato:</ion-label>
-      <ion-input type="text" formControlName="platoEspecial"></ion-input>
+      <ion-label>Plato especial:</ion-label>
+      <ion-input type="text" formControlName="platoEspecial" maxlength="30"></ion-input>
     </ion-item>
+    <div >
+      <ng-container *ngFor ="let error of errorMensajes.platoEspecial">
+        <div class="e" *ngIf ="miform.get('platoEspecial').hasError(error.type) && (miform.get('platoEspecial').dirty || miform.get('platoEspecial').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+    </div>
     <ion-item>
       <ion-label>Precio: </ion-label>
-      <ion-textarea formControlName="precioEspecial"></ion-textarea>
+      <ion-input placeholder="$$,$$" formControlName="precioEspecial" maxlength="5"></ion-input>
     </ion-item>
+    <div >
+      <ng-container *ngFor ="let error of errorMensajes.precioEspecial">
+        <div class="e" *ngIf ="miform.get('precioEspecial').hasError(error.type) && (miform.get('precioEspecial').dirty || miform.get('precioEspecial').touched)">
+          {{error.message}}
+        </div>
+      </ng-container> 
+    </div>
     <ion-item>
       <ion-label>Ingredientes:</ion-label>
     </ion-item>
@@ -32,7 +46,7 @@
     <div formArrayName="ingredientes" style="margin-left: 5%;">
       <div *ngFor="let person of ingre.controls; let i=index;">
         <ion-item  [formGroupName]="i">
-          <ion-input type="text" formControlName="ingrediente"></ion-input>
+          <ion-input type="text" formControlName="ingrediente" maxlength="15"></ion-input>
           <ion-button color="danger" (click)="removeIngrediente(i)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
@@ -49,14 +63,6 @@
     <!-- <button ion-button type="submit" [disabled]="!miform.valid">Submit</button> -->
   </form>
 </ion-card>
-
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-  <ion-fab-button color="danger"  (click)="onRemoveEspecial(especialID)">
-      <ion-icon name="trash"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
 
 </ion-content>
 

@@ -7,6 +7,9 @@ import { AuthService } from '../../servicios/auth.service';
 import { Observable } from 'rxjs';
 import { resta } from '../../models/restaurante-interface';
 import { RestaurantesService } from '../../servicios/restaurantes.service';
+import { ModalController } from '@ionic/angular';
+import { EditarAlmuerzoComponent } from '../editar-menu/editar-almuerzo/editar-almuerzo.component'
+
 
 @Component({
   selector: 'app-menus',
@@ -25,13 +28,16 @@ export class MenusPage implements OnInit {
   public currentUser = this.AFauth.auth.currentUser;
 
   constructor(private almuerzoService: AlmuerzoService, private AFauth : AngularFireAuth, private router:Router,
-    private restauranteService : RestaurantesService) { }
+    private restauranteService : RestaurantesService, private modal: ModalController) { }
 
   ngOnInit() {
 
     this.restaurante$ = this.restauranteService.recuperarDatos();
     this.restauranteService.listar().subscribe(res =>{
       this.restaurantes = res;
+      this.almuerzoService.listar().subscribe(almu =>{
+        this.almuerzos = almu
+      })
     })
 
     this.restauranteService.listar().subscribe((res) =>{
@@ -70,6 +76,16 @@ export class MenusPage implements OnInit {
   onRemove(idAlmuerzo :string){
     this.almuerzoService.removeAlmuerzo(idAlmuerzo);
     
+  }
+
+  openAlmu(alm){
+    this.modal.create({
+      component: EditarAlmuerzoComponent,
+      componentProps : {
+        alm: alm,
+        almuerzos: this.almuerzos
+      }
+    }).then((modal) => modal.present())
   }
 
   
