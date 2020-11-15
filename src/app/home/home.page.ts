@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../servicios/auth.service'; 
 import { Router } from '@angular/router';
-import { Facebook } from '@ionic-native/facebook/ngx';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Platform } from '@ionic/angular';
 import { IonSlides } from '@ionic/angular';
 
@@ -89,11 +89,12 @@ export class HomePage {
     }
 
     facebookCordova(){
-      this.fb.login(['email']).then( (response) => {
+      return this.fb.login(['email', 'public_profile']).then( (response: FacebookLoginResponse) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
-        firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
+         return firebase.auth().signInWithCredential(facebookCredential).then( (success) => {
+          this.authService.actualizarUsuarioDataSocial(success.user)
           console.log('Info facebook: '+ JSON.stringify(success));
-          this.router.navigate(['/perfil']);
+          // this.router.navigate(['/perfil']);
         }).catch((error) => {
           console.log('Error: '+ JSON.stringify(error));
         });
@@ -105,7 +106,8 @@ export class HomePage {
     facebookWeb(){
       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((success) => {
         console.log('Info Facebook '+ JSON.stringify(success));
-        this.authService.actualizarUsuario(success.user)
+        this.authService.actualizarUsuarioDataSocial(success.user)
+        // this.authService.actualizarUsuario(success.user)
         this.router.navigate(['/perfil']);
       }).catch((err) => {
         if(err.code === 'auth/account-exists-with-different-credential'){
@@ -122,8 +124,9 @@ export class HomePage {
 
     ingresoGoogle(){
     
-     this.authService.loginGoogle().then( () =>{
-       this.router.navigate(['/listado'])
+     this.authService.loginGoogle().then( (r) =>{
+        console.log("in", r);
+        window.location.replace('/listado')
      }).catch(err => {
        alert("Contraseña o Correo incorrectos")
      })

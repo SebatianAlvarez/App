@@ -26,7 +26,7 @@
     "@angular/router": "~10.0.14",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/dialogs": "^5.26.0",
-    "@ionic-native/facebook": "^5.18.0",
+    "@ionic-native/facebook": "^5.29.0",
     "@ionic-native/fcm": "^5.26.0",
     "@ionic-native/geolocation": "^5.16.0",
     "@ionic-native/google-plus": "^5.29.0",

@@ -49,10 +49,8 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
 
-    this.Notificiacion2();
-    // this.Notificiacion3();
-    this.Notificiacion4();
-    this.Notificiacion5();
+    this.Notificiacion20();
+    this.Notificiacion40();
 
     this.usuarios$ = this.authservice.recuperarDatos();
     
@@ -72,13 +70,16 @@ export class PerfilPage implements OnInit {
     // this.Notificiacion5();
   }
 
-  Notificiacion2(){
+  Notificiacion20(){
     this.localNotification.schedule({
-      id:2,
+      id:20,
       title: 'Notificacion de prueba 07:05',
       text: 'Ejemplo de notificacion',
       data: {page: 'perfil'},
-      trigger: {every: {hour: 7, minute: 5} },
+      vibrate: true,
+      trigger: {
+        count: 6,
+        every: {hour: 7, minute: 5} },
       foreground: true
     })
     
@@ -97,15 +98,30 @@ export class PerfilPage implements OnInit {
   //   })   
   // }
 
-  Notificiacion8(){
+  // Notificiacion8(){
+  //   this.localNotification.schedule({
+  //     id:8,
+  //     title: 'notifiacion cada minuto, desde perfil sin darle clic al boton',
+  //     text: 'Notificacion cada minuto',
+  //     data: {mydata: 'Mensaje oculto'},
+  //     trigger: { every: ELocalNotificationTriggerUnit.MINUTE },
+  //     foreground: true
+  //   })   
+  // }
+
+  Notificiacion40(){
     this.localNotification.schedule({
-      id:8,
-      title: 'notifiacion cada minuto, desde perfil sin darle clic al boton',
-      text: 'Notificacion cada minuto',
+      id:40,
+      title: 'Revisa las promociones del día de hoy.',
+      text: 'Consulta si tus restaurantes favoritos cuentan con promociones que te gusten.',
       data: {mydata: 'Mensaje oculto'},
-      trigger: { every: ELocalNotificationTriggerUnit.MINUTE },
+      trigger: { 
+        count: 1,
+        every: {hour: 8, minute: 0} 
+      },
       foreground: true
-    })   
+    })
+    
   }
 
   // Notificiacion3(){
@@ -131,28 +147,28 @@ export class PerfilPage implements OnInit {
        
   // }
 
-  Notificiacion4(){
-    this.localNotification.schedule({
-      id:4,
-      title: 'Prueba de notificacion desde Perfil, 11:40',
-      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
-      data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 11, minute: 40} },
-      foreground: true
-    })
+  // Notificiacion4(){
+  //   this.localNotification.schedule({
+  //     id:4,
+  //     title: 'Prueba de notificacion desde Perfil, 11:40',
+  //     text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+  //     data: {mydata: 'Mensaje oculto'},
+  //     trigger: { every: {hour: 11, minute: 40} },
+  //     foreground: true
+  //   })
     
-  }
+  // }
 
-  Notificiacion5(){
-    this.localNotification.schedule({
-      id:5,
-      title: 'Revisa el menu del dia ',
-      text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
-      data: {mydata: 'Mensaje oculto'},
-      trigger: { every: {hour: 19, minute: 40} }
-      //foreground: true
-    })   
-  }
+  // Notificiacion5(){
+  //   this.localNotification.schedule({
+  //     id:5,
+  //     title: 'Revisa el menu del dia ',
+  //     text: 'Puedes ver el menu que ofrecen tus restaurantes favoritos el dia hoy',
+  //     data: {mydata: 'Mensaje oculto'},
+  //     trigger: { every: {hour: 19, minute: 40} }
+  //     //foreground: true
+  //   })   
+  // }
 
   onLogout(){
     this.authservice.logout();
