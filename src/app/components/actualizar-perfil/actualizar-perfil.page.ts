@@ -140,6 +140,10 @@ export class ActualizarPerfilPage implements OnInit {
       }
     }
 
+    goRegreso(){
+      window.location.replace('/listado')
+    }
+
     async actualizarUsuarioApellido(){
       const loading = await this.loadingController.create({
         message:"Actualizando....."

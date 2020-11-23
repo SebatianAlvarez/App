@@ -231,10 +231,13 @@ export class AuthService {
 
     if(this.platform.is('cordova')){
       return this.google.login({}).then( (res) =>{
-        this.actualizarUsuarioDataSocial(res.user)
+        
         const user_data_google = res;
-        console.log("user??", res)
-       return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
+        // this.actualizarUsuarioDataSocial(user_data_google)
+        const provider = new auth.GoogleAuthProvider()
+        this.oAuthLogin2(provider, res);
+       //return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
+       
       })
     }else{
       const provider = new auth.GoogleAuthProvider();
@@ -255,6 +258,13 @@ export class AuthService {
     return this.AFauth.auth.signInWithPopup(provider).then((credencial) => {
       console.log("Credencial", credencial.user);
       console.log("Credencial ??", credencial.user);
+      this.actualizarUsuarioDataSocial(credencial.user);
+    });
+  }
+
+  private oAuthLogin2(provider: any, res: any) {
+    return this.AFauth.auth.signInWithCredential(provider.credential(null, res.accessToken)).then((credencial) => {
+      
       this.actualizarUsuarioDataSocial(credencial.user);
     });
   }
@@ -283,7 +293,26 @@ export class AuthService {
 
           return userRef.set(datos); // Esta insertando datos, por ellos se crear la variable para liberar recursos al final
         } else {
-          console.log("Nuevo usuario")
+
+
+      //     let user = new Usuario()
+      // return new Promise<any>((resolve, reject) => {
+      //   //let userID = this.db.createId();
+      //   //user.uid =userID
+      //     this.db.collection('usuarios').doc(usuario.userId).set({
+      //       apellido : "",
+      //       email : usuario.email,
+      //       foto : "",
+      //       nombre: usuario.givenName,
+      //       numero: "",
+      //       roles: 'cliente',
+      //       uid: usuario.userId
+      //     }).then((res)=>{
+      //       resolve(res)
+      //     }).catch(err => reject(err))
+      // })
+
+          alert("Nuevo usuario")
           const datos: Usuario = {
             uid: usuario.uid,
             nombre: usuario.displayName,
