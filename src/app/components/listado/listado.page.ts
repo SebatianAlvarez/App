@@ -28,6 +28,8 @@ import { ListadoPromoComponent } from '../listado-promo/listado-promo.component'
 import { Usuario } from '../../models/usuario-interface';
 import { CoordenadasService } from '../../servicios/coordenadas.service';
 import { coordenadas } from '../../models/coordenadas-interface';
+import { ELocalNotificationTriggerUnit, LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 
 @Component({
   selector: 'app-listado',
@@ -84,7 +86,7 @@ export class ListadoPage implements OnInit {
     private router:Router, private AFauth : AngularFireAuth, private desayunoService : DesayunoService, private especialService: MeriendaService,
     private almuerzoService : AlmuerzoService, private promocionesService: PromocionService,
     private perfilService : PerfilesService, private firestore: AngularFirestore,
-    private coordenadaService: CoordenadasService, private alercontroller : AlertController) { }
+    private coordenadaService: CoordenadasService, private alercontroller : AlertController, private localNotification: LocalNotifications) { }
 
   async ngOnInit() {
 
@@ -97,6 +99,8 @@ export class ListadoPage implements OnInit {
       console.log(error)
     }
 
+    
+
     this.perfilService.getUsuario(this.usuarioLog).subscribe(data =>{
       if(data.roles === "dueño"){
         window.location.replace('/perfil')
@@ -106,6 +110,9 @@ export class ListadoPage implements OnInit {
         this.presentarMensaje();
       }
     })
+
+    this.Notificiacion21();
+    this.Notificiacion41();
 
     this.resList = await this.initializeItems();  
 
@@ -252,6 +259,35 @@ export class ListadoPage implements OnInit {
           this.resHabilitados2 = this.resHabilitados;
         }
       )
+  }
+
+  Notificiacion41(){
+    this.localNotification.schedule({
+      id:41,
+      title: 'Revisa las promociones del día de hoy.',
+      text: 'Consulta si tus restaurantes favoritos cuentan con promociones que te gusten.',
+      data: {mydata: 'Mensaje oculto'},
+      trigger: { 
+        count: 1,
+        every: {hour: 12, minute: 0} 
+      },
+      foreground: true
+    })  
+  }
+
+  Notificiacion21(){
+    this.localNotification.schedule({
+      id:21,
+      title: 'Revisa los munús del día de hoy',
+      text: 'Los restaurantes aledaños a la EPN tienen nueva información.',
+      data: {page: 'perfil'},
+      trigger: {
+        count: 2,
+        every: {hour: 12, minute: 30} 
+      },
+      foreground: true
+    })
+    
   }
 
 

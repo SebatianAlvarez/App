@@ -127,12 +127,12 @@ export class PromocionPage implements OnInit {
   Notificiacion2(){
     this.localNotification.schedule({
       id:2,
-      title: 'Revisa los munús del día de hoy',
-      text: 'Los restaurantes aledaños a la EPN tienen nueva información.',
+      title: 'Revisa tu menú del día',
+      text: 'Revisa o actualiza tu menú del día de hoy',
       data: {page: 'perfil'},
       trigger: {
         count: 2,
-        every: {hour: 12, minute: 0} 
+        every: {hour: 11, minute: 0} 
       },
       foreground: true
     })
@@ -156,13 +156,13 @@ export class PromocionPage implements OnInit {
   Notificiacion4(){
     this.localNotification.schedule({
       id:4,
-      title: 'Revisa las promociones del día de hoy',
-      text: 'Consulta si tus restaurantes favoritos cuentan con promociones que te gusten.',
+      title: 'Revisa tus promociones',
+      text: 'Agrega promociones para que más clientes se acerquen a tu restaurante.',
       data: {mydata: 'Mensaje oculto'},
       vibrate: true,
       trigger: { 
         count: 1,
-        every: {hour: 12, minute: 50} 
+        every: {hour: 11, minute: 50} 
       },
       foreground: true
     })
