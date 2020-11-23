@@ -83,13 +83,13 @@ export class AuthService {
       console.log("se registro??", res.user.emailVerified );
       
 
-      if(res.user.emailVerified){
-        // this.enviarEmailVerificacion()
-        this.router.navigate(['home'])
-      } else {
-        this.router.navigate(['home'])
-      }
-      //  this.router.navigate(['home'])
+      // if(res.user.emailVerified){
+      //   // this.enviarEmailVerificacion()
+      //   this.router.navigate(['home'])
+      // } else {
+      //   this.router.navigate(['home'])
+      // }
+      // //  this.router.navigate(['home'])
       
     });
     
@@ -237,7 +237,8 @@ export class AuthService {
         const provider = new auth.GoogleAuthProvider()
         this.oAuthLogin2(provider, res);
        //return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
-       
+      // return this.AFauth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(null, user_data_google.accessToken));
+
       })
     }else{
       const provider = new auth.GoogleAuthProvider();

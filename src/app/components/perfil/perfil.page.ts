@@ -49,8 +49,8 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
 
-    this.Notificiacion20();
-    this.Notificiacion40();
+    // this.Notificiacion20();
+    // this.Notificiacion40();
 
     this.usuarios$ = this.authservice.recuperarDatos();
     
@@ -117,7 +117,7 @@ export class PerfilPage implements OnInit {
       data: {mydata: 'Mensaje oculto'},
       trigger: { 
         count: 1,
-        every: {hour: 8, minute: 0} 
+        every: {hour: 12, minute: 0} 
       },
       foreground: true
     })

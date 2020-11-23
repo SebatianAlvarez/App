@@ -14,7 +14,7 @@ export class QuejasService {
   private quejas: Observable<queja[]>;
 
   constructor(private db:AngularFirestore) { 
-    this.quejaCollection = this.db.collection<queja>('quejas');
+    this.quejaCollection = this.db.collection<queja>('quejas'); 
 
     //this.afiliados = this.afiliadoCollection.snapshotChanges().pipe(map(
     //  actions => {
