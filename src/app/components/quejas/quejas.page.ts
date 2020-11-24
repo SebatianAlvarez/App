@@ -39,6 +39,9 @@ export class QuejasPage implements OnInit {
   listRestaurantes: resta[] = []
 
   usuarioLog: string;
+
+  ocultarForm: boolean;
+
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
               private restauranteService: RestaurantesService, private alertController : AlertController,
               private AFauth : AngularFireAuth, private db: AngularFirestore,private formBuilder: FormBuilder,
@@ -64,6 +67,8 @@ public queja = this.formBuilder.group ({
       });
 
   async ngOnInit() {
+
+    this.ocultarForm = false;
 
     this.existeDatos = false;
 
@@ -128,6 +133,16 @@ public queja = this.formBuilder.group ({
         return (Food.nombreRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || Food.tipoRestaurante.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1  );
       }
     });
+  }
+
+  //Mostrar Form
+
+  mostrarForm(){
+    this.ocultarForm = true;
+  }
+
+  ocultarFormu(){
+    this.ocultarForm = false;
   }
 
   realizarQueja(id : string, nombreRes: string, foto:string ){

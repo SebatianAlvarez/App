@@ -12,7 +12,7 @@
 
 <ion-content [fullscreen]="true">
   <ng-template [ngIf]="validarDatos(existeDatos) === true">
-      <div *ngFor="let a of afiliados$ | async">
+      <!-- <div *ngFor="let a of afiliados$ | async">
         <div *ngFor="let r of restaurante$ | async">
           <div *ngIf="usuarioLog === a.uidUsu && r.userUID === a.uidResta">
             <div style="display: inline; grid-template-columns: 1fr 1fr;">
@@ -22,7 +22,7 @@
                     <h2 style="text-align: center;">{{r.nombreRestaurante}}</h2>
                   </div>
                   <img class="imgRes" [src]="r.imagenRes" *ngIf="r.imagenRes; else foto"> 
-        
+                  {{listAfiliados}}
                 </ion-card>
               </div>
               
@@ -31,7 +31,16 @@
              
           </div>
         </div>
-      </div>  
+      </div>   -->
+
+      <div  style="display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 20%;">
+        <ion-card *ngFor="let r of listRestaurantes">
+          <ion-card-header>
+            <h4 style="text-align: center;">{{r.nombreRestaurante}}</h4>
+          </ion-card-header>
+          <img [src]="r.imagenRes" *ngIf="r.imagenRes; else foto">
+        </ion-card>
+      </div>
   </ng-template>
 
   <ng-template #foto>

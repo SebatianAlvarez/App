@@ -209,8 +209,13 @@ export class AuthService {
   logout(){
     this.AFauth.auth.signOut().then(() =>{
       this.google.disconnect();
+      this.router.navigate(['/home']);
+      window.location.reload(true);
+      // Que se quede en true
+
       //this.router.navigate(['/home']);
-      window.location.replace('home');
+      //window.location.replace('home');
+
     })
   }
 

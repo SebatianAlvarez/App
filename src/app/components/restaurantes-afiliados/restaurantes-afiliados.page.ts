@@ -102,14 +102,16 @@ export class RestaurantesAfiliadosPage implements OnInit {
             if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta && elementA.estado === 'verdadero'){
               this.listAfiliados.push(elementA);
               this.listRestaurantes.push(elementR);
-              console.log(this.listAfiliados);
-              console.log(this.listRestaurantes);
+              console.log("lista Afil", this.listAfiliados);
+              console.log("lista res", this.listRestaurantes);
               this.existeDatos = true;
               this.validarDatos(this.existeDatos)              
             }
           });
         })
       });
+      console.log("lista Afil", this.listAfiliados);
+      console.log("lista res", this.listRestaurantes);
     })
 
     console.log("a ver", this.listAfiliados)
@@ -149,6 +151,10 @@ export class RestaurantesAfiliadosPage implements OnInit {
   goMapa(){
     this.router.navigate(['/listado']);
   }
+
+
+
+
 
   /*
 
@@ -471,6 +477,8 @@ export class RestaurantesAfiliadosPage implements OnInit {
   }
 
   */
+
+
 
   openRes(r){
     this.modal.create({

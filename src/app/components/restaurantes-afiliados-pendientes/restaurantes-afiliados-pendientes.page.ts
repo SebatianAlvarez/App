@@ -43,6 +43,7 @@ export class RestaurantesAfiliadosPendientesPage implements OnInit {
   listAfiliados: afiliado[] = []
   listRestaurantes: resta[] = []
 
+
   usuarioLog: string;
   constructor(private afiliadosSvc: AfiliadosServiceService, public actionSheetController: ActionSheetController,
               private restauranteService: RestaurantesService, private alertController : AlertController,
@@ -77,16 +78,15 @@ export class RestaurantesAfiliadosPendientesPage implements OnInit {
             if(this.usuarioLog == elementA.uidUsu &&  elementR.userUID == elementA.uidResta && elementA.estado === 'pendiente'){
               this.listAfiliados.push(elementA);
               this.listRestaurantes.push(elementR);
-              console.log(this.listAfiliados);
-              console.log(this.listRestaurantes);
               this.existeDatos = true;
               this.validarDatos(this.existeDatos)              
             }
           });
         })
       });
+      console.log("lista Afil", this.listAfiliados);
+      console.log("lista res", this.listRestaurantes);
     })
-     
 
 
   }
