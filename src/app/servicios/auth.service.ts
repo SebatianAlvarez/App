@@ -207,6 +207,7 @@ export class AuthService {
       this.google.disconnect();
       this.router.navigate(['/home']);
       window.location.reload(true);
+      // Que se quede en true
     })
   }
 
