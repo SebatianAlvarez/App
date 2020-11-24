@@ -28,7 +28,7 @@ export class RegistroPage implements OnInit {
     private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
-    private authservice : AuthService) { }
+    private authservice : AuthService) { this.prueba()}
   
     public errorMensajes ={
       nombre : [
@@ -68,7 +68,7 @@ export class RegistroPage implements OnInit {
     });
 
   ngOnInit() {
-
+    
   }
 
   mostrarContra(): void{
@@ -79,6 +79,12 @@ export class RegistroPage implements OnInit {
     } else {
       this.passwordToggleIcon = 'eye'
     }
+  }
+
+  prueba(){
+    console.log("primero")
+    this.authservice.logout2()
+    console.log("segundo")
   }
 
   OnSubmitRegister(user: Usuario){

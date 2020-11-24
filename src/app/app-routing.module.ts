@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { NologinGuard } from './guards/nologin.guard';
+import { PruebaGuard } from './guards/prueba.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -29,7 +30,7 @@ const routes: Routes = [
   { path: 'lista-promociones-habilitadas', loadChildren: './components/lista-promociones-habilitadas/lista-promociones-habilitadas.module#ListaPromocionesHabilitadasPageModule', canActivate:[AuthGuard] },
   { path: 'restaurantes-afiliados', loadChildren: './components/restaurantes-afiliados/restaurantes-afiliados.module#RestaurantesAfiliadosPageModule', canActivate:[AuthGuard]  },
   { path: 'comentarios', loadChildren: './components/comentarios/comentarios.module#ComentariosPageModule', canActivate:[AuthGuard] },
-  { path: 'verificar-email', loadChildren: './components/verificar-email/verificar-email.module#VerificarEmailPageModule', canActivate:[AuthGuard] },
+  { path: 'verificar-email', loadChildren: './components/verificar-email/verificar-email.module#VerificarEmailPageModule' },
   { path: 'tabs', loadChildren: './components/tabs/tabs.module#TabsPageModule', canActivate:[AuthGuard] },
   { path: 'reserva-rechazada', loadChildren: './components/reserva-rechazada/reserva-rechazada.module#ReservaRechazadaPageModule', canActivate:[AuthGuard] },
   { path: 'menus', loadChildren: './components/menus/menus.module#MenusPageModule', canActivate:[AuthGuard] },

@@ -22,6 +22,10 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       
       return this.AFauth.authState.pipe(map(auth => {
+
+        
+        //this.AFauth.auth.currentUser.emailVerified() una idea
+
         if(isNullOrUndefined(auth)){
           this.router.navigate(['/home'])
           return false

@@ -108,7 +108,7 @@ export class HomePage {
         console.log('Info Facebook '+ JSON.stringify(success));
         this.authService.actualizarUsuarioDataSocial(success.user)
         // this.authService.actualizarUsuario(success.user)
-        this.router.navigate(['/perfil']);
+        this.router.navigate(['/listado']);
       }).catch((err) => {
         if(err.code === 'auth/account-exists-with-different-credential'){
           let FaceCred = err.credential;
@@ -126,9 +126,9 @@ export class HomePage {
     
      this.authService.loginGoogle().then( (r) =>{
         console.log("in", r);
-        window.location.replace('/listado')
+        this.router.navigate(['/listado']);
      }).catch(err => {
-       alert("Contraseña o Correo incorrectos")
+       alert("Contraseña o Correo incorrectos aver" + err)
      })
     }
 
