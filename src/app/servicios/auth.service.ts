@@ -41,7 +41,9 @@ export class AuthService {
         //this.router.navigate(['listado'])
         window.location.replace('/listado')
       } else{
+        
         this.router.navigate(['verificar-email'])
+        //this.AFauth.auth.signOut()
       }
     });
   }
@@ -79,8 +81,10 @@ export class AuthService {
           foto: ""
         }
         return userRef.set(datos);
+        
       })
       console.log("se registro??", res.user.emailVerified );
+      //this.router.navigate(['verificar-email'])
       
 
       // if(res.user.emailVerified){
@@ -205,9 +209,13 @@ export class AuthService {
   logout(){
     this.AFauth.auth.signOut().then(() =>{
       this.google.disconnect();
-      this.router.navigate(['/home']);
-      window.location.reload(true);
+      //this.router.navigate(['/home']);
+      window.location.replace('home');
     })
+  }
+
+  logout2(){
+    this.AFauth.auth.signOut()
   }
 
   restablecerContra(email:string){
