@@ -1,0 +1,18 @@
+{
+    "android":{
+        "debug":{
+            "keystore": "MuertosdeHambre.keystore",
+            "storePassword": "12345678",
+            "alias": "muertos",
+            "password": "12345678",
+            "keystoreType": ""
+        },
+        "release":{
+            "keystore": "MuertosdeHambre.keystore",
+            "storePassword": "12345678",
+            "alias": "muertos",
+            "password": "12345678",
+            "keystoreType": ""
+        }
+    }
+}

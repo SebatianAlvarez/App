@@ -16,7 +16,7 @@
           <ng-template [ngIf]="res.userUID === reser.uidResta && reser.estado.toString() === 'En Revision'">
             <ion-card>
               <ion-card-header>
-                <p style="text-align: center;">Tu reserva esta siendo <b style="color: #1dbfd4;">revisada</b> </p>
+                <p style="text-align: center;">Tu reserva está siendo <b style="color: #1dbfd4;">revisada</b> </p>
                 <br>
                 <div class="imagen">
                   <img *ngIf="res.imagenRes;else foto" [src]="res.imagenRes" width="140px">
